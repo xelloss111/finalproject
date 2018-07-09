@@ -179,7 +179,13 @@
 	    <artifactId>spring-security-config</artifactId>
 	    <version>5.0.6.RELEASE</version>
 	</dependency>
-
+	
+	<!-- 웹소켓 -->
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>5.0.6.RELEASE</version>
+	</dependency>
   
   </dependencies>
    	<build>
