@@ -70,12 +70,16 @@
 		<section class="rankup_section">
 			<h2 class="title">씽크빅 마스터</h2>
 			<ul class="rankup_list">
-				<li><a href=""><i class="fas fa-crown" style="color: gold"></i> 익명의 펭귄</a></li>
-				<li><a href="">은왕관</a></li>
-				<li><a href="">동왕관</a></li>
-				<li><a href="">금메달</a></li>
-				<li><a href="">은메달</a></li>
-				<li><a href="">동메달</a></li>
+				<li><a href=""><i class="fas fa-crown" style="color: gold"></i> &nbsp 펭귄 </a></li>
+				<li><a href=""><i class="fas fa-crown" style="color: silver"></i> &nbsp 늑대 </a></li>
+				<li><a href=""><i class="fas fa-crown" style="color: #cd7f32"></i> &nbsp 카멜레온 </a></li>
+				<li><a href=""><i class="fas fa-trophy" style="color: gold"></i> &nbsp 돌고래</a></li>
+				<li><a href=""><i class="fas fa-trophy" style="color: silver"></i> &nbsp 기린</a></li>
+				<li><a href=""><i class="fas fa-trophy" style="color: #cd7f32"></i> &nbsp 팬더</a></li>
+				<li><a href=""><i class="fas fa-medal" style="color: gold"></i> &nbsp 블롭피쉬 </a></li>
+				<li><a href=""><i class="fas fa-medal" style="color: silver"></i> &nbsp 키위새</a></li>
+				<li><a href=""><i class="fas fa-medal" style="color: #cd7f32"></i> &nbsp 고양이</a></li>
+				<li><a href=""><i class="fas fa-medal" style="color :#fff"></i> &nbsp 해파리</a></li>
 			</ul>
 		</section>
 

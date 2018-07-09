@@ -36,6 +36,8 @@
 					메뉴 토글 버튼</span></li>
 			<li><a href="${pageContext.request.contextPath}/video">후방주의</a><span class="sub_menu_toggle_btn">하위
 					메뉴 토글 버튼</span></li>
+			<li><a href="#">명예의 전당</a><span class="sub_menu_toggle_btn">하위
+					메뉴 토글 버튼</span></li>
 		</ul>
 	</nav>
 	<!-- <span class="menu_toggle_btn">전체 메뉴 토글 버튼</span> -->
