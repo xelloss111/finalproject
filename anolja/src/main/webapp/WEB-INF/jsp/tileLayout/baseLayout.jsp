@@ -1,21 +1,31 @@
 <%@ page pageEncoding="utf-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>AːNOLJA</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/default.css">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/resources/images/icon/flat-design-touch.png">
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-		type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/js/flat.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/default.css">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon/favicon.ico">
+<link rel="apple-touch-icon-precomposed"
+	href="${pageContext.request.contextPath}/resources/images/icon/flat-design-touch.png">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/flat.min.js"></script>
+<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/demo.js'></script>
+<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/jquery.particleground.js'></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+	crossorigin="anonymous">
 
 
 <script type="text/javascript">
@@ -38,22 +48,24 @@
 	}); //jQuery 종결 
 	</script>
 </head>
-    <body>
-    	
-    	<div id="quick_wrap">
-			<div id="quick_right_menu">
-				<span></span>
-				<ul>
-					<li><a href="#" style="font-weight: bold;">Skyqe</a></li>
+<body>
+	<div id="quick_wrap">
+		<div id="quick_right_menu">
+			<span></span>
+			<ul>
+				<li><a href="#" style="font-weight: bold;">Skyqe</a></li>
 
-				</ul>
-			</div>
-		</div><!-- quick_wrap -->
-    
-        <div class="container">
-            <tiles:insertAttribute name="header" />
-            <tiles:insertAttribute name="content" />
-            <tiles:insertAttribute name="footer" />
-        </div>
-    </body>
+			</ul>
+		</div>
+	</div>
+	<!-- quick_wrap -->
+
+	<div class="container">
+		<div id="particles"></div>
+		<tiles:insertAttribute name="header" />
+		<tiles:insertAttribute name="content" />
+		<tiles:insertAttribute name="footer" />
+	</div>
+
+</body>
 </html>

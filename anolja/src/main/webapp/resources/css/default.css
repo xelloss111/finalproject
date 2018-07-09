@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 
-/*--------------------------------------------------------------------------------------- 모바일용 CSS */
+/*----------------------------------- 모바일용 CSS */
 /* 기본 CSS */
 #wrap{
 display:flex;
@@ -10,6 +10,7 @@ width:80%;
 margin:0 auto;
 max-width:1200px;
 }
+
 
 .content_section{
 order:4;
@@ -142,16 +143,22 @@ background:url(../images/p_images/slider_01.jpg) center center no-repeat;
 	top : 0;
 }
 
-.slider_section div{
-	width: 100%;
-	
+.img_con {
+	overflow: hidden;
+	position: relative;
+	width: 1500px;
+	height: 400px;
+}
+.img_con > ul > li {
+	float: left;
 }
 
 .slider_section div img {
-	width: 80%;
-	height: auto;
+	width: 500px;
+	height: 300px;
 	border-radius: 3px;
 	margin: 20px 10%;
+
 }
 
 
@@ -329,7 +336,7 @@ color:#fff;
 text-shadow:0px 1px 1px #191919;
 }
 
-/*--------------------------------------------------------------------------------------- 태블릿용 CSS */
+/*------------------------------------ 태블릿용 CSS */
 @media all and (min-width:768px){
 /* 기본 CSS */
 #wrap{
@@ -521,7 +528,10 @@ padding:2.500rem 0;
 }
 }
 
-/*--------------------------------------------------------------------------------------- PC용 CSS */
+/*------------------------------------------- PC용 CSS */
+
+
+
 @media all and (min-width:960px){
 /* 기본 CSS */
 
@@ -529,6 +539,19 @@ padding:2.500rem 0;
 position:relative;
 width:90%;
 }
+
+#particles {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+
+
 
 /* 콘텐츠 영역 CSS */
 .content_section{
@@ -740,4 +763,5 @@ padding-left:3.125%;
 /* 30px ÷ 960px */
 text-align:left;
 }
+
 }

@@ -64,6 +64,7 @@ input::-webkit-input-placeholder {
 color:#e65d5d;
 }
 
+
 /* 웹폰트 CSS */
 @font-face{font-family:'Nanum Gothic'; src:url(../webfont/NanumGothic.eot)}
 @font-face{font-family:'Nanum Gothic'; src:url(../webfont/NanumGothic.woff)}

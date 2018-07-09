@@ -11,7 +11,7 @@
 <!--  사용하지 않는 영역 끝 info_section-->
 
 <div id="wrap">
-
+		
 		<section class="info_section">
 			<ul class="info_list">
 				<li><a href="#">Sing up</a></li>
