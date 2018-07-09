@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/context   
+    					http://www.springframework.org/schema/context/spring-context.xsd
+    					http://www.springframework.org/schema/mvc
+    					http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!-- 빈 객체를 자동 등록 처리 -->
+	<context:component-scan base-package="kr.co.anolja" />
+
+	<!-- mvc 관련 객체 등록 작업 진행 : @RequestMapping 어노테이션을 처리 등.. -->	
+    <mvc:annotation-driven>
+    	<mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            	<property name="supportedMediaTypes">
+	                <list>
+	                	<value>text/html; charset=UTF-8</value>
+	                </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	            <property name="supportedMediaTypes">
+		            <list>
+			            <value>text/html; charset=UTF-8</value>
+			            <value>application/json; charset=UTF-8</value>
+		            </list>
+	            </property>
+            </bean>
+        </mvc:message-converters>
+	</mvc:annotation-driven>
+    
+	<!-- WEB의 정적 페이지 처리 등을 위해 사용 -->	
+	<mvc:default-servlet-handler />
+	
+	<!-- JSP 페이지로 이동 시 아래의 설정 내용을 참고 -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
+	</mvc:view-resolvers>
+	
+	<!-- 파일 업로드 최대 사이즈 지정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="10485760" />        
+	</bean>
+	
+	
+	<!-- 메일 보내기 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587" />
+		<property name="username" value="ex8379@gmail.com" />
+		<property name="password" value="neuiahjqvqtwauzm" />
+		
+		<!-- SMTP 요청 처리 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 인터셉터 -->
+<!-- 	<mvc:interceptors> -->
+<!--         <mvc:interceptor> -->
+<!--                 <mvc:mapping path="/interceptor/**" /> -->
+<!--                 <mvc:exclude-mapping path="/interceptor/login*.do" /> -->
+<!--                 <bean class="kr.co.interceptor.AuthInterceptor" /> -->
+<!--         </mvc:interceptor> -->
+<!-- 	</mvc:interceptors> -->
+	
+	<!-- 컨트롤러없이 페이지 이동 -->
+<!-- 	<mvc:view-controller path="/file/uploadForm.do" view-name="file/fileUploadForm"/> -->
+	
+</beans>

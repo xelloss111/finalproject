@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="euc-kr"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"	    
+    xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"	    	    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/aop
+    					http://www.springframework.org/schema/aop/spring-aop.xsd
+    					http://www.springframework.org/schema/tx
+    					http://www.springframework.org/schema/tx/spring-tx.xsd    
+    					http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- bean 객체 자동 등록 및 주입 -->
+	<context:component-scan base-package="kr.co.anolja" />
+	
+	<!-- mybatis 객체 준비 -->
+	<context:property-placeholder 
+		location="classpath:config/mybatis/db.properties"/>
+
+	<!-- DriverManager 사용-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+      	  p:driverClassName="${jdbc.mysql.driver}"
+          p:url="${jdbc.mysql.url}"
+          p:username="${jdbc.mysql.username}" 
+          p:password="${jdbc.mysql.password}" />
+
+
+
+	<!-- DBCP 사용 	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close"
+      	p:driverClassName="${jdbc.mysql.driver}"
+        p:url="${jdbc.mysql.url}"
+        p:username="${jdbc.mysql.username}" 
+        p:password="${jdbc.mysql.password}" />
+    -->
+	
+	<!-- sqlConfig.xml 내부 설정을 하나의 bean 객체로 처리 -  VO 객체 alias 지정, mappers -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="kr.co.anolja.repository.domain" />			
+		<property name="mapperLocations" value="classpath:config/sqlmap/mysql/*.xml" />
+		<property name="configLocation" value="classpath:config/mybatis/sqlMapConfig.xml" />		
+	</bean>
+	
+	<!-- mapper interface의 구현체를 bean으로 자동 등록 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="kr.co.anolja.repository.mapper" />
+	</bean>
+	
+	<!-- ConnectionPool 처리를 위한 트랜잭션 설정 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 트랜잭션 처리를 위한 schema 형식 태그 -->
+<!-- 	<tx:advice id="txAdvice" transaction-manager="transactionManager"> -->
+<!-- 	    <tx:attributes> -->
+<!-- 		    <tx:method name="retrieve*" read-only="true" /> -->
+<!-- 		    <tx:method name="*" rollback-for="Exception" /> -->
+<!-- 		</tx:attributes> -->
+<!-- 	</tx:advice> -->
+	
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="tranMethod" -->
+<!-- 		              expression="execution(public * kr.co.anolja.*.service.*Impl.*(..)) "/> -->
+<!-- 		<aop:advisor advice-ref="txAdvice" pointcut-ref="tranMethod" /> -->
+<!-- 	</aop:config> -->
+	
+	<!-- 트랜잭션 처리를 위한 annotation 사용 태그 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	
+</beans>
