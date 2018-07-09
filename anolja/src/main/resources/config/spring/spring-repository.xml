@@ -44,7 +44,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="typeAliasesPackage" value="kr.co.anolja.repository.domain" />			
-		<property name="mapperLocations" value="classpath:config/sqlmap/mysql/*.xml" />
+		<property name="mapperLocations" value="classpath:config/sqlmap/mysql/*Mapper.xml" />
 		<property name="configLocation" value="classpath:config/mybatis/sqlMapConfig.xml" />		
 	</bean>
 	
