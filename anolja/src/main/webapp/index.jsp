@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:redirect url="main"></c:redirect>
+	<c:redirect url="/main"></c:redirect>
+	
 </body>
 </html>
