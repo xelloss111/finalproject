@@ -1,5 +1,7 @@
 package kr.co.anolja.user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +28,24 @@ public class UserController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(UserController.class);
 	
-	@RequestMapping(value = "main", method = RequestMethod.GET)
-	public void userMain() {}
-	
-	@RequestMapping(value = "signup", method = RequestMethod.GET)
-	public void signupGet() {}
-	
 	@RequestMapping(value = "signup", method = RequestMethod.POST)
-	public String signupPost(User user, Model model, RedirectAttributes rttr) throws Exception {
+	public String signupPost(User user, Model model, RedirectAttributes rttr,
+			HttpServletRequest req) throws Exception {
 		logger.info("회원 가입 중....");
 		logger.info(user.toString());
-		service.registUser(user);
+		String path = req.getContextPath();
+		System.out.println(path);
+		service.registUser(user, path);
 		rttr.addFlashAttribute("msg", "가입 시 사용한 이메일 인증을 부탁 드립니다.");
 		
-		return "redirect:/user/login";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.GET)
 	public String emailConfirm(String email, Model model) throws Exception {
 		service.authUser(email);
 		model.addAttribute("email", email);
-		return "/user/emailConfirm";
+		return "user/emailConfirm";
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
@@ -66,7 +65,7 @@ public class UserController {
 			return "index";
 		}
 		
-		return "/user/signup";
+		return "main/main";
 	}
 	
 	@RequestMapping(value = "idCheck", method = RequestMethod.POST)

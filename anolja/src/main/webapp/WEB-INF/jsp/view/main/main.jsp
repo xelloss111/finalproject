@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%> 
-	
+<section class="user_section"></section>
+
 <section class="slider_section">
 <div id="particles"></div>
 	<div class="img_con">

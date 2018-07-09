@@ -14,7 +14,7 @@
 		
 		<section class="info_section">
 			<ul class="info_list">
-				<li><a href="#">Sing up</a></li>
+				<li><input id="signup" type="checkbox"/><label for="signup">SignUP</label></li>
 				<li><a href="#">Login</a></li>
 			</ul>
 		</section>

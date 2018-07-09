@@ -27,6 +27,7 @@
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
 
 <script type="text/javascript">
 	$(function(){// jQuery 시작
@@ -49,6 +50,14 @@
 	</script>
 </head>
 <body>
+	<!-- 회원 가입 등의 얼럿 처리를 위한 스크립트 -->
+	<script>
+	var msg = `${msg}`;
+	if (msg) {
+		alert(msg);
+	}
+	</script>
+	
 	<div id="quick_wrap">
 		<div id="quick_right_menu">
 			<span></span>
