@@ -1,7 +1,17 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%> 
 	
 		<section class="slider_section">
-
+			<div>
+			<h2 class="sec_h2">명예의 전당</h2>
+				<ul>
+					<li>				
+						<a href="#">
+							<img alt="" src="${pageContext.request.contextPath}/resources/images/catchmind/game_img.png">
+						</a>			
+					</li>	
+				</ul>
+			</div>
+		</section>
 		
 		
 		<section class="latest_post_section">
@@ -42,7 +52,10 @@
 			<ul class="gallery_list">
 				<li>
 					<a href="#">
-
+						<figure>
+							<img src="${pageContext.request.contextPath}/resources/images/youtube/hqdefault.jpg" alt="">
+							<figcaption>GAME CHANNEL</figcaption>
+						</figure>
 					</a>
 				</li>
 				<li>
