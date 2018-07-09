@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class User {
 	private String id;
+	private String annonymousId;
 	private String pass;
 	private String email;
 	private int gameVictory;
@@ -11,6 +12,12 @@ public class User {
 	private int authStatus;
 	private Date regDate;
 	
+	public String getAnnonymousId() {
+		return annonymousId;
+	}
+	public void setAnnonymousId(String annonymousId) {
+		this.annonymousId = annonymousId;
+	}
 	public String getAuthKey() {
 		return authKey;
 	}

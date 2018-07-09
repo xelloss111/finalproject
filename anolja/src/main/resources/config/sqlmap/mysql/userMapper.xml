@@ -4,57 +4,57 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.anolja.repository.mapper.UserMapper">
-<!-- 	<resultMap type="user" id="userMap"> -->
-<!-- 		<result column="id" property="id" /> -->
-<!-- 		<result column="pass" property="pass" /> -->
-<!-- 		<result column="email" property="email" /> -->
-<!-- 		<result column="game_victory" property="gameVictory" /> -->
-<!-- 		<result column="auth_key" property="authKey" /> -->
-<!-- 		<result column="auth_status" property="authStatus" /> -->
-<!-- 		<result column="reg_date" property="regDate" /> -->
-<!-- 	</resultMap> -->
+	<resultMap type="user" id="userMap">
+		<result column="id" property="id" />
+		<result column="annonymous_id" property="annonymousId"/>
+		<result column="pass" property="pass" />
+		<result column="email" property="email" />
+		<result column="game_victory" property="gameVictory" />
+		<result column="auth_key" property="authKey" />
+		<result column="auth_status" property="authStatus" />
+		<result column="reg_date" property="regDate" />
+	</resultMap>
+	
+	<insert id="registUser" parameterType="user">
+		insert into tb_user (
+			id, pass, email, auth_key
+		) values (
+			#{id},
+			#{pass},
+			#{email},
+			'null'
+		);
+	</insert>
+	
+	<update id="createAuthKey" parameterType="user">
+		update tb_user
+		   set auth_key = #{authKey}
+		 where email = #{email}
+	</update>
+	
+	<update id="authUser" parameterType="string">
+		update tb_user
+		   set auth_status = 1
+		 where email = #{email}
+	</update>
+	
+	<select id="selectOneUser" parameterType="user" resultMap="userMap">
+		select id, pass
+		  from tb_user
+		 where id = #{id}
+	</select>	
 	
 	
-<!-- 	<insert id="registUser" parameterType="user"> -->
-<!-- 		insert into tb_user ( -->
-<!-- 			id, pass, email, auth_key -->
-<!-- 		) values ( -->
-<!-- 			#{id}, -->
-<!-- 			#{pass}, -->
-<!-- 			#{email}, -->
-<!-- 			'null' -->
-<!-- 		); -->
-<!-- 	</insert> -->
+	<select id="getIdperUser" parameterType="string" resultMap="userMap">
+		select *
+		  from tb_user
+		 where id = #{id}
+	</select>
 	
-<!-- 	<update id="createAuthKey" parameterType="user"> -->
-<!-- 		update tb_user -->
-<!-- 		   set auth_key = #{authKey} -->
-<!-- 		 where email = #{email} -->
-<!-- 	</update> -->
-	
-<!-- 	<update id="authUser" parameterType="string"> -->
-<!-- 		update tb_user -->
-<!-- 		   set auth_status = 1 -->
-<!-- 		 where email = #{email} -->
-<!-- 	</update> -->
-	
-<!-- 	<select id="selectOneUser" parameterType="user" resultMap="userMap"> -->
-<!-- 		select id, pass -->
-<!-- 		  from tb_user -->
-<!-- 		 where id = #{id} -->
-<!-- 	</select>	 -->
-	
-	
-<!-- 	<select id="getIdperUser" parameterType="string" resultMap="userMap"> -->
-<!-- 		select * -->
-<!-- 		  from tb_user -->
-<!-- 		 where id = #{id} -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getEmailperUser" parameterType="string" resultMap="userMap"> -->
-<!-- 		select * -->
-<!-- 		  from tb_user -->
-<!-- 		 where email = #{email} -->
-<!-- 	</select> -->
+	<select id="getEmailperUser" parameterType="string" resultMap="userMap">
+		select *
+		  from tb_user
+		 where email = #{email}
+	</select>
 
 </mapper>
