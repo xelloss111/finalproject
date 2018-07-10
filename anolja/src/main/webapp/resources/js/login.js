@@ -45,6 +45,8 @@ login.addEventListener('click', function() {
 	
 	// form 태그의 엘리먼트 정보 가져오기
 	var loginBtn = document.querySelector("#loginBtn");
+	var findIdBtn = document.querySelector('#findIdBtn');
+	var findPassBtn = document.querySelector('#findPassBtn');
 	var id = document.querySelector("input[name='id']");
 	var pass = document.querySelector("input[name='pass']");
 
@@ -71,11 +73,6 @@ login.addEventListener('click', function() {
 			return;
 		};
 
-//		var form = document.querySelector("#lForm");
-//		form.setAttribute("action", ctx + "/user/login");
-//		form.setAttribute("method", "post");
-//		form.submit();
-		
 		var form = $('#lForm').serialize();
 		$.ajax({
 			url: ctx + "/user/login",
@@ -94,5 +91,118 @@ login.addEventListener('click', function() {
 				});
 			}
 		});
+	});
+	
+	// 아이디 찾기 이벤트 처리
+	findIdBtn.addEventListener('click', function(e) {
+		e.preventDefault();
+		
+		swal({
+			  title: 'ID 찾기',
+			  text: '가입 시 작성한 email 주소를 입력해 주세요',
+			  content: "input",
+			  button: {
+			    text: "검색",
+			    closeModal: false,
+			  },
+			}).then(name => {
+				$.ajax({
+					url: ctx + "/user/findId",
+					type: "post",
+					data: {email: name},
+				}).done(function(result) {
+					if (result.search("email") != -1) {
+						return swal({
+									title: "ID 찾기 실패",
+									icon: "error",
+									text: result
+								});
+					}
+					swal({
+						title: "ID 찾기 성공",
+						icon: "success",
+						text: "회원님의 아이디는 : [ " + result + " ] 입니다.",
+					});
+				});
+			});	
+	});
+	
+	findPassBtn.addEventListener('click', function(e) {
+		e.preventDefault();
+		
+		swal({
+			  title: 'Password 찾기',
+			  text: 'ID를 먼저 입력해 주세요',
+			  content: {
+				  element: "input",
+				  attributes: {
+					  placeholder: "ID 입력",
+					  type: 'text',
+				  }
+			  },
+			  button: {
+			    text: "입력",
+			    closeModal: false,
+			  },
+			}).then(id => {
+				console.log(id);
+				$.ajax({
+					url: ctx + "/user/idCheck",
+					type: "post",
+					data: {id: id},
+				}).done(function(resID) {
+					if (!resID) {
+						return swal({
+									icon: "error",
+									text: "ID가 맞지 않습니다."
+								});
+					}
+					swal({
+						  title: 'Password 찾기',
+						  text: 'email을 입력해 주세요',
+						  content: {
+							  element: "input",
+							  attributes: {
+								  placeholder: "email 입력",
+								  type: 'text',
+							  }
+						  },
+						  button: {
+						    text: "입력",
+						    closeModal: false,
+						  },
+						}).then(email => {
+							console.log(email);
+							$.ajax({
+								url: ctx + "/user/emailCheck",
+								type: "post",
+								data: {email: email},
+							}).done(function(resEmail) {
+								if (!resEmail) {
+									return swal({
+												icon: "error",
+												text: "email 주소가 맞지 않습니다."
+											});
+								}
+								var temp = JSON.parse(resEmail);
+								$.ajax({
+									url: ctx + "/user/findPass",
+									type: "post",
+									data: {email: temp.email},
+									success: function(result) {
+										swal({
+											title: "완료",
+											icon: "success",
+											text: result,
+											button: "닫기"
+										});
+									}
+								});
+							});
+						
+						});
+		
+					});
+			});
 	});
 });

@@ -56,5 +56,11 @@
 		  from tb_user
 		 where email = #{email}
 	</select>
+	
+	<update id="changePassword" parameterType="user">
+		update tb_user
+		   set pass = #{pass}
+		 where email = #{email}
+	</update>
 
 </mapper>

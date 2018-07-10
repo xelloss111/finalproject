@@ -34,7 +34,6 @@ public class UserController {
 		logger.info("회원 가입 중....");
 		logger.info(user.toString());
 		String path = req.getServerName() + ":" + req.getServerPort() + "" + req.getContextPath();
-		System.out.println("로컬 정보 : " + path);
 		service.registUser(user, path);
 		rttr.addFlashAttribute("msg", "가입 시 사용한 이메일 인증을 부탁 드립니다.");
 		
@@ -80,5 +79,38 @@ public class UserController {
 	public User emailCheck(@RequestParam(value="email") String email) throws Exception {
 		logger.info(email);
 		return service.getEmail(email);
+	}
+	
+	@RequestMapping(value = "findId", method = RequestMethod.POST)
+	@ResponseBody
+	public String findId(@RequestParam(value="email") String email) throws Exception {
+		User temp = service.findId(email);
+		
+		if (temp != null) {
+			return temp.getId();
+		} else {
+			return "email에 해당하는 ID가 존재하지 않습니다.";
+		}
+	}
+	
+	@RequestMapping(value = "findPass")
+	@ResponseBody
+	public String findPass(@RequestParam(value="email") String email, HttpServletRequest req) throws Exception {
+		String path = req.getServerName() + ":" + req.getServerPort() + "" + req.getContextPath();
+		String result = service.findPass(email, path);
+		return result;
+	}
+	
+	@RequestMapping(value = "changePass", method = RequestMethod.GET)
+	public String changePassGet(String email, Model model) throws Exception {
+		model.addAttribute("email", email);
+		return "user/changePass";
+	}
+	
+	@RequestMapping(value = "changePass", method = RequestMethod.POST)
+	@ResponseBody
+	public String changePassPost(User user) throws Exception {
+		String result = service.changePass(user);
+		return result;
 	}
 }

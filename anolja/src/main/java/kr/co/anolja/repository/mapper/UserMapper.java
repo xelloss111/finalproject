@@ -9,4 +9,5 @@ public interface UserMapper {
 	User selectOneUser(String id);
 	User getIdperUser(String id);
 	User getEmailperUser(String email);
+	void changePassword(User user);
 }

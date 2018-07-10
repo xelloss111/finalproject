@@ -92,4 +92,41 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
+
+	@Override
+	public User findId(String email) throws Exception {
+		User temp = mapper.getEmailperUser(email);
+		
+		if (temp != null) {
+			return temp;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public String findPass(String email, String path) throws Exception {
+		User temp = mapper.getEmailperUser(email);
+
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("[anolja 패스워드 변경 서비스]");
+		sendMail.setText(new StringBuffer().append("<h1>패스워드 변경</h1>").append("<a href='http://" + path + "/user/changePass?email=")
+				.append(temp.getEmail()).append("' target='_blank'>인증 확인 후 비밀번호 변경 페이지 이동</a>").toString());
+		sendMail.setFrom("anoljamanager@gmail.com", "anolja 관리자");
+		sendMail.setTo(temp.getEmail());
+		sendMail.send();
+			
+		return "비밀번호 변경을 위한 메일이 발송되었습니다.\n확인 후 비밀번호를 변경해 주세요";
+	}
+
+	@Override
+	public String changePass(User user) throws Exception {
+		String pass = passwordEncoder.encode(user.getPass());
+		user.setPass(pass);
+		mapper.changePassword(user);
+		
+		return "비밀번호가 정상적으로 변경되었습니다.";
+	}
+	
+	
 }

@@ -8,4 +8,7 @@ public interface UserService {
 	public User loginUser(User user) throws Exception;
 	public User getId(String id) throws Exception;
 	public User getEmail(String email) throws Exception;
+	public User findId(String email) throws Exception;
+	public String findPass(String email, String path) throws Exception;
+	public String changePass(User user) throws Exception;
 }
