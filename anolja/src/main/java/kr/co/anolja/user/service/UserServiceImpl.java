@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 		sendMail.setSubject("[anolja 서비스 이메일 인증]");
 		sendMail.setText(new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://" + path + "/user/emailConfirm?email=")
 				.append(user.getEmail()).append("&key=").append(key).append("' target='_blank'>이메일 인증 확인</a>").toString());
-		sendMail.setFrom("ex8379@gmail.com", "anolja 개발자");
+		sendMail.setFrom("anoljamanager@gmail.com", "anolja 관리자");
 		sendMail.setTo(user.getEmail());
 		sendMail.send();
 	}
