@@ -33,12 +33,12 @@ public class UserController {
 			HttpServletRequest req) throws Exception {
 		logger.info("회원 가입 중....");
 		logger.info(user.toString());
-		String path = req.getContextPath();
-		System.out.println(path);
+		String path = req.getServerName() + ":" + req.getServerPort() + "" + req.getContextPath();
+		System.out.println("로컬 정보 : " + path);
 		service.registUser(user, path);
 		rttr.addFlashAttribute("msg", "가입 시 사용한 이메일 인증을 부탁 드립니다.");
 		
-		return "redirect:/";
+		return "redirect:/main";
 	}
 	
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.GET)

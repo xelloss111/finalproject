@@ -65,7 +65,23 @@ signup.addEventListener('click', function() {
 	});
 
 	// email 존재 여부 체크
-	email.addEventListener("blur", function() {
+	email.addEventListener("keyup", function(e) {
+//		e.preventDefault();
+		var mail = email.value;
+		var chk = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		console.log(mail.indexOf('.'));	
+		console.log(mail.length);
+		
+		if (mail.length == 0) {
+			emailChk.innerHTML = '';
+			return;
+		}
+		
+		if (!chk.test(mail)){
+			emailChk.style.color = 'red';
+			emailChk.innerHTML = '&nbsp;&nbsp;잘못된 주소';
+			return;
+		}
 		serverCall(ctx + "/user/emailCheck", "POST", {"email": email.value}, "email");
 	});
 
@@ -93,22 +109,76 @@ signup.addEventListener('click', function() {
 		console.log(emailChk.innerText);
 		
 		if (id.value == "") {
-			alert("id는 필수 입력 사항입니다.");
+			swal({
+				  title: "회원 가입 실패",
+				  text: "ID는 필수 입력 사항입니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
 			return;
 		} else if (idChk.innerHTML == '&nbsp;&nbsp;사용 불가') {
-			alert("사용 중인 ID로 가입이 불가능 합니다.");
+			swal({
+				  title: "회원 가입 실패",
+				  text: "사용 중인 ID로 가입이 불가능 합니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
+			return;
+		};
+		
+		if (pass.value == "") { 
+			swal({
+				  title: "회원 가입 실패",
+				  text: "패스워드는 필수 입력 사항입니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
+			return;
+		} else if (pass.value != passAgain.value) {
+			swal({
+				  title: "회원 가입 실패",
+				  text: "입력하신 패스워드와 확인된 패스워드가 다릅니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
+			return;
+		} else if (passAgain = '') {
+			swal({
+				  title: "회원 가입 실패",
+				  text: "패스워드를 재 확인 해주세요",
+				  icon: "error",
+				  button: "돌아가기",
+				});
 			return;
 		}
-		
-		if (pass.value == "") { alert("pass는 필수 입력 사항입니다."); return; }
 		
 		if (email.value == "") {
-			alert("email은 필수 입력 사항입니다.");
+			swal({
+				  title: "회원 가입 실패",
+				  text: "email은 필수 입력 사항입니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
+			return;
+		};
+			
+		if (email.value.search("@") == -1) {
+			swal({
+				  title: "회원 가입 실패",
+				  text: "email 주소에는 @이 포함되어야 합니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
 			return;
 		} else if (emailChk.innerHTML == '&nbsp;&nbsp;사용 불가') {
-			alert("사용 중인 email로 가입이 불가능 합니다.");
+			swal({
+				  title: "회원 가입 실패",
+				  text: "사용 중인 email로 가입이 불가능합니다.",
+				  icon: "error",
+				  button: "돌아가기",
+				});
 			return;
-		}
+		};
 		
 		var form = document.querySelector("#sForm");
 		var elements = form.elements;
@@ -145,13 +215,13 @@ signup.addEventListener('click', function() {
 				} else {
 					color = "green";
 					html = "&nbsp;&nbsp;사용 가능";
-				}
+				}				
 			break;
 		}
 		element.innerHTML = "";
 		element.style.color = color;
 		element.innerHTML = html;
-	}
+	};
 
 
 	// 회원 가입 전 서버 통신을 통한 정보 체크 함수

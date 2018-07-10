@@ -27,7 +27,8 @@
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+<!-- sweetAlert 적용 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 	$(function(){// jQuery 시작
@@ -54,7 +55,10 @@
 	<script>
 	var msg = `${msg}`;
 	if (msg) {
-		alert(msg);
+		swal({
+			  text: msg,
+			  button: "확인"
+			});
 	}
 	</script>
 	
