@@ -5,10 +5,12 @@
 // contextPath 가져오기
 var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 
-var userSection = $('.user_section');
+var signupSection = $('.signup_section');
+var loginSection = $('.login_section');
 var signup = document.querySelector('#signup');
 
 signup.addEventListener('click', function() {
+	if(loginSection.attr('display') != 'none') loginSection.slideUp('slow');
 	var html = "";
 	html += '<img class="glass" src="'+ ctx +'/resources/images/user/mark_icon_title.png" alt=""\
 		  style="float:left; margin-right: 100px; padding-left:17%; padding-top:50px;">\
@@ -46,8 +48,8 @@ signup.addEventListener('click', function() {
 		</div>\
 		</form>';
 	
-	userSection.slideToggle('slow');
-	$(".user_section").html(html);
+	signupSection.slideToggle('slow');
+	signupSection.html(html);
 	
 	// form 태그의 엘리먼트 정보 가져오기
 	var registBtn = document.querySelector("#registBtn");

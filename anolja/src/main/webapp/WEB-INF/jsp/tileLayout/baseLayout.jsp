@@ -1,4 +1,4 @@
-<%@ page pageEncoding="utf-8" session="false"%>
+<%@ page pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <html lang="ko">
@@ -54,6 +54,7 @@
 <body>
 	<!-- 회원 가입 등의 얼럿 처리를 위한 스크립트 -->
 	<script>
+	console.log("세션 ID : ", `${id}`);
 	var msg = `${msg}`;
 	if (msg) {
 		swal({

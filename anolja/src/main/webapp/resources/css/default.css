@@ -3,8 +3,29 @@
 
 
 /* 유저 영역용 CSS */
-#signup { display:none; }
-.user_section {
+.signupicon, .loginicon {
+	width : 30px;
+	height: 30px;
+}
+
+#signup:hover, #login:hover {
+	cursor: pointer;
+}
+
+.signup_section {
+	order: 1;
+	top: 80px;
+	
+	background-color: rgba( 255, 255, 255, 0.2 );
+	height: 250px;
+	display:none;
+	flex-flow:column nowrap;
+	width:100%;
+	margin:0 auto;
+	max-width:1200px;
+}
+
+.login_section {
 	order: 1;
 	top: 80px;
 	
@@ -98,6 +119,73 @@ input:focus{
   -webkit-transform: translateY(-3px);
 }
 .btn.positive:active {
+  background: #3ba19c;
+  -webkit-box-shadow: 0 0 0 0 #1f5753;
+  -moz-box-shadow: 0 0 0 0 #1f5753;
+  box-shadow: 0 0 0 0 #1f5753;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+}
+
+.btn2 {
+  margin-right:10px;
+  display: inline-block;
+  min-width: 6rem;
+  background: #219af7;
+  color: white;
+  line-height: 1;
+  padding: 1rem;
+  border: 0;
+  text-align: center;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 3px 0 0 #a31417;
+  -moz-box-shadow: 0 3px 0 0 #a31417;
+  box-shadow: 0 3px 0 0 #a31417;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+}
+.btn2:hover, .btn2:focus {
+  color: white;
+  -webkit-box-shadow: 0 6px 0 0 #a31417;
+  -moz-box-shadow: 0 6px 0 0 #a31417;
+  box-shadow: 0 6px 0 0 #a31417;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn2:active {
+  background: #a31417;
+  -webkit-box-shadow: 0 0 0 0 #48090a;
+  -moz-box-shadow: 0 0 0 0 #48090a;
+  box-shadow: 0 0 0 0 #48090a;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+}
+.btn2.disabled {
+  background: #eeeeee;
+  color: #bbbbbb;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  transform: none;
+}
+.btn2.positive {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 3px 0 0 #3ba19c;
+  -moz-box-shadow: 0 3px 0 0 #3ba19c;
+  box-shadow: 0 3px 0 0 #3ba19c;
+}
+.btn2.positive:hover, .btn2.positive:focus {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 6px 0 0 #3ba19c;
+  -moz-box-shadow: 0 6px 0 0 #3ba19c;
+  box-shadow: 0 6px 0 0 #3ba19c;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn2.positive:active {
   background: #3ba19c;
   -webkit-box-shadow: 0 0 0 0 #1f5753;
   -moz-box-shadow: 0 0 0 0 #1f5753;

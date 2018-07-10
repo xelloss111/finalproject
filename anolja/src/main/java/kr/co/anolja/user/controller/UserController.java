@@ -18,8 +18,8 @@ import kr.co.anolja.repository.domain.User;
 import kr.co.anolja.user.service.UserService;
 
 @Controller
-@SessionAttributes("user")
 @RequestMapping("/user/*")
+@SessionAttributes("id")
 public class UserController {
 
 	@Autowired
@@ -48,24 +48,24 @@ public class UserController {
 		return "user/emailConfirm";
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public void loginGet() {}
-	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@ResponseBody
 	public String loginPost(User user, Model model) throws Exception {
 		User temp = service.loginUser(user);
 		
-		logger.info(temp.getId() + " : " + temp.getPass());
+		if (temp == null) return "아이디 또는 패스워드가 잘못되었습니다.";
 		
-		if (temp != null && temp.getAuthStatus() == 1) {
-			model.addAttribute("msg", "로그인 완료");
-			model.addAttribute("user", temp);
-		} else if (temp != null && temp.getAuthStatus() == 0) {
-			model.addAttribute("msg", "메일 인증 후 로그인이 가능합니다.");
-			return "index";
+		logger.info(temp.getId() + " : " + temp.getPass() + " : " + temp.getAuthStatus());
+		
+		String msg = "";
+		if (temp.getAuthStatus() == 0) {
+			msg = "가입된 메일 인증 후 로그인이 가능합니다";
+		} else {
+			model.addAttribute("id", temp.getId());
+			return "/main";
 		}
 		
-		return "main/main";
+		return msg;
 	}
 	
 	@RequestMapping(value = "idCheck", method = RequestMethod.POST)

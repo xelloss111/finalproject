@@ -38,8 +38,8 @@
 		 where email = #{email}
 	</update>
 	
-	<select id="selectOneUser" parameterType="user" resultMap="userMap">
-		select id, pass
+	<select id="selectOneUser" parameterType="string" resultMap="userMap">
+		select *
 		  from tb_user
 		 where id = #{id}
 	</select>	

@@ -12,13 +12,12 @@ import kr.co.anolja.common.MailHandler;
 import kr.co.anolja.common.MailTempKey;
 import kr.co.anolja.repository.domain.User;
 import kr.co.anolja.repository.mapper.UserMapper;
-import kr.co.anolja.user.controller.UserController;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
 	private static final Logger logger = 
-			LoggerFactory.getLogger(UserController.class);
+			LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired // 매퍼 자동 주입
 	private UserMapper mapper;
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User loginUser(User user) throws Exception {
-		User temp = mapper.selectOneUser(user);
+		User temp = mapper.selectOneUser(user.getId());
 		// 스프링 시큐리티의 BCryptPasswordEncoder 객체의 matches 메서드로 패스워드 체크
 		boolean passCheck = passwordEncoder.matches(user.getPass(), temp.getPass());
 		

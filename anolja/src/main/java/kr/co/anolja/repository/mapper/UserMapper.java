@@ -6,7 +6,7 @@ public interface UserMapper {
 	void registUser(User user);
 	void createAuthKey(User user);
 	void authUser(String email);
-	User selectOneUser(User user);
+	User selectOneUser(String id);
 	User getIdperUser(String id);
 	User getEmailperUser(String email);
 }
