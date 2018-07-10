@@ -82,5 +82,7 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 
+<script src="${pageContext.request.contextPath}/resources/js/signup.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/login.js"></script>
 </body>
 </html>
