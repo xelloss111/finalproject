@@ -28,7 +28,7 @@
 <!--  사용하지 않는 영역 끝 class="logo"-->
 	<nav class="nav">
 		<ul class="gnb">
-			<li><a href="#">아무말대잔치</a><span
+			<li><a href="${pageContext.request.contextPath}/list">아무말대잔치</a><span
 				class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 			<li><a href="${pageContext.request.contextPath}/game">씽크빅 대전</a><span
 				class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
