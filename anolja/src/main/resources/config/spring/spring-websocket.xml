@@ -14,7 +14,7 @@
     http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<websocket:handlers>
-		<websocket:mapping handler="game" path="/game"/>
+		<websocket:mapping handler="gameChat" path="/gameChat.do"/>
 		<websocket:handshake-interceptors>
 	    	<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 	    </websocket:handshake-interceptors>		

@@ -52,8 +52,7 @@
 }
 
 #outer { 
-    /* border: 1px solid black; */
-    width: 780px; height: 650px;
+    width: 900px; height: 650px;
     margin: 0 auto;
 }
 #canvas {
@@ -69,30 +68,30 @@ canvas {
 }
 #canvasDiv {width: 550px; height: 100%; float: left;}
 #chatDiv {width: 225px; height: 100%; float: left;}
+#connectedUser {
+	width: 100px; height: 450px; float: left; margin-top: 100px; margin-left: 10px;
+}
 #online {
-    /* border: 1px solid black; */
-      margin-top: 120px;
-      position: relative;
-      height: 450px;
       font-family: 'Hanna', serif;
       text-align: left;
+      font-size: 20px;
   }
 #chat {
+/* 	border: 1px dashed tomato; */
     text-align: left;
     height: 460px;
-	position: relative;
 	overflow: hidden;
 	top: -486px;
-    margin-top: 15px;
+    margin-top: 100px;
     font-family: 'Nanum Pen Script', serif;
 }
 #chatInput {
-    width: 140px; height: 35px;
+    width: 110px; height: 10px;
     font-family: 'Nanum Pen Script', serif;
 }
 #sendChat {
     position: relative;
-    top: -466px;     left: 3px;
+    top: 18px; left: 3px;
 }
 #funny {
     position: absolute;
@@ -116,39 +115,23 @@ canvas {
 	font-family: 'Hanna', serif;
 }
 #pencil {
-    width: 780px; height: 50px;
+    width: 900px; height: 50px;
     text-align: center;
     margin-bottom: 20px;
 }
 #pencilImg {position: relative;}
 #question {
     position: relative;
-    top: 19px; left: -120px;
+    top: 19px; left: -110px;
     font-family: 'Hanna', serif;
 }
-
+.btn {min-width: 4rem;}
 
 
 /*---------------------- 버튼 css -------------------- */
 
 * {
     box-sizing: border-box;
-}body {
-    font-family: 'Lato', sans-serif;
-}
-.header {
-    background: white;
-    padding: 30px;
-    text-align: center;
-}
-.header h1 {
-    font-weight: 300;
-    display: inline;
-}
-h2 {
-    color: #89867e;
-    text-align: center;
-    font-weight: 300;
 }
 .color {
     width: 350px;
@@ -200,7 +183,6 @@ pre .att {color: #a6a926;} /* attribute */
 pre .val {color: #e6db74;} /* value */
 
 .btn-container, .container {
-    background-color: white;
     border-radius: 4px;
     text-align: center;
     margin-bottom: 40px;
