@@ -13,29 +13,41 @@
 } 
 
 embed {
-	width: 80%;
-	height: 450px;
+	width: 745px;
+	height: 419px;
 	margin: 5% 10% 2%;
 	border-radius: 3px;
+	z-index: 100;
 }
 
 .span4  {
 	width: 80%;
-	height: 50px;
-	margin: 5% 10% 2%;
+	height: 30px;
+	margin: 0 10% 2%;
 }
+
+.span4 > h3 {
+	width : 100%;
+	height : 30px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
+
 /* 콘텐츠 영역 CSS */
 
 .content_section {
 width : 100%; 
 order:3;
 padding:60px 120px;
-}
 
+}
 
 /* Container */
 .container-fluid {
-	background: #fbf4e0;
+	background: #ffc40f;
 /* 	margin: 40px auto 10px; */
 /* 	padding: 20px 0px; */
 	max-width: 960px;
@@ -45,7 +57,7 @@ padding:60px 120px;
 
 /* Thumbnail Box */
 .caption {
-	height: 140px;
+	height: 50px;
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
@@ -54,18 +66,13 @@ padding:60px 120px;
 	-webkit-box-sizing: border-box;
 }
 
-.caption .span4, .caption .span8 {
-	padding: 0px 20px;
-}
 
-.caption .span4 {
-	border-right: 1px dotted #CCCCCC;
-}
-
+/* .caption .span4, .caption .span8 { */
+/* 	padding: 0px 20px; */
+/* } */
 .caption h3 {
 	color: #a83b3b;
 	line-height: 2rem;
-	margin: 0 0 20px;
 	text-transform: uppercase;
 }
 
@@ -80,6 +87,45 @@ padding:60px 120px;
 
 p.right {
 	float: right;
+}
+
+
+
+/*  */
+
+
+
+.thumb_imgs {
+	background-color: c8c8c8;
+	width: 100%;
+	height: auto;
+}
+
+.lini1-1 {
+	width: 50%;
+	height: 120px;
+	padding: 2%;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+	float: left;
+}
+
+.lini1-1 > a > img {
+	float: left;
+}
+
+.lini1-1 > a > span {
+	width : 60%;
+	position : relative;
+	float: left;
+	margin-left: 1%;
+	box-sizing: border-box;
+	display: inline-block;
+	z-index: 1600;
+	color: #000;
+	font-weight: bold;
+	overflow: hidden;
 }
 
 /* ADD-ON
@@ -359,29 +405,35 @@ caption {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 15%;
+  width: 5%;
   font-size: 20px;
   color: #fff;
   text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-  filter: alpha(opacity=50);
-  opacity: .5;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, .2);
+  filter: alpha(opacity=20);
+  opacity: .2;
 }
+
+.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+	margin-top: 245px;
+}
+
+
 .carousel-control.left {
-  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .0001) 100%);
-  background-image:      -o-linear-gradient(left, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .0001) 100%);
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, .5)), to(rgba(0, 0, 0, .0001)));
-  background-image:         linear-gradient(to right, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .0001) 100%);
+  background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image:      -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 0)));
+  background-image:         linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
   background-repeat: repeat-x;
 }
 .carousel-control.right {
   right: 0;
   left: auto;
-  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .5) 100%);
-  background-image:      -o-linear-gradient(left, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .5) 100%);
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, .0001)), to(rgba(0, 0, 0, .5)));
-  background-image:         linear-gradient(to right, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .5) 100%);
+  background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image:      -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 0)));
+  background-image:         linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
   background-repeat: repeat-x;
 }
@@ -389,9 +441,7 @@ caption {
 .carousel-control:focus {
   color: #fff;
   text-decoration: none;
-  filter: alpha(opacity=90);
   outline: 0;
-  opacity: .9;
 }
 .carousel-control .icon-prev,
 .carousel-control .icon-next,
@@ -419,10 +469,4 @@ caption {
   margin-top: -10px;
   font-family: serif;
   line-height: 1;
-}
-.carousel-control .icon-prev:before {
-  content: '\2039';
-}
-.carousel-control .icon-next:before {
-  content: '\203a';
 }
