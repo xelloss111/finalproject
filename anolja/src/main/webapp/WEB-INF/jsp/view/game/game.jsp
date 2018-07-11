@@ -11,7 +11,6 @@
     </style>
     <link rel = "stylesheet" type = "text/css" href = "${pageContext.request.contextPath}/resources/css/game.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.notice.js"></script>
 </head>
 
 <body>
@@ -70,24 +69,44 @@
     		ws = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
     		ws.onopen = function () {
     			console.log("웹소켓 서버 접속 성공");
+    			console.log("${id}");
     		};
-    		
-    		// 서버에서 메세지가 왔을 때 호출
     		ws.onmessage = function (evt) {
-    			$("#chat").append('<div class="bubbleMe">'+ evt.data +'</div>');
-    			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-// 				setTimeout(fade_out, 5000);
+    			onMessage(evt);
     		};
-    		
     		ws.onclose = function () {
     			console.log("웹소켓 서버 연결 종료");
     		};
-    		
     		ws.onerror = function (evt) {
     			console.log(evt);
     		};
     	});
     	
+    	function onMessage(evt) {
+    		if (evt.data.startsWith('notice:')) {
+    			var msg = evt.data.substring('notice:'.length);
+    			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
+    			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+    		}
+    		else {
+	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
+				$("#chat").scrollTop($("#chat")[0].scrollHeight);
+    		}
+//				setTimeout(fade_out, 5000);
+
+//				var drawData = JSON.parse(evt.data);
+			
+//				var c = document.querySelector("#myCanvas");
+//		        var otherCtx = c.getContext("2d");
+	        
+//		        otherCtx.strokeStyle = drawData.color;
+//	            otherCtx.beginPath();
+//	            otherCtx.moveTo(drawData.prevX, drawData.prevY);
+//	            otherCtx.lineTo(drawData.nowX, drawData.nowY);
+//	            otherCtx.stroke();
+//	            otherCtx.closePath();
+    	}
+
 //     	function fade_out() {
 //     		cnt = cnt - 0.1;
 //     		$(".bubble:first-child").css("opacity", cnt);
@@ -98,7 +117,7 @@
 // 	    		$(".bubble:first-child").remove();
 //     		}
 //     	}
-    	
+
     	function enterkey() {
     		if (window.event.keyCode == 13) {
     			sendMsg();
@@ -107,8 +126,14 @@
     	
     	function sendMsg() {
     		var $msg = $("#chatInput");
-    		ws.send($msg.val());
-    		$msg.val("");
+    		if ($msg.val() == "") {
+    			alert("내용을 입력하세요");
+    		} else {
+	    		ws.send($msg.val());
+	    		$("#chat").append('<div class="bubbleMe">'+ $msg.val() +'</div>');
+				$("#chat").scrollTop($("#chat")[0].scrollHeight);
+	    		$msg.val("");
+    		}
     	}
     
     	// 그림그리기
@@ -116,6 +141,9 @@
         const ctx = canvas.getContext("2d");
         
         var isPress = false;
+        var prevX = 0;
+        var prevY = 0;
+        var point = {};
         
         ctx.lineWidth = 3;
         ctx.lineCap = "round";
@@ -126,16 +154,30 @@
                 isPress = true;
                 ctx.beginPath();
                 ctx.moveTo(e.offsetX, e.offsetY);
+//                 console.log(e.pageX, e.offsetX);
+				prevX = e.offsetX;
+				prevY = e.offsetY;
             },
             mouseup: function (e) {
                 isPress = false;
+                ctx.closePath();
             },
             mousemove: function (e) {
                 var x = e.offsetX;
                 var y = e.offsetY;
-                if (isPress == true) {
+                if (isPress) {
+//                 	point.prevX = prevX;
+//                 	point.prevY = prevY;
+//                 	point.nowX = x;
+//                 	point.nowY = y;
+//                 	point.color = color;
+                	
+//                 	ws.send(JSON.stringify(point));
+                	
+//                 	ctx.moveTo(prevX, prevY);
                     ctx.lineTo(x, y);
                     ctx.stroke();
+                    
                     if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
                         isPress = false;
                     }
