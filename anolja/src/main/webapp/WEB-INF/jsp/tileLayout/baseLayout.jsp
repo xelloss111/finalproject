@@ -76,7 +76,6 @@
 	var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 	var sessionId = `<%=session.getAttribute("id")%>`;
 	console.log("세션 ID : ", sessionId);
-	console.log("컨텍스트 : ", `${pageContext.request.contextPath}`);
 	var msg = `${msg}`;
 	if (msg) {
 		swal({

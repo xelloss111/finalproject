@@ -5,7 +5,6 @@
 
 	var infoList = $('#wrap > .info_section > ul');
 	console.log("세션 ID 체크 중 : ", sessionId);
-	console.log("contextPath : ", ctx);
 	if (sessionId == 'null') {
 		makeLoginElement();
 	} else {

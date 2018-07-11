@@ -17,25 +17,25 @@ if (signup) {
 			<table id="writeTable">\
 			<tr>\
 			<td style="width: 200px; vertical-align=middle;" >\
-			<input type="text" name="id" placeholder="id 입력"/>\
+			<input class="userlib" type="text" name="id" placeholder="id 입력"/>\
 			</td>\
 			<td style="width: 100px;"><span id="chkId"></span></td>\
 			</tr>\
 			<tr>\
 			<td>\
-			<input type="password" name="pass" placeholder="비밀번호 입력" />\
+			<input class="userlib" type="password" name="pass" placeholder="비밀번호 입력" />\
 			</td>\
 			<td></td>\
 			</tr>\
 			<tr>\
 			<td>\
-			<input type="password" id="passCheck" placeholder="비밀번호 체크" />\
+			<input class="userlib" type="password" id="passCheck" placeholder="비밀번호 체크" />\
 			</td>\
 			<td><span id="chkPass"></span></td>\
 			</tr>\
 			<tr>\
 			<td>\
-			<input type="email" name="email" placeholder="Example@Example.com" />\
+			<input class="userlib" type="email" name="email" placeholder="Example@Example.com" />\
 			</td>\
 			<td><span id="chkEmail"></span></td>\
 			</tr>\

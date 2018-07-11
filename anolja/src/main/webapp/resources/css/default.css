@@ -53,21 +53,21 @@
 }
 
 /* input box 설정 */
-/* input { */
-/*   padding: 12px 14px; */
-/*   width: 200px; */
-/*   margin: 2px 2px; */
-/*   border: none; */
-/*   outline: none; */
-/*   color: #2c3e50; */
-/*   box-shadow:  0 2px 4px rgba(0,0,0, .2); */
-/* } */
-/* input:hover, input:focus{ */
-/*   box-shadow: 0 4px 6px rgba(0,0,0, .3); */
-/* } */
-/* input:focus{ */
-/*   border: 1px solid rgba(44, 62, 80, .6); */
-/* } */
+input.userlib {
+  padding: 12px 14px;
+  width: 200px;
+  margin: 2px 2px;
+  border: none;
+  outline: none;
+  color: #2c3e50;
+  box-shadow:  0 2px 4px rgba(0,0,0, .2);
+}
+input.userlib:hover, input.userlib:focus{
+  box-shadow: 0 4px 6px rgba(0,0,0, .3);
+}
+input.userlib:focus{
+  border: 1px solid rgba(44, 62, 80, .6);
+}
 
 #writeTable td {
 	vertical-align: middle;

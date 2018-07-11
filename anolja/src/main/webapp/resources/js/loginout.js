@@ -22,12 +22,12 @@ if (login != null) {
 			<table id="writeTable">\
 			<tr>\
 			<td style="width: 200px; vertical-align=middle;" >\
-			<input type="text" name="id" placeholder="id 입력"/>\
+			<input class="userlib" type="text" name="id" placeholder="id 입력"/>\
 			</td>\
 			</tr>\
 			<tr>\
 			<td>\
-			<input type="password" name="pass" placeholder="비밀번호 입력" />\
+			<input class="userlib" type="password" name="pass" placeholder="비밀번호 입력" />\
 			</td>\
 			</tr>\
 			</table>\
