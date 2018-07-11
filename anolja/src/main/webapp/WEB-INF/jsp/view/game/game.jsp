@@ -99,14 +99,14 @@
 //				var drawData = JSON.parse(evt.data);
 			
 //				var c = document.querySelector("#myCanvas");
-//		        var otherCtx = c.getContext("2d");
+//		        var otherpaintCtx = c.getContext("2d");
 	        
-//		        otherCtx.strokeStyle = drawData.color;
-//	            otherCtx.beginPath();
-//	            otherCtx.moveTo(drawData.prevX, drawData.prevY);
-//	            otherCtx.lineTo(drawData.nowX, drawData.nowY);
-//	            otherCtx.stroke();
-//	            otherCtx.closePath();
+//		        otherpaintCtx.strokeStyle = drawData.color;
+//	            otherpaintCtx.beginPath();
+//	            otherpaintCtx.moveTo(drawData.prevX, drawData.prevY);
+//	            otherpaintCtx.lineTo(drawData.nowX, drawData.nowY);
+//	            otherpaintCtx.stroke();
+//	            otherpaintCtx.closePath();
     	}
 
 //     	function fade_out() {
@@ -145,75 +145,101 @@
     	var paintWs = null;
     	
         var canvas = document.querySelector("#myCanvas");
-        var ctx = canvas.getContext("2d");
+        var paintCtx = canvas.getContext("2d");
         
         var isPress = false;
         var prevX = 0;
         var prevY = 0;
         var point = {};
         
-        ctx.lineWidth = 3;
-        ctx.lineCap = "round";
+        paintCtx.lineWidth = 3;
+        paintCtx.lineCap = "round";
         
-//         $(document).ready(function () {
-//         	paintWs = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
-//         });
-        
-        $("canvas").on({
-            mousedown: function (e) {
-            	e.preventDefault();
-                isPress = true;
-                ctx.beginPath();
-                ctx.moveTo(e.offsetX, e.offsetY);
-//                 console.log(e.pageX, e.offsetX);
-				prevX = e.offsetX;
-				prevY = e.offsetY;
-            },
-            mouseup: function (e) {
-                isPress = false;
-                ctx.closePath();
-            },
-            mousemove: function (e) {
-                var x = e.offsetX;
-                var y = e.offsetY;
-                if (isPress) {
-//                 	point.prevX = prevX;
-//                 	point.prevY = prevY;
-//                 	point.nowX = x;
-//                 	point.nowY = y;
-//                 	point.color = color;
-                	
-//                 	ws.send(JSON.stringify(point));
-                	
-//                 	ctx.moveTo(prevX, prevY);
-                    ctx.lineTo(x, y);
-                    ctx.stroke();
-                    
-                    if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
-                        isPress = false;
-                    }
-                }
-            }
+        $(document).ready(function () {
+        	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
+	        $("canvas").on({
+	            mousedown: function (e) {
+	            	e.preventDefault();
+	                isPress = true;
+	                paintCtx.beginPath();
+	//                 console.log(e.pageX, e.offsetX);
+					prevX = e.offsetX;
+					prevY = e.offsetY;
+// 	                paintCtx.moveTo(prevX, prevY);
+	                
+// 	                point.prevX = prevX;
+// 	                point.prevY = prevY;
+	            },
+	            mouseup: function (e) {
+	                isPress = false;
+	                paintCtx.closePath();
+	            },
+	            mousemove: function (e) {
+	                var x = e.offsetX;
+	                var y = e.offsetY;
+	                if (isPress) {
+	                	point.prevX = prevX;
+	                	point.prevY = prevY;
+	                	point.nowX = x;
+	                	point.nowY = y;
+	                	point.color = color;
+	                	
+	                	paintWs.send(JSON.stringify(point));
+	                	
+	                	paintCtx.moveTo(prevX, prevY);
+	                    paintCtx.lineTo(x, y);
+	                    paintCtx.stroke();
+	                    
+	                    prevX = e.offestX;
+	                    prevY = e.offestY;
+	                    
+	                    if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
+	                        isPress = false;
+	                    }
+	                }
+	            }
+	        });
+	        
+	        paintWs.onmessage = function (evt) {
+	        	console.log(evt.data);
+	        	
+	        	var drawData = JSON.parse(evt.data);
+	        	
+	        	var c = document.querySelector("#myCanvas");
+	            var otherCtx = c.getContext("2d");
+	            
+	            otherCtx.strokeStyle = drawData.color;
+	            otherCtx.beginPath();
+	            otherCtx.moveTo(drawData.prevX, drawData.prevY);
+	            otherCtx.lineTo(drawData.nowX, drawData.nowY);
+	            otherCtx.stroke();
+	            otherCtx.closePath();
+	        }
+	        
         });
         
+        
+        
+        
+        
         // 캔버스 그리기 색상 바꾸기 및 지우기
-        var color = "";
+        var color = "black";
         $(".color").click(function () {
             var strokeStyle = $(this).data("color"); 
-            ctx.strokeStyle = strokeStyle;
+            paintCtx.strokeStyle = strokeStyle;
             color = strokeStyle;
         });
         $("#bucket").click(function () {
-            ctx.fillStyle = color;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            paintCtx.fillStyle = color;
+            paintCtx.fillRect(0, 0, canvas.width, canvas.height);
         });
         $("canvas").contextmenu(function (e) {
             e.preventDefault();
-            ctx.fillStyle = color;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            paintCtx.fillStyle = color;
+            paintCtx.fillRect(0, 0, canvas.width, canvas.height);
         });
         $("#clearBtn").click(function () {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            paintCtx.clearRect(0, 0, canvas.width, canvas.height);
         });
         
         
