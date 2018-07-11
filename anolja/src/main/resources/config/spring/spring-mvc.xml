@@ -109,5 +109,5 @@
 	
 	<!-- 컨트롤러없이 페이지 이동 -->
 <!-- 	<mvc:view-controller path="/file/uploadForm.do" view-name="file/fileUploadForm"/> -->
-	
+	<mvc:view-controller path="/bgsearch" view-name="stastics/bgsearch" />
 </beans>
