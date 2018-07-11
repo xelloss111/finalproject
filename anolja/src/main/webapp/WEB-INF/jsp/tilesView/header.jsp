@@ -30,7 +30,7 @@
 				class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
 			<li><a href="${pageContext.request.contextPath}/game">씽크빅 대전</a><span
 				class="sub_menu_toggle_btn">하위 메뉴 토글 버튼</span></li>
-			<li><a href="#">치키너</a><span class="sub_menu_toggle_btn">하위
+			<li><a href="${pageContext.request.contextPath}/bgsearch">치키너</a><span class="sub_menu_toggle_btn">하위
 					메뉴 토글 버튼</span></li>
 			<li><a href="${pageContext.request.contextPath}/video">후방주의</a><span class="sub_menu_toggle_btn">하위
 					메뉴 토글 버튼</span></li>

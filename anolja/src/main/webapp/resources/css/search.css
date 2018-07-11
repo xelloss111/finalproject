@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+/* 콘텐츠 영역 CSS */
+
+.content_section {
+width : 100%; 
+order:3;
+padding:60px 120px;
+}
+
+ #image-area{
+      text-align: center;
+    }
+
+    #search-input {
+      width: 70%;
+      height: 30px;
+      background-color:white;
+      border-color: transparent;
+    }
+    
+    #search--area{
+      background-color: aquamarine;
+    }
+    	
+    #search-area {
+      width: 400px;
+      background-color: rgb(226, 226, 119);
+      padding: 14px 20px;
+      text-align: center;
+      border-radius: 5px;
+      margin: 0 auto;
+    }
+
+    #search-icon{
+      float: right;
+      position: relative;
+      left: -40px;
+    }
