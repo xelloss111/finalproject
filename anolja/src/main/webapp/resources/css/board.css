@@ -243,7 +243,7 @@ background:#219af7;
 
 /* 푸터 영역 CSS */
 .footer{
-order:5;
+order:11;
 width:100%;
 background:#474747;
 }
@@ -485,7 +485,7 @@ padding:3.750rem;
 
 /* 푸터 영역 CSS */
 .footer{
-order:4;
+order:9;
 }
 
 .footer p{

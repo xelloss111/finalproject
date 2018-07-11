@@ -38,6 +38,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> boardList() throws Exception {
 		return boardMapper.boardList();
 	}
+
+	@Override
+	public void boardInsert(Board board) throws Exception {
+		boardMapper.boardInsert(board);
+	}
 	
 	
 	

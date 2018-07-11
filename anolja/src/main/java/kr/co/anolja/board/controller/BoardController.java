@@ -25,19 +25,16 @@ public class BoardController {
 	
 	@RequestMapping("/write")
 	public String boardWrite(Board board, Model model, HttpServletRequest request) throws Exception{
-		if(request.getMethod() == "GET") {
-			return "board/write";
-		} else {
-			boardService.boardWrite(board);
-			return "board/list";
-		}
+		return "board/write";
 	}
 	
-	@RequestMapping("/board/update")
-	public String boardUpdate(Board board, Model model) throws Exception{
-		boardService.boardUpdate(board);
-		return null;
+	@RequestMapping("/insert")
+	public String boardInsert(Board board) throws Exception {
+		System.out.println(board.getAnonymousId());
+		boardService.boardInsert(board);
+		return "redirect:/list";
 	}
+	
 	
 	@RequestMapping("/board/detail")
 	public String boardDetail(HttpServletRequest request, Model model) throws Exception{
@@ -49,12 +46,23 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/board/delete")
-	public void boardDelete(int no) throws Exception{
+	public String boardDelete(HttpServletRequest request) throws Exception{
+		int no = Integer.parseInt(request.getParameter("bNo"));
 		boardService.boardDelete(no);
+		return "redirect:/list";
 	}
 	
+	@RequestMapping("/updateForm")
+	public String boardUpdate(HttpServletRequest request, Model model) throws Exception {
+		int no = Integer.parseInt(request.getParameter("bNo"));
+		model.addAttribute("board",boardService.boardDetail(no));
+		return "board/update";
+	}
 	
-	
-	
+	@RequestMapping("/board/update")
+	public String boardUpdate(Board board) throws Exception {
+		boardService.boardUpdate(board);
+		return "board/list";
+	}
 	
 }

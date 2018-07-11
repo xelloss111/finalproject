@@ -40,14 +40,12 @@
 					<button>등록</button>
 				</form>
 				<div style="text-align: right;">
-					<c:if test="${sessionScope.member.userSeq eq recipe.userSeq}">
 						<button class="btnn"
-							onclick="location.href='update?bNo=${board.bNo}'">수정</button>
+							onclick="location.href='${pageContext.request.contextPath}/updateForm?bNo=${board.bNo}'">수정</button>
 						<button class="btnn"
-							onclick="location.href='delete.do?recipeSeq=${recipe.recipeSeq}'">삭제</button>
-					</c:if>
+							onclick="location.href='delete?bNo=${board.bNo}'">삭제</button>
 					<button class="btnn"
-						onclick="location.href='${pageContext.request.contextPath}/board/list'">목록</button>
+						onclick="location.href='${pageContext.request.contextPath}/list'">목록</button>
 				</div>
 			</div>
 		</div>
@@ -93,6 +91,7 @@
 							<option value="제목">제목</option>
 							<option value="제목">제목+내용</option>
 							<option value="제목">댓글</option>
+						</select>
 					</div>
 				</form>
 			</div>

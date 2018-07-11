@@ -18,7 +18,7 @@
 					<tbody>
 					<c:forEach var="list" items="${list}">
 						<tr>
-							<td>${list.bNo}</td>
+							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${list.bNo}">${list.bNo}</a></td>
 							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${list.bNo}">${list.title}</a></td>
 							<td>${list.anonymousId}</td>
 							<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
@@ -34,16 +34,19 @@
 					<form action="#" method="get">
 						<input type="search" name="gallery_search_window" class="search_window" placeholder="검색어">
 						<div class="search_select_box">
-							<select name="검색 대상" value="검색대상">
+							<select name="검색 대상">
 								<option value="제목">제목</option>
 								<option value="제목">제목+내용</option>
 								<option value="제목">댓글</option>
+							</select>
 						</div>	
 					</form>
 				</div>
-				<div class="write_box">
-					<a href="#">글 쓰기</a>
-				</div>
+				<c:if test="${!empty sessionScope.id}">
+					<div class="write_box">
+						<a href="write">글 쓰기</a>
+					</div>
+				</c:if>
 			</div>
 			<div class="content_row_3">
 				<span class="list_prev_btn">문의사항 이전 버튼</span>
@@ -53,14 +56,3 @@
 				<span class="list_next_btn">문의사항 다음 버튼</span>
 			</div>
 		</section>
-				<%-- 	<tbody>
-					<c:forEach var="list" items="${list}">
-						<tr>
-							<td>${list.bNo}</td>
-							<td>${list.title}</td>
-							<td>${list.content}</td>
-							<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
-						</tr>
-					</c:forEach>
-						
-					</tbody> --%>

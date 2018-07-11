@@ -27,4 +27,30 @@
 		from tb_board
 		where bNo = #{bNo}
 	</select>
+	
+	<insert id="boardInsert" parameterType="board">
+		insert into tb_board(
+			group_bno, anonymous_id, title, content, pass, reg_date
+		)values(
+			#{bNo},
+			#{anonymousId}, 
+			#{title}, 
+			#{content}, 
+			#{pass},
+			now()
+		)
+	</insert>
+	
+	<update id="boardUpdate" parameterType="board">
+		update tb_board
+			set title = #{title},
+				content = #{content},
+				pass = #{pass}
+			where bNo = #{bNo} 
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from tb_board
+		where bNo = #{bNo}
+	</delete>
 </mapper>
