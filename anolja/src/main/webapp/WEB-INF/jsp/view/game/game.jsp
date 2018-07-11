@@ -47,13 +47,10 @@
         </div>
         <div id="connectedUser">
 	        <div id="online">
-	               	접속자<br>
-	                hrin<br>
-	                banana<br>
-	                apple<br>
-	                orange<br>
-	                tomato<br>
-	                skyblue<br>
+               	접속자<br>
+               	<c:forEach var="i" items="${chatList}">
+               		${i}<br>
+               	</c:forEach>
             </div>
         </div>
     </div>
@@ -85,6 +82,11 @@
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
+    			if (msg.includes('참여')) {
+					var id = msg.substring(0, msg.indexOf('님'));
+					$("#online").append(id+"<br>");
+    			}
+    			
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
     			$("#chat").scrollTop($("#chat")[0].scrollHeight);
     		}
