@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.anolja.common.handler.WebSocketHandler;
+import kr.co.anolja.common.handler.GameChatHandler;
 import kr.co.anolja.game.service.GameService;
 
 @Controller
@@ -28,7 +28,7 @@ public class GameController {
 //		for (int i = 0; i < WebSocketHandler.chatList.size(); i++) {
 //			System.out.println("컨트롤러: "+WebSocketHandler.chatList.get(i));
 //		}
-		model.addAttribute("chatList", WebSocketHandler.chatList);
+		model.addAttribute("chatList", GameChatHandler.chatList);
 		
         return "game/game";
     }

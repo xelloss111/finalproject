@@ -138,9 +138,14 @@
     		}
     	}
     
-    	// 그림그리기
-        const canvas = document.querySelector("#myCanvas");
-        const ctx = canvas.getContext("2d");
+    	
+    	
+    	
+    	/* 그림그리기 */
+    	var paintWs = null;
+    	
+        var canvas = document.querySelector("#myCanvas");
+        var ctx = canvas.getContext("2d");
         
         var isPress = false;
         var prevX = 0;
@@ -149,6 +154,10 @@
         
         ctx.lineWidth = 3;
         ctx.lineCap = "round";
+        
+//         $(document).ready(function () {
+//         	paintWs = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
+//         });
         
         $("canvas").on({
             mousedown: function (e) {
@@ -206,6 +215,9 @@
         $("#clearBtn").click(function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
+        
+        
+        
         
         
         // 타이머

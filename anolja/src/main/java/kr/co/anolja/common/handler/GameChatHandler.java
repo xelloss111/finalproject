@@ -13,9 +13,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component("gameChat")
-public class WebSocketHandler extends TextWebSocketHandler {
+public class GameChatHandler extends TextWebSocketHandler {
 	
-	public WebSocketHandler() {}
+	public GameChatHandler() {}
 	
 	// 웹소켓 리스트
 	private Map<String, WebSocketSession> users = new HashMap<>();

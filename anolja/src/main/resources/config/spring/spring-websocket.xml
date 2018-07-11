@@ -15,6 +15,7 @@
 
 	<websocket:handlers>
 		<websocket:mapping handler="gameChat" path="/gameChat.do"/>
+		<websocket:mapping handler="gamePaint" path="/gamePaint.do"/>
 		<websocket:handshake-interceptors>
 	    	<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 	    </websocket:handshake-interceptors>		
