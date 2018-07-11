@@ -60,10 +60,11 @@
 						text: "비밀번호가 성공적으로 변경되었습니다.\n홈페이지에서 다시 로그인 하세요",
 						icon: "success",
 						button: "메인으로 가기"
+					}).then((acc) => {
+			 			window.open('', '_self', ''); // 브라우저창 닫기
+			 			/* window.close(); // 브라우저 창 닫기 */
+			 			self.location = ctx + '/main';
 					});
-		 			window.open('', '_self', ''); // 브라우저창 닫기
-		 			/* window.close(); // 브라우저 창 닫기 */
-		 			self.location = ctx + '/main';
 				 });
 			  });
 		});

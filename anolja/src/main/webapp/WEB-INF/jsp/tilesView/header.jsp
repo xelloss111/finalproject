@@ -14,14 +14,6 @@
 		
 		<section class="info_section">
 			<ul class="info_list">
-				<li id='signup'>
-				<img class='signupicon' src="${pageContext.request.contextPath}/resources/images/user/glyphicons-7-user-add.png" 
-				alt='회원가입' title="회원가입">
-				</li>
-				<li id='login'>
-				<img class='loginicon' src="${pageContext.request.contextPath}/resources/images/user/glyphicons-205-unlock.png" 
-				alt="로그인" title="로그인">
-				</li>
 			</ul>
 		</section>
 

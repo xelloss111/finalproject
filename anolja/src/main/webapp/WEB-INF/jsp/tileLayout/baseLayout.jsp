@@ -52,18 +52,6 @@
 	</script>
 </head>
 <body>
-	<!-- 회원 가입 등의 얼럿 처리를 위한 스크립트 -->
-	<script>
-	console.log("세션 ID : ", `${id}`);
-	var msg = `${msg}`;
-	if (msg) {
-		swal({
-			  text: msg,
-			  button: "확인"
-			});
-	}
-	</script>
-	
 	<div id="quick_wrap">
 		<div id="quick_right_menu">
 			<span></span>
@@ -82,7 +70,28 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 
-<script src="${pageContext.request.contextPath}/resources/js/signup.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/login.js"></script>
+
+	<!-- 회원 가입 등의 얼럿 처리를 위한 스크립트 -->
+	<script>
+	var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+	var sessionId = `<%=session.getAttribute("id")%>`;
+	console.log("세션 ID : ", sessionId);
+	console.log("컨텍스트 : ", `${pageContext.request.contextPath}`);
+	var msg = `${msg}`;
+	if (msg) {
+		swal({
+			  text: msg,
+			  button: "확인"
+			});
+	}
+	
+	$.getScript(ctx + "/resources/js/info_section.js", function() {});
+	$.getScript(ctx + "/resources/js/signup.js", function() {});
+	$.getScript(ctx + "/resources/js/loginout.js", function() {});
+	</script>
+
+<%-- <script src="${pageContext.request.contextPath}/resources/js/info_section.js"></script> --%>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/signup.js"></script> --%>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/loginout.js"></script> --%>
 </body>
 </html>

@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.anolja.repository.domain.User;
@@ -61,7 +63,7 @@ public class UserController {
 			msg = "가입된 메일 인증 후 로그인이 가능합니다";
 		} else {
 			model.addAttribute("id", temp.getId());
-			return "/main";
+			return "/";
 		}
 		
 		return msg;
@@ -112,5 +114,12 @@ public class UserController {
 	public String changePassPost(User user) throws Exception {
 		String result = service.changePass(user);
 		return result;
+	}
+	
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	@ResponseBody
+	public String logoutPost(@ModelAttribute String id, SessionStatus sessionStatus) throws Exception {
+		sessionStatus.setComplete();
+		return "/main";
 	}
 }

@@ -3,12 +3,19 @@
 
 
 /* 유저 영역용 CSS */
-.signupicon, .loginicon {
-	width : 30px;
-	height: 30px;
+#mSpan {
+	color: white;
+	text-shadow:0px 1px 1px #25ab5e;
+	margin-right: 10px;
 }
 
-#signup:hover, #login:hover {
+.signupicon, .loginicon, .mypageicon, .logouticon {
+	width : 30px;
+	height: 30px;
+	vertical-align: middle;
+}
+
+#signup:hover, #login:hover, #mypage:hover, #logout:hover {
 	cursor: pointer;
 }
 
