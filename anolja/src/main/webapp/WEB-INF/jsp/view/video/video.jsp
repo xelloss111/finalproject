@@ -7,6 +7,15 @@
 
 <section class="content_section">
 	<div class="content_row_1">
+	
+	<!-- 검색 영역 -->
+	<input type="text" id="videoSearch" placeholder="     YOUTUBE 영상 검색 GO!"/>
+	<button type="submit" value="Search" class="sc_btn">
+		<i class="fas fa-search-plus"></i>
+	</button>
+		
+	
+	
 	<!-- 캐러셀 영역 시작 -->
 		<div class="container-fluid">
 			<div class="row-fluid">
@@ -41,12 +50,7 @@
 
 
 <script>
-
-//Carousel Auto-Cycle
-
-
-
-///////////////test
+/////////////// list
 var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=PLSB4jUMSVNnaGj5Auw93KId3MoYxvrfNQ&key=AIzaSyCiq53GDPhGkdCHDXCHb_LTN9cDj2mMBHQ";
 var req = new XMLHttpRequest();
 var html = '';
@@ -101,8 +105,8 @@ req.onreadystatechange = function (aEvt) {
 	 					
 	 					// list 영역
 	 					html2 += '<li class="lini1-1">';
-	 					html2 += '	<a href="" class = index'+ i +'>';
-	 					html2 += '		<img src="' + vimg + '" />';
+	 					html2 += '	<a href="">';
+	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 	 					html2 += '	<span>' + vtitle + '</span>';
 	 					html2 += '	</a>';
 	 					html2 += '</li>';
@@ -114,22 +118,14 @@ req.onreadystatechange = function (aEvt) {
 			
 			// List 클릭 시 캐러셀 이동
 			$('.lini1-1').click(function(e){
-				var indexSearch = $(this).children('a').attr('class');					
+				var indexSearch = $(this).children('a').children('img').attr('class');	
+				
+				console.log(indexSearch);
+				
 				var result = indexSearch.slice(-1);
  					$('.carousel').carousel(parseInt(result));
 				});
-			
-			
-// 				$.ajax({
-// 					type:"POST",
-// 					data: {videoId:vurl, title:vtitle, thumbnail:vimg},
-// 					url:"videoList",
-// 					dataType:"json",
-// 					success : function(video) {
 						
-// 				});
-				
-			
         }
   }else {
       console.log("Error loading page\n");
@@ -137,5 +133,89 @@ req.onreadystatechange = function (aEvt) {
 };
 
 req.send(null);
+
+
+/* youtube search */
+$(".sc_btn").click(function(){
+	var value = $('#videoSearch').val();
+	var searchUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&order=viewCount&q="+ value +"&type=video&videoDefinition=high&key=AIzaSyCiq53GDPhGkdCHDXCHb_LTN9cDj2mMBHQ";
+	var searchReq = new XMLHttpRequest();
+		
+	searchReq.open('GET', searchUrl , true);
+	searchReq.onreadystatechange = function (aEvt) {
+		if (searchReq.readyState == 4) {
+			if(searchReq.status == 200)
+				/* 기존 캐러셀 삭제 */
+				html='';
+				html2='';
+				
+				/* 리스트 가져오기 */
+				var result = JSON.parse(searchReq.responseText); 
+				var items = result.items;
+				var i = 0;	
+				
+				for ( i = 0; i < items.length; i++){
+					
+					var vId = items[i].id.videoId;
+					var vurl = "http://www.youtube.com/embed/" + vId;
+					var vtitle = items[i].snippet.title;
+					var vimg = items[i].snippet.thumbnails.default.url;
+					
+					function searchVideoList() {	
+														
+						if( i == 0 ) {
+							html += '	<div class="item active"> ';
+						} else {							
+							html += '	<div class="item"> ';		
+						}
+						//캐러셀 영역
+							html += '		<div class="bannerImage"> ';	
+		 					html += '			<embed src=' + vurl + ' style="width:745px; height:419px; left:0px; top:0.46875px;" /> ';	
+		 					html += '				<div class="caption row-fluid">  ';	
+		 					html += '					<div class="span4">  ';	
+		 					html += '						<h3>' + vtitle + '</h3>  ';	
+		 					html += '					</div>  ';	
+		 					html += '					<div class="span8">  ';	
+		 					html += '						<h3></h3>  ';	
+		 					html += '					</div>  ';	
+		 					html += '				</div>  ';	
+		 					html += '		</div>  ';	
+		 					html += '	</div>  ';	
+							
+
+		 					html += '<div class="control-box">';
+		 					html += '	<a data-slide="prev" href="#myCarousel" class="carousel-control left">';
+		 					html += '		<i class="far fa-arrow-alt-circle-left fa-2x"></i>';
+		 					html += '	</a>';
+		 					html += '	<a data-slide="next" href="#myCarousel" class="carousel-control right">';
+		 					html += ' 		<i class="far fa-arrow-alt-circle-right fa-2x"></i>';
+		 					html += '	</a>';	 					
+		 					html += '</div>';
+		 					
+		 					$(".carousel-inner").html(html);
+		 					
+		 					// list 영역
+		 					html2 += '<li class="lini1-1">';
+		 					html2 += '	<a href="">';
+		 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
+		 					html2 += '	<span>' + vtitle + '</span>';
+		 					html2 += '	</a>';
+		 					html2 += '</li>';
+		 					
+		 					$(".clickList").html(html2);
+					};
+
+					searchVideoList();
+					
+				
+				}/* for문 끝 */
+					
+		} else {
+	        console.log("Error loading page\n");
+	      } /* if문 끝 */
+	} /* onreadystatechange 끝  */
+	searchReq.send(null);
+});/* click 끝 */
+
 
 </script>

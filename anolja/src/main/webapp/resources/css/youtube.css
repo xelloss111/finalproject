@@ -471,3 +471,30 @@ caption {
   font-family: serif;
   line-height: 1;
 }
+
+
+/* 동영상 검색 */
+
+
+#videoSearch {
+	width: 60%;
+	height: 30px;
+	border-radius : 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	background-color: #eee;
+}
+#videoSearch:focus, .sc_btn:focus {
+  outline: none;
+}
+
+.fa-search-plus {
+	font-size: 1.5rem;
+	margin-top: 5px;
+	color: #e65d5d;
+}
+.sc_btn {
+	background: #fff;
+	border-style: none;
+	cursor: pointer;
+}
