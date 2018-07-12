@@ -27,7 +27,6 @@
 			</ul>
 		</section>
 		<section class="popular_post_section bgarea">
-
 			<figure class="snip1200">
 				<img src="${pageContext.request.contextPath}/resources/images/s_images/bg_1.jpg" alt="" />
 				<figcaption>
@@ -42,24 +41,24 @@
 				</figcaption>
 				<a href="${pageContext.request.contextPath}/bgsearch"></a>
 			</figure>
-
-
-
-
-
-	<!-- 			<h2 class="title">배그 전적검색실</h2> -->
-<!-- 			<ul class="popular_post_list"> -->
-<%-- 				<li><a href="${pageContext.request.contextPath}/bgsearch">이미지 처리 예정</a></li> --%>
-
-<!-- 			</ul> -->
 		</section>
 		
 		
 		<section class="popular_post_section sec_sky">
-			<h2 class="title">skyqe 영역</h2>
-			<ul class="popular_post_list">
-				<li><a href="">안녕하세요 홈페이지가 오픈...</a></li>
-			</ul>
+			<figure class="snip1200">
+				<img src="${pageContext.request.contextPath}/resources/images/s_images/bg_2.png" alt="" />
+				<figcaption>
+					<p>얼굴보고 얘기하자! <br>
+						화상 채팅하러 가기
+					</p>
+					<div class="heading">
+						<h2>
+							<span>SKYQE</span>
+						</h2>
+					</div>
+				</figcaption>
+				<a href="#"></a>
+			</figure>
 		</section>
 		
 		<section class="popular_post_section sec_you">

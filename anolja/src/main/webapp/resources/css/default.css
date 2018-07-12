@@ -379,14 +379,73 @@ background:url(../images/p_images/slider_01.jpg) center center no-repeat;
 .latest_post_section{
 order:4;
 background:#ffc40f;
-text-shadow:0px 1px 1px #b98e0b;
+text-shadow:0px 1px 1px #eee;
 }
 
 .popular_post_section{
 order:5;
-background:#a660c2;
-text-shadow:0px 1px 1px #714185;
+text-shadow:0px 1px 1px #eee;
 }
+
+.bgarea {
+	background: rgba(166, 96, 194, 0.15);
+}
+.bgarea > .snip1200 {
+	background:#a660c2;	
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	color : #fff;	
+}
+.bgarea > figure.snip1200 h2:before,
+.bgarea > figure.snip1200 h2:after {
+  position: absolute;
+  display: block;
+  width: 1000%;
+  height: 1px;
+  content: '';
+  background: white;
+  top: 50%;
+}
+
+
+.bgarea > figure.snip1200 figcaption {
+  position: absolute;
+  top: 30%;
+  left: 7%;
+  right: 7%;
+  bottom: 30%;
+  border: 2px solid #fff;
+  border-width: 1px 1px 0;
+}
+
+
+.sec_sky {
+	background:#fff;
+}
+.sec_sky > figure.snip1200 {
+	color: #1ab5f1;
+}
+
+.sec_sky > figure.snip1200 figcaption {
+  position: absolute;
+  top: 30%;
+  left: 7%;
+  right: 7%;
+  bottom: 30%;
+  border: 2px solid #1ab5f1;
+  border-width: 1px 1px 0;
+}
+
+.sec_sky > figure.snip1200 h2:before,
+.sec_sky > figure.snip1200 h2:after {
+  position: absolute;
+  display: block;
+  width: 1000%;
+  height: 1px;
+  content: '';
+  background: #1ab5f1;
+  top: 50%;
+}
+
 
 .latest_post_section, .popular_post_section{
 padding:0px 12.5%;
@@ -885,9 +944,6 @@ display:block;
 	background-color: #2ecc71;
 }
 
-.sec_sky {
-	background-color: #fff;
-}
 
 .gallery_list li{
 width:auto;
@@ -954,13 +1010,11 @@ figure.snip1200 {
   max-width: 310px;
   max-height: 310px;
   width: 100%;
-  background: rgba(166, 96, 194, 0.15);
-  color: #ffffff;
   text-align: center;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   font-size: 16px;
   padding: 0px;
 }
+
 figure.snip1200 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -974,12 +1028,12 @@ figure.snip1200 img {
 }
 figure.snip1200 figcaption {
   position: absolute;
-  top: 33%;
+  top: 30%;
   left: 7%;
   right: 7%;
-  bottom: 33%;
-  border: 1px solid white;
-  border-width: 1px 1px 0;
+  bottom: 30%;
+/*   border: 1px solid white; */
+/*   border-width: 1px 1px 0; */
 }
 figure.snip1200 .heading {
   overflow: hidden;
@@ -1002,16 +1056,18 @@ figure.snip1200 h2 {
 figure.snip1200 h2 span {
   font-weight: 800;
 }
-figure.snip1200 h2:before,
-figure.snip1200 h2:after {
-  position: absolute;
-  display: block;
-  width: 1000%;
-  height: 1px;
-  content: '';
-  background: white;
-  top: 50%;
-}
+/* figure.snip1200 h2:before, */
+/* figure.snip1200 h2:after { */
+/*   position: absolute; */
+/*   display: block; */
+/*   width: 1000%; */
+/*   height: 1px; */
+/*   content: ''; */
+/*   background: white; */
+/*   top: 50%; */
+/* } */
+
+
 figure.snip1200 h2:before {
   left: -1000%;
 }
@@ -1057,7 +1113,7 @@ figure.snip1200.hover p {
 }
 
 
-/* 여기까지 배그 */
+/* 여기까지  */
 
 
 /* 배너 영역 CSS */
