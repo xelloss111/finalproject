@@ -62,10 +62,20 @@
 		</section>
 		
 		<section class="popular_post_section sec_you">
-			<h2 class="title">youtube 영역</h2>
-			<ul class="popular_post_list">
-				<li><a href="">안녕하세요 홈페이지가 오픈...</a></li>
-			</ul>
+			<figure class="snip1200">
+				<img src="${pageContext.request.contextPath}/resources/images/s_images/bg_3.png" alt="" />
+				<figcaption>
+					<p> 격하게 아무것도 하기 싫다면 <br>
+						동영상이나 보도록 하자
+					</p>
+					<div class="heading">
+						<h2>
+							<span>YouTube</span>
+						</h2>
+					</div>
+				</figcaption>
+				<a href="${pageContext.request.contextPath}/video"></a>
+			</figure>
 		</section>
 		
 				
