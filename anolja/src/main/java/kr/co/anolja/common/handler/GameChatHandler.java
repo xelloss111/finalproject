@@ -19,7 +19,6 @@ public class GameChatHandler extends TextWebSocketHandler {
 	
 	// 웹소켓 리스트
 	private Map<String, WebSocketSession> users = new HashMap<>();
-	
 	// 접속자 아이디 공유하기위한 리스트
 	public static List<String> chatList = new ArrayList<>();
 	

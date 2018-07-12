@@ -36,10 +36,9 @@
             </div>
         </div>
         <div id="chatDiv">
-            <div id="chat">
-<!--                 <div class="bubble">hrin: 안녕하세요</div> -->
-<!--                 <div class="bubbleMe">banana: 안녕하세요</div> -->
-            </div>
+        	<div id="hiddenScroll">
+            	<div id="chat"> </div>
+        	</div>
             <div id="sendChat">
                 <input type="text" id="chatInput" onkeyup="enterkey();" />
                 <a href="javascript:sendMsg()" class="btn green small">send</a>
@@ -51,6 +50,14 @@
                	<c:forEach var="i" items="${chatList}">
                		${i}<br>
                	</c:forEach>
+<!--                	<script> -->
+<%--                		var list = <%= chatList %>; --%>
+<!-- //                		$(document).ready(function () { -->
+<!-- //                			for (var i = 0; i < ${chatList}.size(); i++) { -->
+<!-- //                				$("#online").append(i+"<br>"); -->
+<!-- //                			} -->
+<!-- //                		}); -->
+<!--                	</script> -->
             </div>
         </div>
     </div>
@@ -135,6 +142,7 @@
 	    		$("#chat").append('<div class="bubbleMe">'+ $msg.val() +'</div>');
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
 	    		$msg.val("");
+	    		$msg.focus();
     		}
     	}
     
@@ -289,7 +297,14 @@
     			$("#question").text(data);
     		}
     	});
-
+		
+    	
+    	$("#chat").mouseover(function () {
+    		$("#hiddenScroll").css("width", "240px");
+    	});
+    	$("#chat").mouseleave(function () {
+    		$("#hiddenScroll").css("width", "215px");
+    	});
     </script>
 </body>
 </html>
