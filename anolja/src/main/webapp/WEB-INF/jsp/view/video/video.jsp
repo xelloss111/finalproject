@@ -47,7 +47,7 @@
 
 
 ///////////////test
-var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=PLSB4jUMSVNnaGj5Auw93KId3MoYxvrfNQ&key=AIzaSyCAlK-6EnlJZ3seSOGsvS7X8Yq_GzFlT9I";
+var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=PLSB4jUMSVNnaGj5Auw93KId3MoYxvrfNQ&key=AIzaSyCiq53GDPhGkdCHDXCHb_LTN9cDj2mMBHQ";
 var req = new XMLHttpRequest();
 var html = '';
 var html2 ='';

@@ -16,7 +16,7 @@
 </section>
 
 
-<section class="latest_post_section">
+<section class="latest_post_section bdarea" >
 			<h2 class="title">최근 글</h2>
 			<ul class="latest_post_list">
 				<li><a href="">안녕하세요 홈페이지가 오픈...</a></li>
@@ -26,12 +26,32 @@
 				<li><a href="">저는 누굴까요?...</a></li>
 			</ul>
 		</section>
-		<section class="popular_post_section">
-			<h2 class="title">전적검색실 영역</h2>
-			<ul class="popular_post_list">
-				<li><a href="">이미지 처리 예정</a></li>
+		<section class="popular_post_section bgarea">
 
-			</ul>
+			<figure class="snip1200">
+				<img src="${pageContext.request.contextPath}/resources/images/s_images/bg_1.jpg" alt="" />
+				<figcaption>
+					<p>오늘도 치킨? <br>
+						내 전적을 검색해봅시닭!
+					</p>
+					<div class="heading">
+						<h2>
+							<span>전적 검색실</span>
+						</h2>
+					</div>
+				</figcaption>
+				<a href="${pageContext.request.contextPath}/bgsearch"></a>
+			</figure>
+
+
+
+
+
+	<!-- 			<h2 class="title">배그 전적검색실</h2> -->
+<!-- 			<ul class="popular_post_list"> -->
+<%-- 				<li><a href="${pageContext.request.contextPath}/bgsearch">이미지 처리 예정</a></li> --%>
+
+<!-- 			</ul> -->
 		</section>
 		
 		

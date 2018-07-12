@@ -113,6 +113,7 @@ p.right {
 
 .lini1-1 > a > img {
 	float: left;
+	border-radius: 6px;
 }
 
 .lini1-1 > a > span {
