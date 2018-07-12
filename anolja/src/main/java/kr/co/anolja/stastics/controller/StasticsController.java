@@ -1,5 +1,7 @@
 package kr.co.anolja.stastics.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +21,6 @@ public class StasticsController {
 	
 	@RequestMapping("/sendname")
 	public String sendStat(HttpServletRequest request, RedirectAttributes rttr) {
-		/*mav.setViewName("bgsearchresult");
-		
-		String userName =  request.getParameter("userName");
-		
-		System.out.println(userName);
-		
-		mav.addObject("userName", userName);
-		
-		return mav;*/
         
 		String userName =  request.getParameter("userName");
 		
@@ -43,10 +36,19 @@ public class StasticsController {
 		System.out.println("Result");
 		System.out.println("Name:"+ userName);
 	
+		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.solo);
+		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.duo);
+		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.squad);
+		
+		System.out.println(soloInfo);
+		System.out.println(duoInfo);
+		System.out.println(squadInfo);
+		
+		mav.addObject("solo",soloInfo);
+		mav.addObject("duo",duoInfo);
+		mav.addObject("squad",squadInfo);
 		
 		mav.setViewName("stastics/bgsearchresult");
-		
-		
 		
 		return mav;
 	}

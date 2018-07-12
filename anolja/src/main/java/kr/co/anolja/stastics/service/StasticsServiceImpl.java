@@ -1,11 +1,12 @@
 package kr.co.anolja.stastics.service;
 
 import java.io.BufferedReader;
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import kr.co.anolja.stastics.controller.Season;
 
 @Service
 public class StasticsServiceImpl implements StasticsService {
@@ -330,7 +333,8 @@ public class StasticsServiceImpl implements StasticsService {
 	}
 	
 	//해당 시즌과 게임모드를 입력받아 해당하는 계정 데이터의 시즌 해당 정보를 JSON으로 반환
-	public String getSeasonInfo(String accountId,String seasonInfo,String gameMode) {
+	@SuppressWarnings("unchecked")
+	public Map<String,Object> getSeasonInfo(String accountId,String seasonInfo,String gameMode) {
 		String apiAddress="https://api.playbattlegrounds.com/shards/pc-krjp/players/"+accountId+"/seasons/"+seasonInfo;
 
 		String errMsg = "";
@@ -342,6 +346,8 @@ public class StasticsServiceImpl implements StasticsService {
 		StringBuilder sb = new StringBuilder();
 		
 		JsonObject jsonObject = null;
+		
+		Map<String,Object> map = null;
 
 		try {
 			URL url = new URL(apiAddress);
@@ -379,9 +385,14 @@ public class StasticsServiceImpl implements StasticsService {
 		apiAddress = "https://api.playbattlegrounds.com/shards/pc-na/players/coppersin/seasons/division.bro.official.2018-07";
 		url = new URL(apiAddress);
 			 */
+			
+            String matchInfo = ((JsonObject)(JsonObject)((JsonObject)(jsonObject.get("data"))).get("attributes").getAsJsonObject().get("gameModeStats")).get(gameMode).toString();
+			
+			
+			map = new ObjectMapper().readValue(matchInfo, HashMap.class);
+			
 		}catch (Exception e) {
-			errMsg = "URL 경로에 해당하는 자료 없음";
-			return errMsg;
+			e.printStackTrace();
 
 		}finally {
 			try {
@@ -389,12 +400,25 @@ public class StasticsServiceImpl implements StasticsService {
 				isr.close();
 				br.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				errMsg += ",IO에러 발생";
-				return errMsg;
+				e.printStackTrace();
 			}
 		}
-		return ((JsonObject)(JsonObject)((JsonObject)(jsonObject.get("data"))).get("attributes").getAsJsonObject().get("gameModeStats")).get(gameMode).toString();
+		return map;
 	}
-
+/* 리스트로 데이터 한번에 담는 메소드
+	public List<Map<String,Object>> getAllSeasonInfo(String accountId,String gameMode){
+		
+		Map<String,Object>season4 = getSeasonInfo(accountId,Season.season4,gameMode);
+		Map<String,Object>season5 = getSeasonInfo(accountId,Season.season5,gameMode);
+		Map<String,Object>season6 = getSeasonInfo(accountId,Season.season6,gameMode);
+		
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		
+		list.add(season4);
+		list.add(season5);
+		list.add(season6);
+		
+		return list;
+	}
+	*/
 }
