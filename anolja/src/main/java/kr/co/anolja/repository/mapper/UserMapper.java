@@ -10,4 +10,6 @@ public interface UserMapper {
 	User getIdperUser(String id);
 	User getEmailperUser(String email);
 	void changePassword(User user);
+	void registProfileImage(User user);
+	void removeProfileImage(String id);
 }

@@ -13,6 +13,9 @@
 		<result column="auth_key" property="authKey" />
 		<result column="auth_status" property="authStatus" />
 		<result column="reg_date" property="regDate" />
+		<result column="file_path" property="filePath" />
+		<result column="file_name" property="fileName" />
+		<result column="file_size" property="fileSize" />
 	</resultMap>
 	
 	<insert id="registUser" parameterType="user">
@@ -61,6 +64,18 @@
 		update tb_user
 		   set pass = #{pass}
 		 where email = #{email}
+	</update>
+	
+	<update id="registProfileImage" parameterType="user">
+		update tb_user
+		   set file_path = #{filePath}, file_name = #{fileName}, file_size = #{fileSize}
+		 where id = #{id}
+	</update>
+	
+	<update id="removeProfileImage" parameterType="string">
+		update tb_user
+		   set file_path = null, file_name = null, file_size = null
+		 where id = #{id}
 	</update>
 
 </mapper>

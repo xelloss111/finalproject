@@ -1,5 +1,11 @@
 package kr.co.anolja.user.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +13,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.anolja.common.FileHandler;
 import kr.co.anolja.common.MailHandler;
 import kr.co.anolja.common.MailTempKey;
 import kr.co.anolja.repository.domain.User;
@@ -127,6 +135,46 @@ public class UserServiceImpl implements UserService {
 		
 		return "비밀번호가 정상적으로 변경되었습니다.";
 	}
-	
-	
+
+	@Transactional
+	@Override
+	public void registProfileImage(String id, MultipartFile attach) throws Exception {
+		String defaultPath = "c:/java-lec/upload";
+		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/HH");
+		String detailPath = sdf.format(new Date());
+		
+		File dir = new File(defaultPath + detailPath);
+
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		
+		attach.transferTo(new File(defaultPath + detailPath, id + "_" + attach.getOriginalFilename()));
+				
+		User temp = new User();
+		temp.setId(id);
+		temp.setFilePath(detailPath);
+		temp.setFileName(id + "_" + attach.getOriginalFilename());
+		temp.setFileSize((int)attach.getSize());
+		
+		mapper.registProfileImage(temp);
+	}
+
+	@Override
+	public void profileImageView(String id, HttpServletResponse res) throws Exception {
+		User temp = mapper.selectOneUser(id);
+		new FileHandler().fileViewer(temp.getFilePath(),temp.getFileName(), res);
+	}
+
+	@Override
+	public void profileImageRemove(String id) throws Exception {
+		User temp = mapper.selectOneUser(id);
+		new FileHandler().removeFile(temp.getFilePath(),temp.getFileName());
+		mapper.removeProfileImage(id);
+	}
+
+	@Override
+	public User getUserInfo(String id) throws Exception {
+		return mapper.selectOneUser(id);
+	}
 }

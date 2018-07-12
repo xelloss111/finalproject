@@ -11,7 +11,28 @@ public class User {
 	private String authKey;
 	private int authStatus;
 	private Date regDate;
+	private String filePath;
+	private String fileName;
+	private int fileSize;
 	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public int getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(int fileSize) {
+		this.fileSize = fileSize;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 	public String getAnnonymousId() {
 		return annonymousId;
 	}

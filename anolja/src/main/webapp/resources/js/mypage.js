@@ -5,7 +5,7 @@
 var mypage = $('.mypage_section');
 
 if (mypage) {
-	$('#mypage').click(function() {
+	$(document).on('click', '#mypage', function() {
 		// show 되기 전 내부 html을 지우고 시작
 		$(mypage).html('');
 		
@@ -16,8 +16,24 @@ if (mypage) {
 		$(photoArea).append(photo);
 		
 		// 서버 통신으로 사용자 프로필 이미지 경로가 존재하는지 체크 후 코드 추가
-//		$(photoArea).children('img').attr('id', 'default');
-		$(photoArea).children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+		$.ajax({
+			url: ctx + '/user/getUserInfo',
+			data: {id : sessionId},
+			dataType: 'json',
+			success: function(result) {
+				if(result.filePath == null) {
+					$(photoArea).children('img').attr('id', 'default');
+					$(photoArea).children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+				} else {
+					$(photoArea).children('img').attr('id', 'user');
+					$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+				}
+				
+				if ($(photoArea).children('img').attr('id') == 'user') {
+					$(mypage).append(removeIcon);
+				}
+			}
+		});
 		
 		// id 영역 생성 및 클래스, id 값 적용
 		var idArea = document.createElement('div');
@@ -44,7 +60,8 @@ if (mypage) {
 		var photoIcon = document.createElement('img');
 		var addIcon = document.createElement('img');
 		var removeIcon = document.createElement('img');
-				
+		var fileInfo;
+		
 		$(photoInput).addClass('photoInput');
 		$(photoInput).attr('type', 'file');
 		$(photoInput).attr('name', 'attachFile');
@@ -80,15 +97,13 @@ if (mypage) {
 		photoArea.ondrop = function (event) {
 			$(photoArea).html('');
             var files = event.dataTransfer.files;
-            for (var i = 0; i < files.length; i++) {
-                console.log(files[i].name, files[i].size);
-                $(this).html(`<img id="user" src="${URL.createObjectURL(files[i])}">`);
-                // 서버에 파일 저장하기
-//                sendFile(files[i]);
-            }
+            event.preventDefault();
+            fileInfo = files[0];
+            console.log(fileInfo.name, fileInfo.size);
+            $(this).html(`<img id="user" src="${URL.createObjectURL(fileInfo)}">`);
             $(mypage).append(addIcon);
             return false;
-        }
+        };
 		
 		
 		// 이미지를 파일에서 직접 불러와서 처리
@@ -113,6 +128,7 @@ if (mypage) {
 						$(photoArea).append(img).attr('id', 'user');
 						$(mypage).append(addIcon);
 						console.log(f);
+						fileInfo = f;
 					};
 					
 					fr.readAsDataURL(f);
@@ -120,7 +136,97 @@ if (mypage) {
 			});
 			$(".photoInput").trigger('click');
 		});
-			
+		
+		// 파일 업로드 ajax 처리 함수
+		function sendFile(file) {
+        	var fd = new FormData();
+        	fd.append("id", sessionId);
+        	fd.append("attach", file);
+        	
+        	$.ajax({
+        		url: ctx + "/user/registProfileImage",
+        		data: fd,
+        		type: "POST",
+        		contentType: false,
+        		processData: false,
+        		success: function (data) {
+        			if (data.endsWith("완료")) {
+        				swal({
+        					title: '프로필 이미지 등록 성공',
+        					text: data,
+        					icon: 'success',
+        				}).then((val) => {
+        					$(photoArea).attr('id', 'user');
+        					$(photoArea).attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+        					location.href = ctx + '/main';
+        				});
+        			} else {
+        				swal({
+        					title: '프로필 이미지 등록 실패',
+        					text: data,
+        					icon: 'error',
+        				});
+        			}
+        		}
+        	});
+        };
+		
+		// addIcon 클릭 시 서버에 파일 저장
+		$(document).on('click', '.addIcon', function() {
+			swal({
+				  title: '프로필 이미지 등록',
+				  text: '해당 이미지로 정말 등록하시겠습니까?',
+				  icon: "warning",
+				  buttons: {
+				    cancel: true,
+				    confirm: true,
+				  },
+				}).then((val) => {
+					if (val) {
+						sendFile(fileInfo);
+					} else {
+						return;
+					}
+				});
+		});
+		
+		// removeIcon 클릭 시 DB 및 서버 삭제
+		$(document).on('click', '.removeIcon', function() {
+			swal({
+				  title: '프로필 이미지 삭제',
+				  text: '프로필 이미지를 삭제하고 기본 이미지로 대체하시겠습니까?',
+				  icon: "warning",
+				  buttons: {
+				    cancel: true,
+				    confirm: true,
+				  },
+				}).then((val) => {
+					if (val) {
+						removeProfile();
+					} else {
+						return;
+					}
+				});
+		});
+		
+		function removeProfile() {
+			$.ajax({
+				url: ctx + '/user/removeProfileImage',
+				data: {id : sessionId},
+				success: function(result) {
+    				swal({
+    					title: '프로필 이미지 삭제',
+    					text: result,
+    					icon: 'success',
+    				}).then((val) => {
+    					$(photoArea).attr('id', 'default');
+    					$(photoArea).attr('src', ctx + '/resources/images/user/default-profile.png');
+    					location.href = ctx + '/main';
+    				});
+				}
+			});
+		}
+		
 		// fade 토글로 display 처리
 		$(mypage).fadeToggle('slow');
 	});
