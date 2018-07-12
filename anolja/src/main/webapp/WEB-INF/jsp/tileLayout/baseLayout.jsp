@@ -87,6 +87,7 @@
 	$.getScript(ctx + "/resources/js/info_section.js", function() {});
 	$.getScript(ctx + "/resources/js/signup.js", function() {});
 	$.getScript(ctx + "/resources/js/loginout.js", function() {});
+	$.getScript(ctx + "/resources/js/mypage.js", function() {});
 	</script>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/js/info_section.js"></script> --%>

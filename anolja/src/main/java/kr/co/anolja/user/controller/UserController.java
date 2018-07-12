@@ -1,5 +1,7 @@
 package kr.co.anolja.user.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.anolja.repository.domain.User;
@@ -122,4 +125,18 @@ public class UserController {
 		sessionStatus.setComplete();
 		return "/main";
 	}
+	
+	@RequestMapping(value = "registProfileImage")
+	@ResponseBody
+	public String registProfileImage(MultipartFile attach) throws Exception {
+		System.out.println("사용자가 올린 파일 정보 : " + attach.getOriginalFilename());
+		try {
+			// 실제 서버 저장하기
+			attach.transferTo(new File("c:/java-lec/upload", attach.getOriginalFilename()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "success";
+	}
+	
 }

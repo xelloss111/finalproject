@@ -3,6 +3,95 @@
 
 
 /* 유저 영역용 CSS */
+
+.mypage_section > .photoInput {
+	display: none;
+}
+
+.mypage_section > .removeIcon {
+	top: 80px;
+	right: 5%;
+	width: 20px;
+	position: absolute;
+}
+
+.mypage_section > .removeIcon:hover, .mypage_section > .addIcon:hover, .mypage_section > .photoIcon:hover{
+	cursor: pointer;
+} 
+
+.mypage_section > .addIcon {
+	top: 50px;
+	right: 5%;
+	width: 20px;
+	position: absolute;
+}
+
+.mypage_section > .photoIcon {
+	top: 20px;
+	right: 5%;
+	width: 20px;
+	position: absolute;
+}
+
+.mypage_section > .photoArea {
+	margin: 20 auto;
+	width : 150px;
+	height: 150px;
+/* 	background-image: url("../images/user/default-profile.png"); */
+/* 	background-size: contain; */
+	border: 1px solid white;
+	border-radius: 80%;
+}
+
+.mypage_section > .photoArea > img {
+	width : 150px;
+	height: 150px;
+	border-radius: 80%;
+	overflow: hidden;
+}
+
+.mypage_section > .idArea {
+	margin: 20 auto;
+	width : 250px;
+	height: 50px;
+	border-radius: 50%;
+	color: white;
+	text-align: center;
+}
+
+.mypage_section > .mypageBtnArea {
+	margin: 20 auto;
+}
+
+.mypage_section > .mypageBtnArea > ul {
+	padding-left: 35px;
+}
+
+.mypage_section > .mypageBtnArea > ul > li {
+	float: left;
+	margin: 0 auto;
+	width: 110px;
+	height: 50px;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.mypage_section{
+	order: 1;
+	top: 70px;
+	left: 845px;
+	width: 285px;
+	height: 380px;
+	position: absolute;
+/* 	border: 1px solid green; */
+	border: 1px solid #eee;
+	background: #8271fe;
+/* 	background: #2ecc71; */
+/* 	background: #ffffff; */
+	display: none;
+}
+
 #mSpan {
 	color: white;
 	text-shadow:0px 1px 1px #25ab5e;
@@ -72,6 +161,8 @@ input.userlib:focus{
 #writeTable td {
 	vertical-align: middle;
 }
+
+
 
 /* 버튼 CSS */
 .btn {
@@ -211,6 +302,143 @@ input.userlib:focus{
 /* 이미지 배경 투명 처리 */
 .glass{
 	background-color: rgba( 255, 255, 255, 0.2 );
+}
+
+
+/* 오렌지 색상 버튼 */
+.btn3 {
+  margin-right:10px;
+  display: inline-block;
+  min-width: 6rem;
+  background: #ffc40f;
+  color: white;
+  line-height: 1;
+  padding: 1rem;
+  border: 0;
+  text-align: center;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 3px 0 0 #a31417;
+  -moz-box-shadow: 0 3px 0 0 #a31417;
+  box-shadow: 0 3px 0 0 #a31417;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+}
+.btn3:hover, .btn3:focus {
+  color: white;
+  -webkit-box-shadow: 0 6px 0 0 #a31417;
+  -moz-box-shadow: 0 6px 0 0 #a31417;
+  box-shadow: 0 6px 0 0 #a31417;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn3:active {
+  background: #a31417;
+  -webkit-box-shadow: 0 0 0 0 #48090a;
+  -moz-box-shadow: 0 0 0 0 #48090a;
+  box-shadow: 0 0 0 0 #48090a;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+}
+.btn3.disabled {
+  background: #eeeeee;
+  color: #bbbbbb;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  transform: none;
+}
+.btn3.positive {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 3px 0 0 #3ba19c;
+  -moz-box-shadow: 0 3px 0 0 #3ba19c;
+  box-shadow: 0 3px 0 0 #3ba19c;
+}
+.btn3.positive:hover, .btn3.positive:focus {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 6px 0 0 #3ba19c;
+  -moz-box-shadow: 0 6px 0 0 #3ba19c;
+  box-shadow: 0 6px 0 0 #3ba19c;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn3.positive:active {
+  background: #3ba19c;
+  -webkit-box-shadow: 0 0 0 0 #1f5753;
+  -moz-box-shadow: 0 0 0 0 #1f5753;
+  box-shadow: 0 0 0 0 #1f5753;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+}
+
+/* 경고 처리용 빨간색 버튼 */
+.btn4 {
+  margin-right:10px;
+  display: inline-block;
+  min-width: 6rem;
+  background: #e65d5d;
+  color: white;
+  line-height: 1;
+  padding: 1rem;
+  border: 0;
+  text-align: center;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 3px 0 0 #a31417;
+  -moz-box-shadow: 0 3px 0 0 #a31417;
+  box-shadow: 0 3px 0 0 #a31417;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+}
+.btn4:hover, .btn4:focus {
+  color: white;
+  -webkit-box-shadow: 0 6px 0 0 #a31417;
+  -moz-box-shadow: 0 6px 0 0 #a31417;
+  box-shadow: 0 6px 0 0 #a31417;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn4:active {
+  background: #a31417;
+  -webkit-box-shadow: 0 0 0 0 #48090a;
+  -moz-box-shadow: 0 0 0 0 #48090a;
+  box-shadow: 0 0 0 0 #48090a;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+}
+.btn4.disabled {
+  background: #eeeeee;
+  color: #bbbbbb;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  transform: none;
+}
+.btn4.positive {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 3px 0 0 #3ba19c;
+  -moz-box-shadow: 0 3px 0 0 #3ba19c;
+  box-shadow: 0 3px 0 0 #3ba19c;
+}
+.btn4.positive:hover, .btn4.positive:focus {
+  background: #75cdc8;
+  -webkit-box-shadow: 0 6px 0 0 #3ba19c;
+  -moz-box-shadow: 0 6px 0 0 #3ba19c;
+  box-shadow: 0 6px 0 0 #3ba19c;
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+}
+.btn4.positive:active {
+  background: #3ba19c;
+  -webkit-box-shadow: 0 0 0 0 #1f5753;
+  -moz-box-shadow: 0 0 0 0 #1f5753;
+  box-shadow: 0 0 0 0 #1f5753;
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
 }
 
 
