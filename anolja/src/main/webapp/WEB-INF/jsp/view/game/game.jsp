@@ -93,39 +93,27 @@
 					var id = msg.substring(0, msg.indexOf('님'));
 					$("#online").append(id+"<br>");
     			}
-    			
+    			if (msg.includes('시작')) {
+    				startTime();
+    			}
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
     			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+    		}
+    		else if (evt.data.startsWith('question:')) {
+    			var msg = evt.data.substring('question:'.length);
+//     			$("#canvasDiv").prepend(
+//     				'<div id="pencil">'+
+//     				'    <img src="${pageContext.request.contextPath}/resources/images/game/pencil.png" width="200px" height="50px" id="pencilImg">'+
+//     				'    <span id="question">'+msg+'</span>'+
+//     				'</div>'
+// 				);
+				$("#question").text(msg);
     		}
     		else {
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
     		}
-//				setTimeout(fade_out, 5000);
-
-//				var drawData = JSON.parse(evt.data);
-			
-//				var c = document.querySelector("#myCanvas");
-//		        var otherpaintCtx = c.getContext("2d");
-	        
-//		        otherpaintCtx.strokeStyle = drawData.color;
-//	            otherpaintCtx.beginPath();
-//	            otherpaintCtx.moveTo(drawData.prevX, drawData.prevY);
-//	            otherpaintCtx.lineTo(drawData.nowX, drawData.nowY);
-//	            otherpaintCtx.stroke();
-//	            otherpaintCtx.closePath();
     	}
-
-//     	function fade_out() {
-//     		cnt = cnt - 0.1;
-//     		$(".bubble:first-child").css("opacity", cnt);
-//     		settime = setTimeout(fade_out, 100);
-//     		if(cnt < 0) {
-//     			clearTimeout(settime);
-//     			cnt = 0;
-// 	    		$(".bubble:first-child").remove();
-//     		}
-//     	}
 
     	function enterkey() {
     		if (window.event.keyCode == 13) {
@@ -151,6 +139,7 @@
     	
     	/* 그림그리기 */
     	var paintWs = null;
+    	var isEditable = false;
     	
         var canvas = document.querySelector("#myCanvas");
         var paintCtx = canvas.getContext("2d");
@@ -167,10 +156,12 @@
         	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
 	        $("canvas").on({
 	            mousedown: function (e) {
+	            	if (!isEditable) {return;}
+	            	
 	            	e.preventDefault();
 	                isPress = true;
 	                paintCtx.beginPath();
-	//                 console.log(e.pageX, e.offsetX);
+//                 console.log(e.pageX, e.offsetX);
 					prevX = e.offsetX;
 					prevY = e.offsetY;
 // 	                paintCtx.moveTo(prevX, prevY);
@@ -179,10 +170,13 @@
 // 	                point.prevY = prevY;
 	            },
 	            mouseup: function (e) {
+	            	if (!isEditable) {return;}
 	                isPress = false;
 	                paintCtx.closePath();
 	            },
 	            mousemove: function (e) {
+	            	if (!isEditable) {return;}
+	            	
 	                var x = e.offsetX;
 	                var y = e.offsetY;
 	                if (isPress) {
@@ -209,7 +203,16 @@
 	        });
 	        
 	        paintWs.onmessage = function (evt) {
-	        	console.log(evt.data);
+// 	        	console.log(evt.data);
+	        	if (evt.data == "OK" || evt.data == "NO") {
+	        		if (evt.data == "OK") {
+	        			isEditable = true;
+	        		}
+	        		else {
+	        			isEditable = false;
+	        		}
+	        		return;
+	        	}
 	        	
 	        	var drawData = JSON.parse(evt.data);
 	        	
@@ -256,7 +259,7 @@
         
         // 타이머
         var timerId; // 타이머를 핸들링하기 위한 전역 변수
-        var time = 90; // 타이머의 시작 시간
+        var time = 10; // 타이머의 시작 시간
         
         function startTime() {
         	timerId = setInterval("decrementTime()", 1000);
@@ -267,8 +270,9 @@
         	if (time > 0) time--;
         	else {
         		clearInterval(timerId);
-        		// 게임끝내는 코드 작성
-        		
+        		alert("Time Over");
+        		time = 10;
+        		ws.send("gemeEnd");
         	}
         }
         
@@ -287,16 +291,14 @@
 
     		return(min + ":" + sec);
     	}
-    	startTime();
-    	
     	
     	/* 랜덤한 문제 받아오기 */
-    	$.ajax({
-    		url: "<c:url value='/gameAnswer'/>",
-   			success: function (data) {
-    			$("#question").text(data);
-    		}
-    	});
+//     	$.ajax({
+//     		url: "<c:url value='/gameAnswer'/>",
+//    			success: function (data) {
+//     			$("#question").text(data);
+//     		}
+//     	});
 		
     	
     	$("#chat").mouseover(function () {

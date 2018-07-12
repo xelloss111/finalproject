@@ -1,5 +1,7 @@
 package kr.co.anolja.game.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,10 @@ public class GameServiceImpl implements GameService {
 	@Autowired
 	private GameMapper mapper;
 	
-	public String selectAnswer() {
-		return mapper.selectAnswer();
+	public void selectAnswer() {
+//		System.out.println(mapper.selectAnswer());
+//		List<String> list = mapper.selectAnswer();
+//		System.out.println(list.size());
+//		return mapper.selectAnswer();
 	}
 }

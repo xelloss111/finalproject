@@ -33,9 +33,9 @@ public class GameController {
         return "game/game";
     }
 	
-	@ResponseBody
-	@RequestMapping("/gameAnswer")
-	public String selectAnswer() {
-		return service.selectAnswer();
-	}
+//	@ResponseBody
+//	@RequestMapping("/gameAnswer")
+//	public void selectAnswer() {
+//		service.selectAnswer();
+//	}
 }

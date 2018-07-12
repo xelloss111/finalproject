@@ -9,7 +9,7 @@
 	select answer
 	  from tb_answer
 	 order by rand()
-	 limit 1
+	 limit 20
 </select>
 
 </mapper>

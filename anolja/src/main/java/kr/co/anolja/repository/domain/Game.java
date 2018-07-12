@@ -3,6 +3,28 @@ package kr.co.anolja.repository.domain;
 public class Game {
 	private int ano;
 	private String answer;
+	private static String questionNo;
+	private static String questionuser;
+	
+	public Game() {}
+//	public static void Game(String questionNo, String questionuser) {
+//		System.out.println(questionNo + questionuser);
+//		setQuestionNo(questionNo);
+//		setQuestionuser(questionuser);
+//	}
+
+	public static String getQuestionNo() {
+		return questionNo;
+	}
+	public static void setQuestionNo(String questionNo) {
+		Game.questionNo = questionNo;
+	}
+	public static String getQuestionuser() {
+		return questionuser;
+	}
+	public static void setQuestionuser(String questionuser) {
+		Game.questionuser = questionuser;
+	}
 	public int getAno() {
 		return ano;
 	}
