@@ -1,18 +1,21 @@
 package kr.co.anolja.stastics.service;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+@Service
 public class StasticsServiceImpl implements StasticsService {
 	private String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiNGQ3MjJlMC01ZmY3LTAxMzYtYzljZC00OTk2OTY0YzJkYzMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTMwNTE2NjIzLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImFwaXByYWN0aWNlIn0.9zcoqesjlQaFzvmntiYCRUvpHThDBXQv8YKO57ROxiE";
 

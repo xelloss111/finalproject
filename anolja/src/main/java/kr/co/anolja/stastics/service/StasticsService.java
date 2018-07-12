@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface StasticsService {
 	public void setApiKey(String apiKey);
 	//계정 아이디 식별자 얻기

@@ -15,7 +15,7 @@
 		</div>
 		<div id="#search--area">
 			<div id="search-area">
-				<form action="${pageContext.request.contextPath}/sendstat">
+				<form action="${pageContext.request.contextPath}/sendname">
 					<input type="text" id="search-input" name="userName" placeholder="검색할 아이디를 입력하세요.">
 					<div id="search-icon">
 						<button type="submit" class="send-btn">
