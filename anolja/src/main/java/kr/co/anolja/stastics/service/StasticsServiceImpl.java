@@ -1,6 +1,7 @@
 package kr.co.anolja.stastics.service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,12 +12,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import kr.co.anolja.stastics.controller.Season;
 
 @Service
 public class StasticsServiceImpl implements StasticsService {
@@ -37,7 +38,7 @@ public class StasticsServiceImpl implements StasticsService {
 		BufferedReader br = null;
 
 		StringBuilder sb = new StringBuilder();
-		
+
 		JsonArray jsonArray = null;
 
 		try {
@@ -95,8 +96,9 @@ public class StasticsServiceImpl implements StasticsService {
 		return ((JsonObject)jsonArray.get(0)).get("id").toString().replaceAll("\"", "");
 	}
 
-	//해당 계정의 최근  매치 데이터를 JSON 배열 형태로 반환
-	public String getUserMatchId(String accountId) {
+	//해당 계정의 최근  매치 데이터를 JSON 배열 형태로 반환 -> 이 메소드를 통해서 얻은 정보로 getMatchUserInfo/getMatchInfo를 이용한다. 
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getMatchId(String accountId) {
 
 		String apiAddress="https://api.playbattlegrounds.com/shards/pc-krjp/players/"+accountId;
 
@@ -109,7 +111,11 @@ public class StasticsServiceImpl implements StasticsService {
 		StringBuilder sb = new StringBuilder();
 		
 		JsonObject jsonObject = null;
-
+		
+		Map<String,Object> map = null;
+		
+		List<Map<String,Object>> list = new ArrayList<>();
+		
 		try {
 			URL url = new URL(apiAddress);
 
@@ -139,27 +145,31 @@ public class StasticsServiceImpl implements StasticsService {
 			
 			jsonObject = (JsonObject)parser.parse(sb.toString());
 			
+			JsonArray jsonArr = ((JsonObject)((JsonObject)((JsonObject)(jsonObject.get("data"))).get("relationships")).get("matches")).getAsJsonArray("data");
+			
+			for(int i = 0;i<jsonArr.size();i++) {
+				map = new ObjectMapper().readValue(jsonArr.get(i).toString(), HashMap.class);
+				
+				list.add(map);
+			}
+			
 			//System.out.println(((JsonObject)jsonArray.get(0)).get("id"));
 			/*
 		apiAddress = "https://api.playbattlegrounds.com/shards/pc-na/players/coppersin/seasons/division.bro.official.2018-07";
 		url = new URL(apiAddress);
 			 */
 		}catch (Exception e) {
-			errMsg = "URL 경로에 해당하는 자료 없음";
-			return errMsg;
+			e.printStackTrace();
 
 		}finally {
 			try {
-
 				isr.close();
 				br.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				errMsg += ",IO에러 발생";
-				return errMsg;
+				e.printStackTrace();
 			}
 		}
-		return ((JsonObject)((JsonObject)((JsonObject)(jsonObject.get("data"))).get("relationships")).get("matches")).getAsJsonArray("data").toString();
+		return list;
 	}
 
 	//매치 아이디와 아이디를 입력하면 해당 매치에 대한 사용자의 정보를 JSON형태 문자열로 반환
@@ -173,7 +183,7 @@ public class StasticsServiceImpl implements StasticsService {
 		BufferedReader br = null;
 
 		StringBuilder sb = new StringBuilder();
-		
+
 		String player = null;
 
 		try {
@@ -200,41 +210,41 @@ public class StasticsServiceImpl implements StasticsService {
 
 				sb.append(line);
 			}
-			
+
 			JsonParser parser = new JsonParser();
-			
-//			System.out.println(parser.parse(sb.toString()));
-			
+
+			//			System.out.println(parser.parse(sb.toString()));
+
 			JsonObject jsonObject = (JsonObject)parser.parse(sb.toString());
-			
-			
-//			System.out.println(jsonObject.get("included"));
-			
+
+
+			//			System.out.println(jsonObject.get("included"));
+
 			JsonArray jsonArr = (jsonObject.get("included")).getAsJsonArray();
-			
-		
+
+
 			for(int i = 0; i < jsonArr.size(); i++) {
-//				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("roster")) {
-//					
-//					continue;
-//				}
+				//				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("roster")) {
+				//					
+				//					continue;
+				//				}
 				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("\"participant\"") && (((JsonObject)jsonArr.get(i)).get("type")).toString()!=null) {
 					if(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name").toString().equals("\""+playerName+"\"")) {
 						player = (((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).toString();
 					}
 				};
-				
-//				System.out.println(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name"));
+
+				//				System.out.println(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name"));
 			}
-				
-				
-			
-//			System.out.println(player);
-			
-			
+
+
+
+			//			System.out.println(player);
+
+
 			//a3133ab5-517f-47e1-9ddd-854173b10405
-			
-			
+
+
 			//System.out.println(((JsonObject)jsonArray.get(0)).get("id"));
 			/*
 		apiAddress = "https://api.playbattlegrounds.com/shards/pc-na/players/coppersin/seasons/division.bro.official.2018-07";
@@ -268,7 +278,7 @@ public class StasticsServiceImpl implements StasticsService {
 		BufferedReader br = null;
 
 		StringBuilder sb = new StringBuilder();
-		
+
 		Map<String,Object> map = null;
 
 		try {
@@ -295,21 +305,21 @@ public class StasticsServiceImpl implements StasticsService {
 
 				sb.append(line);
 			}
-			
+
 			JsonParser parser = new JsonParser();
-			
-//			System.out.println(parser.parse(sb.toString()));
-			
+
+			//			System.out.println(parser.parse(sb.toString()));
+
 			JsonObject jsonObject = (JsonObject)parser.parse(sb.toString());
-			
+
 			String matchInfo = (((JsonObject)(jsonObject.get("data"))).get("attributes")).toString();
-			
-			
+
+
 			map = new ObjectMapper().readValue(matchInfo, HashMap.class);
-			
+
 			//a3133ab5-517f-47e1-9ddd-854173b10405
-			
-			
+
+
 			//System.out.println(((JsonObject)jsonArray.get(0)).get("id"));
 			/*
 		apiAddress = "https://api.playbattlegrounds.com/shards/pc-na/players/coppersin/seasons/division.bro.official.2018-07";
@@ -331,7 +341,7 @@ public class StasticsServiceImpl implements StasticsService {
 		return map;
 
 	}
-	
+
 	//해당 시즌과 게임모드를 입력받아 해당하는 계정 데이터의 시즌 해당 정보를 JSON으로 반환
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> getSeasonInfo(String accountId,String seasonInfo,String gameMode) {
@@ -344,9 +354,9 @@ public class StasticsServiceImpl implements StasticsService {
 		BufferedReader br = null;
 
 		StringBuilder sb = new StringBuilder();
-		
+
 		JsonObject jsonObject = null;
-		
+
 		Map<String,Object> map = null;
 
 		try {
@@ -373,24 +383,24 @@ public class StasticsServiceImpl implements StasticsService {
 
 				sb.append(line);
 			}
-			
+
 			JsonParser parser = new JsonParser();
 
 			jsonObject =  (JsonObject)parser.parse(sb.toString());
 
 			//System.out.println(jsonObject.get("data"));
-			
+
 			//System.out.println(((JsonObject)jsonArray.get(0)).get("id"));
 			/*
 		apiAddress = "https://api.playbattlegrounds.com/shards/pc-na/players/coppersin/seasons/division.bro.official.2018-07";
 		url = new URL(apiAddress);
 			 */
-			
-            String matchInfo = ((JsonObject)(JsonObject)((JsonObject)(jsonObject.get("data"))).get("attributes").getAsJsonObject().get("gameModeStats")).get(gameMode).toString();
-			
-			
+
+			String matchInfo = ((JsonObject)(JsonObject)((JsonObject)(jsonObject.get("data"))).get("attributes").getAsJsonObject().get("gameModeStats")).get(gameMode).toString();
+
+
 			map = new ObjectMapper().readValue(matchInfo, HashMap.class);
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 
@@ -405,20 +415,31 @@ public class StasticsServiceImpl implements StasticsService {
 		}
 		return map;
 	}
-/* 리스트로 데이터 한번에 담는 메소드
-	public List<Map<String,Object>> getAllSeasonInfo(String accountId,String gameMode){
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getMatchUserInfoList(List<Map<String,Object>> list,String playerName){
 		
-		Map<String,Object>season4 = getSeasonInfo(accountId,Season.season4,gameMode);
-		Map<String,Object>season5 = getSeasonInfo(accountId,Season.season5,gameMode);
-		Map<String,Object>season6 = getSeasonInfo(accountId,Season.season6,gameMode);
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
 		
-		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(int i=0;i<list.size();i++) {
+			 String json = getMatchUserInfo(list.get(i).get("id").toString(), playerName);
+			 
+			 try {
+				Map<String,Object> userInfo = new ObjectMapper().readValue(json, HashMap.class);
+				resultList.add(userInfo);
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		list.add(season4);
-		list.add(season5);
-		list.add(season6);
 		
-		return list;
+		return resultList;
 	}
-	*/
 }

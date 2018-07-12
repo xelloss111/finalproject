@@ -1,5 +1,6 @@
 package kr.co.anolja.stastics.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,6 @@ public class StasticsController {
 		
 		rttr.addAttribute("userName",userName);
 		
-		System.out.println(userName);
-		
 		return "redirect:/bgsearchresult";
 	}
 	
@@ -40,9 +39,11 @@ public class StasticsController {
 		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.duo);
 		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.squad);
 		
-		System.out.println(soloInfo);
-		System.out.println(duoInfo);
-		System.out.println(squadInfo);
+		System.out.println("리스트정보:"+stasticsService.getMatchId(stasticsService.getAccountId(userName)));
+		
+		List<Map<String,Object>> list = stasticsService.getMatchUserInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)), userName);
+		
+		System.out.println("최후의 리스트:"+list.toString());
 		
 		mav.addObject("solo",soloInfo);
 		mav.addObject("duo",duoInfo);
