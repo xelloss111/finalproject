@@ -212,14 +212,16 @@ public class StasticsServiceImpl implements StasticsService {
 			}
 
 			JsonParser parser = new JsonParser();
-
+			
+			
 			//			System.out.println(parser.parse(sb.toString()));
 
 			JsonObject jsonObject = (JsonObject)parser.parse(sb.toString());
+			
+			
 
-
+//			Included 매치에 대한 사용자 정보 추출 
 			//			System.out.println(jsonObject.get("included"));
-
 			JsonArray jsonArr = (jsonObject.get("included")).getAsJsonArray();
 
 
@@ -228,9 +230,16 @@ public class StasticsServiceImpl implements StasticsService {
 				//					
 				//					continue;
 				//				}
+				
 				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("\"participant\"") && (((JsonObject)jsonArr.get(i)).get("type")).toString()!=null) {
 					if(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name").toString().equals("\""+playerName+"\"")) {
-						player = (((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).toString();
+						String gameMode = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("gameMode").toString();
+						JsonObject resultObject = (((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats").getAsJsonObject());
+						
+						resultObject.addProperty("gameMode", gameMode);
+						
+						player = resultObject.toString();
+						//.addProperty("gameMode", gameMode)
 					}
 				};
 
@@ -442,4 +451,21 @@ public class StasticsServiceImpl implements StasticsService {
 		
 		return resultList;
 	}
+	
+	public List<Map<String,Object>> getMatchInfoList(List<Map<String,Object>>list){
+		
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		
+		for(int i=0;i<list.size();i++) {
+			 Map<String,Object> info = getMatchInfo(list.get(i).get("id").toString());
+			 System.out.println(info);
+				
+			resultList.add(info);
+		}
+			
+		
+		return resultList;
+	}
+	
+	
 }

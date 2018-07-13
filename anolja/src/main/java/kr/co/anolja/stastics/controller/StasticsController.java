@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.anolja.common.constant.GameMode;
+import kr.co.anolja.common.constant.Season;
 import kr.co.anolja.stastics.service.StasticsService;
 
 @Controller
@@ -41,9 +43,13 @@ public class StasticsController {
 		
 		System.out.println("리스트정보:"+stasticsService.getMatchId(stasticsService.getAccountId(userName)));
 		
-		List<Map<String,Object>> list = stasticsService.getMatchUserInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)), userName);
+		List<Map<String,Object>> ulist = stasticsService.getMatchUserInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)), userName);
+		System.out.println(ulist.toString());
 		
-		System.out.println("최후의 리스트:"+list.toString());
+//		System.out.println("최후의 리스트:"+list.toString());
+//		List<Map<String,Object>> list = stasticsService.getMatchInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)));
+//		System.out.println(list.toString());
+		mav.addObject("ulist",ulist);
 		
 		mav.addObject("solo",soloInfo);
 		mav.addObject("duo",duoInfo);

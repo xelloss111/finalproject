@@ -1,4 +1,4 @@
-package kr.co.anolja.stastics.controller;
+package kr.co.anolja.common.constant;
 
 public interface Season {
 	String season4 = "division.bro.official.2018-04";
