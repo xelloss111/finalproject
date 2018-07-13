@@ -25,17 +25,16 @@
 			<div class="center">
 				<div class="player-summary">
 					<div class="player-name-space">
-						<span class="player-name">Place to put name</span>
+						<span class="player-name">${characterName}의 전적정보</span>
 					</div>
-
 				</div>
 
 				<div class="season-select-wrapper">
-					<select id="season-selbox">
+					<select id="season-selbox" name="season">
 						<!-- <option selected>시즌7</option> -->
-						<option>시즌6</option>
-						<option>시즌5</option>
-						<option>시즌4</option>
+						<option value="division.bro.official.2018-06" selected="selected">시즌6</option>
+						<option value="division.bro.official.2018-05">시즌5</option>
+						<option value="division.bro.official.2018-04">시즌4</option>
 					</select>
 				</div>
 
@@ -53,9 +52,10 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score">1700</div>
+										<div class="rank-score"><fmt:formatNumber value="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100}" pattern="0" /></div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">5231위</div>
+										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${solo.killPoints}" pattern="0" /></div>
+										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${solo.winPoints}" pattern="0" /></div>
 									</div>
 								</div>
 
@@ -158,9 +158,10 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score">1700</div>
+										<div class="rank-score"><fmt:formatNumber value="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100}" pattern="0" /></div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">5231위</div>
+										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${duo.killPoints}" pattern="0" /></div>
+										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${duo.winPoints}" pattern="0" /></div>
 									</div>
 								</div>
 
@@ -279,9 +280,10 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score">1700</div>
+										<div class="rank-score"><fmt:formatNumber value="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100}" pattern="0" /></div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">5231위</div>
+										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${squad.winPoints}" pattern="0" /></div>
+										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${squad.winPoints}" pattern="0" /></div>
 									</div>
 								</div>
 
@@ -404,6 +406,10 @@
 									<div>게임 일시</div>
 									<div>${mlog.createdAt}</div>
 								</div>
+								<div class="matches-item-column-status matches-item__column">
+									<div>게임 모드</div>
+									<div>${mlog.gameMode}</div>
+								</div>
 								<div class="matches-item-column-rank matches-item__column">
 									<div>${mlog.winPlace}</div>
 									<div>등</div>
@@ -414,12 +420,17 @@
 									<div>킬</div>
 								</div>
 								<div class="matches-item-column-damage matches-item__column">
-									<div>${mlog.damageDealt}</div>
+									<div><fmt:formatNumber value="${mlog.damageDealt}" pattern="0" /></div>
 									<div>데미지</div>
 								</div>
 								<div class="matches-item-column-distance matches-item__column">
-									<div>${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}</div>
+									<div><fmt:formatNumber value="${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}" pattern="0" />M</div>
 									<div>총 이동 거리</div>
+								</div>
+								
+								<div class="matches-item-column-distance matches-item__column">
+									<div>${mlog.mapName}</div>
+									<div>맵</div>
 								</div>
 								<div class="matches-item-column-team matches-item__column">
 									
@@ -442,6 +453,21 @@
 	</div>
 </section>
 
+<script>
+$(function(){
+$("#season-selbox").change(function(){
+	var selected = $(this).val();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/getseasoninfo",
+		headers:{"Content-Type":"text/html"},
+		type:"POST",
+		data:"season="+selected+"&characterName="+'${characterName}',
+		dataType:"JSON",
+		success:function(result){
+			console.log(result[1].longestKill);
+		}
+	})
+})
+});
 
-
-</html>
+</script>
