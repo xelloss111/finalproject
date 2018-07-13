@@ -233,10 +233,16 @@ public class StasticsServiceImpl implements StasticsService {
 				
 				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("\"participant\"") && (((JsonObject)jsonArr.get(i)).get("type")).toString()!=null) {
 					if(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name").toString().equals("\""+playerName+"\"")) {
+						
 						String gameMode = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("gameMode").toString();
+						String createdAt = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("createdAt").toString();
+						String mapName = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("mapName").toString();
+						
 						JsonObject resultObject = (((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats").getAsJsonObject());
 						
 						resultObject.addProperty("gameMode", gameMode);
+						resultObject.addProperty("createdAt", createdAt);
+						resultObject.addProperty("mapName", mapName);
 						
 						player = resultObject.toString();
 						//.addProperty("gameMode", gameMode)

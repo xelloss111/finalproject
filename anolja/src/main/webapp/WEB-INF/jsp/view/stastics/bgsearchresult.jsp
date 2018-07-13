@@ -104,8 +104,8 @@
 											</div>
 										</li>
 										<li class="ranked-stats__item">
-											<div>평균 등수</div>
-											<div>39.7</div>
+											<div>팀킬</div>
+											<div>${solo.teamKills}</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>평균 생존시간</div>
@@ -209,8 +209,8 @@
 											</div>
 										</li>
 										<li class="ranked-stats__item">
-											<div>평균 등수</div>
-											<div>39.7</div>
+											<div>팀킬</div>
+											<div>${solo.teamKills}</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>평균 생존시간</div>
@@ -330,8 +330,8 @@
 											</div>
 										</li>
 										<li class="ranked-stats__item">
-											<div>평균 등수</div>
-											<div>39.7</div>
+											<div>팀킬</div>
+											<div>${solo.teamKills}</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>평균 생존시간</div>
@@ -396,40 +396,39 @@
 
 				<div class="matches-list-layer">
 					<ul class="matches__list">
+					<c:forEach var="mlog" items="${ulist}">
 						<li id="matches-item ">
 							<div class="matches-item_summary">
 								<div class="matches-item-column-status matches-item__column">
 									<i></i>
-									<div>10일전</div>
-									<div>29:35</div>
+									<div>게임 일시</div>
+									<div>${mlog.createdAt}</div>
 								</div>
 								<div class="matches-item-column-rank matches-item__column">
-									<div>3</div>
-									<div>/27</div>
+									<div>${mlog.winPlace}</div>
+									<div>등</div>
 								</div>
 
 								<div class="matches-item-column-kill matches-item__column">
-									<div>3</div>
+									<div>${mlog.kills}</div>
 									<div>킬</div>
 								</div>
 								<div class="matches-item-column-damage matches-item__column">
-									<div>441</div>
+									<div>${mlog.damageDealt}</div>
 									<div>데미지</div>
 								</div>
 								<div class="matches-item-column-distance matches-item__column">
-									<div>6.82km</div>
+									<div>${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}</div>
 									<div>총 이동 거리</div>
 								</div>
 								<div class="matches-item-column-team matches-item__column">
-									<div>팀원</div>
-									<div>김씨</div>
-									<div>이씨</div>
+									
 								</div>
 
 							</div>
 						</li>
 
-
+                    </c:forEach>
 					</ul>
 					<button data-selector="total-played-game-btn-more"
 						class="total-played-game__btn total-played-game__btn--more">더
