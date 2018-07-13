@@ -4,6 +4,25 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css">
 		<section class="content_section">
 			<div class="content_row_1">
+			<div class="content_row_2">
+				<div class="search_box">
+					<form action="#" method="get">
+						<input type="search" name="gallery_search_window" class="search_window" placeholder="검색어">
+						<div class="search_select_box">
+							<select name="검색 대상">
+								<option value="제목">제목</option>
+								<option value="제목">제목+내용</option>
+								<option value="제목">댓글</option>
+							</select>
+						</div>	
+					</form>
+				</div>
+				<c:if test="${!empty sessionScope.id}">
+					<div class="write_box">
+						<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
+					</div>
+				</c:if>
+			</div>
 				<table class="board_table">
 					<caption>문의사항 게시판</caption>
 					<thead>

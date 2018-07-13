@@ -10,7 +10,7 @@
 			<button onclick="location.href='write'">글쓰기</button>
 			<button>답글</button>
 			<div id="ps">
-				<a href="#">목록</a> <a href="#">윗글</a> <a href="#">아랫글</a>
+				<a href="list">목록</a>
 			</div>
 		</div>
 		<hr>
@@ -39,13 +39,12 @@
 					<textarea name="commentText"></textarea>
 					<button>등록</button>
 				</form>
-				<div style="text-align: right;">
-						<button class="btnn"
-							onclick="location.href='${pageContext.request.contextPath}/updateForm?bNo=${board.bNo}'">수정</button>
-						<button class="btnn"
-							onclick="location.href='delete?bNo=${board.bNo}'">삭제</button>
-					<button class="btnn"
-						onclick="location.href='${pageContext.request.contextPath}/list'">목록</button>
+				<div class="write_box">
+					<div style="text-align: right;">
+							<a href="updateForm">수정</a>
+							<a href="delete?bNo=${board.bNo}">삭제</a>
+						<a href="list">목록</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -96,7 +95,7 @@
 				</form>
 			</div>
 			<div class="write_box">
-				<a href="#">글 쓰기</a>
+				<a href="write">글 쓰기</a>
 			</div>
 		</div>
 		<div class="content_row_3">

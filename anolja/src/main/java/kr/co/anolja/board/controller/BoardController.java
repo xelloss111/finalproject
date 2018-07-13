@@ -42,6 +42,7 @@ public class BoardController {
 	public String boardDetail(HttpServletRequest request, Model model) throws Exception{
 		model.addAttribute("list", boardService.boardList());
 		int no = Integer.parseInt(request.getParameter("bNo"));
+		model.addAttribute("no", no);
 		Board board = boardService.boardDetail(no);
 		model.addAttribute("board", board);
 		return "board/detail";
