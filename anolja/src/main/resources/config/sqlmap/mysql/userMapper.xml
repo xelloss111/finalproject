@@ -77,5 +77,11 @@
 		   set file_path = null, file_name = null, file_size = null
 		 where id = #{id}
 	</update>
+	
+	<update id="updateUserEmail" parameterType="user">
+		update tb_user
+		   set email = #{email}
+		 where id = #{id}
+	</update>
 
 </mapper>

@@ -56,6 +56,7 @@ if (mypage) {
 		btnAreaUl.html(mypagehtml);
 				
 		// 프로필 이미지 파일 불러오기
+		// input type 엘리먼트를 hide하고 버튼 트리거로 클릭 효과를 주기 위해 input 태그 생성
 		var photoInput = document.createElement('input');
 		var photoIcon = document.createElement('img');
 		var addIcon = document.createElement('img');
@@ -67,11 +68,9 @@ if (mypage) {
 		$(photoInput).attr('name', 'attachFile');
 		$(photoInput).attr('id', 'attachFile');
 		
-		
 		$(photoIcon).addClass('photoIcon');
 		$(photoIcon).attr('src', ctx + '/resources/images/user/photo.png');
 		$(photoIcon).attr('title', '프로필 사진 파일에서 추가');
-//		$(photoIcon).attr('role', 'file');
 
 		$(addIcon).addClass('addIcon');
 		$(addIcon).attr('src', ctx + '/resources/images/user/add_icon.png');
@@ -90,7 +89,6 @@ if (mypage) {
 		
 		// 프로필 영역 이미지 등록 처리
 		$(document).on('dragover', '.photoArea > img', function(event) { 
-//			console.log("이미지 오버");
 			return false;
 		});
 		
@@ -225,10 +223,81 @@ if (mypage) {
     				});
 				}
 			});
-		}
+		};
+		
+		// --------------------------------------------------------------------------------------------
+		// email 변경 처리
+		$('.changeemailbtn').on('click', function() {
+			swal({
+				  title: "[MyPage Email 변경]",
+				  text: "기존 Email 주소를 입력해 주세요",
+				  content: {
+					  element: "input",
+					  attributes: {
+						  placeholder: "Email 입력",
+						  type: 'text',
+					  }
+				  },
+				  button: {
+				    text: "입력",
+				    closeModal: false,
+				  },
+			}).then((lastEmail) => {
+				$.ajax({
+					url: ctx + "/user/emailCheck",
+					type: "post",
+					data: {email: lastEmail},
+				}).done(function(resEmail) {
+					if (!resEmail) {
+						return swal({
+									icon: "error",
+									text: "email 주소가 맞지 않습니다."
+						});
+					} else {
+						swal({
+							  title: "[MyPage Email 변경]",
+							  text: "변경할 Email 주소를 입력해 주세요",
+							  content: {
+								  element: "input",
+								  attributes: {
+									  placeholder: "변경할 Email 입력",
+									  type: 'text',
+								  }
+							  },
+							  button: {
+							    text: "입력",
+							    closeModal: false,
+							  },
+						}).then((changeEmail) => {
+							$.ajax({
+								url: ctx + "/user/updateUserEmail",
+								type: "post",
+								data: {id: sessionId, email: changeEmail},
+							}).done(function(result) {
+								swal({
+									title: '[MyPage Email 변경]',
+									text: result,
+									icon: 'success',
+									button: '닫기',
+								});
+							}).fail(function() {
+								swal({
+									title: '[MyPage Email 변경]',
+									text: '서버 통신 중 오류 발생으로 변경이 불가능합니다.\n다시 시도해 주세요',
+									icon: 'error',
+									button: '닫기',
+								});
+							});
+						});
+					}
+				});
+			});
+		});
+		
+		
+		
 		
 		// fade 토글로 display 처리
 		$(mypage).fadeToggle('slow');
 	});
 }
-

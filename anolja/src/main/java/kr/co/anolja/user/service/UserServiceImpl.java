@@ -177,4 +177,9 @@ public class UserServiceImpl implements UserService {
 	public User getUserInfo(String id) throws Exception {
 		return mapper.selectOneUser(id);
 	}
+
+	@Override
+	public void updateUserEmail(User user) throws Exception {
+		mapper.updateUserEmail(user);
+	}
 }

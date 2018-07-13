@@ -19,4 +19,5 @@ public interface UserService {
 	public void profileImageView(String id, HttpServletResponse res) throws Exception;
 	public void profileImageRemove(String id) throws Exception;
 	public User getUserInfo(String id) throws Exception;
+	public void updateUserEmail(User user) throws Exception;
 }

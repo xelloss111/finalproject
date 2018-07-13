@@ -12,4 +12,5 @@ public interface UserMapper {
 	void changePassword(User user);
 	void registProfileImage(User user);
 	void removeProfileImage(String id);
+	void updateUserEmail(User user);
 }

@@ -150,4 +150,11 @@ public class UserController {
 	public User getUserInfo(String id) throws Exception {
 		return service.getUserInfo(id);
 	}
+	
+	@RequestMapping(value = "updateUserEmail")
+	@ResponseBody
+	public String updateUserEmail(User user) throws Exception {
+		service.updateUserEmail(user);
+		return "email 주소가 정상 변경되었습니다.";
+	}
 }
