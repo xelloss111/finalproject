@@ -12,7 +12,7 @@ var logout = document.querySelector('#logout');
 console.log(login, logout);
 
 if (login != null) {
-	login.addEventListener('click', function() {
+	$(document).on('click', '#login', function() {
 		if (signupSection.attr("display") != 'none') signupSection.slideUp('slow');
 		var html = "";
 		html += '<img class="glass" src="'+ ctx +'/resources/images/user/mark_icon_login.png" alt=""\
@@ -53,9 +53,8 @@ if (login != null) {
 		var loginpass = document.querySelector("input[name='pass']");
 
 		// 로그인 버튼 이벤트 처리
-		loginBtn.addEventListener("click", function(e) {
+		$(document).on('click', '#loginBtn', function(e) {
 			e.preventDefault();
-			
 			if (loginid.value === "") { 
 				swal({
 					  title: "로그인 실패",
@@ -78,7 +77,7 @@ if (login != null) {
 			var lform = $('#lForm').serialize();
 			$.ajax({
 				url: ctx + "/user/login",
-				type: 'POST',
+				type: 'post',
 				data: lform,
 				success: function(result) {
 					if (result.startsWith('/')) {
@@ -96,9 +95,7 @@ if (login != null) {
 		});
 		
 		// 아이디 찾기 이벤트 처리
-		findIdBtn.addEventListener('click', function(e) {
-			e.preventDefault();
-			
+		$(document).on('click', '#findIdBtn', function(e) {
 			swal({
 				  title: 'ID 찾기',
 				  text: '가입 시 작성한 email 주소를 입력해 주세요',
@@ -129,9 +126,7 @@ if (login != null) {
 				});	
 		});
 		
-		findPassBtn.addEventListener('click', function(e) {
-			e.preventDefault();
-			
+		$(document).on('click', '#findPassBtn', function(e) {
 			swal({
 				  title: 'Password 찾기',
 				  text: 'ID를 먼저 입력해 주세요',
@@ -211,7 +206,7 @@ if (login != null) {
 }
 
 if (logout != null) {
-	logout.addEventListener('click', function() {
+	$(document).on('click', '#logout', function() {
 		swal({
 			  title: "로그 아웃",
 			  text: "정말 종료하시겠습니까?",

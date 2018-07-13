@@ -7,7 +7,7 @@ var loginSection = $('.login_section');
 var signup = document.querySelector('#signup');
 
 if (signup) {
-	signup.addEventListener('click', function() {
+	$(document).on('click', '#signup', function() {
 		if(loginSection.attr('display') != 'none') loginSection.slideUp('slow');
 		var html = "";
 		html += '<img class="glass" src="'+ ctx +'/resources/images/user/mark_icon_title.png" alt=""\
@@ -60,12 +60,12 @@ if (signup) {
 		var signemailChk = document.querySelector("#chkEmail");
 
 		// id 존재 여부 체크
-		signid.addEventListener("keyup", function() {
+		$(document).on('keyup', 'input[name="id"]', function() {
 			serverCall(ctx + "/user/idCheck", "POST", {"id":id.value}, "id");
 		});
 
 		// email 존재 여부 체크
-		signemail.addEventListener("keyup", function(e) {
+		$(document).on('keyup', 'input[name="email"]', function() {
 //			e.preventDefault();
 			var mail = signemail.value;
 			var chk = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -86,7 +86,7 @@ if (signup) {
 		});
 
 		// 패스워드 재 확인 체크
-		signpassAgain.addEventListener("keyup", function() {
+		$(document).on('keyup', '#passCheck', function() {
 			var color = "";
 			var html = "";
 			if (signpass.value === signpassAgain.value) {
@@ -102,9 +102,7 @@ if (signup) {
 		});
 
 		// 가입 버튼 이벤트 처리
-		registBtn.addEventListener("click", function(e) {
-			e.preventDefault();
-			
+		$(document).on('keyup', '#registBtn', function(e) {
 			console.log(signidChk.innerText);
 			console.log(signemailChk.innerText);
 			

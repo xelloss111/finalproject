@@ -1,8 +1,7 @@
 package kr.co.anolja.user.controller;
 
-import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,15 +127,48 @@ public class UserController {
 	
 	@RequestMapping(value = "registProfileImage")
 	@ResponseBody
-	public String registProfileImage(MultipartFile attach) throws Exception {
-		System.out.println("사용자가 올린 파일 정보 : " + attach.getOriginalFilename());
-		try {
-			// 실제 서버 저장하기
-			attach.transferTo(new File("c:/java-lec/upload", attach.getOriginalFilename()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "success";
+	public String registProfileImage(@RequestParam("id") String id, MultipartFile attach) throws Exception {
+		if (id == null || attach == null) return "일시적인 오류로 프로필 이미지 등록 실패\n다시 시도하세요";
+		service.registProfileImage(id, attach);
+		return "프로필 이미지 등록 완료";
 	}
 	
+	@RequestMapping(value = "viewProfileImage")
+	public void viewProfileImage(String id, HttpServletResponse res) throws Exception {
+		service.profileImageView(id, res);
+	}
+	
+	@RequestMapping(value = "removeProfileImage")
+	@ResponseBody
+	public String removeProfileImage(String id) throws Exception {
+		service.profileImageRemove(id);
+		return "프로필 이미지 삭제 완료";
+	}
+	
+	@RequestMapping(value = "getUserInfo")
+	@ResponseBody
+	public User getUserInfo(String id) throws Exception {
+		return service.getUserInfo(id);
+	}
+	
+	@RequestMapping(value = "updateUserEmail")
+	@ResponseBody
+	public String updateUserEmail(User user) throws Exception {
+		service.updateUserEmail(user);
+		return "email 주소가 정상 변경되었습니다.";
+	}
+	
+	@RequestMapping(value = "passwordCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String passwordCheck(User user) throws Exception {
+		return service.checkPass(user);
+	}
+	
+	@RequestMapping(value = "secessionUser", method = RequestMethod.POST)
+	@ResponseBody
+	public String secessionUser(String id, SessionStatus sessionStatus) throws Exception {
+		sessionStatus.setComplete();
+		service.deleteUserInfo(id);
+		return "/main";
+	}
 }
