@@ -35,11 +35,11 @@ if (login != null) {
 			<div id="loginArea" style="float:left; margin-left: 40px; margin-top:100px;">\
 			<button class="btn2" id="loginBtn"><span class="button__inner">로그인</span></button>\
 			</div>\
+			</form>\
 			<div id="findArea" style="float:left; margin-left: 40px; margin-top:100px;">\
 			<button class="btn" id="findIdBtn"><span class="button__inner">ID 찾기</span></button>\
 			<button class="btn" id="findPassBtn"><span class="button__inner">PW 찾기</span></button>\
-			</div>\
-			</form>';
+			</div>';
 		
 		
 		loginSection.slideToggle('slow');
@@ -95,7 +95,7 @@ if (login != null) {
 		});
 		
 		// 아이디 찾기 이벤트 처리
-		$(document).on('click', '#findIdBtn', function(e) {
+		$(findIdBtn).click(function() {
 			swal({
 				  title: 'ID 찾기',
 				  text: '가입 시 작성한 email 주소를 입력해 주세요',
@@ -126,7 +126,7 @@ if (login != null) {
 				});	
 		});
 		
-		$(document).on('click', '#findPassBtn', function(e) {
+		$(findPassBtn).click(function() {
 			swal({
 				  title: 'Password 찾기',
 				  text: 'ID를 먼저 입력해 주세요',
