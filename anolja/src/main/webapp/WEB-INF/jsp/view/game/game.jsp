@@ -85,7 +85,7 @@
     			console.log(evt);
     		};
     	});
-    	
+    	var current = false;
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
@@ -93,7 +93,7 @@
 					var id = msg.substring(0, msg.indexOf('님'));
 					$("#online").append(id+"<br>");
     			}
-    			if (msg.includes('시작')) {
+    			else if (msg == '게임을 시작합니다.') {
     				startTime();
     			}
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
@@ -101,6 +101,8 @@
     		}
     		else if (evt.data.startsWith('question:')) {
     			var msg = evt.data.substring('question:'.length);
+    			current = true;
+    			console.log("출제자: ", "${id}");
 //     			$("#canvasDiv").prepend(
 //     				'<div id="pencil">'+
 //     				'    <img src="${pageContext.request.contextPath}/resources/images/game/pencil.png" width="200px" height="50px" id="pencilImg">'+
@@ -161,13 +163,8 @@
 	            	e.preventDefault();
 	                isPress = true;
 	                paintCtx.beginPath();
-//                 console.log(e.pageX, e.offsetX);
 					prevX = e.offsetX;
 					prevY = e.offsetY;
-// 	                paintCtx.moveTo(prevX, prevY);
-	                
-// 	                point.prevX = prevX;
-// 	                point.prevY = prevY;
 	            },
 	            mouseup: function (e) {
 	            	if (!isEditable) {return;}
@@ -203,7 +200,7 @@
 	        });
 	        
 	        paintWs.onmessage = function (evt) {
-// 	        	console.log(evt.data);
+	        	console.log(evt.data);
 	        	if (evt.data == "OK" || evt.data == "NO") {
 	        		if (evt.data == "OK") {
 	        			isEditable = true;
@@ -270,9 +267,19 @@
         	if (time > 0) time--;
         	else {
         		clearInterval(timerId);
-        		alert("Time Over");
+        		ws.send("Time Over");
+        		ws.send("gameEnd");
+				$("#question").text("");
+				paintCtx.clearRect(0, 0, canvas.width, canvas.height);
         		time = 10;
-        		ws.send("gemeEnd");
+        		
+        		if (current) {
+	        		paintWs.send("next");
+	        		current = false;
+        		}
+				setTimeout(() => {
+	        		paintWs.send("gameRestart");
+				}, 100);
         	}
         }
         

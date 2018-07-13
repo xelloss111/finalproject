@@ -21,10 +21,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 	private GameMapper mapper;
 	
 	// 문제 리스트
-	private List<String> questions;
+	public static List<String> questions;
 	// 문제 번호
-	private int questionNo;
-	private int userNo;
+	public static int questionNo;
+	public static int userNo;
 	
 	public GameChatHandler() {}
 	
@@ -62,16 +62,15 @@ public class GameChatHandler extends TextWebSocketHandler {
 //		}
 		 if (chatList.size() == 2) {
 			for (WebSocketSession wss : users) {
-				System.out.println(wss);
 				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			}
 			
 			Game.setQuestionNo(questions.get(questionNo));
 			Game.setQuestionuser(chatList.get(userNo));
 			
-			users.get(questionNo).sendMessage(new TextMessage("question:"+questions.get(questionNo)));
-			questionNo++;
-			userNo++;
+//			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
+			
+			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
 		}
 	}
 	
@@ -80,19 +79,27 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (message.getPayload().equals("gemeEnd")) {
+		if (message.getPayload().equals("gameEnd")) {
 			for (int i = 10; i >= 1; i--) { 
-				for (WebSocketSession wss : users) {
-					System.out.println(wss);
-					wss.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
-				}
+				session.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
 				Thread.sleep(1000); 
 			}
 			
-			Game.setQuestionNo(questions.get(questionNo));
-			Game.setQuestionuser(chatList.get(userNo));
+//			Game.setQuestionNo(questions.get(questionNo));
+//			Game.setQuestionuser(chatList.get(userNo));
+//			System.out.println("chatList.get(userNo): "+chatList.get(userNo));
 			
-			users.get(questionNo).sendMessage(new TextMessage("question:"+questions.get(questionNo)));
+//			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
+
+			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
+//			System.out.println("users.get(userNo): " + users.get(userNo));
+//			System.out.println("questions.get(questionNo): " + questions.get(questionNo));
+			
+			session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
+			session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+		}
+		else if (message.getPayload().equals("Time Over")) {
+			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
 		else {
 			for (WebSocketSession wss : users) {

@@ -15,53 +15,52 @@ import kr.co.anolja.repository.domain.Game;
 public class GamePaintHandler extends TextWebSocketHandler {
 	
 	private List<WebSocketSession> connectedUsers;
-//	private Game question;
 	
 	public GamePaintHandler() {
 		connectedUsers = new ArrayList<WebSocketSession>();
-//		question = new Game();
 	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		connectedUsers.add(session);
-		System.out.println(connectedUsers.size());
 		
 //		if (connectedUsers.size() == 6) {
 //		}
 		 if (connectedUsers.size() == 2) {
-//			 System.out.println(Game.getQuestionNo());
-//			 System.out.println(Game.getQuestionuser());
-//			while(true) {
-				if (Game.getQuestionNo() != null && Game.getQuestionuser() != null && !Game.getQuestionNo().equals("") && !Game.getQuestionuser().equals("")) {
-//					System.out.println("Game.getQuestionuser(): "+Game.getQuestionuser());
-					for (int i = 0; i < connectedUsers.size(); i++) {
-//						System.out.println("connectedUsers.get(i): "+connectedUsers.get(i));
-//						System.out.println("GameChatHandler.chatList.get(i): "+GameChatHandler.chatList.get(i));
-						if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
-							System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
-							connectedUsers.get(i).sendMessage(new TextMessage("OK"));
-						}
-						else {
-							connectedUsers.get(i).sendMessage(new TextMessage("NO"));
-						}
+			if (Game.getQuestionNo() != null && Game.getQuestionuser() != null && !Game.getQuestionNo().equals("") && !Game.getQuestionuser().equals("")) {
+				for (int i = 0; i < connectedUsers.size(); i++) {
+					if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
+						connectedUsers.get(i).sendMessage(new TextMessage("OK"));
+					}
+					else {
+						connectedUsers.get(i).sendMessage(new TextMessage("NO"));
 					}
 				}
-//			}
+			}
 		}
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		for (int i = 0; i < connectedUsers.size(); i++) {
-			if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
-				connectedUsers.get(i).sendMessage(new TextMessage("OK"));
+		if (message.getPayload().equals("next")) {
+			++GameChatHandler.questionNo;
+			++GameChatHandler.userNo;
+			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
+				GameChatHandler.userNo = 0;
 			}
-			else {
-				connectedUsers.get(i).sendMessage(new TextMessage("NO"));
+			Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
+			Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
+		}
+		if (message.getPayload().equals("gameRestart")) {
+			for (int i = 0; i < connectedUsers.size(); i++) {
+				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
+					connectedUsers.get(i).sendMessage(new TextMessage("OK"));
+				}
+				else {
+					connectedUsers.get(i).sendMessage(new TextMessage("NO"));
+				}
 			}
 		}
-
 		for (WebSocketSession wss : connectedUsers) {
 			if ( !wss.getId().equals(session.getId()) ) {
 				wss.sendMessage(new TextMessage(message.getPayload()));
