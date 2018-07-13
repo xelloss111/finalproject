@@ -29,17 +29,25 @@
 	</select>
 	
 	<insert id="boardInsert" parameterType="board">
+	<selectKey resultType="int" keyProperty="bNo" order="AFTER" >
+             select last_insert_ID()
+    </selectKey>
 		insert into tb_board(
-			group_bno, anonymous_id, title, content, pass, reg_date
+			group_bno, anonymous_id, title, content, pass
 		)values(
 			#{bNo},
 			#{anonymousId}, 
 			#{title}, 
 			#{content}, 
-			#{pass},
-			now()
+			#{pass}
 		)
 	</insert>
+	
+	<update id="boardUpdateNo" parameterType="int">
+		update tb_board
+		   set #{group_bNo} = #{bNo}
+		   where bNo = #{bNo}
+	</update>
 	
 	<update id="boardUpdate" parameterType="board">
 		update tb_board
@@ -53,4 +61,23 @@
 		delete from tb_board
 		where bNo = #{bNo}
 	</delete>
+	
+	<!-- 파일 첨부시작 -->
+	
+	<resultMap id="boardFileMap" type="boardFile">
+		<result column="fNo" property="fNo" />
+		<result column="bNo" property="bNo" />
+		<result column="path" property="path" /> 
+		<result column="ori_name" property="oriName" /> 
+		<result column="sys_name" property="sysName" />
+		<result column="file_size" property="fileSize" />
+	</resultMap>
+	
+	<insert id="boardInsertFile" parameterType="boardFile">
+		insert into tb_file (
+			bNo, path, ori_name, sys_name, file_size
+		) values (
+			#{bNo}, #{path}, #{oriName}, #{sysName}, #{fileSize}		
+		)
+	</insert> 
 </mapper>

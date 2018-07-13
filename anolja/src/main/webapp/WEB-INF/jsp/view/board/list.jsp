@@ -44,7 +44,7 @@
 				</div>
 				<c:if test="${!empty sessionScope.id}">
 					<div class="write_box">
-						<a href="write">글 쓰기</a>
+						<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
 					</div>
 				</c:if>
 			</div>

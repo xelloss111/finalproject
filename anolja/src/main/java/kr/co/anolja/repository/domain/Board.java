@@ -13,6 +13,34 @@ public class Board {
 	private String content;
 	private Date regDate;
 	private int viewCnt;
+//	private Integer fileSeq;
+//	private MultipartFile[] files;
+//	private List<BoardFile> fileList;
+	
+//public MultipartFile[] getFiles() {
+//		return files;
+//	}
+//	public void setFiles(MultipartFile[] files) {
+//		this.files = files;
+//	}
+	//	public Integer getFileSeq() {
+//		return fileSeq;
+//	}
+//	public void setFileSeq(Integer fileSeq) {
+//		this.fileSeq = fileSeq;
+//	}
+//	public MultipartFile[] getFile() {
+//		return file;
+//	}
+//	public void setFile(MultipartFile[] file) {
+//		this.file = file;
+//	}
+//	public List<BoardFile> getBoardfile() {
+//		return fileList;
+//	}
+//	public void setBoardfile(List<BoardFile> boardfile) {
+//		this.fileList = boardfile;
+//	}
 	public String getAnonymousId() {
 		return anonymousId;
 	}

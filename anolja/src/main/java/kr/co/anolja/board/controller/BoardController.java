@@ -1,17 +1,19 @@
 package kr.co.anolja.board.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.anolja.board.service.BoardService;
 import kr.co.anolja.repository.domain.Board;
+import kr.co.anolja.repository.domain.BoardFile;
 
 @Controller
+@RequestMapping(value="/board")
 public class BoardController {
 	
 	@Autowired
@@ -23,20 +25,20 @@ public class BoardController {
 		return "board/list";
 	}
 	
-	@RequestMapping("/write")
-	public String boardWrite(Board board, Model model, HttpServletRequest request) throws Exception{
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	public String boardWrite() throws Exception{
 		return "board/write";
 	}
 	
 	@RequestMapping("/insert")
-	public String boardInsert(Board board) throws Exception {
-		System.out.println(board.getAnonymousId());
-		boardService.boardInsert(board);
-		return "redirect:/list";
+	public String boardInsert(Board board, BoardFile files) throws Exception {
+		System.out.println(files);
+		boardService.boardInsert(board, files);
+		return "redirect:/board/detail?bNo="+board.getbNo();
 	}
 	
 	
-	@RequestMapping("/board/detail")
+	@RequestMapping("/detail")
 	public String boardDetail(HttpServletRequest request, Model model) throws Exception{
 		model.addAttribute("list", boardService.boardList());
 		int no = Integer.parseInt(request.getParameter("bNo"));
@@ -45,11 +47,11 @@ public class BoardController {
 		return "board/detail";
 	}
 	
-	@RequestMapping("/board/delete")
+	@RequestMapping("/delete")
 	public String boardDelete(HttpServletRequest request) throws Exception{
 		int no = Integer.parseInt(request.getParameter("bNo"));
 		boardService.boardDelete(no);
-		return "redirect:/list";
+		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/updateForm")

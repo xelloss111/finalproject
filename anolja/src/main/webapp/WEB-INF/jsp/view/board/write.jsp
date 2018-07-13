@@ -70,27 +70,25 @@
     border:1px solid #777;
 }
 
+#board {order : 2;}
 
     </style>
 <div id="board">
-    	<form action="insert" method="POST" enctype="multiple/form-data" name="insert">
+    	<form action="insert" method="POST" enctype="multipart/form-data">
     		<input type="hidden" name="anonymousId" value="${sessionScope.id}">
-	    	<input type="text" class="form-control" id="exampleInputEmail1" id="title" name="title" placeholder="제목을 입력해주세요" style="width:500px;"> <br><br>
-<!--             <div class="file_input" style="margin-bottom:30px;"> -->
-<!--             <label> -->
-<!--                 File Attach -->
-<!--                 <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="filename[]"> -->
-<!--             </label> -->
-
-
-<!--             <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;"> -->
-<!--             </div> -->
+	    	<input type="text" class="form-control" id="exampleInputEmail1" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
+            <div class="file_input" style="margin-bottom:30px;">
+	            <label>
+	                File Attach
+	                <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
+	            </label>
+	            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
+            </div>
 	    	<textarea id="message" class="form-control" name="content" type="text" placeholder="내용을 입력해주세요" style="width:525px; height:300px;"></textarea> <br>
-<!--             <textarea name="content" id="summernote" value=""></textarea> -->
 	    	<div id="btn">
                 password : <input type="password" placeholder="비밀번호를 입력해주세요" name="pass" id="pass">
-                <div style="width:156px; margin:0 auto; margin-top:15px;">
-	    		<button type="button" id="writeBtn" onclick="chk();	" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
+                <div style="width:253px; margin:0 auto; margin-top:15px;">
+	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
 	    		<button onclick="location.href='list'" class="btn btn-default btnps">취소</button>
                 </div>
 	    	</div>
