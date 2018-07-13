@@ -111,12 +111,13 @@ p.right {
 	float: left;
 }
 
-.lini1-1 > a > img {
+.lini1-1 > span > img {
 	float: left;
 	border-radius: 6px;
+	cursor: pointer;
 }
 
-.lini1-1 > a > span {
+.lini1-1 > span > span {
 	width : 60%;
 	position : relative;
 	float: left;
@@ -127,6 +128,7 @@ p.right {
 	color: #000;
 	font-weight: bold;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 /* ADD-ON

@@ -799,6 +799,36 @@ text-transform:uppercase;
 font-weight:bold;
 }
 
+.thinkbig > figure.snip1200 figcaption {
+  position: absolute;
+  top: 10%;
+  left: 7%;
+  right: 7%;
+  bottom: 10%;
+  border: 2px solid #fff;
+  border-width: 1px 1px 0;
+}
+.thinkbig > figure.snip1200 p {
+	color: #fff;
+}
+.thinkbig > .snip1200 > figcaption > .heading {
+	position: absolute;
+    bottom: 0px;
+    color: #fff;
+}
+
+.thinkbig > figure.snip1200 h2:before,
+.thinkbig > figure.snip1200 h2:after {
+  position: absolute;
+  display: block;
+  width: 1000%;
+  height: 1px;
+  content: '';
+  color : #fff;
+  background: white;
+  top: 50%;
+}
+
 /* 인기 검색어 영역 CSS */
 .rankup_section{
 order:7;

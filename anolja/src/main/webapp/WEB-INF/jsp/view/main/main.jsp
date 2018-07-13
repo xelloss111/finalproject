@@ -80,25 +80,23 @@
 		</section>
 		
 				
-		<section class="gallery_section">
-			<ul class="gallery_list">
-				<li>
-					<a href="#">
-						<figure>
-							<img src="${pageContext.request.contextPath}/resources/images/youtube/hqdefault.jpg" alt="">
-							<figcaption>GAME CHANNEL</figcaption>
-						</figure>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<figure>
-							<figcaption>Overwatch - All Cinematic Trailers (1080p)</figcaption>
-						</figure>
-					</a>
-				</li>
-			</ul>				
+		<section class="gallery_section thinkbig">
+			<figure class="snip1200">
+				<img src="${pageContext.request.contextPath}/resources/images/p_images/bg-1.png" alt="" />
+				<figcaption>
+					<p> 창의력 장인이라면  <br>
+						도전!!
+					</p>
+					<div class="heading">
+						<h2>
+							<span>TINGKBIG</span>
+						</h2>
+					</div>
+				</figcaption>
+				<a href="${pageContext.request.contextPath}/game"></a>
+			</figure>
 		</section>
+		
 		<section class="rankup_section">
 			<h2 class="title">씽크빅 마스터</h2>
 			<ul class="rankup_list">
