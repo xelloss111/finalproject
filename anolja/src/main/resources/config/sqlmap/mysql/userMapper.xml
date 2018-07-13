@@ -83,5 +83,11 @@
 		   set email = #{email}
 		 where id = #{id}
 	</update>
+	
+	<delete id="deleteUserInfo" parameterType="string">
+		delete
+		  from tb_user
+		 where id = #{id}
+	</delete>
 
 </mapper>

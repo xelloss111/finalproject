@@ -157,4 +157,18 @@ public class UserController {
 		service.updateUserEmail(user);
 		return "email 주소가 정상 변경되었습니다.";
 	}
+	
+	@RequestMapping(value = "passwordCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String passwordCheck(User user) throws Exception {
+		return service.checkPass(user);
+	}
+	
+	@RequestMapping(value = "secessionUser", method = RequestMethod.POST)
+	@ResponseBody
+	public String secessionUser(String id, SessionStatus sessionStatus) throws Exception {
+		sessionStatus.setComplete();
+		service.deleteUserInfo(id);
+		return "/main";
+	}
 }

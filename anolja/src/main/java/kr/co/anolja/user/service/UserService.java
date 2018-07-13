@@ -14,10 +14,13 @@ public interface UserService {
 	public User getEmail(String email) throws Exception;
 	public User findId(String email) throws Exception;
 	public String findPass(String email, String path) throws Exception;
+	public String checkPass(User user) throws Exception;
 	public String changePass(User user) throws Exception;
 	public void registProfileImage(String id, MultipartFile attach) throws Exception;
 	public void profileImageView(String id, HttpServletResponse res) throws Exception;
 	public void profileImageRemove(String id) throws Exception;
 	public User getUserInfo(String id) throws Exception;
 	public void updateUserEmail(User user) throws Exception;
+	public void deleteUserInfo(String id) throws Exception;
+	
 }

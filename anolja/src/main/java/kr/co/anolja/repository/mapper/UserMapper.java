@@ -13,4 +13,5 @@ public interface UserMapper {
 	void registProfileImage(User user);
 	void removeProfileImage(String id);
 	void updateUserEmail(User user);
+	void deleteUserInfo(String id);
 }

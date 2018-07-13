@@ -294,7 +294,148 @@ if (mypage) {
 			});
 		});
 		
+		// --------------------------------------------------------------------------------------------
+		// 비밀번호 변경 처리
+		$(document).on('click', '.changepassbtn', function() {
+			swal({
+				  title: '[MyPage Password 변경]',
+				  text: 'email을 입력해 주세요',
+				  content: {
+					  element: "input",
+					  attributes: {
+						  placeholder: "email 입력",
+						  type: 'text',
+					  }
+				  },
+				  button: {
+				    text: "입력",
+				    closeModal: false,
+				  },
+				}).then(email => {
+					console.log(email);
+					$.ajax({
+						url: ctx + "/user/emailCheck",
+						type: "post",
+						data: {email: email},
+					}).done(function(resEmail) {
+						if (!resEmail) {
+							return swal({
+										icon: "error",
+										text: "email 주소가 맞지 않습니다."
+									});
+						}
+						var temp = JSON.parse(resEmail);
+						$.ajax({
+							url: ctx + "/user/findPass",
+							type: "post",
+							data: {email: temp.email},
+							success: function(result) {
+								swal({
+									title: "[MyPage Password 변경]",
+									icon: "success",
+									text: result,
+									button: "닫기"
+								});
+							}
+						});
+					});
+				
+				});
+		});
 		
+		// -------------------------------------------------------------------------------------------
+		// 로그아웃 처리
+		$(document).on('click', '.logoutbtn', function() {
+			swal({
+				  title: "로그 아웃",
+				  text: "정말 종료하시겠습니까?",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((accept) => {
+				  if (accept) {
+				    $.ajax({
+				    	url: ctx + "/user/logout",
+				    	type: 'post',
+				    	data: sessionId
+				    }).done(function(result) {
+				    	swal("로그아웃 되었습니다.").then((acc) => {location.href = ctx + result;});
+				    });
+				  } else {
+					  return;
+				  }
+				});
+		});
+		
+		// -------------------------------------------------------------------------------------------
+		// 회원 탈퇴 처리
+		$(document).on('click', '.secessionbtn', function() {
+			swal({
+				  title: "[Anolja 회원 탈퇴]",
+				  text: "회원 탈퇴 시 더 이상 Anolja 서비스를 이용하실 수 없습니다.\n그래도 진행하시겠습니까?",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((accept) => {
+					if (accept) {
+						swal({
+							  title: '[Anolja 회원 탈퇴]',
+							  text: '본인 확인을 위해 패스워드를 입력해 주세요',
+							  content: {
+								  element: "input",
+								  attributes: {
+									  placeholder: "패스워드 입력",
+									  type: 'text',
+								  }
+							  },
+							  button: {
+							    text: "입력",
+							    closeModal: false,
+							  },
+						}).then((password) => {
+							$.ajax({
+								url: ctx + '/user/passwordCheck',
+								data: {id : sessionId, pass : password},
+								type: 'post'
+							}).done(function(info) {
+								if (!info) {
+									return swal('패스워드가 일치하지 않습니다. 다시 진행해 주세요');
+								} else {
+									swal({
+										  title: "[Anolja 회원 탈퇴]",
+										  text: "패스워드 확인 완료\n탈퇴를 진행하시겠습니까?",
+										  icon: "warning",
+										  buttons: true,
+										  dangerMode: true,
+										}).then((accept) => {
+											if(!accept) {
+												return swal('회원 탈퇴가 취소되었습니다.');
+											} else {
+												$.ajax({
+													url: ctx + '/user/secessionUser',
+													data: {id : sessionId},
+													type: 'post'
+												}).done(function(path) {
+													swal({
+														title: "[Anolja를 이용해 주셔서 감사합니다]",
+														icon: "success",
+														text: "다시 서비스를 이용하고 싶다면\n회원 가입 후 이용해 주세요",
+														button: "닫기"
+													}).then((end) => {
+														location.href = ctx + path;
+														return;
+													});
+												});
+											}
+										});
+								}
+							});
+						})
+					}
+				});
+		});
 		
 		
 		// fade 토글로 display 처리

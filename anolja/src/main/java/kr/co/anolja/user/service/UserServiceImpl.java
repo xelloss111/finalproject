@@ -182,4 +182,23 @@ public class UserServiceImpl implements UserService {
 	public void updateUserEmail(User user) throws Exception {
 		mapper.updateUserEmail(user);
 	}
+
+	@Override
+	public void deleteUserInfo(String id) throws Exception {
+		mapper.deleteUserInfo(id);
+	}
+
+	@Override
+	public String checkPass(User user) throws Exception {
+		User temp = mapper.selectOneUser(user.getId());
+		
+		// 스프링 시큐리티의 BCryptPasswordEncoder 객체의 matches 메서드로 패스워드 체크
+		boolean passCheck = passwordEncoder.matches(user.getPass(), temp.getPass());
+		
+		if (passCheck == true) {
+			return "패스워드 확인 성공";
+		} else {
+			return null;
+		}
+	}
 }
