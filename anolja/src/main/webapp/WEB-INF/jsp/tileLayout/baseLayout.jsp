@@ -52,6 +52,9 @@
 	</script>
 </head>
 <body>
+	<!-- 로딩 이미지 -->
+	<div class="loading" id='display-none'><img class="loading-image" src="${pageContext.request.contextPath}/resources/images/user/working.gif" alt="Loading..." /></div>
+	 
 	<div id="quick_wrap">
 		<div id="quick_right_menu">
 			<span></span>
@@ -69,11 +72,20 @@
 		<tiles:insertAttribute name="content" />
 		<tiles:insertAttribute name="footer" />
 	</div>
-
-
+	
 	<!-- 회원 가입 등의 얼럿 처리를 위한 스크립트 -->
 	<script>
-	var ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+	var ctx;
+	$(document).ready(function() {
+		ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+		$.getScript(ctx + "/resources/js/info_section.js", function() {});
+		$.getScript(ctx + "/resources/js/signup.js", function() {});
+		$.getScript(ctx + "/resources/js/loginout.js", function() {});
+		$.getScript(ctx + "/resources/js/mypage.js", function() {});
+		
+	});
+	
+
 	var sessionId = `<%=session.getAttribute("id")%>`;
 	console.log("세션 ID : ", sessionId);
 	var msg = `${msg}`;
@@ -83,11 +95,7 @@
 			  button: "확인"
 			});
 	}
-	
-	$.getScript(ctx + "/resources/js/info_section.js", function() {});
-	$.getScript(ctx + "/resources/js/signup.js", function() {});
-	$.getScript(ctx + "/resources/js/loginout.js", function() {});
-	$.getScript(ctx + "/resources/js/mypage.js", function() {});
+
 	</script>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/js/info_section.js"></script> --%>

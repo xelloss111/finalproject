@@ -32,16 +32,18 @@ public class UserController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(UserController.class);
 	
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
+//	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	@RequestMapping(value = "signup")
+	@ResponseBody
 	public String signupPost(User user, Model model, RedirectAttributes rttr,
 			HttpServletRequest req) throws Exception {
 		logger.info("회원 가입 중....");
 		logger.info(user.toString());
 		String path = req.getServerName() + ":" + req.getServerPort() + "" + req.getContextPath();
 		service.registUser(user, path);
-		rttr.addFlashAttribute("msg", "가입 시 사용한 이메일 인증을 부탁 드립니다.");
+//		rttr.addFlashAttribute("msg", "가입 시 사용한 이메일 인증을 부탁 드립니다.");
 		
-		return "redirect:/main";
+		return "/";
 	}
 	
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.GET)

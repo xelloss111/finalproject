@@ -41,10 +41,10 @@ if (signup) {
 			</tr>\
 			</table>\
 			</div>\
+			</form>\
 			<div id="btnArea" style="float:left; margin-left: 40px; margin-top:105px;">\
-			<button class="btn" id="registBtn"><span class="button__inner">가입</span></button>\
-			</div>\
-			</form>';
+		    <button class="btn" id="registBtn"><span class="button__inner">가입</span></button>\
+			</div>';
 		
 		signupSection.slideToggle('slow');
 		signupSection.html(html);
@@ -61,7 +61,7 @@ if (signup) {
 
 		// id 존재 여부 체크
 		$(document).on('keyup', 'input[name="id"]', function() {
-			serverCall(ctx + "/user/idCheck", "POST", {"id":id.value}, "id");
+			serverCall(ctx + "/user/idCheck", "POST", {"id":signid.value}, "id");
 		});
 
 		// email 존재 여부 체크
@@ -102,7 +102,7 @@ if (signup) {
 		});
 
 		// 가입 버튼 이벤트 처리
-		$(document).on('keyup', '#registBtn', function(e) {
+		$(registBtn).click(function(e) {
 			console.log(signidChk.innerText);
 			console.log(signemailChk.innerText);
 			
@@ -140,7 +140,7 @@ if (signup) {
 					  button: "돌아가기",
 					});
 				return;
-			} else if (signpassAgain = '') {
+			} else if (signpassAgain.innerHTML = '') {
 				swal({
 					  title: "회원 가입 실패",
 					  text: "패스워드를 재 확인 해주세요",
@@ -178,14 +178,36 @@ if (signup) {
 				return;
 			};
 			
-			var sform = document.querySelector("#sForm");
-			var selements = sform.elements;
+			var signForm = $('#sForm').serialize();
+			console.log(signForm);
+			$.ajax({
+				url: ctx + '/user/signup',
+				data: signForm,
+//				data: {id: signForm.id, pass : signForm.id, email : signForm.email},
+				type: 'post',
+				success: function(signResult) {
+//					swal('가입 시 입력한 이메일 주소를 통해 인증을 완료해 주세요').then((acc) => {
+//						location.href = ctx + signResult;
+//					});
+					swal('가입 시 입력한 이메일 주소를 통해 인증을 완료해 주세요');
+				}
+				,beforeSend:function(){
+					$('.loading').attr('id', '');
+				}
+				,complete:function(){
+					$('.loading').attr('id', 'display-none');
+				}
+				,error:function() {
+					$('.loading').attr('id', 'display-none');
+					swal({
+						title: '[Anolja 회원 가입]',
+						text: '서버 통신 오류로 회원 가입이 실패했습니다.\n다시 시도해 주세요',
+						icon: 'error',
+						button: '확인',
+					});
+				}
+			});
 			
-			console.log(selements);
-			
-			sform.setAttribute("action", ctx + "/user/signup");
-			sform.setAttribute("method", "post");
-			sform.submit();
 		});
 
 
@@ -259,6 +281,5 @@ if (signup) {
 			req.send(method == "POST" ? params : null);
 		};
 	});
-
 }
 

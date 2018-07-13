@@ -309,7 +309,7 @@ if (mypage) {
 				  },
 				  button: {
 				    text: "입력",
-				    closeModal: false,
+				    closeModal: true,
 				  },
 				}).then(email => {
 					console.log(email);
@@ -336,6 +336,21 @@ if (mypage) {
 									text: result,
 									button: "닫기"
 								});
+							},beforeSend:function(){
+								$('.loading').attr('id', '');
+							}
+							,complete:function(){
+								$('.loading').attr('id', 'display-none');
+							}
+							,error:function() {
+								$('.loading').attr('id', 'display-none');
+								swal({
+									title: '[MyPage Password 변경]',
+									text: '서버 통신 오류로 메일 발송에 실패했습니다.\n다시 시도해 주세요',
+									icon: 'error',
+									button: '확인',
+								});
+								location.href = ctx + '/main';
 							}
 						});
 					});
