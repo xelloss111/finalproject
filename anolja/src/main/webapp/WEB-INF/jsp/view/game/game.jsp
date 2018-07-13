@@ -31,7 +31,7 @@
                 <a href='#t' class='color' data-color='#7fccde' id='blue'><img src="${pageContext.request.contextPath}/resources/images/game/blue.png"></a>
                 <a href='#t' class='color' data-color='#cb99c5' id='purple'><img src="${pageContext.request.contextPath}/resources/images/game/purple.png"></a>
                 <a href='#t' class='color' data-color='black' id='black'><img src="${pageContext.request.contextPath}/resources/images/game/black.png"></a>
-                <a href='#t' id='bucket'><img src="${pageContext.request.contextPath}/resources/images/game/bucket.png" width="50px" height="50px"></a>
+                <a href='javascript:fill();' id='bucket'><img src="${pageContext.request.contextPath}/resources/images/game/bucket.png" width="50px" height="50px"></a>
                 <a href="#t" id="clearBtn" class="btn cyan small">All Clear</a>
             </div>
         </div>
@@ -211,17 +211,33 @@
 	        		return;
 	        	}
 	        	
-	        	var drawData = JSON.parse(evt.data);
-	        	
 	        	var c = document.querySelector("#myCanvas");
 	            var otherCtx = c.getContext("2d");
-	            
-	            otherCtx.strokeStyle = drawData.color;
-	            otherCtx.beginPath();
-	            otherCtx.moveTo(drawData.prevX, drawData.prevY);
-	            otherCtx.lineTo(drawData.nowX, drawData.nowY);
-	            otherCtx.stroke();
-	            otherCtx.closePath();
+	        	var drawData;
+	        	
+	        	if (evt.data == "clear") {
+	            	paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+	                paintCtx.closePath();
+	                return;
+	            }
+	        	if (evt.data.startsWith('{"')) {
+	        		drawData = JSON.parse(evt.data);
+		            console.log(drawData.mode);
+		            if(drawData.mode != undefined && drawData.mode == "fill") {
+		            	otherCtx.fillStyle = drawData.color;
+		            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
+		            	otherCtx.closePath();
+		            	return;
+		            }
+		            
+		            otherCtx.strokeStyle = drawData.color;
+		            otherCtx.beginPath();
+		            otherCtx.moveTo(drawData.prevX, drawData.prevY);
+		            otherCtx.lineTo(drawData.nowX, drawData.nowY);
+		            otherCtx.stroke();
+		            otherCtx.closePath();
+	        	}
+// 	        	var drawData = JSON.parse(evt.data);
 	        }
 	        
         });
@@ -237,17 +253,29 @@
             paintCtx.strokeStyle = strokeStyle;
             color = strokeStyle;
         });
-        $("#bucket").click(function () {
+        function fill() {
+        	if (!isEditable) {return;}
+        	
             paintCtx.fillStyle = color;
             paintCtx.fillRect(0, 0, canvas.width, canvas.height);
-        });
+            paintCtx.closePath();
+            
+            var fill = {};
+            fill.mode = "fill";
+            fill.color = color;
+            
+            paintWs.send(JSON.stringify(fill));
+        };
         $("canvas").contextmenu(function (e) {
             e.preventDefault();
-            paintCtx.fillStyle = color;
-            paintCtx.fillRect(0, 0, canvas.width, canvas.height);
+            fill();
         });
         $("#clearBtn").click(function () {
+        	if (!isEditable) {return;}
             paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+            paintCtx.closePath();
+            
+            paintWs.send("clear");
         });
         
         

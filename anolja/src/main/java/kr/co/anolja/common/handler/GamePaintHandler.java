@@ -28,6 +28,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 //		}
 		 if (connectedUsers.size() == 2) {
 			if (Game.getQuestionNo() != null && Game.getQuestionuser() != null && !Game.getQuestionNo().equals("") && !Game.getQuestionuser().equals("")) {
+				// 현재 출제자에게 그림 그릴 수 있는 권한 주기
 				for (int i = 0; i < connectedUsers.size(); i++) {
 					if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
 						connectedUsers.get(i).sendMessage(new TextMessage("OK"));
@@ -35,6 +36,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 					else {
 						connectedUsers.get(i).sendMessage(new TextMessage("NO"));
 					}
+					connectedUsers.get(i).sendMessage(new TextMessage("{ \"mode\" : \"fill\", \"color\" : \"#FFFFFF\" }"));
 				}
 			}
 		}
@@ -42,6 +44,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		// 한문제가 끝난 후 문제와 출제자 다음으로 set해주기
 		if (message.getPayload().equals("next")) {
 			++GameChatHandler.questionNo;
 			++GameChatHandler.userNo;
