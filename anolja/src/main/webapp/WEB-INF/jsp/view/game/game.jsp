@@ -64,13 +64,15 @@
 </div>
 </section>
     <script>
+    	// 문제출제영역 숨기기
+    	$("#pencilImg").hide();
+    
     	// 웹소켓을 이용한 채팅하기
     	var ws = null;
-//     	var cnt = 1;
+    	
     	$(function () {
     		// 서버의 웹소켓 객체 연결하기
-//     		ws = new WebSocket("ws://localhost/anolja/gameChat.do");
-    		ws = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
+    		ws = new WebSocket("ws://localhost/anolja/gameChat.do");
     		ws.onopen = function () {
     			console.log("웹소켓 서버 접속 성공");
     			console.log("${id}");
@@ -93,6 +95,10 @@
 					var id = msg.substring(0, msg.indexOf('님'));
 					$("#online").append(id+"<br>");
     			}
+    			if (msg.includes('정답')) {
+    				clearInterval(timerId);
+    				gameRestart();
+    			}
     			else if (msg == '게임을 시작합니다.') {
     				startTime();
     			}
@@ -103,12 +109,7 @@
     			var msg = evt.data.substring('question:'.length);
     			current = true;
     			console.log("출제자: ", "${id}");
-//     			$("#canvasDiv").prepend(
-//     				'<div id="pencil">'+
-//     				'    <img src="${pageContext.request.contextPath}/resources/images/game/pencil.png" width="200px" height="50px" id="pencilImg">'+
-//     				'    <span id="question">'+msg+'</span>'+
-//     				'</div>'
-// 				);
+    			$("#pencilImg").show();
 				$("#question").text(msg);
     		}
     		else {
@@ -155,13 +156,13 @@
         paintCtx.lineCap = "round";
         
         $(document).ready(function () {
-        	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
+        	paintWs = new WebSocket("ws://localhost/anolja/gamePaint.do");
 	        $("canvas").on({
 	            mousedown: function (e) {
 	            	if (!isEditable) {return;}
 	            	
 	            	e.preventDefault();
-	                isPress = true;
+			        isPress = true;
 	                paintCtx.beginPath();
 					prevX = e.offsetX;
 					prevY = e.offsetY;
@@ -199,6 +200,10 @@
 	            }
 	        });
 	        
+	        function mousedown(e) {
+	        	
+	        }
+	        
 	        paintWs.onmessage = function (evt) {
 	        	console.log(evt.data);
 	        	if (evt.data == "OK" || evt.data == "NO") {
@@ -227,6 +232,7 @@
 		            	otherCtx.fillStyle = drawData.color;
 		            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 		            	otherCtx.closePath();
+		            	$("#time").css("color", "white");
 		            	return;
 		            }
 		            
@@ -260,6 +266,8 @@
             paintCtx.fillRect(0, 0, canvas.width, canvas.height);
             paintCtx.closePath();
             
+            $("#time").css("color", "white");
+            
             var fill = {};
             fill.mode = "fill";
             fill.color = color;
@@ -268,6 +276,7 @@
         };
         $("canvas").contextmenu(function (e) {
             e.preventDefault();
+            if (!isEditable) {return;}
             fill();
         });
         $("#clearBtn").click(function () {
@@ -296,19 +305,24 @@
         	else {
         		clearInterval(timerId);
         		ws.send("Time Over");
-        		ws.send("gameEnd");
-				$("#question").text("");
-				paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-        		time = 10;
-        		
-        		if (current) {
-	        		paintWs.send("next");
-	        		current = false;
-        		}
-				setTimeout(() => {
-	        		paintWs.send("gameRestart");
-				}, 100);
+        		gameRestart();
         	}
+        }
+        
+        // 게임 한세트 끝난 후 다시 시작하기
+        function gameRestart() {
+    		ws.send("gameEnd");
+			$("#question").text("");
+			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+    		time = 10;
+    		
+    		if (current) {
+        		paintWs.send("next");
+        		current = false;
+    		}
+			setTimeout(() => {
+        		paintWs.send("gameRestart");
+			}, 100);
         }
         
         /* 정수형 숫자(초 단위)를 "시:분:초" 형태로 표현하는 함수 */
@@ -335,7 +349,7 @@
 //     		}
 //     	});
 		
-    	
+    	// 스크롤바 마우스오버시 보이고, 마우스리브시 없애기
     	$("#chat").mouseover(function () {
     		$("#hiddenScroll").css("width", "240px");
     	});

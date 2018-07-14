@@ -103,11 +103,17 @@ public class GameChatHandler extends TextWebSocketHandler {
 		else if (message.getPayload().equals("Time Over")) {
 			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
+		else if (message.getPayload().equals(Game.getQuestionNo())) {
+			for (WebSocketSession wss : users) {
+				wss.sendMessage(new TextMessage("notice:"+id+"님 ["+message.getPayload()+"] 정답입니다!!!"));
+			}
+		}
 		else {
 			for (WebSocketSession wss : users) {
 				if ( !wss.getId().equals(session.getId()) ) {
 					wss.sendMessage(new TextMessage(id + ": " + message.getPayload()));
-	            }
+				}
+				
 			}
 		}
 		System.out.println("아이디:" + id + ", 메세지: " + message.getPayload());
