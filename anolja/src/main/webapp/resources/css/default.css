@@ -596,7 +596,7 @@ order:3;
 width:100%;
 height:400px;
 height:18.750rem;
-background:url(../images/p_images/slider_01.jpg) center center no-repeat;
+background:#8271fe;
 }
 
 .sec_h2 {
@@ -1238,8 +1238,91 @@ height: 400	px;
 /* 480px ÷ 960px */
 }
 
-/* 최근 글 영역, 인기 글 영역 CSS */
-.latest_post_section, .popular_post_section{
+#main_img{
+	width:100%; 
+	min-width:400px; 
+	max-width:1000px; 
+	margin:0 auto; 
+	overflow:hidden;
+	position:relative;
+	height: 400px;
+	}
+	
+#main_img ul{
+	position:relative;
+	float:left;
+	width:100%;
+}
+#main_img ul li{
+	position:absolute;
+	width:100%;
+}
+#main_img ul li a{
+	display:block;
+	}
+
+/*이거 없으면 그림이 안줄어요- 틀에 맞춰서 그림 줄이기*/
+#main_img ul li a img{
+	width:100%;
+	max-width : 480px;
+	height:auto;
+	max-height: 300px;
+}
+
+#main_img ul li.visual_0{left:0;}
+#main_img ul li.visual_1{left:100%;}
+#main_img ul li.visual_2{left:200%;}
+
+/* 이전 다음 */
+#prev {
+	position:absolute;
+	top : 35%;
+	left: 2%;
+	z-index:111;
+	}
+	
+.fa-arrow-alt-circle-left,  .fa-arrow-alt-circle-right{
+	color: #fff;
+	}
+	
+#next {
+	position:absolute;
+	top : 35%;
+	right: 2%;
+	sz-index:111;
+	}
+	
+	
+/* 블릿 버튼 이미지 스타일 */
+#list_btn li {
+	background: url(../images/catchmind/btnVisual.png) 0 -16px no-repeat;
+	width: 14px;
+	height: 15px;
+	float: left;
+	position: relative; /*left, top을 주기위해 넣음*/
+	left: 50%;
+	top: -25px;
+	overflow: hidden; /*밖으로 나간거 안보이게*/
+	margin: 0 5px;
+}
+
+/*검정색이 보여라 - 좌표값 변경*/
+#list_btn li.on {
+	background-position: 0 0;
+}
+
+/* 글자 밖으로 빼기*/
+#list_btn li a {
+	display: block;
+	text-indent: -9999px;
+} 
+
+	
+	
+	
+	
+	/* 최근 글 영역, 인기 글 영역 CSS */
+	.latest_post_section, .popular_post_section{
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -1471,5 +1554,6 @@ padding-left:3.125%;
 /* 30px ÷ 960px */
 text-align:left;
 }
+
 
 }

@@ -4,15 +4,53 @@
 <section class="mypage_section"></section>
 
 <section class="slider_section">
-<div id="particles"></div>
+
 	<div class="img_con">
 		<h2 class="sec_h2">명예의 전당</h2>
-		<ul>
-			<li><a href="#"> <img alt=""
-					src="${pageContext.request.contextPath}/resources/images/catchmind/game_img.png">
-			</a></li>
+		<div id="main_img">
+			<ul>
+				<li class="visual_0">
+					<a href="#">
+						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img.png">
+					</a>
+				</li>
+	
+				<li class="visual_1">
+					<a href="#">
+						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img2.png">
+					</a>
+				</li>
+	
+				<li class="visual_2">
+					<a href="#">
+						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img3.png">
+					</a>
+				</li>
+	
+			</ul>
+	
+	
+	<!-- 화살표 영역 -->
+			<div id="prev">
+				<i class="far fa-arrow-alt-circle-left fa-2x"></i>
+			</div><!-- prev -->
+	
+			<div id="next">
+				<i class="far fa-arrow-alt-circle-right fa-2x"></i>
+			</div><!-- next -->
+<!-- 화살표 영역 끝 -->
+
+
+	</div><!-- main_img -->
+	
+	<!-- 블릿 기호 영역  -->
+		<ul id="list_btn">
+			<li class="on"><a href="#">최근 게시물1</a></li>
+			<li><a href="#">최근 게시물2</a></li>
+			<li><a href="#">최근 게시물3</a></li>
 		</ul>
-	</div>
+		
+	</div><!-- img_con -->
 
 </section>
 
@@ -114,5 +152,89 @@
 		</section>
 		
 		
+<script>
+// 슬라이더
+$(function(){ 
+	var visual = $("#main_img > ul > li");
+	var visualImg =visual.find("a img");
+	var button=$("#list_btn > li");
+	var cnt = 0;
+	var setIntervalId;
+	var dir = "next";
+
+	setTimeout(win_init, 10);
+	$(window).resize(function(){
+		win_init();
+	});
+	
+	function win_init(){
+		$("#main_img").css("height", visualImg.height());
+		$("#prev").css("top",(visualImg.height() - $("#prev").height())/2);
+		$("#next").css("top",(visualImg.height() - $("#next").height())/2);
+	}
+
+	button.click(function(){
+		var tg=$(this);
+		var i= tg.index();
+
+		button.removeClass("on");
+		tg.addClass("on");
 		
+		move(i);
+	});
+
+	$("#next").click(function(){
+		dir="next";
+		var n = cnt+1;
+		if(n == visual.length){
+			n=0;
+		}
+		button.eq(n).trigger("click");
+	});
+
+	$("#prev").click(function(){
+		dir="prev";
+		var n = cnt-1;
+		if(n < 0 ){
+			n= visual.length - 1;
+		}
+		button.eq(n).trigger("click");
+	});
+
+	timer();
+
+	function timer(){
+		setIntervalId = setInterval(function(){
+			var n = cnt + 1;
+			if(n == visual.length){
+				n=0;
+			}
+			button.eq(n).trigger("click");
+		},5000);
+	};
+
+	function move(i){
+		if(cnt == i) return;
+		
+		var cnt_img = visual.eq(cnt); // 현재 이미지
+		var next_img = visual.eq(i); // 바뀔 이미지
+
+		if(dir == "prev"){
+		 cnt_img.css({left:0}).stop().animate({left:"-100%"});
+		 next_img.css({left:"100%"}).stop().animate({left:0});
+		}else{
+		 cnt_img.css({left:0}).stop().animate({left:"100%"});
+		 next_img.css({left:"-100%"}).stop().animate({left:0});
+		}
+		cnt=i;
+	};// move()함수 종결
+
+	$("#main_wrap").mouseover(function(){
+		clearInterval(setIntervalId);
+	}).mouseout(function(){
+		timer();
+	});
+
+});
+</script>		
 		
