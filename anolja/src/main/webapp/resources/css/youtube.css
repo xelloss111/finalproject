@@ -484,7 +484,7 @@ caption {
 
 #videoSearch {
 	width: 40%;
-	height: 30px;
+	height: 40px;
 	border-radius : 10px;
 	margin-bottom: 10px;
 	padding-left: 30px;
@@ -507,10 +507,77 @@ caption {
 
 .searchList {
 	width: 50%;
-	height: 30px;
+	height: 40px;
 	max-height: 300px;
-	background: #000;
 	float: right;
+}
+
+.list_ul  li {
+	float: left;
+}
+
+.myTank {
+	color: #fff;
+	cursor: pointer;
+	background: #e65d5d;
+	text-align: center;
+	height: 40px;
+	line-height : 40px;
+	width : 40%;
+	border-radius: 10px;
+	margin-left: 50px;
+}
+
+.myTank > span {
+	width: 40%;
+	height: 40px;
+}
+/* select Box */
+
+select {
+	/* styling */
+	border: thin solid #e65d5d;
+	border-radius: 10px;
+	display: inline-block;
+	font: inherit;
+	font-size : 1rem;
+	line-height: 1rem;
+	padding: 0.5em 3.5em 0.5em 1em;
+	width: 100%;
+	height: 40px;
+	border-radius : 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;
+	background-color: #eee;
+	/* reset */
+	margin: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+select.round {
+	background-image: linear-gradient(45deg, transparent 50%, #e65d5d 50%),
+		linear-gradient(135deg, #e65d5d 50%, transparent 50%),
+		radial-gradient(#ddd 70%, transparent 72%);
+	background-position: calc(100% - 20px) calc(1em + 2px),
+		calc(100% - 15px) calc(1em + 2px), calc(100% - .5em) .5em;
+	background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+	background-repeat: no-repeat;
+}
+
+select.round:focus {
+	background-image: linear-gradient(45deg, white 50%, transparent 50%),
+		linear-gradient(135deg, transparent 50%, white 50%),
+		radial-gradient(gray 70%, transparent 72%);
+	background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
+		calc(100% - .5em) .5em;
+	background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+	background-repeat: no-repeat;
+	border-color: #e65d5d;
+	outline: 0;
 }
 
 /* 모달 영역 - 부트스트랩 */
@@ -621,7 +688,8 @@ caption {
 }
 @media (min-width: 768px) {
   .modal-dialog {
-    width: 600px;
+    width: 800px;
+    height : auto;
     margin: 30px auto;
   }
   .modal-content {
@@ -638,4 +706,99 @@ caption {
   }
 }
 
+/* 모달 영역 2 - 내 저장소 */
+.save_myTank {
+	
+}
+
+.save_myTank > ul > li {
+	margin: 2%;
+}
+.save_myTank > ul > li > span {
+	width: 200px;
+	height: 50px;
+	display: inline-block;
+	line-height: 50px;
+}
+.newTank {
+	width: 50%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1rem;
+	border-radius: 10px;
+}
+
+.oldTank {
+	width: 100%;
+	height: 40px;
+	border-radius: 10px;
+	margin-bottom: 20px;	
+}
+.oldTank > span {
+	float: left;
+	height: 40px;
+		
+}
+
+.oldTank > select {
+	float: left;	
+	width: 50%;
+	height: 40px;
+	font-size: 1rem;
+}
+
+hr {
+	border: inset 3px #e65d5d;
+}
+
+.save_info {
+	width: 100%;
+	height: 150px;
+}
+.save_info > h2 {
+	margin: 2%;	
+}
+.save_info > ul > li {
+	float: left;
+}
+.save_thumb {
+	width: 25%;
+}
+.save_titleaddr {
+	width: 75%;
+}
+.save_info > ul > li > span {
+	width: 100%;
+	display: inline-block;
+	margin: 0 0 2% 0;
+}
+
+.save_list_btn {
+	width: 100%;
+}
+
+.save_list_btn > input {
+	width: 50%;
+	margin-left: 25%;
+	margin-right: 25%;
+}
+
+/* video page용 btn */
+.btn {
+	background: #ffc40f;
+}
+
+.btn-default {
+	background: #ffc40f;
+	text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top,#fff 0,#ffc40f 100%);
+    background-image: -o-linear-gradient(top,#fff 0,#ffc40f 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#ffc40f));
+    background-image: linear-gradient(to bottom,#fff 0,#ffc40f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    border-color: #ffc40f;
+}
 

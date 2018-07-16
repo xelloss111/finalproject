@@ -17,12 +17,23 @@
 		<button type="submit" value="Search" class="sc_btn">
 			<i class="fas fa-search-plus"></i>
 		</button>
-
+		
 		<div class="searchList">
-			1
-			2
-			3
-			4
+			<ul class="list_ul">
+				<li class="list_select">
+					<form name="lForm" id="lForm" method="post">
+						<select class="round" name="tank_list" id="tank_list">
+							<option>  저장 리스트 불러오기</option>
+							<option value="thank1">  저장소 리스트1 </option>
+							<option value="thank2">  저장소 리스트2 </option>
+							<option value="thank3">  저장소 리스트3 </option>
+						</select>
+					</form>
+				</li>
+				<li class="myTank"  data-toggle="modal" data-target="#myModal2">
+					<span>내 저장소</span>
+				</li>
+			</ul>
 			
 		</div>
 
@@ -56,30 +67,111 @@
 	<!-- content_row_1 END -->
 	
 	
-	<!-- 모달 영역  -->
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      Modal content
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">YOUTUBE 저장소</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+	<!-- 모달 영역 1 -->
 
+	  <!-- 동영상 저장소 -->
+	  <div class="modal fade" id="myModal1" role="dialog">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title">동영상 저장소</h4>
+	        </div>
+	        
+	        
+	        <div class="modal-body">
+					<form name="saveTank">
+						<div class="save_myTank">
+							<ul>
+								<li><span>새로운 저장소에 저장 :</span> <input type="text"
+									placeholder="    새로운 저장소 이름" name="tankTitle" class="newTank">
+								</li>
 
+								<li class="oldTank"><span>기존 저장소에 저장 :</span> <select
+									class="round" name="tank_list" id="tank_list">
+										<option>저장 리스트 불러오기</option>
+										<option value="thank1">저장소 리스트1</option>
+										<option value="thank2">저장소 리스트2</option>
+										<option value="thank3">저장소 리스트3</option>
+								</select></li>
+
+							</ul>
+						</div>
+						<!-- save_myTank END -->
+						<hr>
+
+						<div class="save_info">
+							<h2>저장 동영상 정보</h2>
+							<!-- script 영역 -->
+							<script>
+								
+								$(document).on("click", ".save_btn", function(){
+									var saveImg = '';
+									var saveTitle ='';
+									var saveImgHtml = '';
+									var saveTitleHtml ='';
+								
+									saveImg = $(this).prev().children('img').attr('src');
+									saveTitle = $(this).prev().children('span').text();
+									console.log("img : " + saveImg);
+									console.log("title : " + saveTitle);
+									
+									saveImgHtml += '<img src="'+ saveImg +' ">';
+									
+									$(".save_thumb").html(saveImgHtml);
+									
+									saveTitleHtml += '<h2>동영상 제목 </h2>';
+									saveTitleHtml += '<span>'+ saveTitle +'</span>';
+									
+									$(".save_titleaddr").html(saveTitleHtml);
+								});
+							</script>
+							<ul>
+								<li class="save_thumb">
+									<!-- 여기가 섬네일 위치 -->
+								</li>
+								<li class="save_titleaddr">
+									
+									<!-- 여기가 제목 위치 -->
+								</li>
+							</ul>
+						</div>
+						<!-- save_info END -->
+						<div class="save_list_btn">
+							<input type="button" class="btn btn-primary" value="저장하기"
+							id="submit">
+						</div>
+					</form>
+
+				</div>
+	        <!-- modal-body END-->
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>	
+	<!-- 모달1 영역 끝 -->
 	
 	
+	<!-- 모달 영역 2 -->
+	<!-- 내 동영상 LIST -->
+	  <div class="modal fade" id="myModal2" role="dialog">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title">My YOUTUBE 저장소</h4>
+	        </div>
+	        <div class="modal-body">
+	          <p>Some text in the modal.</p>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
 </section>
 
 
@@ -154,7 +246,7 @@ req.onreadystatechange = function (aEvt) {
 	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 	 					html2 += '		<span>' + vtitle + '</span>';
 	 					html2 += '	</span>';
-	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal">';
+	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
 	 					html2 += '		<i class="far fa-save"></i>';
 	 					html2 += '  </button>';
 	 					html2 += '</li>';
@@ -283,6 +375,9 @@ function searchEnter() {
 			 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 			 					html2 += '		<span>' + vtitle + '</span>';
 			 					html2 += '	</span>';
+			 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
+			 					html2 += '		<i class="far fa-save"></i>';
+			 					html2 += '  </button>';
 			 					html2 += '</li>';
 			 					
 			 					$(".clickList").html(html2);
@@ -301,7 +396,19 @@ function searchEnter() {
 };
 
 
-// save 클릭 시 이벤트 동적 처리
+///////////////////////////////////동영상 저장 기능
+
+// var saveListHtml ='';
+
+// $(documnet).on("click","#myModal1", function(){
+	
+
+// 	});
+
+
+
+
+////////////////////////////////// save 클릭 시 이벤트 동적 처리
 var modalHtml = '';
 
 $(document).on('click','.save_btn' ,function(){
@@ -312,8 +419,8 @@ $(document).on('click','.save_btn' ,function(){
 		swal({
 			  title: "로그인 필요",
 			  text: "로그인 후 저장 가능합니다.",
-			  icon: "error",
-			  button: "돌아가기",
+			  icon: "warning",
+			  button: "닫기",
 			})
 				return;
 	}
