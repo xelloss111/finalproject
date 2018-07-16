@@ -18,7 +18,13 @@
 			<i class="fas fa-search-plus"></i>
 		</button>
 
-
+		<div class="searchList">
+			1
+			2
+			3
+			4
+			
+		</div>
 
 		<!-- 캐러셀 영역 시작 -->
 		<div class="container-fluid">
@@ -48,6 +54,32 @@
 
 	</div>
 	<!-- content_row_1 END -->
+	
+	
+	<!-- 모달 영역  -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      Modal content
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">YOUTUBE 저장소</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+	
+	
 </section>
 
 
@@ -122,7 +154,7 @@ req.onreadystatechange = function (aEvt) {
 	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 	 					html2 += '		<span>' + vtitle + '</span>';
 	 					html2 += '	</span>';
-	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn">';
+	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal">';
 	 					html2 += '		<i class="far fa-save"></i>';
 	 					html2 += '  </button>';
 	 					html2 += '</li>';
@@ -199,7 +231,7 @@ function searchEnter() {
 							  text: "검색된 영상이 없습니다.",
 							  icon: "error",
 							  button: "돌아가기",
-							}).then((value)=>{
+							}).then((value)=> {
 								$("#videoSearch").focus();
 								return;
 							});
@@ -270,26 +302,21 @@ function searchEnter() {
 
 
 // save 클릭 시 이벤트 동적 처리
+var modalHtml = '';
+
 $(document).on('click','.save_btn' ,function(){
 	
 	if(sessionId == 'null') {
+		$(".modal").remove();
+	
 		swal({
 			  title: "로그인 필요",
 			  text: "로그인 후 저장 가능합니다.",
 			  icon: "error",
 			  button: "돌아가기",
-			});
+			})
 				return;
-	} else {
-		swal({
-			  title: "저장 완료",
-			  text: "저장이 완료되었습니다.",
-			  icon: "success",
-			  button: "돌아가기",
-			});
-				return;
-		}
-		
+	}
 });
 
 
