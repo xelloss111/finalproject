@@ -69,6 +69,8 @@
     
     	// 웹소켓을 이용한 채팅하기
     	var ws = null;
+    	// 현재 문제 출제자
+    	var current = false;
     	
     	$(function () {
     		// 서버의 웹소켓 객체 연결하기
@@ -87,10 +89,14 @@
     			console.log(evt);
     		};
     	});
-    	var current = false;
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
+    			if (msg.includes('메인')) {
+    				alert(msg);
+    				clearInterval(timerId);
+    				location.href = "${pageContext.request.contextPath}/main";
+    			}
     			if (msg.includes('참여')) {
 					var id = msg.substring(0, msg.indexOf('님'));
 					$("#online").append(id+"<br>");
@@ -116,6 +122,9 @@
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
     		}
+			if (!current) {
+    			$("#pencilImg").hide();
+			}
     	}
 
     	function enterkey() {
@@ -128,9 +137,16 @@
     		var $msg = $("#chatInput");
     		if ($msg.val() == "") {
     			alert("내용을 입력하세요");
-    		} else {
-	    		ws.send($msg.val());
-	    		$("#chat").append('<div class="bubbleMe">'+ $msg.val() +'</div>');
+    		}
+    		else {
+    			if (current) {
+    				ws.send("문제를 출제하는동안 채팅할 수 없습니다.");
+    	    		$("#chat").append('<div class="bubbleNotice">문제를 출제하는동안 채팅할 수 없습니다.</div>');
+    			}
+    			else {
+		    		ws.send($msg.val());
+		    		$("#chat").append('<div class="bubbleMe">'+ $msg.val() +'</div>');
+    			}
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
 	    		$msg.val("");
 	    		$msg.focus();
@@ -199,10 +215,6 @@
 	                }
 	            }
 	        });
-	        
-	        function mousedown(e) {
-	        	
-	        }
 	        
 	        paintWs.onmessage = function (evt) {
 	        	console.log(evt.data);
@@ -293,7 +305,7 @@
         
         // 타이머
         var timerId; // 타이머를 핸들링하기 위한 전역 변수
-        var time = 10; // 타이머의 시작 시간
+        var time = 60; // 타이머의 시작 시간
         
         function startTime() {
         	timerId = setInterval("decrementTime()", 1000);
@@ -314,9 +326,10 @@
     		ws.send("gameEnd");
 			$("#question").text("");
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-    		time = 10;
+    		time = 60;
     		
     		if (current) {
+    			ws.send("next");
         		paintWs.send("next");
         		current = false;
     		}
