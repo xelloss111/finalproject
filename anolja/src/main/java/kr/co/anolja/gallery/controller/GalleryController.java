@@ -1,5 +1,16 @@
 package kr.co.anolja.gallery.controller;
 
-public class GalleryController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+@Controller
+@RequestMapping("/gallery")
+public class GalleryController {
+	
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public String gallery() {
+		
+		return "gallery/list";
+	}
 }
