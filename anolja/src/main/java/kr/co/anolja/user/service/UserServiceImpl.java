@@ -3,6 +3,7 @@ package kr.co.anolja.user.service;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -70,8 +71,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User loginUser(User user) throws Exception {
 		User temp = mapper.selectOneUser(user.getId());
+		List<String> idList = mapper.getAnnonymousId();
 		// 스프링 시큐리티의 BCryptPasswordEncoder 객체의 matches 메서드로 패스워드 체크
 		boolean passCheck = passwordEncoder.matches(user.getPass(), temp.getPass());
+				
+		long loginTime = -(temp.getLoginDate().getTime() - new Date().getTime());
+		System.out.println(loginTime);
+		// 로그인 정보 처리
+		if (temp.getLoginDate() == null || loginTime >= 86400000) {
+			mapper.setLoginDate(temp);
+		}
+		
+		// 익명 ID 처리
+		String key = "";
+		if (temp.getAnnonymousId() == null || loginTime >= 86400000) {
+			key = new MailTempKey().getKey(6, false);
+			for (int i = 0; i < idList.size(); i++) {
+				if (key == idList.get(i)) {
+					key = new MailTempKey().getKey(6, false);
+					i = 0;
+					continue;
+				}
+			}
+			temp.setAnnonymousId(key);
+			mapper.setAnnonymousId(temp);
+		}
 		
 		if (temp != null && passCheck == true) {
 			return temp;

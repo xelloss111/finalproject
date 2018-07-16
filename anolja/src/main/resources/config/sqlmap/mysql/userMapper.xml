@@ -16,6 +16,7 @@
 		<result column="file_path" property="filePath" />
 		<result column="file_name" property="fileName" />
 		<result column="file_size" property="fileSize" />
+		<result column="login_date" property="loginDate" />
 	</resultMap>
 	
 	<insert id="registUser" parameterType="user">
@@ -42,9 +43,7 @@
 	</update>
 	
 	<select id="selectOneUser" parameterType="string" resultMap="userMap">
-		select *
-		  from tb_user
-		 where id = #{id}
+		<include refid="search"></include>
 	</select>	
 	
 	
@@ -89,5 +88,28 @@
 		  from tb_user
 		 where id = #{id}
 	</delete>
+
+	<update id="setAnnonymousId" parameterType="user">
+		update tb_user
+		   set annonymous_id = #{annonymousId}
+		 where id = #{id}
+	</update>
+	
+	<select id="getAnnonymousId" resultType="string">
+		select annonymous_id
+		  from tb_user
+	</select>
+	
+	<update id="setLoginDate" parameterType="user">
+		update tb_user
+		   set login_date = now()
+		 where id = #{id}
+	</update>
+	
+	<sql id="search">
+		select *
+		  from tb_user
+		 where id = #{id}
+	</sql>
 
 </mapper>

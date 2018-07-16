@@ -81,21 +81,23 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (message.getPayload().equals("gameEnd")) {
-			for (int i = 10; i >= 1; i--) { 
+		if (message.getPayload().equals("next")) {
+			System.out.println("문제번호: "+questionNo);
+			if (questionNo == 20) {
+				for (WebSocketSession wss : users) {
+					wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
+				}
+				return;
+			}
+		}
+		else if (message.getPayload().equals("gameEnd")) {
+			if (questionNo == 20) {return;}
+			for (int i = 5; i >= 1; i--) { 
 				session.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
 				Thread.sleep(1000); 
 			}
-			
-//			Game.setQuestionNo(questions.get(questionNo));
-//			Game.setQuestionuser(chatList.get(userNo));
-//			System.out.println("chatList.get(userNo): "+chatList.get(userNo));
-			
-//			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
-
+			// 출제자에게 문제 보내기
 			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
-//			System.out.println("users.get(userNo): " + users.get(userNo));
-//			System.out.println("questions.get(questionNo): " + questions.get(questionNo));
 			
 			session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));

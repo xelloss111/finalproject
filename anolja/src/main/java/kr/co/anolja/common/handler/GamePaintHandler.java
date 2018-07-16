@@ -51,8 +51,10 @@ public class GamePaintHandler extends TextWebSocketHandler {
 			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
 				GameChatHandler.userNo = 0;
 			}
-			Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
-			Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
+			if (GameChatHandler.questionNo < 20) {
+				Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
+				Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
+			}
 		}
 		if (message.getPayload().equals("gameRestart")) {
 			for (int i = 0; i < connectedUsers.size(); i++) {

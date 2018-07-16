@@ -14,7 +14,14 @@ public class User {
 	private String filePath;
 	private String fileName;
 	private int fileSize;
+	private Date loginDate;
 	
+	public Date getLoginDate() {
+		return loginDate;
+	}
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
+	}
 	public String getFileName() {
 		return fileName;
 	}
