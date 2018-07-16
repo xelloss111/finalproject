@@ -40,7 +40,7 @@
 
 				<div class="rank-wrapper">
 
-					<div class="rank-box">
+					<div class="rank-box solobox">
 						<h4 class="rank-stats-title-solo"
 							style="background-color: #ff1e3c">솔로</h4>
 						<!--  -->
@@ -87,29 +87,29 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>승률</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber value="${solo.wins/solo.roundsPlayed*100}"
 													pattern=".0" />
 												%
 											</div>
 										</li>
 										<li class="ranked-stats__item">
-											<div>Top10%</div>
-											<div>
+											<div >Top10%</div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${solo.top10s/solo.roundsPlayed*100}" pattern=".0" />
 											</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>최대거리 킬</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber value="${solo.longestKill}" pattern=".0" />
 												m
 											</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>헤드샷</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${solo.headshotKills/solo.kills*100}" pattern=".0" />
 												%
@@ -117,11 +117,11 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>팀킬</div>
-											<div>${solo.teamKills}</div>
+											<div class="ranked-stats__value">${solo.teamKills}</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>평균 생존시간</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${(solo.timeSurvived/solo.roundsPlayed)/60}"
 													pattern="0" />
@@ -130,7 +130,7 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>KDA</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${(solo.kills+solo.assists)/solo.losses}"
 													pattern=".00" />
@@ -138,7 +138,7 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>최다 킬</div>
-											<div>${solo.roundMostKills}</div>
+											<div class="ranked-stats__value">${solo.roundMostKills}</div>
 										</li>
 									</ul>
 
@@ -160,7 +160,7 @@
 
 					</div>
 
-					<div class="rank-box">
+					<div class="rank-box duobox">
 						<h4 class="rank-stats-title-duo" style="background-color: #ffa035">듀오</h4>
 						<c:choose>
 							<c:when test="${duo.roundsPlayed ne 0}">
@@ -269,7 +269,6 @@
 											width="70px" height="70px">
 										<p>표시할 전적이 없습니다.</p>
 									</div>
-
 								</div>
 							</c:when>
 						</c:choose>
@@ -292,7 +291,7 @@
 					 -->
 
 
-					<div class="rank-box">
+					<div class="rank-box squadbox">
 						<h4 class="rank-stats-title-squad"
 							style="background-color: #448cff">스쿼드</h4>
 						<c:choose>
@@ -338,7 +337,7 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>승률</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${squad.wins/squad.roundsPlayed*100}" pattern=".0" />
 												%
@@ -346,21 +345,21 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>Top10%</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${squad.top10s/squad.roundsPlayed*100}" pattern=".0" />
 											</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>최대거리 킬</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber value="${squad.longestKill}" pattern=".0" />
 												m
 											</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>헤드샷</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${squad.headshotKills/squad.kills*100}" pattern=".0" />
 												%
@@ -368,11 +367,11 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>팀킬</div>
-											<div>${solo.teamKills}</div>
+											<div class="ranked-stats__value">${solo.teamKills}</div>
 										</li>
 										<li class="ranked-stats__item">
 											<div>평균 생존시간</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${(squad.timeSurvived/squad.roundsPlayed)/60}"
 													pattern="0" />
@@ -381,7 +380,7 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>KDA</div>
-											<div>
+											<div class="ranked-stats__value">
 												<fmt:formatNumber
 													value="${(squad.kills+squad.assists)/squad.losses}"
 													pattern=".00" />
@@ -389,7 +388,7 @@
 										</li>
 										<li class="ranked-stats__item">
 											<div>최다 킬</div>
-											<div>${squad.roundMostKills}</div>
+											<div class="ranked-stats__value">${squad.roundMostKills}</div>
 										</li>
 									</ul>
 
@@ -521,7 +520,62 @@
 										dataType : "JSON",
 										success : function(data) {
 											console.log(data[0].roundsPlayed);
-										
+											
+											var solo = data[0];
+											var duo = data[1];
+											var squad = data[2];
+											
+											alert(((solo.winPoints*100.36)+(solo.killPoints*19.61))/100);
+											
+											var $soloBox = ".rank-box.solobox";
+											var $duoBox = ".rank-box.duobox";
+											var $squadBox = ".rank-box.squadbox";
+																						
+											$($soloBox).find(".rank-score").text((((solo.winPoints*100.36)+(solo.killPoints*19.61))/100).toFixed(0));
+											$($soloBox).find(".rank-ranking").eq(0).text("KillPoints"+solo.killPoints.toFixed(0));
+											$($soloBox).find(".rank-ranking").eq(1).text("WinPoints"+solo.winPoints.toFixed(0));
+											$($soloBox).find(".ranked-stats__value").eq(0).text((solo.kills/solo.losses).toFixed(2));
+											$($soloBox).find(".ranked-stats__value").eq(1).text((solo.damageDealt/solo.roundsPlayed).toFixed(0));
+											$($soloBox).find(".ranked-stats__value").eq(2).text((solo.wins/solo.roundsPlayed*100).toFixed(1)+"%");
+											$($soloBox).find(".ranked-stats__value").eq(3).text((solo.top10s/solo.roundsPlayed*100).toFixed(1));
+											$($soloBox).find(".ranked-stats__value").eq(4).text(solo.longestKill.toFixed(0)+" m");
+											$($soloBox).find(".ranked-stats__value").eq(5).text((solo.headshotKills/solo.kills*100).toFixed(1)+"%");
+											$($soloBox).find(".ranked-stats__value").eq(6).text(solo.teamKills.toFixed(0));
+											$($soloBox).find(".ranked-stats__value").eq(7).text(((solo.timeSurvived/solo.roundsPlayed)/60).toFixed(0)+" minutes");
+											$($soloBox).find(".ranked-stats__value").eq(8).text(((solo.kills+solo.assists)/solo.losses).toFixed(2));
+											$($soloBox).find(".ranked-stats__value").eq(9).text(solo.roundMostKills.toFixed(0));
+											
+											$($duoBox).find(".rank-score").text((((duo.winPoints*100.36)+(duo.killPoints*19.61))/100).toFixed(0));
+											$($duoBox).find(".rank-ranking").eq(0).text("KillPoints"+duo.killPoints.toFixed(0));
+											$($duoBox).find(".rank-ranking").eq(1).text("WinPoints"+duo.winPoints.toFixed(0));
+											$($duoBox).find(".ranked-stats__value").eq(0).text((duo.kills/duo.losses).toFixed(2));
+											$($duoBox).find(".ranked-stats__value").eq(1).text((duo.damageDealt/duo.roundsPlayed).toFixed(0));
+											$($duoBox).find(".ranked-stats__value").eq(2).text((duo.wins/duo.roundsPlayed*100).toFixed(1)+"%");
+											$($duoBox).find(".ranked-stats__value").eq(3).text((duo.top10s/duo.roundsPlayed*100).toFixed(1));
+											$($duoBox).find(".ranked-stats__value").eq(4).text(duo.longestKill.toFixed(0)+" m");
+											$($duoBox).find(".ranked-stats__value").eq(5).text((duo.headshotKills/duo.kills*100).toFixed(1)+"%");
+											$($duoBox).find(".ranked-stats__value").eq(6).text(duo.teamKills.toFixed(0));
+											$($duoBox).find(".ranked-stats__value").eq(7).text(((duo.timeSurvived/duo.roundsPlayed)/60).toFixed(0)+" minutes");
+											$($duoBox).find(".ranked-stats__value").eq(8).text(((duo.kills+duo.assists)/duo.losses).toFixed(2));
+											$($duoBox).find(".ranked-stats__value").eq(9).text(duo.roundMostKills.toFixed(0));
+											
+											$($squadBox).find(".rank-score").text((((squad.winPoints*100.36)+(squad.killPoints*19.61))/100).toFixed(0));
+											$($squadBox).find(".rank-ranking").eq(0).text("KillPoints"+squad.killPoints.toFixed(0));
+											$($squadBox).find(".rank-ranking").eq(1).text("WinPoints"+squad.winPoints.toFixed(0));
+											$($squadBox).find(".ranked-stats__value").eq(0).text((squad.kills/squad.losses).toFixed(2));
+											$($squadBox).find(".ranked-stats__value").eq(1).text((squad.damageDealt/squad.roundsPlayed).toFixed(0));
+											$($squadBox).find(".ranked-stats__value").eq(2).text((squad.wins/squad.roundsPlayed*100).toFixed(1)+"%");
+											$($squadBox).find(".ranked-stats__value").eq(3).text((squad.top10s/squad.roundsPlayed*100).toFixed(1));
+											$($squadBox).find(".ranked-stats__value").eq(4).text(squad.longestKill.toFixed(0)+" m");
+											$($squadBox).find(".ranked-stats__value").eq(5).text((squad.headshotKills/squad.kills*100).toFixed(1)+"%");
+											$($squadBox).find(".ranked-stats__value").eq(6).text(squad.teamKills.toFixed(0));
+											$($squadBox).find(".ranked-stats__value").eq(7).text(((squad.timeSurvived/squad.roundsPlayed)/60).toFixed(0) +" minutes");
+											$($squadBox).find(".ranked-stats__value").eq(8).text(((squad.kills+squad.assists)/squad.losses).toFixed(2));
+											$($squadBox).find(".ranked-stats__value").eq(9).text(squad.roundMostKills.toFixed(0));
+											
+											
+											
+											
 										}
 									})
 						})
