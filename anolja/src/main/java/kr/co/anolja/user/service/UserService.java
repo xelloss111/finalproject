@@ -17,6 +17,7 @@ public interface UserService {
 	public String checkPass(User user) throws Exception;
 	public String changePass(User user) throws Exception;
 	public void registProfileImage(String id, MultipartFile attach) throws Exception;
+	public void registProfileBase64Image(String id, String fileInfo) throws Exception;
 	public void profileImageView(String id, HttpServletResponse res) throws Exception;
 	public void profileImageRemove(String id) throws Exception;
 	public User getUserInfo(String id) throws Exception;

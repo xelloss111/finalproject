@@ -13,7 +13,7 @@ public class User {
 	private Date regDate;
 	private String filePath;
 	private String fileName;
-	private int fileSize;
+	private long fileSize;
 	private Date loginDate;
 	
 	public Date getLoginDate() {
@@ -28,10 +28,10 @@ public class User {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getFilePath() {

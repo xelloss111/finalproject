@@ -173,14 +173,25 @@ public class UserServiceImpl implements UserService {
 			dir.mkdirs();
 		}
 		
-		attach.transferTo(new File(defaultPath + detailPath, id + "_" + attach.getOriginalFilename()));
+		attach.transferTo(new File(defaultPath + detailPath, id + ".jpg"));
 				
 		User temp = new User();
 		temp.setId(id);
 		temp.setFilePath(detailPath);
-		temp.setFileName(id + "_" + attach.getOriginalFilename());
-		temp.setFileSize((int)attach.getSize());
+		temp.setFileName(id + ".jpg");
+		temp.setFileSize(attach.getSize());
 		
+		mapper.registProfileImage(temp);
+	}
+	
+	@Override
+	public void registProfileBase64Image(String id, String fileInfo) throws Exception {
+		Object[] result = new FileHandler().base64Decode(id, fileInfo);
+		User temp = new User();
+		temp.setId(id);
+		temp.setFilePath((String)result[0]);
+		temp.setFileName((String)result[1]);
+		temp.setFileSize((Long)result[2]);
 		mapper.registProfileImage(temp);
 	}
 

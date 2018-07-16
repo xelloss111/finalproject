@@ -28,10 +28,6 @@ if (mypage) {
 					$(photoArea).children('img').attr('id', 'user');
 					$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
 				}
-				
-				if ($(photoArea).children('img').attr('id') == 'user') {
-					$(mypage).append(removeIcon);
-				}
 			}
 		});
 		
@@ -105,8 +101,7 @@ if (mypage) {
 		
 		// 프로필 이미지 출력 팝업
 		$(document).on('click', ".photoIcon", function() {
-			var windowOpen = window.open("_blank", "location=no");
-			windowOpen.locationbar.visible = false;
+			var windowOpen = window.open("about:blank", "resizable=1", "pop");
 			windowOpen.location.href = ctx + '/user/profile'
 			
 			

@@ -135,6 +135,15 @@ public class UserController {
 		return "프로필 이미지 등록 완료";
 	}
 	
+	@RequestMapping(value = "registProfileBase64Image")
+	@ResponseBody
+	public String registProfileBase64Image(@RequestParam("id") String id, 
+			@RequestParam("fileInfo") String fileInfo) throws Exception {
+		if (id == null || fileInfo == null) return "일시적인 오류로 프로필 이미지 등록 실패\n다시 시도하세요";
+		service.registProfileBase64Image(id, fileInfo);
+		return "프로필 이미지 등록 완료";
+	}
+	
 	@RequestMapping(value = "viewProfileImage")
 	public void viewProfileImage(String id, HttpServletResponse res) throws Exception {
 		service.profileImageView(id, res);
@@ -174,8 +183,7 @@ public class UserController {
 		return "/main";
 	}
 	
-	@RequestMapping(value = "mypage/profile", method = RequestMethod.GET)
-	public String profile() throws Exception {
-		return "user/mypage/profile";
+	@RequestMapping(value = "profile", method = RequestMethod.GET)
+	public void profile() throws Exception {
 	}
 }
