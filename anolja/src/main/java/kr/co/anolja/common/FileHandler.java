@@ -15,6 +15,9 @@ public class FileHandler {
 		String fName = fileName;
 		
 		File f = new File(uploadPath + path, fName);
+		if(!f.isDirectory()) {
+			f.mkdirs();
+		}
 		
 		res.setHeader("Content-Type", "image/jpg");
 

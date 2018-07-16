@@ -1,5 +1,7 @@
 package kr.co.anolja.repository.mapper;
 
+import java.util.List;
+
 import kr.co.anolja.repository.domain.User;
 
 public interface UserMapper {
@@ -14,4 +16,7 @@ public interface UserMapper {
 	void removeProfileImage(String id);
 	void updateUserEmail(User user);
 	void deleteUserInfo(String id);
+	void setAnnonymousId(User user);
+	void setLoginDate(User user);
+	List<String> getAnnonymousId();
 }
