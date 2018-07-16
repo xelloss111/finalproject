@@ -44,119 +44,157 @@
 						<h4 class="rank-stats-title-solo"
 							style="background-color: #ff1e3c">솔로</h4>
 						<!--  -->
-						<c:choose>
-							<c:when test="${solo.roundsPlayed ne 0}">
-								<div class="rank-stats-header">
-									<div class="rank-stats-grade">
-										<img class="rank-image"
-											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
-									</div>
-									<div class="rank-stats-data">
-										<div class="rank-score">
-											<fmt:formatNumber
-												value="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100}"
-												pattern="0" />
+						<div class="stats-content">
+							<c:choose>
+								<c:when test="${solo.roundsPlayed ne 0}">
+									<div class="rank-stats-header">
+										<div class="rank-stats-grade">
+											<c:choose>
+												<c:when
+													test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <1600}">
+													<img class="rank-image"
+														src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
+												</c:when>
+												<c:when
+													test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 >=1600 && ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <1800}">
+													<img class="rank-image"
+														src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png">
+												</c:when>
+												<c:when
+													test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 >=1800 && ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <2000}">
+													<img class="rank-image"
+														src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png">
+												</c:when>
+												<c:otherwise>
+													<img class="rank-image"
+														src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png">
+												</c:otherwise>
+											</c:choose>
 										</div>
-										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">
-											KillPoints
-											<fmt:formatNumber value="${solo.killPoints}" pattern="0" />
-										</div>
-										<div class="rank-ranking">
-											WinPoints
-											<fmt:formatNumber value="${solo.winPoints}" pattern="0" />
-										</div>
-									</div>
-								</div>
-
-								<div class="ranked-stats__detailed">
-									<ul class="ranked-stats__list">
-										<li class="ranked-stats__item">
-											<div class="ranked-stats__key">K/D</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber value="${solo.kills/solo.losses}"
-													pattern=".00" />
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div class="ranked-stats__key">경기 당 데미지</div>
-											<div class="ranked-stats__value">
+										<div class="rank-stats-data">
+											<div class="rank-score">
 												<fmt:formatNumber
-													value="${solo.damageDealt/solo.roundsPlayed}" pattern="0" />
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>승률</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber value="${solo.wins/solo.roundsPlayed*100}"
-													pattern=".0" />
-												%
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div >Top10%</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber
-													value="${solo.top10s/solo.roundsPlayed*100}" pattern=".0" />
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>최대거리 킬</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber value="${solo.longestKill}" pattern=".0" />
-												m
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>헤드샷</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber
-													value="${solo.headshotKills/solo.kills*100}" pattern=".0" />
-												%
-											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>팀킬</div>
-											<div class="ranked-stats__value">${solo.teamKills}</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>평균 생존시간</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber
-													value="${(solo.timeSurvived/solo.roundsPlayed)/60}"
+													value="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100}"
 													pattern="0" />
-												minutes
 											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>KDA</div>
-											<div class="ranked-stats__value">
-												<fmt:formatNumber
-													value="${(solo.kills+solo.assists)/solo.losses}"
-													pattern=".00" />
+											<div class="rank-grade">
+												<c:choose>
+													<c:when
+														test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <1600}">
+										Bronze
+									</c:when>
+													<c:when
+														test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 >=1600 && ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <1800}">
+										Silver
+									</c:when>
+													<c:when
+														test="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 >=1800 && ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 <2000}">
+										Gold
+									</c:when>
+													<c:otherwise>
+										Diamond
+									</c:otherwise>
+												</c:choose>
 											</div>
-										</li>
-										<li class="ranked-stats__item">
-											<div>최다 킬</div>
-											<div class="ranked-stats__value">${solo.roundMostKills}</div>
-										</li>
-									</ul>
-
-								</div>
-							</c:when>
-							<c:when test="${solo.roundsPlayed eq 0}">
-								<div class="rank-stats-header">
-									<div class="no-status">
-										<img
-											src="${pageContext.request.contextPath}/resources/images/battleground/exclamation-mark.png"
-											width="70px" height="70px">
-										<p>표시할 전적이 없습니다.</p>
+											<div class="rank-ranking">
+												KillPoints
+												<fmt:formatNumber value="${solo.killPoints}" pattern="0" />
+											</div>
+											<div class="rank-ranking">
+												WinPoints
+												<fmt:formatNumber value="${solo.winPoints}" pattern="0" />
+											</div>
+										</div>
 									</div>
 
-								</div>
-							</c:when>
-						</c:choose>
+									<div class="ranked-stats__detailed">
+										<ul class="ranked-stats__list">
+											<li class="ranked-stats__item">
+												<div class="ranked-stats__key">K/D</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber value="${solo.kills/solo.losses}"
+														pattern=".00" />
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div class="ranked-stats__key">경기 당 데미지</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${solo.damageDealt/solo.roundsPlayed}" pattern="0" />
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>승률</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${solo.wins/solo.roundsPlayed*100}" pattern=".0" />
+													%
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>Top10%</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${solo.top10s/solo.roundsPlayed*100}" pattern=".0" />
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>최대거리 킬</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber value="${solo.longestKill}" pattern=".0" />
+													m
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>헤드샷</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${solo.headshotKills/solo.kills*100}" pattern=".0" />
+													%
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>팀킬</div>
+												<div class="ranked-stats__value">${solo.teamKills}</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>평균 생존시간</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${(solo.timeSurvived/solo.roundsPlayed)/60}"
+														pattern="0" />
+													minutes
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>KDA</div>
+												<div class="ranked-stats__value">
+													<fmt:formatNumber
+														value="${(solo.kills+solo.assists)/solo.losses}"
+														pattern=".00" />
+												</div>
+											</li>
+											<li class="ranked-stats__item">
+												<div>최다 킬</div>
+												<div class="ranked-stats__value">${solo.roundMostKills}</div>
+											</li>
+										</ul>
 
+									</div>
+								</c:when>
+								<c:when test="${solo.roundsPlayed eq 0}">
+									<div class="rank-stats-header">
+										<div class="no-status">
+											<img
+												src="${pageContext.request.contextPath}/resources/images/battleground/exclamation-mark.png"
+												width="70px" height="70px">
+											<p>표시할 전적이 없습니다.</p>
+										</div>
+
+									</div>
+								</c:when>
+							</c:choose>
+						</div>
 
 					</div>
 
@@ -166,8 +204,27 @@
 							<c:when test="${duo.roundsPlayed ne 0}">
 								<div class="rank-stats-header">
 									<div class="rank-stats-grade">
-										<img class="rank-image"
-											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
+										<c:choose>
+											<c:when
+												test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <1600}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
+											</c:when>
+											<c:when
+												test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 >=1600 && ((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <1800}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png">
+											</c:when>
+											<c:when
+												test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 >=1800 && ((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <2000}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png">
+											</c:when>
+											<c:otherwise>
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png">
+											</c:otherwise>
+										</c:choose>
 									</div>
 									<div class="rank-stats-data">
 										<div class="rank-score">
@@ -175,7 +232,25 @@
 												value="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100}"
 												pattern="0" />
 										</div>
-										<div class="rank-grade">Silver 4</div>
+										<div class="rank-grade">
+											<c:choose>
+												<c:when
+													test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <1600}">
+										Bronze
+									</c:when>
+												<c:when
+													test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 >=1600 && ((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <1800}">
+										Silver
+									</c:when>
+												<c:when
+													test="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 >=1800 && ((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 <2000}">
+										Gold
+									</c:when>
+												<c:otherwise>
+										Diamond
+									</c:otherwise>
+											</c:choose>
+										</div>
 										<div class="rank-ranking">
 											KillPoints
 											<fmt:formatNumber value="${duo.killPoints}" pattern="0" />
@@ -298,8 +373,27 @@
 							<c:when test="${squad.roundsPlayed ne 0}">
 								<div class="rank-stats-header">
 									<div class="rank-stats-grade">
-										<img class="rank-image"
-											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
+										<c:choose>
+											<c:when
+												test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <1600}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
+											</c:when>
+											<c:when
+												test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 >=1600 && ((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <1800}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png">
+											</c:when>
+											<c:when
+												test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 >=1800 && ((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <2000}">
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png">
+											</c:when>
+											<c:otherwise>
+												<img class="rank-image"
+													src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png">
+											</c:otherwise>
+										</c:choose>
 									</div>
 									<div class="rank-stats-data">
 										<div class="rank-score">
@@ -307,7 +401,22 @@
 												value="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100}"
 												pattern="0" />
 										</div>
-										<div class="rank-grade">Silver 4</div>
+										<div class="rank-grade">
+											<c:choose>
+												<c:when test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <1600}">
+										Bronze
+									</c:when>
+												<c:when test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 >=1600 && ((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <1800}">
+										Silver
+									</c:when>
+												<c:when test="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 >=1800 && ((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 <2000}">
+										Gold
+									</c:when>
+												<c:otherwise>
+										Diamond
+									</c:otherwise>
+											</c:choose>
+										</div>
 										<div class="rank-ranking">
 											KillPoints
 											<fmt:formatNumber value="${squad.winPoints}" pattern="0" />
@@ -432,6 +541,9 @@
 
 				<div class="matches-list-layer">
 					<ul class="matches__list">
+					<c:if test="${empty ulist}">
+					<li class='matches-item'><div class='matches-item_summary' style="text-align: center;">표시할 매치기록이 존재하지 않습니다.</div></li>
+						</c:if>
 						<c:forEach var="mlog" items="${ulist}">
 							<li class="matches-item ${mlog.gameMode}">
 								<div class="matches-item_summary">
@@ -481,6 +593,7 @@
 							</li>
 
 						</c:forEach>
+					
 					</ul>
 					<button data-selector="total-played-game-btn-more"
 						class="total-played-game__btn total-played-game__btn--more loadLog">더
@@ -496,6 +609,15 @@
 
 <script>
 	var displayCnt = 4; //화면 첫 로딩시 보여줄 리스트 개수 지정 관련 변수
+	
+	var alertMsg = "<div class=\"rank-stats-header\">\r\n" + 
+	"												<div class=\"no-status\">\r\n" + 
+	"													<img\r\n" + 
+	"														src=\"${pageContext.request.contextPath}/resources/images/battleground/exclamation-mark.png\"\r\n" + 
+	"														width=\"70px\" height=\"70px\">\r\n" + 
+	"													<p>표시할 전적이 없습니다.</p>\r\n" + 
+	"												</div>\r\n" + 
+	"											</div>";
 
 	$(document).ready(
 			function() {
@@ -530,7 +652,59 @@
 											var $soloBox = ".rank-box.solobox";
 											var $duoBox = ".rank-box.duobox";
 											var $squadBox = ".rank-box.squadbox";
-																						
+											
+											var soloImgLink = "";
+											var duoImgLink = "";
+											var squadImgLink = "";
+											
+											var soloRank = "";
+											var duoRank = "";
+											var squadRank = "";
+											
+											if ((((solo.winPoints * 100.36) + (solo.killPoints * 19.61)) / 100) < 1600) {
+									            soloImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png'>";
+									            soloRank += "Bronze";
+									        } else if ((((solo.winPoints * 100.36) + (solo.killPoints * 19.61)) / 100) >= 1600 && (((solo.winPoints * 100.36) + (solo.killPoints * 19.61)) / 100) < 1800) {
+									            soloImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png'>"
+									            soloRank += "Silver";
+									        } else if ((((solo.winPoints * 100.36) + (solo.killPoints * 19.61)) / 100) >= 1800 && (((solo.winPoints * 100.36) + (solo.killPoints * 19.61)) / 100) < 2000) {
+									            soloImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png'>";
+									            soloRank += "Gold";
+									        } else {
+									            soloImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png'>";
+									            soloRank += "Diamond";
+									        }
+
+									        if ((((duo.winPoints * 100.36) + (duo.killPoints * 19.61)) / 100) < 1600) {
+									            duoImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png'>";
+									            duoRank += "Bronze";
+									        } else if ((((duo.winPoints * 100.36) + (duo.killPoints * 19.61)) / 100) >= 1600 && (((duo.winPoints * 100.36) + (duo.killPoints * 19.61)) / 100) < 1800) {
+									            duoImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png'>"
+									            duoRank += "Silver";
+									        } else if ((((duo.winPoints * 100.36) + (duo.killPoints * 19.61)) / 100) >= 1800 && (((duo.winPoints * 100.36) + (duo.killPoints * 19.61)) / 100) < 2000) {
+									            duoImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png'>";
+									            duoRank += "Gold";
+									        } else {
+									            duoImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png'>";
+									            duoRank += "Diamond";
+									        }
+
+									        if ((((squad.winPoints * 100.36) + (squad.killPoints * 19.61)) / 100) < 1600) {
+									            squadImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png'>";
+									            squadRank += "Bronze";
+									        } else if ((((squad.winPoints * 100.36) + (squad.killPoints * 19.61)) / 100) >= 1600 && (((squad.winPoints * 100.36) + (squad.killPoints * 19.61)) / 100) < 1800) {
+									            squadImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/silver.png'>"
+									            squadRank += "Silver";
+									        } else if ((((squad.winPoints * 100.36) + (squad.killPoints * 19.61)) / 100) >= 1800 && (((squad.winPoints * 100.36) + (squad.killPoints * 19.61)) / 100) < 2000) {
+									            squadImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/gold.png'>";
+									            squadRank += "Gold";
+									        } else {
+									            squadImgLink += "<img class='rank-image' src='${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/diamond.png'>";
+									            squadRank += "Diamond";
+									        }
+											
+											//함수화 필요
+											if(solo.roundsPlayed !=0 || ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 !=0 ||solo == null){
 											$($soloBox).find(".rank-score").text((((solo.winPoints*100.36)+(solo.killPoints*19.61))/100).toFixed(0));
 											$($soloBox).find(".rank-ranking").eq(0).text("KillPoints"+solo.killPoints.toFixed(0));
 											$($soloBox).find(".rank-ranking").eq(1).text("WinPoints"+solo.winPoints.toFixed(0));
@@ -544,7 +718,13 @@
 											$($soloBox).find(".ranked-stats__value").eq(7).text(((solo.timeSurvived/solo.roundsPlayed)/60).toFixed(0)+" minutes");
 											$($soloBox).find(".ranked-stats__value").eq(8).text(((solo.kills+solo.assists)/solo.losses).toFixed(2));
 											$($soloBox).find(".ranked-stats__value").eq(9).text(solo.roundMostKills.toFixed(0));
+											$($soloBox + " .rank-stats-grade").html(soloImgLink);
+											$($soloBox + " .rank-grade").html(soloRank);
+											}else{
+												$($soloBox + " .stats-content").html(alertMsg);
+											}
 											
+											if(duo.roundsPlayed !=0 &&((duo.winPoints*100.36)+(duo.killPoints*19.61))/100 !=0 ){	
 											$($duoBox).find(".rank-score").text((((duo.winPoints*100.36)+(duo.killPoints*19.61))/100).toFixed(0));
 											$($duoBox).find(".rank-ranking").eq(0).text("KillPoints"+duo.killPoints.toFixed(0));
 											$($duoBox).find(".rank-ranking").eq(1).text("WinPoints"+duo.winPoints.toFixed(0));
@@ -558,7 +738,13 @@
 											$($duoBox).find(".ranked-stats__value").eq(7).text(((duo.timeSurvived/duo.roundsPlayed)/60).toFixed(0)+" minutes");
 											$($duoBox).find(".ranked-stats__value").eq(8).text(((duo.kills+duo.assists)/duo.losses).toFixed(2));
 											$($duoBox).find(".ranked-stats__value").eq(9).text(duo.roundMostKills.toFixed(0));
+											$($duoBox + " .rank-stats-grade").html(duoImgLink);
+											$($duoBox + " .rank-grade").html(duoRank);
+											}else{
+												$($duoBox + " .stats-content").html(alertMsg);
+											}
 											
+											if(squad.roundsPlayed !=0 &&((squad.winPoints*100.36)+(squad.killPoints*19.61))/100 !=0 ){
 											$($squadBox).find(".rank-score").text((((squad.winPoints*100.36)+(squad.killPoints*19.61))/100).toFixed(0));
 											$($squadBox).find(".rank-ranking").eq(0).text("KillPoints"+squad.killPoints.toFixed(0));
 											$($squadBox).find(".rank-ranking").eq(1).text("WinPoints"+squad.winPoints.toFixed(0));
@@ -572,8 +758,11 @@
 											$($squadBox).find(".ranked-stats__value").eq(7).text(((squad.timeSurvived/squad.roundsPlayed)/60).toFixed(0) +" minutes");
 											$($squadBox).find(".ranked-stats__value").eq(8).text(((squad.kills+squad.assists)/squad.losses).toFixed(2));
 											$($squadBox).find(".ranked-stats__value").eq(9).text(squad.roundMostKills.toFixed(0));
-											
-											
+											$($squadBox + " .rank-stats-grade").html(squadImgLink);
+											$($squadBox + " .rank-grade").html(squadRank);
+											}else{
+												$($squadBox + " .stats-content").html(alertMsg);
+											}
 											
 											
 										}
@@ -595,7 +784,7 @@
 						})
 			});
 
-	
+	//함수 생성 필요
 	$(document).ready(function() {
 		var all = "<c:forEach var='mlog' items='${ulist}'>" + 
 		"							<li class='matches-item ${mlog.gameMode}'>" + 
@@ -769,11 +958,20 @@
 		"							</li>\r\n" + 
 		"						</c:forEach>";
 		
+		
+		
+		var alertLi = "<li class='matches-item'><div class='rank-stats-header'><div class='no-status'>"+
+		"<img src='${pageContext.request.contextPath}/resources/images/battleground/exclamation-mark.png' width='70px' height='70px'>"+
+		"<p>표시할 전적이 없습니다.</p></div></div></div></li>";
+		
 		$(".allbtn").on("click", function() {
 			displayCnt = 4;
 			$("ul.matches__list").html(all);
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
+			if($("ul.matches__list").children().length == 0){
+				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+			}
 		});
 		
 		$(".solobtn").on("click", function() {
@@ -781,6 +979,9 @@
 			$("ul.matches__list").html(solo);
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
+			if($("ul.matches__list").children().length == 0){
+				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+			}
 		});
 		
 		$(".duobtn").on("click", function() {
@@ -788,6 +989,9 @@
 			$("ul.matches__list").html(duo);
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
+			if($("ul.matches__list").children().length == 0){
+				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+			}
 		});
 		
 		$(".squadbtn").on("click", function() {
@@ -795,6 +999,9 @@
 			$("ul.matches__list").html(squad);
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
+			if($("ul.matches__list").children().length == 0){
+				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+			}
 		});
 
 	})
