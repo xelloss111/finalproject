@@ -39,7 +39,7 @@
 				</div>
 
 				<div class="rank-wrapper">
-				
+
 					<div class="rank-box">
 						<h4 class="rank-stats-title-solo"
 							style="background-color: #ff1e3c">솔로</h4>
@@ -52,10 +52,20 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score"><fmt:formatNumber value="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100}" pattern="0" /></div>
+										<div class="rank-score">
+											<fmt:formatNumber
+												value="${((solo.winPoints*100.36)+(solo.killPoints*19.61))/100}"
+												pattern="0" />
+										</div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${solo.killPoints}" pattern="0" /></div>
-										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${solo.winPoints}" pattern="0" /></div>
+										<div class="rank-ranking">
+											KillPoints
+											<fmt:formatNumber value="${solo.killPoints}" pattern="0" />
+										</div>
+										<div class="rank-ranking">
+											WinPoints
+											<fmt:formatNumber value="${solo.winPoints}" pattern="0" />
+										</div>
 									</div>
 								</div>
 
@@ -100,7 +110,9 @@
 										<li class="ranked-stats__item">
 											<div>헤드샷</div>
 											<div>
-												<fmt:formatNumber value="${solo.headshotKills/solo.kills*100}" pattern=".0" /> %
+												<fmt:formatNumber
+													value="${solo.headshotKills/solo.kills*100}" pattern=".0" />
+												%
 											</div>
 										</li>
 										<li class="ranked-stats__item">
@@ -158,10 +170,20 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score"><fmt:formatNumber value="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100}" pattern="0" /></div>
+										<div class="rank-score">
+											<fmt:formatNumber
+												value="${((duo.winPoints*100.36)+(duo.killPoints*19.61))/100}"
+												pattern="0" />
+										</div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${duo.killPoints}" pattern="0" /></div>
-										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${duo.winPoints}" pattern="0" /></div>
+										<div class="rank-ranking">
+											KillPoints
+											<fmt:formatNumber value="${duo.killPoints}" pattern="0" />
+										</div>
+										<div class="rank-ranking">
+											WinPoints
+											<fmt:formatNumber value="${duo.winPoints}" pattern="0" />
+										</div>
 									</div>
 								</div>
 
@@ -192,8 +214,8 @@
 										<li class="ranked-stats__item">
 											<div>Top10%</div>
 											<div>
-												<fmt:formatNumber
-													value="${duo.top10s/duo.roundsPlayed*100}" pattern=".0" />
+												<fmt:formatNumber value="${duo.top10s/duo.roundsPlayed*100}"
+													pattern=".0" />
 											</div>
 										</li>
 										<li class="ranked-stats__item">
@@ -206,7 +228,9 @@
 										<li class="ranked-stats__item">
 											<div>헤드샷</div>
 											<div>
-												<fmt:formatNumber value="${duo.headshotKills/duo.kills*100}" pattern=".0" />%
+												<fmt:formatNumber value="${duo.headshotKills/duo.kills*100}"
+													pattern=".0" />
+												%
 											</div>
 										</li>
 										<li class="ranked-stats__item">
@@ -226,8 +250,7 @@
 											<div>KDA</div>
 											<div>
 												<fmt:formatNumber
-													value="${(duo.kills+duo.assists)/duo.losses}"
-													pattern=".00" />
+													value="${(duo.kills+duo.assists)/duo.losses}" pattern=".00" />
 											</div>
 										</li>
 										<li class="ranked-stats__item">
@@ -280,10 +303,20 @@
 											src="${pageContext.request.contextPath}/resources/images/battleground/Rank-Icon/bronze.png">
 									</div>
 									<div class="rank-stats-data">
-										<div class="rank-score"><fmt:formatNumber value="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100}" pattern="0" /></div>
+										<div class="rank-score">
+											<fmt:formatNumber
+												value="${((squad.winPoints*100.36)+(squad.killPoints*19.61))/100}"
+												pattern="0" />
+										</div>
 										<div class="rank-grade">Silver 4</div>
-										<div class="rank-ranking">KillPoints <fmt:formatNumber value="${squad.winPoints}" pattern="0" /></div>
-										<div class="rank-ranking">WinPoints<fmt:formatNumber value="${squad.winPoints}" pattern="0" /></div>
+										<div class="rank-ranking">
+											KillPoints
+											<fmt:formatNumber value="${squad.winPoints}" pattern="0" />
+										</div>
+										<div class="rank-ranking">
+											WinPoints
+											<fmt:formatNumber value="${squad.winPoints}" pattern="0" />
+										</div>
 									</div>
 								</div>
 
@@ -306,8 +339,8 @@
 										<li class="ranked-stats__item">
 											<div>승률</div>
 											<div>
-												<fmt:formatNumber value="${squad.wins/squad.roundsPlayed*100}"
-													pattern=".0" />
+												<fmt:formatNumber
+													value="${squad.wins/squad.roundsPlayed*100}" pattern=".0" />
 												%
 											</div>
 										</li>
@@ -328,7 +361,9 @@
 										<li class="ranked-stats__item">
 											<div>헤드샷</div>
 											<div>
-												<fmt:formatNumber value="${squad.headshotKills/squad.kills*100}" pattern=".0" />%
+												<fmt:formatNumber
+													value="${squad.headshotKills/squad.kills*100}" pattern=".0" />
+												%
 											</div>
 										</li>
 										<li class="ranked-stats__item">
@@ -373,76 +408,83 @@
 							</c:when>
 						</c:choose>
 					</div>
-					
-				<!-- rank-wrapper/div 끝 부분 -->
+
+					<!-- rank-wrapper/div 끝 부분 -->
 				</div>
-				
+
 				<!--Rank-Wrapper 블럭박스 끝-->
 
 				<div class="matches-filter">
 					<ul style="list-style: none; float: right;">
 						<li class="matches-filter-item">
-							<button type="button" class="matches-filter-btn">전체</button>
+							<button type="button" class="matches-filter-btn allbtn">전체</button>
 						</li>
 						<li class="matches-filter-item">
-							<button type="button" class="matches-filter-btn">솔로</button>
+							<button type="button" class="matches-filter-btn solobtn">솔로</button>
 						</li>
 						<li class="matches-filter-item">
-							<button type="button" class="matches-filter-btn">듀오</button>
+							<button type="button" class="matches-filter-btn duobtn">듀오</button>
 						</li>
 						<li class="matches-filter-item">
-							<button type="button" class="matches-filter-btn">스쿼드</button>
+							<button type="button" class="matches-filter-btn squadbtn">스쿼드</button>
 						</li>
 					</ul>
 				</div>
 
 				<div class="matches-list-layer">
 					<ul class="matches__list">
-					<c:forEach var="mlog" items="${ulist}">
-						<li id="matches-item ">
-							<div class="matches-item_summary">
-								<div class="matches-item-column-status matches-item__column">
-									<i></i>
-									<div>게임 일시</div>
-									<div>${mlog.createdAt}</div>
-								</div>
-								<div class="matches-item-column-status matches-item__column">
-									<div>게임 모드</div>
-									<div>${mlog.gameMode}</div>
-								</div>
-								<div class="matches-item-column-rank matches-item__column">
-									<div>${mlog.winPlace}</div>
-									<div>등</div>
-								</div>
+						<c:forEach var="mlog" items="${ulist}">
+							<li class="matches-item ${mlog.gameMode}">
+								<div class="matches-item_summary">
+									<div class="matches-item-column-status matches-item__column">
+										<i></i>
+										<div>게임 일시</div>
+										<div>${mlog.createdAt}</div>
+									</div>
+									<div class="matches-item-column-status matches-item__column">
+										<div>게임 모드</div>
+										<div class="matches-game-mode">${mlog.gameMode}</div>
+									</div>
+									<div class="matches-item-column-rank matches-item__column">
+										<div>${mlog.winPlace}</div>
+										<div>등</div>
+									</div>
 
-								<div class="matches-item-column-kill matches-item__column">
-									<div>${mlog.kills}</div>
-									<div>킬</div>
-								</div>
-								<div class="matches-item-column-damage matches-item__column">
-									<div><fmt:formatNumber value="${mlog.damageDealt}" pattern="0" /></div>
-									<div>데미지</div>
-								</div>
-								<div class="matches-item-column-distance matches-item__column">
-									<div><fmt:formatNumber value="${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}" pattern="0" />M</div>
-									<div>총 이동 거리</div>
-								</div>
-								
-								<div class="matches-item-column-distance matches-item__column">
-									<div>${mlog.mapName}</div>
-									<div>맵</div>
-								</div>
-								<div class="matches-item-column-team matches-item__column">
-									
-								</div>
+									<div class="matches-item-column-kill matches-item__column">
+										<div>${mlog.kills}</div>
+										<div>킬</div>
+									</div>
+									<div class="matches-item-column-damage matches-item__column">
+										<div>
+											<fmt:formatNumber value="${mlog.damageDealt}" pattern="0" />
+										</div>
+										<div>데미지</div>
+									</div>
+									<div class="matches-item-column-distance matches-item__column">
+										<div>
+											<fmt:formatNumber
+												value="${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}"
+												pattern="0" />
+											M
+										</div>
+										<div>총 이동 거리</div>
+									</div>
 
-							</div>
-						</li>
+									<div class="matches-item-column-distance matches-item__column">
+										<div>${mlog.mapName}</div>
+										<div>맵</div>
+									</div>
+									<div class="matches-item-column-team matches-item__column">
 
-                    </c:forEach>
+									</div>
+
+								</div>
+							</li>
+
+						</c:forEach>
 					</ul>
 					<button data-selector="total-played-game-btn-more"
-						class="total-played-game__btn total-played-game__btn--more">더
+						class="total-played-game__btn total-played-game__btn--more loadLog">더
 						보기</button>
 				</div>
 
@@ -454,20 +496,252 @@
 </section>
 
 <script>
-$(function(){
-$("#season-selbox").change(function(){
-	var selected = $(this).val();
-	$.ajax({
-		url:"${pageContext.request.contextPath}/getseasoninfo",
-		headers:{"Content-Type":"text/html"},
-		type:"POST",
-		data:"season="+selected+"&characterName="+'${characterName}',
-		dataType:"JSON",
-		success:function(result){
-			console.log(result[1].longestKill);
-		}
-	})
-})
-});
+	var displayCnt = 4; //화면 첫 로딩시 보여줄 리스트 개수 지정 관련 변수
 
+	$(document).ready(
+			function() {
+				$("ul.matches__list li").eq(displayCnt).nextAll().css(
+						"display", "none");
+			})
+
+	$(function() {
+		$("#season-selbox")
+				.change(
+						function() {
+							var selected = $(this).val();
+							$.ajax({
+										url : "${pageContext.request.contextPath}/getseasoninfo",
+										headers : {
+											"Content-Type" : "text/html"
+										},
+										type : "GET",
+										data : "season=" + selected
+												+ "&characterName="
+												+ '${characterName}',
+										dataType : "JSON",
+										success : function(data) {
+											console.log(data[0].roundsPlayed);
+										
+										}
+									})
+						})
+	});
+
+	$(document).ready(
+			function() {
+				$(".loadLog").on(
+						"click",
+						function() {
+							var plusCnt = displayCnt + 4;
+
+							for (; displayCnt < plusCnt; displayCnt++) {
+								$("ul.matches__list li").eq(displayCnt).next()
+										.css("display", "block");
+							}
+						})
+			});
+
+	
+	$(document).ready(function() {
+		var all = "<c:forEach var='mlog' items='${ulist}'>" + 
+		"							<li class='matches-item ${mlog.gameMode}'>" + 
+		"								<div class='matches-item_summary'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<i></i>\r\n" + 
+		"										<div>게임 일시</div>\r\n" + 
+		'										<div>"${mlog.createdAt}"</div>' + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<div>게임 모드</div>\r\n" + 
+		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"										<div>${mlog.winPlace}</div>\r\n" + 
+		"										<div>등</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"										<div>${mlog.kills}</div>\r\n" + 
+		"										<div>킬</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>데미지</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
+		"											M\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>총 이동 거리</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		'										<div>"${mlog.mapName}"</div>' + 
+		"										<div>맵</div>" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
+		"									</div>\r\n" + 
+		"								</div>\r\n" + 
+		"							</li>\r\n" + 
+		"						</c:forEach>";
+		
+		var solo = "<c:forEach var='mlog' items='${soloMatchInfo}'>" + 
+		"							<li class='matches-item ${mlog.gameMode}'>" + 
+		"								<div class='matches-item_summary'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<i></i>\r\n" + 
+		"										<div>게임 일시</div>\r\n" + 
+		'										<div>"${mlog.createdAt}"</div>' + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<div>게임 모드</div>\r\n" + 
+		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"										<div>${mlog.winPlace}</div>\r\n" + 
+		"										<div>등</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"										<div>${mlog.kills}</div>\r\n" + 
+		"										<div>킬</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>데미지</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
+		"											M\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>총 이동 거리</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		'										<div>"${mlog.mapName}"</div>' + 
+		"										<div>맵</div>" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
+		"									</div>\r\n" + 
+		"								</div>\r\n" + 
+		"							</li>\r\n" + 
+		"						</c:forEach>";
+		
+		var duo = "<c:forEach var='mlog' items='${duoMatchInfo}'>" + 
+		"							<li class='matches-item ${mlog.gameMode}'>" + 
+		"								<div class='matches-item_summary'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<i></i>\r\n" + 
+		"										<div>게임 일시</div>\r\n" + 
+		'										<div>"${mlog.createdAt}"</div>' + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<div>게임 모드</div>\r\n" + 
+		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"										<div>${mlog.winPlace}</div>\r\n" + 
+		"										<div>등</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"										<div>${mlog.kills}</div>\r\n" + 
+		"										<div>킬</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>데미지</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
+		"											M\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>총 이동 거리</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		'										<div>"${mlog.mapName}"</div>' + 
+		"										<div>맵</div>" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
+		"									</div>\r\n" + 
+		"								</div>\r\n" + 
+		"							</li>\r\n" + 
+		"						</c:forEach>";
+		
+		var squad = "<c:forEach var='mlog' items='${squadMatchInfo}'>" + 
+		"							<li class='matches-item ${mlog.gameMode}'>" + 
+		"								<div class='matches-item_summary'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<i></i>\r\n" + 
+		"										<div>게임 일시</div>\r\n" + 
+		'										<div>"${mlog.createdAt}"</div>' + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"										<div>게임 모드</div>\r\n" + 
+		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"										<div>${mlog.winPlace}</div>\r\n" + 
+		"										<div>등</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"										<div>${mlog.kills}</div>\r\n" + 
+		"										<div>킬</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>데미지</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"										<div>\r\n" + 
+		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
+		"											M\r\n" + 
+		"										</div>\r\n" + 
+		"										<div>총 이동 거리</div>\r\n" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		'										<div>"${mlog.mapName}"</div>' + 
+		"										<div>맵</div>" + 
+		"									</div>\r\n" + 
+		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
+		"									</div>\r\n" + 
+		"								</div>\r\n" + 
+		"							</li>\r\n" + 
+		"						</c:forEach>";
+		
+		$(".allbtn").on("click", function() {
+			displayCnt = 4;
+			$("ul.matches__list").html(all);
+			$("ul.matches__list li").eq(displayCnt).nextAll().css(
+					"display", "none");
+		});
+		
+		$(".solobtn").on("click", function() {
+			displayCnt = 4;
+			$("ul.matches__list").html(solo);
+			$("ul.matches__list li").eq(displayCnt).nextAll().css(
+					"display", "none");
+		});
+		
+		$(".duobtn").on("click", function() {
+			displayCnt = 4;
+			$("ul.matches__list").html(duo);
+			$("ul.matches__list li").eq(displayCnt).nextAll().css(
+					"display", "none");
+		});
+		
+		$(".squadbtn").on("click", function() {
+			displayCnt = 4;
+			$("ul.matches__list").html(squad);
+			$("ul.matches__list li").eq(displayCnt).nextAll().css(
+					"display", "none");
+		});
+
+	})
 </script>

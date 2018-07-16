@@ -234,7 +234,7 @@ public class StasticsServiceImpl implements StasticsService {
 				if((((JsonObject)jsonArr.get(i)).get("type")).toString().equals("\"participant\"") && (((JsonObject)jsonArr.get(i)).get("type")).toString()!=null) {
 					if(((JsonObject)((JsonObject)((JsonObject)jsonArr.get(i)).get("attributes")).get("stats")).get("name").toString().equals("\""+playerName+"\"")) {
 						
-						String gameMode = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("gameMode").toString();
+						String gameMode = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("gameMode").toString().replaceAll("\"","");
 						String createdAt = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("createdAt").toString();
 						String mapName = jsonObject.getAsJsonObject("data").get("attributes").getAsJsonObject().get("mapName").toString();
 						
@@ -473,5 +473,19 @@ public class StasticsServiceImpl implements StasticsService {
 		return resultList;
 	}
 	
-	
+	//모드에 따른 ajax 통신을 위한 모듈
+	public List<Map<String,Object>> getMatchInfoForEachMode(List<Map<String,Object>> list,String mode){
+		//Map<String,Object> result = new HashMap<String,Object>();
+		System.out.println("넘어왔는가:"+list.toString());
+		System.out.println("모드:"+mode);
+		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+		
+		for(Map<String,Object> info : list) {
+			if(info.get("gameMode").equals(mode)) {
+				result.add(info);
+				}
+			}
+		
+		return result;
+	}
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,15 +37,30 @@ public class StasticsController {
 	@RequestMapping("/bgsearchresult")
 	public ModelAndView searchResult(@RequestParam(value ="userName")String userName,ModelAndView mav) {
 		mav.addObject("characterName",userName);
+		
+		String userAccount = stasticsService.getAccountId(userName);
 	
-		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.solo);
-		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.duo);
-		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), Season.season6, GameMode.squad);
+		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(userAccount, Season.season6, GameMode.solo);
+		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(userAccount, Season.season6, GameMode.duo);
+		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(userAccount, Season.season6, GameMode.squad);
 		
-		System.out.println("리스트정보:"+stasticsService.getMatchId(stasticsService.getAccountId(userName)));
+		//System.out.println("리스트정보:"+stasticsService.getMatchId(userAccount));
 		
-		List<Map<String,Object>> ulist = stasticsService.getMatchUserInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)), userName);
-		System.out.println(ulist.toString());
+		List<Map<String,Object>> ulist = stasticsService.getMatchUserInfoList(stasticsService.getMatchId(userAccount), userName);
+		System.out.println("매치기록:"+ulist.toString());
+		
+		//각해 당 게임 모드에 맞는 매치기록만 뽑아낸다. API에 접근 하는 메소드가 아닌 가공용 메소드
+		List<Map<String,Object>> soloMatchInfo= stasticsService.getMatchInfoForEachMode(ulist,"solo");
+		List<Map<String,Object>> duoMatchInfo= stasticsService.getMatchInfoForEachMode(ulist,"duo");
+		List<Map<String,Object>> squadMatchInfo= stasticsService.getMatchInfoForEachMode(ulist,"squad");
+		System.out.println("솔로매치인포:"+soloMatchInfo.toString());
+		System.out.println("듀오매치인포:"+duoMatchInfo.toString());
+		System.out.println("스쿼드매치인포:"+squadMatchInfo.toString());
+		
+		mav.addObject("soloMatchInfo",soloMatchInfo);
+		mav.addObject("duoMatchInfo",duoMatchInfo);
+		mav.addObject("squadMatchInfo",squadMatchInfo);
+	
 		
 //		System.out.println("최후의 리스트:"+list.toString());
 //		List<Map<String,Object>> list = stasticsService.getMatchInfoList(stasticsService.getMatchId(stasticsService.getAccountId(userName)));
@@ -68,12 +82,20 @@ public class StasticsController {
 		
 		String userName = req.getParameter("characterName");
 		String season = req.getParameter("season");
+		String userAccount = stasticsService.getAccountId(userName);
+		System.out.println(userName);
+		System.out.println(season);
 		
-		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), season, GameMode.solo);
-		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), season, GameMode.duo);
-		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(stasticsService.getAccountId(userName), season, GameMode.squad);
+		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(userAccount, season, GameMode.solo);
+		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(userAccount, season, GameMode.duo);
+		Map<String,Object> squadInfo = stasticsService.getSeasonInfo(userAccount, season, GameMode.squad);
 		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		
+		System.out.println("솔로인포:"+soloInfo);
+		System.out.println("듀오인포:"+duoInfo);
+		System.out.println("스쿼드인포:"+squadInfo);
+		
 		
 		list.add(soloInfo);
 		list.add(duoInfo);

@@ -27,4 +27,6 @@ public interface StasticsService {
 	public List<Map<String,Object>> getMatchUserInfoList(List<Map<String,Object>> list,String playerName);
 	//매치 정보 리스트를 불러오는 메소드
 	public List<Map<String,Object>> getMatchInfoList(List<Map<String,Object>>list);
+	
+	public List<Map<String,Object>> getMatchInfoForEachMode(List<Map<String,Object>> list,String mode);
 }
