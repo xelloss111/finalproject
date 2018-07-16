@@ -103,36 +103,40 @@ if (mypage) {
             return false;
         };
 		
-		
-		// 이미지를 파일에서 직접 불러와서 처리
+		// 프로필 이미지 출력 팝업
 		$(document).on('click', ".photoIcon", function() {
-			// 만약 같은 파일 이름을 등록하는 경우 value 값을 공백으로 처리
-			$(photoInput).val('');
-			$(document).on('click', ".photoInput", function() {
-				var file = document.querySelector("#attachFile");
-				file.onchange = function () {
-					var files = this.files;
-					var f = files[0];
-					
-					// f 파일객체의 내용을 읽기
-					var fr = new FileReader();
-					
-					fr.onload = function () {
-						var img = document.createElement("img");
-						img.width = 150;
-						img.height = 150;
-						img.src = fr.result;
-						$(photoArea).html('');
-						$(photoArea).append(img).attr('id', 'user');
-						$(mypage).append(addIcon);
-						console.log(f);
-						fileInfo = f;
-					};
-					
-					fr.readAsDataURL(f);
-				};
-			});
-			$(".photoInput").trigger('click');
+			var windowOpen = window.open("_blank", "location=no");
+			windowOpen.locationbar.visible = false;
+			windowOpen.location.href = ctx + '/user/profile'
+			
+			
+//			// 만약 같은 파일 이름을 등록하는 경우 value 값을 공백으로 처리
+//			$(photoInput).val('');
+//			$(document).on('click', ".photoInput", function() {
+//				var file = document.querySelector("#attachFile");
+//				file.onchange = function () {
+//					var files = this.files;
+//					var f = files[0];
+//					
+//					// f 파일객체의 내용을 읽기
+//					var fr = new FileReader();
+//					
+//					fr.onload = function () {
+//						var img = document.createElement("img");
+//						img.width = 150;
+//						img.height = 150;
+//						img.src = fr.result;
+//						$(photoArea).html('');
+//						$(photoArea).append(img).attr('id', 'user');
+//						$(mypage).append(addIcon);
+//						console.log(f);
+//						fileInfo = f;
+//					};
+//					
+//					fr.readAsDataURL(f);
+//				};
+//			});
+//			$(".photoInput").trigger('click');
 		});
 		
 		// 파일 업로드 ajax 처리 함수

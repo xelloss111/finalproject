@@ -173,4 +173,9 @@ public class UserController {
 		service.deleteUserInfo(id);
 		return "/main";
 	}
+	
+	@RequestMapping(value = "mypage/profile", method = RequestMethod.GET)
+	public String profile() throws Exception {
+		return "user/mypage/profile";
+	}
 }

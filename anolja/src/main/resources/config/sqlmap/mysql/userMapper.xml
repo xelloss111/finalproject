@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.anolja.repository.mapper.UserMapper">
 	<resultMap type="user" id="userMap">
 		<result column="id" property="id" />
-		<result column="annonymous_id" property="annonymousId"/>
+		<result column="anonymous_id" property="annonymousId"/>
 		<result column="pass" property="pass" />
 		<result column="email" property="email" />
 		<result column="game_victory" property="gameVictory" />
@@ -91,12 +91,12 @@
 
 	<update id="setAnnonymousId" parameterType="user">
 		update tb_user
-		   set annonymous_id = #{annonymousId}
+		   set anonymous_id = #{annonymousId}
 		 where id = #{id}
 	</update>
 	
 	<select id="getAnnonymousId" resultType="string">
-		select annonymous_id
+		select anonymous_id
 		  from tb_user
 	</select>
 	
