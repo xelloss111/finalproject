@@ -1,55 +1,68 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/youtube.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/youtube.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <section class="content_section">
 	<div class="content_row_1">
-	
-	<!-- 검색 영역 -->
-	<input type="text" id="videoSearch" name="videoSearch" placeholder="     YOUTUBE 영상 검색 GO!"/>
-	<button type="submit" value="Search" class="sc_btn"  onclick="nameTest()">
-		<i class="fas fa-search-plus"></i>
-	</button>
-		
-	
-	
-	<!-- 캐러셀 영역 시작 -->
+
+		<!-- 검색 영역 -->
+		<input type="text" id="videoSearch" name="videoSearch"
+			placeholder="     YOUTUBE 영상 검색 GO!" />
+		<button type="submit" value="Search" class="sc_btn">
+			<i class="fas fa-search-plus"></i>
+		</button>
+
+
+
+		<!-- 캐러셀 영역 시작 -->
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12">
-					<div class="carousel slide " id="myCarousel"  data-interval="false">
-						<div class="carousel-inner">
+					<div class="carousel slide " id="myCarousel" data-interval="false">
+						<div class="carousel-inner"></div>
+						<!-- carousel-innerEND -->
+					</div>
+					<!-- /#myCarousel -->
 
-
-						</div><!-- carousel-innerEND -->
-					</div><!-- /#myCarousel -->
-						
 
 				</div>
-					<!-- /.span12 -->
+				<!-- /.span12 -->
 			</div>
-				<!-- /.row -->
+			<!-- /.row -->
 		</div>
-			<!-- /.container -->
-	<!-- 캐러셀 영역 끝 -->
-		
+		<!-- /.container -->
+		<!-- 캐러셀 영역 끝 -->
+
 		<div class="thumb_imgs">
 			<ul class='clickList'>
-			
+
 			</ul>
 		</div>
-		
-		
+
+
 	</div>
-		<!-- content_row_1 END -->
+	<!-- content_row_1 END -->
 </section>
 
 
 
 <script>
+
+//sessionID 구해오기
+var ctx;
+$(document).ready(function() {
+	ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));	
+});
+var sessionId = `<%=session.getAttribute("id")%>`;
+
+
+
 /////////////// list
 var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=PLSB4jUMSVNnaGj5Auw93KId3MoYxvrfNQ&key=AIzaSyCiq53GDPhGkdCHDXCHb_LTN9cDj2mMBHQ";
 var req = new XMLHttpRequest();
@@ -109,16 +122,22 @@ req.onreadystatechange = function (aEvt) {
 	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 	 					html2 += '		<span>' + vtitle + '</span>';
 	 					html2 += '	</span>';
+	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn">';
+	 					html2 += '		<i class="far fa-save"></i>';
+	 					html2 += '  </button>';
 	 					html2 += '</li>';
 	 					
 	 					$(".clickList").html(html2);
+	 					
 				};
 
 			videoList();
 			
+			
+			
 			// List 클릭 시 캐러셀 이동
-			$(document).on('click','.lini1-1',function(){
-				var indexSearch = $(this).children('span').children('img').attr('class');	
+			$(document).on('click','.lini1-1 > span' ,function(){
+				var indexSearch = $(this).children('img').attr('class');	
 				
 				var result = indexSearch.slice(-1);
  					$('.carousel').carousel(parseInt(result));
@@ -248,5 +267,32 @@ function searchEnter() {
 		} /* onreadystatechange 끝  */
 		searchReq.send(null);
 };
+
+
+// save 클릭 시 이벤트 동적 처리
+$(document).on('click','.save_btn' ,function(){
+	
+	if(sessionId == 'null') {
+		swal({
+			  title: "로그인 필요",
+			  text: "로그인 후 저장 가능합니다.",
+			  icon: "error",
+			  button: "돌아가기",
+			});
+				return;
+	} else {
+		swal({
+			  title: "저장 완료",
+			  text: "저장이 완료되었습니다.",
+			  icon: "success",
+			  button: "돌아가기",
+			});
+				return;
+		}
+		
+});
+
+
+
 
 </script>

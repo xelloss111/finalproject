@@ -131,6 +131,10 @@ p.right {
 	cursor: pointer;
 }
 
+.fa-save {
+	color: #a83b3b;
+	font-size: 1.5rem;
+}
 /* ADD-ON
 -------------------------------------------------- */
 /* 
