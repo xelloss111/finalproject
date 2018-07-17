@@ -75,7 +75,6 @@ public class GameChatHandler extends TextWebSocketHandler {
 			// 문제와 출제자 담기
 			Game.setQuestionNo(questions.get(questionNo));
 			Game.setQuestionuser(chatList.get(userNo));
-			
 //			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
 			
 			// 문제 출제자에게만 문제 전송하기
@@ -90,6 +89,11 @@ public class GameChatHandler extends TextWebSocketHandler {
 		
 		if (message.getPayload().equals("next")) {
 			questionSend();
+		}
+		else if (message.getPayload().contains("rcmndCnt")) {
+			for (WebSocketSession wss : users) {
+				wss.sendMessage(new TextMessage(message.getPayload()));
+			}
 		}
 		else if (message.getPayload().equals("gameEnd")) {
 			endGame(session);

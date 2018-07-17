@@ -21,7 +21,7 @@
             <div id="pencil"><img src="${pageContext.request.contextPath}/resources/images/game/pencil.png" width="200px" height="50px" id="pencilImg"><span id="question"></span></div>
             <div id="canvas">
                 <canvas id="myCanvas" width="520" height="430"></canvas>
-                <a id="funny" href="#" class="btn yellow mini">추천 <span>0</span></a>
+                <a id="funny" href="#t" class="btn yellow mini">추천 <span>0</span></a>
                 <span id="time"></span>
             </div>
             <div id="colorArea">
@@ -147,6 +147,11 @@
     			var cnt = msgArr[1];
     			$("#"+id).next().text(cnt);
     		}
+    		// 추천 뿌려주기
+			else if (evt.data.includes('rcmndCnt:')) {
+				rcmndCnt = evt.data.substring('rcmndCnt:'.length);
+				$("#funny > span").text(rcmndCnt);
+			}
     		else {
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
@@ -328,10 +333,7 @@
         });
         
         
-        
-        
-        
-        // 타이머
+        /* 타이머 */
         var timerId; // 타이머를 핸들링하기 위한 전역 변수
         var time = 60; // 타이머의 시작 시간
         
@@ -355,6 +357,7 @@
 			$("#question").text("");
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
     		time = 60;
+    		rcmndCnt = 1;
     		
     		if (current) {
     			ws.send("next");
@@ -382,14 +385,6 @@
 
     		return(min + ":" + sec);
     	}
-    	
-    	/* 랜덤한 문제 받아오기 */
-//     	$.ajax({
-//     		url: "<c:url value='/gameAnswer'/>",
-//    			success: function (data) {
-//     			$("#question").text(data);
-//     		}
-//     	});
 		
     	// 스크롤바 마우스오버시 보이고, 마우스리브시 없애기
     	$("#chat").mouseover(function () {
@@ -398,6 +393,19 @@
     	$("#chat").mouseleave(function () {
     		$("#hiddenScroll").css("width", "215px");
     	});
+    	
+    	
+    	/* 추천버튼 */
+    	var rcmndCnt = 0;
+    	$("#funny").click(function () {
+    		if (current) {
+    			$(this).unbind('click');
+    			return;
+    		}
+    		$("#funny > span").text(++rcmndCnt);
+    		$(this).unbind('click');
+    		ws.send("rcmndCnt:"+rcmndCnt);
+   		}); 
     </script>
 </body>
 </html>
