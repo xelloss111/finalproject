@@ -14,12 +14,16 @@
 	var body = document.querySelector('body');
 	body.innerHTML = '';
 	
+	// 프로필 이미지 영역 생성 및 클래스 추가
 	var profile = document.createElement('section')
 	$(profile).addClass('profile_section');
+	// 사이드바 영역 생성 및 클래스 추가
 	var sidebar = document.createElement('div');
 	$(sidebar).addClass("mypage-sidebar");
+	// 사이드 바 내부 목록 영역 생성 및 클래스 추가
 	var sidebarnav = document.createElement('ul');
 	$(sidebarnav).addClass("mypage-sidebar-nav");
+	// file 타입의 input 태그 생성 (영역에서는 숨김 처리)
 	var profileInput = document.createElement('input');
 	$(profileInput).addClass('photoInput');
 	$(profileInput).attr('type', 'file');
@@ -43,8 +47,7 @@
 	bType2.setAttribute('class', 'fas fa-minus-square fa-2x');
 	delBtn.appendChild(bType2);
 	
-	
-	// 되돌리기
+	// 되돌리기 버튼
 	var reBtn = document.createElement('a');
 	$(reBtn).attr('role', 'button');
 	$(reBtn).attr('id', 'returnProfile');
@@ -52,16 +55,23 @@
 	bType3.setAttribute('class', 'fas fa-undo fa-2x');
 	reBtn.appendChild(bType3);
 	
-	// 비디오 객체 및 스트림 얻기
+	// 비디오 객체 및 스트림 얻기, 캡쳐 버튼 추가
 	var video = document.createElement('video');
 	$(video).addClass('profileVideo');
 	$(video).attr('autoplay', 'autoplay');
+	
 	var canvasprofile = document.createElement('canvas');
 	$(canvasprofile).addClass('profileCanvas');
     var ctxcanvas = canvasprofile.getContext('2d');
+    
     var localMediaStream = null;
+    
+    var captureBtn = document.createElement('button');
+    captureBtn.setAttribute('id', 'captureBtn');
+    captureBtn.setAttribute('class', 'btn2');
+    captureBtn.innerText = "사진찍기";
 	
-	
+	// 사이드바 메뉴에 들어갈 엘리먼트 작성
 	var html = ''; 
 	html += '<li><a id="mypage-navbar-toggle">돌아가기<i class="fa fa-bars menu-icon fa-2x" aria-hidden="true"></i></a></li>';
 	html += '<li><a role="button" id="openFile">파일 불러오기<i class="fa fa-file-alt menu-icon fa-2x" aria-hidden="true"></i></a></li>';
@@ -73,11 +83,12 @@
 	$(body).append(profile);
 	$(body).append(sidebar);
 	
+	// 돌아가기 버튼 클릭 시 윈도우 창 닫음
 	$('#mypage-navbar-toggle').click(function() {
 		window.close();
 	})
 	
-	// 프로필 이미지 영역 생성 및 클래스 적용
+	// 프로필 이미지 영역 생성 및 클래스 적용, 엘리먼트의 자식 객체로 추가
 	var photoArea = document.createElement('div');
 	var photo = document.createElement('img');
 	$(photoArea).addClass('photoArea');
@@ -147,6 +158,7 @@
 		$(".photoInput").trigger('click');
 	});
 	
+	// 추가 버튼 클릭 이벤트 및 파일 업로드 처리
 	$(document).on('click', '#uploadProfile', function() {
 		swal({
 			  text: '해당 이미지로 정말 등록하시겠습니까?',
@@ -163,12 +175,14 @@
 			});
 	});
 	
+	// 되돌리기 버튼 클릭 이벤트 처리
 	$(document).on('click', '#returnProfile', function() {
 		getProfile();
 		$(upBtn).hide();
 		$(reBtn).hide();
 	});
 	
+	// 삭제 버튼 클릭 이벤트 처리 및 삭제 처리
 	$(document).on('click', '#deleteProfile', function() {
 		swal({
 			  text: '프로필 이미지를 삭제하고 기본 이미지로 대체하시겠습니까?',
@@ -244,6 +258,7 @@
     	
     };
 	
+    // 삭제 처리용 함수
 	function deleteProfile() {
 		$.ajax({
 			url: ctx + '/user/removeProfileImage',
@@ -264,16 +279,30 @@
 	
 	// 웹캠 등록 버튼 이벤트 처리
 	$("#openCam").click(function() {
-		window.resizeTo(620, 700);
+	  	// 웹캠 정보 가져오기
+	 
+		navigator.getUserMedia({video: true}, function(stream) {
+		    video.src = window.URL.createObjectURL(stream);
+		    localMediaStream = stream;
 
-		$(body).append(video);
-		$(body).append(canvasprofile);
+		    // 미디어 정보가 존재하는 경우에만 브라우저 사이즈를 늘림
+		    // 사이즈 확장 후 video, canvas 객체, 버튼 적용
+		    window.resizeTo(620, 700);
+			$(body).append(video);
+			$(body).append(canvasprofile);
+			$(body).append(captureBtn);
+		  }, function(err) {
+// 			  swal("웹캠 정보가 없어 해당 기능은 이용하실 수 없습니다.");
+// 			  return false;
+		  });
 		
 		// 에러 발생 시 콜백 함수
 	    var errorCallback = function(e) {
-	        console.log('Reeeejected!', e);
+	    	 swal("웹캠 정보가 없어 해당 기능은 이용하실 수 없습니다.");
 	    };
 	    
+	    // 스트림객체를 통해 캔버스에 이미지를 그린후
+	    // 캔버스의 이미지 정보를 img 태그에 삽입
 		function snapshot() {
 		    if (localMediaStream) {
 		      ctxcanvas.drawImage(video, 0, 0, 300, 150);
@@ -288,17 +317,12 @@
 		    }
 		  }
 		
-		  video.addEventListener('click', snapshot, false);
-		
-		  // Not showing vendor prefixes or code that works cross-browser.
-		  navigator.getUserMedia({video: true}, function(stream) {
-		    video.src = window.URL.createObjectURL(stream);
-		    localMediaStream = stream;
-		  }, errorCallback);
+// 		  video.addEventListener('click', snapshot, false);
+ 		  captureBtn.addEventListener('click', snapshot, false);
 	});
 	
 	
-	// 최초 윈도우 위치
+	// 최초 윈도우 위치 설정 함수
 	function firstPosition() {
 		window.resizeTo(620, 290);
 		window.moveTo(popupX, popupY);

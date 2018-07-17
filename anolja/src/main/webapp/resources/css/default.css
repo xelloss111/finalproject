@@ -3,6 +3,14 @@
 
 /* profile 페이지 */
 
+#captureBtn {
+	top: 570px;
+	left: 240px;
+	width: 120px;
+	height: 50px;
+	position: absolute;
+}
+
 .profileCanvas {
 	display: none;
 }
