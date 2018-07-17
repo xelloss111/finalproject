@@ -22,11 +22,8 @@
 			<ul class="list_ul">
 				<li class="list_select">
 					<form name="lForm" id="lForm" method="post">
-						<select class="round" name="tank_list" id="tank_list">
-							<option>  저장 리스트 불러오기</option>
-							<option value="thank1">  저장소 리스트1 </option>
-							<option value="thank2">  저장소 리스트2 </option>
-							<option value="thank3">  저장소 리스트3 </option>
+						<select class="round" name="myTank_list" id="myTank_list">
+							<option value="tank0"> 내 저장 리스트 불러오기</option>
 						</select>
 					</form>
 				</li>
@@ -79,19 +76,19 @@
 	        
 	        
 	        <div class="modal-body">
-					<form name="saveTank">
+	        
+
+					<form name="saveTank" id="saveTank">
 						<div class="save_myTank">
 							<ul>
-								<li><span>새로운 저장소에 저장 :</span> <input type="text"
-									placeholder="    새로운 저장소 이름" name="tankTitle" class="newTank">
+								<li><span>새로운 저장소 만들기 :</span> 
+									<input type="text" placeholder="    새로운 저장소 이름" name="tankName1" class="newTank">
+									<input type="button" value=" 추가 " onclick="addOption()">
 								</li>
 
 								<li class="oldTank"><span>기존 저장소에 저장 :</span> <select
-									class="round" name="tank_list" id="tank_list">
-										<option>저장 리스트 불러오기</option>
-										<option value="thank1">저장소 리스트1</option>
-										<option value="thank2">저장소 리스트2</option>
-										<option value="thank3">저장소 리스트3</option>
+									class="round" name="tankName2" id="tank_list">
+										<option value="tank0">저장 리스트 불러오기</option>
 								</select></li>
 
 							</ul>
@@ -101,30 +98,7 @@
 
 						<div class="save_info">
 							<h2>저장 동영상 정보</h2>
-							<!-- script 영역 -->
-							<script>
-								
-								$(document).on("click", ".save_btn", function(){
-									var saveImg = '';
-									var saveTitle ='';
-									var saveImgHtml = '';
-									var saveTitleHtml ='';
-								
-									saveImg = $(this).prev().children('img').attr('src');
-									saveTitle = $(this).prev().children('span').text();
-									console.log("img : " + saveImg);
-									console.log("title : " + saveTitle);
-									
-									saveImgHtml += '<img src="'+ saveImg +' ">';
-									
-									$(".save_thumb").html(saveImgHtml);
-									
-									saveTitleHtml += '<h2>동영상 제목 </h2>';
-									saveTitleHtml += '<span>'+ saveTitle +'</span>';
-									
-									$(".save_titleaddr").html(saveTitleHtml);
-								});
-							</script>
+
 							<ul>
 								<li class="save_thumb">
 									<!-- 여기가 섬네일 위치 -->
@@ -178,16 +152,29 @@
 
 <script>
 
-//sessionID 구해오기
+/////////////////sessionID 구해오기
 var ctx;
 $(document).ready(function() {
 	ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));	
 });
+
+///////////////////저장을 위한 변수들
+
 var sessionId = `<%=session.getAttribute("id")%>`;
+var tankName ='';
+var saveVideoImg='';
+var saveVideoTitle ='';
+var saveVideoUrl ='';
+var saveTankName ='';
+var saveTankId ='';
+
+//로그인 하지 않았을 때 첫 화면에서 저장소 정보 불러오지 않기
+if(sessionId == 'null') {
+	$(".searchList").hide();
+};
 
 
-
-/////////////// list
+/////////////// 첫 화면에서 유튜브 리스트 불러오기
 var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=PLSB4jUMSVNnaGj5Auw93KId3MoYxvrfNQ&key=AIzaSyCiq53GDPhGkdCHDXCHb_LTN9cDj2mMBHQ";
 var req = new XMLHttpRequest();
 var html = '';
@@ -245,6 +232,7 @@ req.onreadystatechange = function (aEvt) {
 	 					html2 += '	<span>';
 	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 	 					html2 += '		<span>' + vtitle + '</span>';
+	 					html2 += '		<span class="hide_url">' + vurl + '</span>';
 	 					html2 += '	</span>';
 	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
 	 					html2 += '		<i class="far fa-save"></i>';
@@ -266,10 +254,39 @@ req.onreadystatechange = function (aEvt) {
 				var result = indexSearch.slice(-1);
  					$('.carousel').carousel(parseInt(result));
 				});
-				
-		
-// 			$('.lini1-1').click(function(e){
+			
+			///////////////////////// 동영상 저장 클릭 시 모달창
 						
+			$(document).on("click", ".save_btn", function(){
+				var saveImg = '';
+				var saveTitle ='';
+				var saveUrl ='';
+				var saveImgHtml = '';
+				var saveTitleHtml ='';			
+				
+				saveImg = $(this).prev().children('img').attr('src');
+				saveTitle = $(this).prev().children('span').text();
+				saveUrl = $(this).prev().children('.hide_url').text();
+				
+				console.log(saveUrl);
+				
+				saveImgHtml += '<img src="'+ saveImg +'" name="videoImg">';
+				
+				$(".save_thumb").html(saveImgHtml);
+				
+				saveTitleHtml += '<h2>동영상 제목 </h2>';
+				saveTitleHtml += '<span>'+ saveTitle +'</span>';
+				saveTitleHtml += '<h2>동영상 주소 </h2>';
+				saveTitleHtml += '<span>'+ saveUrl +'</span>';
+				
+				$(".save_titleaddr").html(saveTitleHtml);
+				 saveVideoImg = saveImg;
+				 saveVideoTitle = saveTitle;
+				 saveVideoUrl = saveUrl;
+				
+			});
+
+
         }
   }else {
       console.log("Error loading page\n");
@@ -374,6 +391,7 @@ function searchEnter() {
 			 					html2 += '	<span>';
 			 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
 			 					html2 += '		<span>' + vtitle + '</span>';
+			 					html2 += '		<span class="hide_url">' + vurl + '</span>';
 			 					html2 += '	</span>';
 			 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
 			 					html2 += '		<i class="far fa-save"></i>';
@@ -408,7 +426,7 @@ function searchEnter() {
 
 
 
-////////////////////////////////// save 클릭 시 이벤트 동적 처리
+////////////////////////////////// save 아이콘 클릭 시 로그인 요청 이벤트 동적 처리
 var modalHtml = '';
 
 $(document).on('click','.save_btn' ,function(){
@@ -426,6 +444,80 @@ $(document).on('click','.save_btn' ,function(){
 	}
 });
 
+
+
+/////////// 동영상 저장 모달에서 저장하기 눌렀을 때.
+
+$("#submit").click(function () {
+	saveTankName = $(".newTank").val();		
+	var target = document.getElementById("tank_list");
+	var saveTankSelect = target.options[target.selectedIndex].value;
+	
+	if(saveTankName=='' & saveTankSelect=='tank0') {
+		swal({
+			  text: "저장소를 선택해주세요.",
+			  icon: "error",
+			  button: "닫기",
+			})
+				return;
+	};
+
+	//////////// 서버로 데이터 보내기 ajax
+		$.ajax({
+			type: "POST",
+			data: {"id":sessionId,
+					"tankName":saveTankName,
+					"tankId":saveTankId,
+				   "videoImg": saveVideoImg,
+				   "videoTitle":saveVideoTitle,
+				   "videoUrl":saveVideoUrl},
+			url: "videoSave",
+			success: function () {
+				swal({
+					  text: saveTankName+ " 저장소에 저장 완료",
+					  icon: "success",
+					  button: "닫기",
+					}).then((value)=> {
+						$("#myModal1").removeClass('in');
+						return;
+					});
+	
+			}
+		});
+});
+
+
+////////////// 새로운 저장소 추가
+function addOption(){
+	saveTankName = $(".newTank").val();	
+	var target = document.getElementById("tank_list");
+		
+    ///// 저장소 이름을 지정하지 않았을 때
+	if(saveTankName=='') {
+		swal({
+			  title: "저장소 이름 필요",
+			  text: "새로운 저장소의 이름을 지정해주세요.",
+			  icon: "warning",
+			  button: "닫기",
+			})
+				return;
+	};
+	
+	
+    var frm = document.saveTank;
+    var op = new Option();
+    
+    op.value = 'tank' + frm.tank_list.length; // value
+    op.text = saveTankName; // title	  
+    
+    
+    op.selected = true; // 선택된 상태 설정 (기본값은 false이며 선택된 상태로 만들 경우에만 사용)
+
+    frm.tank_list.options.add(op); // 옵션 추가
+    //saveTankId 추가
+	saveTankId = target.options[target.selectedIndex].value;
+	console.log("saveTankId : " + saveTankId);
+};	
 
 
 

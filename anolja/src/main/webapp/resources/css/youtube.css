@@ -131,6 +131,10 @@ p.right {
 	cursor: pointer;
 }
 
+.lini1-1 > span > .hide_url{
+	display: none;
+}
+
 .fa-save {
 	color: #a83b3b;
 	font-size: 1.5rem;
@@ -523,7 +527,7 @@ caption {
 	text-align: center;
 	height: 40px;
 	line-height : 40px;
-	width : 40%;
+	width : 30%;
 	border-radius: 10px;
 	margin-left: 50px;
 }
@@ -767,6 +771,13 @@ hr {
 .save_titleaddr {
 	width: 75%;
 }
+
+.save_info > ul > li > h2 {
+	width: 100%;
+	display: inline-block;
+	margin: 0 0 2% 0;
+}
+
 .save_info > ul > li > span {
 	width: 100%;
 	display: inline-block;

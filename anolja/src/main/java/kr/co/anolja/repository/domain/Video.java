@@ -1,64 +1,55 @@
 package kr.co.anolja.repository.domain;
 
-import java.util.Date;
-
 public class Video {
 	private String id;
-	private String title;
-	private String thumbnail;
-	private String listId;
-	private String videoId;
-	private String description;
-	private Date regDate;
+	private String tankId;
+	private String tankName;
+	private String videoImg;
+	private String videoTitle;
+	private String videoUrl;
 	
-	
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getTitle() {
-		return title;
+	public String getTankId() {
+		return tankId;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTankId(String tankId) {
+		this.tankId = tankId;
 	}
-	public String getThumbnail() {
-		return thumbnail;
+	public String getTankName() {
+		return tankName;
 	}
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setTankName(String tankName) {
+		this.tankName = tankName;
 	}
-	public String getListId() {
-		return listId;
+	public String getVideoImg() {
+		return videoImg;
 	}
-	public void setListId(String listId) {
-		this.listId = listId;
+	public void setVideoImg(String videoImg) {
+		this.videoImg = videoImg;
 	}
-	public String getVideoId() {
-		return videoId;
+	public String getVideoTitle() {
+		return videoTitle;
 	}
-	public void setVideoId(String videoId) {
-		this.videoId = videoId;
+	public void setVideoTitle(String videoTitle) {
+		this.videoTitle = videoTitle;
 	}
-	public Date getRegDate() {
-		return regDate;
+	public String getVideoUrl() {
+		return videoUrl;
 	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
 	@Override
 	public String toString() {
-		return "Video [id=" + id + ", title=" + title + ", thumbnail=" + thumbnail + ", listId=" + listId + ", videoId="
-				+ videoId + ", regDate=" + regDate + "]";
+		return "Video [id=" + id + ", tankId=" + tankId + ", tankName=" + tankName + ", videoImg=" + videoImg
+				+ ", videoTitle=" + videoTitle + ", videoUrl=" + videoUrl + "]";
 	}
-
+	
+	
 	
 }

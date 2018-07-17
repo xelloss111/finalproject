@@ -1,5 +1,8 @@
 package kr.co.anolja.video.service;
 
-public interface VideoService {
+import kr.co.anolja.repository.domain.Video;
 
+public interface VideoService {
+	
+	public void insert(Video video);
 }
