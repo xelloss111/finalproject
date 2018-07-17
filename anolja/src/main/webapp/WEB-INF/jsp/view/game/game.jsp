@@ -367,19 +367,21 @@
         
         // 게임 한세트 끝난 후 다시 시작하기
         function gameRestart() {
-    		ws.send("gameEnd");
 			$("#question").text("");
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
     		time = 60;
     		rcmndCnt = 1;
     		
     		if (current) {
-    			ws.send("next");
         		paintWs.send("next");
         		current = false;
         		
 				setTimeout(() => {
 	        		paintWs.send("gameRestart");
+				}, 100);
+	    		setTimeout(() => {
+		    		ws.send("gameEnd");
+	    			ws.send("next");
 				}, 100);
     		}
         }

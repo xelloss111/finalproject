@@ -43,14 +43,28 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		// 한문제가 끝난 후 문제와 출제자 다음으로 set해주기
 		if (message.getPayload().equals("next")) {
 			GameChatHandler.flag = false;
+			System.out.println("1 : " + GameChatHandler.userNo);
 			++GameChatHandler.questionNo;
 			++GameChatHandler.userNo;
+			System.out.println("2 : " + GameChatHandler.userNo);
 			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
 				GameChatHandler.userNo = 0;
 			}
 			if (GameChatHandler.questionNo < 10) {
+				System.out.println("3 : " + GameChatHandler.userNo);
+				System.out.println("접속자인덱스0: "+GameChatHandler.chatList.get(0));
+				System.out.println("접속자인덱스1: "+GameChatHandler.chatList.get(1));
+				System.out.println("chatList.get(GameChatHandler.userNo): "+GameChatHandler.chatList.get(GameChatHandler.userNo));
+//				for (int i = 0; i < GameChatHandler.chatList.size(); i++) {
+//					if (GameChatHandler.chatList.get(GameChatHandler.userNo) == null) {
+//						System.out.println("4 : " + GameChatHandler.userNo);
+//						++GameChatHandler.userNo;
+//						System.out.println("5 : " + GameChatHandler.userNo);
+//					}
+//				}
 				Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
 				Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
+				System.out.println("5 : " + GameChatHandler.userNo);
 			}
 			if (GameChatHandler.questionNo == 10) {
 				GameChatHandler.questions = null;
@@ -59,12 +73,12 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		if (message.getPayload().equals("gameRestart")) {
 			for (int i = 0; i < connectedUsers.size(); i++) {
 				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
+					System.out.println("Game.getQuestionuser(): "+Game.getQuestionuser());
+					System.out.println("GameChatHandler.chatList.get(i): "+GameChatHandler.chatList.get(i));
 					connectedUsers.get(i).sendMessage(new TextMessage("OK"));
 				}
 				else {
-					synchronized(connectedUsers.get(i)) {
-						connectedUsers.get(i).sendMessage(new TextMessage("NO"));
-					}
+					connectedUsers.get(i).sendMessage(new TextMessage("NO"));
 				}
 			}
 		}

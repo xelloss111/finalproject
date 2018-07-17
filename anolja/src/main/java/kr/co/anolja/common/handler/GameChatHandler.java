@@ -71,9 +71,12 @@ public class GameChatHandler extends TextWebSocketHandler {
 			}
 			
 			// 문제와 출제자 담기
+			if (questionNo == 10) {
+				Game.setQuestionNo(null);
+			}
 			Game.setQuestionNo(questions.get(questionNo));
 			Game.setQuestionuser(chatList.get(userNo));
-//			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
+			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
 			
 			// 문제 출제자에게만 문제 전송하기
 			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
@@ -158,8 +161,11 @@ public class GameChatHandler extends TextWebSocketHandler {
 //			session.sendMessage(new TextMessage("notice:초 후 게임을 시작합니다."));
 //			Thread.sleep(1000); 
 //		}
-		session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
-		session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+		for (WebSocketSession wss : users) {
+			wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
+			wss.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+		}
+		System.out.println("이번차례 밑에 찍히는거: "+Game.getQuestionuser()+", userNo: " + userNo);
 	}
 
 	/**
@@ -167,6 +173,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 	 */
 	private void questionSend() throws IOException {
 		// 출제자에게 문제 보내기
+		System.out.println("출제자..에게문제보내기: " + users.get(userNo));
 		users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
 		
 		System.out.println("문제번호: "+questionNo);
@@ -174,10 +181,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 		if (questionNo == 10) {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
-				questions = null;
-				Game.setQuestionNo(null);
-				Game.setQuestionuser(null);
 			}
+			questions = null;
+			Game.setQuestionNo(null);
+			Game.setQuestionuser(null);
 			return;
 		}
 	}
