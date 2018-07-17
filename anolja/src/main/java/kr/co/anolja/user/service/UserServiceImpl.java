@@ -74,9 +74,11 @@ public class UserServiceImpl implements UserService {
 		List<String> idList = mapper.getAnnonymousId();
 		// 스프링 시큐리티의 BCryptPasswordEncoder 객체의 matches 메서드로 패스워드 체크
 		boolean passCheck = passwordEncoder.matches(user.getPass(), temp.getPass());
-				
-		long loginTime = -(temp.getLoginDate().getTime() - new Date().getTime());
-		System.out.println(loginTime);
+		
+		long loginTime = 0;
+		if (temp.getLoginDate() != null) {
+			loginTime = -(temp.getLoginDate().getTime() - new Date().getTime());
+		}
 		// 로그인 정보 처리
 		if (temp.getLoginDate() == null || loginTime >= 86400000) {
 			mapper.setLoginDate(temp);
