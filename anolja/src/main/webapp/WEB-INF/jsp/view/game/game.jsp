@@ -48,7 +48,7 @@
 	        <div id="online">
                	접속자<br>
                	<c:forEach var="i" items="${chatList}">
-               		${i}<br>
+               		<span id='${i}'>${i}</span> [ <span>0</span> ]<br>
                	</c:forEach>
 <!--                	<script> -->
 <%--                		var list = <%= chatList %>; --%>
@@ -74,7 +74,7 @@
     	
     	$(function () {
     		// 서버의 웹소켓 객체 연결하기
-    		ws = new WebSocket("ws://localhost/anolja/gameChat.do");
+    		ws = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
     		ws.onopen = function () {
     			console.log("웹소켓 서버 접속 성공");
     			console.log("${id}");
@@ -89,18 +89,51 @@
     			console.log(evt);
     		};
     	});
+    	
+    	var rightAnswerCnt = 0;
+    	
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
+    			// 게임 중 인원이 1명남았을 경우 게임 끝내고 메인으로 보내기
+    			if (msg.includes('부족')) {
+    				alert(msg);
+    				clearInterval(timerId);
+    				location.href = "${pageContext.request.contextPath}/main";
+    				return;
+    			}
+    			// 모든 게임이 끝나면 메인으로 보내기
     			if (msg.includes('메인')) {
     				alert(msg);
     				clearInterval(timerId);
     				location.href = "${pageContext.request.contextPath}/main";
+    				return;
     			}
+    			// 소켓연결이 되면 참여자 목록에 더하기
     			if (msg.includes('참여')) {
 					var id = msg.substring(0, msg.indexOf('님'));
-					$("#online").append(id+"<br>");
+					$("#online").append("<span id='"+id+"'>"+ id +"</span> [ <span>0</span> ]<br>");
     			}
+    			// 소켓연결 종료되면 참여자 목록에서 빼기
+    			if (msg.includes('접속종료')) {
+					var id = msg.substring(0, msg.indexOf('님'));
+					if ($(".onlineId").text() == id) {
+    					$(".onlineId").remove();
+    				}
+    			}
+    			if (msg.includes('맞춤')) {
+    				var id = msg.substring(0, msg.indexOf('님'));
+   					$.ajax({
+   						url: "<c:url value='/rightAnswerCnt'/>",
+   						data: {id: id},
+   						dataType: "JSON",
+   						success: function (data) {
+   							console.log($("#"+id));
+   							$("#"+id).next().text(data);
+   						}
+   					});
+    			}
+    			// 정답맞출 시 새로게임 시작하기
     			if (msg.includes('정답')) {
     				clearInterval(timerId);
     				gameRestart();
@@ -172,7 +205,7 @@
         paintCtx.lineCap = "round";
         
         $(document).ready(function () {
-        	paintWs = new WebSocket("ws://localhost/anolja/gamePaint.do");
+        	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
 	        $("canvas").on({
 	            mousedown: function (e) {
 	            	if (!isEditable) {return;}
@@ -255,7 +288,6 @@
 		            otherCtx.stroke();
 		            otherCtx.closePath();
 	        	}
-// 	        	var drawData = JSON.parse(evt.data);
 	        }
 	        
         });
@@ -332,10 +364,11 @@
     			ws.send("next");
         		paintWs.send("next");
         		current = false;
+        		
+				setTimeout(() => {
+	        		paintWs.send("gameRestart");
+				}, 100);
     		}
-			setTimeout(() => {
-        		paintWs.send("gameRestart");
-			}, 100);
         }
         
         /* 정수형 숫자(초 단위)를 "시:분:초" 형태로 표현하는 함수 */

@@ -6,13 +6,6 @@ public class Game {
 	private static String questionNo;
 	private static String questionuser;
 	
-	public Game() {}
-//	public static void Game(String questionNo, String questionuser) {
-//		System.out.println(questionNo + questionuser);
-//		setQuestionNo(questionNo);
-//		setQuestionuser(questionuser);
-//	}
-
 	public static String getQuestionNo() {
 		return questionNo;
 	}

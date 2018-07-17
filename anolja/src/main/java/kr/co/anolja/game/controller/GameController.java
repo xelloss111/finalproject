@@ -1,5 +1,7 @@
 package kr.co.anolja.game.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.anolja.common.handler.GameChatHandler;
 import kr.co.anolja.game.service.GameService;
+import kr.co.anolja.repository.domain.User;
 
 @Controller
 public class GameController {
@@ -38,4 +41,11 @@ public class GameController {
 //	public void selectAnswer() {
 //		service.selectAnswer();
 //	}
+	
+	@ResponseBody
+	@RequestMapping("/rightAnswerCnt")
+	public int rightAnswerCnt(User user) {
+		System.out.println("컨트롤러: "+user.getId()+", "+GameChatHandler.rightAnswerCnt.get(user.getId()));
+		return GameChatHandler.rightAnswerCnt.get(user.getId());
+	}
 }

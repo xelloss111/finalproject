@@ -21,7 +21,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	}
 	
 	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		connectedUsers.add(session);
 		
 //		if (connectedUsers.size() == 6) {
@@ -43,7 +43,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	}
 
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		// 한문제가 끝난 후 문제와 출제자 다음으로 set해주기
 		if (message.getPayload().equals("next")) {
 			++GameChatHandler.questionNo;
@@ -51,7 +51,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
 				GameChatHandler.userNo = 0;
 			}
-			if (GameChatHandler.questionNo < 20) {
+			if (GameChatHandler.questionNo < 10) {
 				Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
 				Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
 			}
@@ -62,7 +62,9 @@ public class GamePaintHandler extends TextWebSocketHandler {
 					connectedUsers.get(i).sendMessage(new TextMessage("OK"));
 				}
 				else {
-					connectedUsers.get(i).sendMessage(new TextMessage("NO"));
+					synchronized(connectedUsers.get(i)) {
+						connectedUsers.get(i).sendMessage(new TextMessage("NO"));
+					}
 				}
 			}
 		}
@@ -74,7 +76,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	}
 
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+	public synchronized void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		connectedUsers.remove(session);
 	}
 	

@@ -5,11 +5,17 @@
   
 <mapper namespace="kr.co.anolja.repository.mapper.GameMapper">
 
-<select id="selectAnswer" resultType="string">
-	select answer
-	  from tb_answer
-	 order by rand()
-	 limit 20
-</select>
+	<select id="selectAnswer" resultType="string">
+		select answer
+		  from tb_answer
+		 order by rand()
+		 limit 10
+	</select>
+	
+	<update id="updateGameVictory" parameterType="user">
+		update tb_user
+		   set game_victory = game_victory + 1
+		 where id = #{id}
+	</update>
 
 </mapper>
