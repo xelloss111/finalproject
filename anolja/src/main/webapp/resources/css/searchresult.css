@@ -5,6 +5,14 @@ width : 100%;
 order:3;
 padding:60px 120px;
 }
+.send-button {
+	border: 0;
+    background: transparent;
+    border: 0;
+    float: right;
+
+}
+
 #search-nav {
             background-color: #2b2e28;
             margin: -10px;

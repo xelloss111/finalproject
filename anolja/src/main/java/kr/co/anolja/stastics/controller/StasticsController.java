@@ -39,6 +39,13 @@ public class StasticsController {
 		mav.addObject("characterName",userName);
 		
 		String userAccount = stasticsService.getAccountId(userName);
+		
+		if(userAccount.equals("입력하신 아이디와 일치하는 아이디가 없습니다.")) {
+			mav.addObject("errAlert", userAccount);
+			mav.setViewName("stastics/bgsearch");
+			
+			return mav;
+		}
 	
 		Map<String,Object> soloInfo = stasticsService.getSeasonInfo(userAccount, Season.season6, GameMode.solo);
 		Map<String,Object> duoInfo = stasticsService.getSeasonInfo(userAccount, Season.season6, GameMode.duo);

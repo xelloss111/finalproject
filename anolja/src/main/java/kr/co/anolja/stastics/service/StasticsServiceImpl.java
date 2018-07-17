@@ -79,20 +79,20 @@ public class StasticsServiceImpl implements StasticsService {
 		url = new URL(apiAddress);
 			 */
 		}catch (Exception e) {
-			errMsg = "URL 경로에 해당하는 자료 없음";
+			errMsg = "입력하신 아이디와 일치하는 아이디가 없습니다.";
 			return errMsg;
 
-		}finally {
+		}
 			try {
 
 				isr.close();
 				br.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				errMsg += ",IO에러 발생";
+				errMsg += "IO에러 발생";
 				return errMsg;
 			}
-		}
+		
 		return ((JsonObject)jsonArray.get(0)).get("id").toString().replaceAll("\"", "");
 	}
 

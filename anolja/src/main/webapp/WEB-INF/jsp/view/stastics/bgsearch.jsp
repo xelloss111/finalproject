@@ -33,6 +33,8 @@
 </section>
 
 <script>
-	
+if('${errAlert}' == "입력하신 아이디와 일치하는 아이디가 없습니다."){
+	alert('${errAlert}');
+}
 </script>
 </html>

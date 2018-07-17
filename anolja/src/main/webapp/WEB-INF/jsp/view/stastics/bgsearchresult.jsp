@@ -10,13 +10,17 @@
 
 		<!-- 여기부터 -->
 		<div id="search-nav">
-			<img
-				src="${pageContext.request.contextPath}/resources/images/battleground/Letter2.png"
-				width="100px" height="40px" style="margin-left: 10px;"> <img
-				src="${pageContext.request.contextPath}/resources/images/battleground/google-web-search-256.png"
-				width="35px" height="35px"
-				style="float: right; margin-right: 40px; margin-top: 2.2px;">
-			<input type="text" id="nav-input" placeholder="검색할 ID 입력">
+		<img src="${pageContext.request.contextPath}/resources/images/battleground/Letter2.png"
+					width="100px" height="40px" style="margin-left: 10px;">
+			<form action ="${pageContext.request.contextPath}/sendname" style="float:right;">
+			<button type="submit" class="send-button" style="border: 0;background: transparent; border: 0;float: right;">
+				 <img
+					src="${pageContext.request.contextPath}/resources/images/battleground/google-web-search-256.png"
+					width="35px" height="35px"
+					style="float: right; margin-right: 40px; margin-top: 2.2px;">
+				</button>
+				<input type="text" name="userName" id="nav-input" placeholder="검색할 ID 입력">
+			</form>
 		</div>
 
 		<div class="main">
@@ -970,7 +974,7 @@
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
 			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary' style='text-align:center;'>표시할 매치기록이 존재하지 않습니다.</div></li>");
 			}
 		});
 		
@@ -980,7 +984,7 @@
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
 			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+				$("ul.matches__list").html("<li class='matches-item' style='text-align:center';><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
 			}
 		});
 		
@@ -990,7 +994,7 @@
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
 			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+				$("ul.matches__list").html("<li class='matches-item' style='text-align:center;'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
 			}
 		});
 		
@@ -1000,7 +1004,7 @@
 			$("ul.matches__list li").eq(displayCnt).nextAll().css(
 					"display", "none");
 			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+				$("ul.matches__list").html("<li class='matches-item' style='text-align:center';><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
 			}
 		});
 
