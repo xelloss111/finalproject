@@ -121,18 +121,6 @@
     					$(".onlineId").remove();
     				}
     			}
-    			if (msg.includes('맞춤')) {
-    				var id = msg.substring(0, msg.indexOf('님'));
-   					$.ajax({
-   						url: "<c:url value='/rightAnswerCnt'/>",
-   						data: {id: id},
-   						dataType: "JSON",
-   						success: function (data) {
-   							console.log($("#"+id));
-   							$("#"+id).next().text(data);
-   						}
-   					});
-    			}
     			// 정답맞출 시 새로게임 시작하기
     			if (msg.includes('정답')) {
     				clearInterval(timerId);
@@ -150,6 +138,14 @@
     			console.log("출제자: ", "${id}");
     			$("#pencilImg").show();
 				$("#question").text(msg);
+    		}
+			// 화면에 정답 맞춘 갯수 뿌려주기
+			else if (evt.data.startsWith('rightAnswerCnt:')) {
+    			var msg = evt.data.substring('rightAnswerCnt:'.length);
+    			var msgArr = msg.split(':');
+    			var id = msgArr[0];
+    			var cnt = msgArr[1];
+    			$("#"+id).next().text(cnt);
     		}
     		else {
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');

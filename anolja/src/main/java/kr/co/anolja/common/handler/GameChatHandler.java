@@ -1,5 +1,6 @@
 package kr.co.anolja.common.handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,31 +89,15 @@ public class GameChatHandler extends TextWebSocketHandler {
 		String id = (String)attrs.get("id");
 		
 		if (message.getPayload().equals("next")) {
-			// 출제자에게 문제 보내기
-			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
-			
-			System.out.println("문제번호: "+questionNo);
-			// 10문제 끝나면 게임 끝내기
-			if (questionNo == 10) {
-				for (WebSocketSession wss : users) {
-					wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
-				}
-				return;
-			}
+			questionSend();
 		}
 		else if (message.getPayload().equals("gameEnd")) {
-			if (questionNo == 10) {return;}
-			for (int i = 5; i >= 1; i--) { 
-				session.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
-				Thread.sleep(1000); 
-			}
-			session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
-			session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+			endGame(session);
 		}
 		else if (message.getPayload().equals("Time Over")) {
 			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
-		// 받아온 메세지와 현재 문제가 같을 경우(정답인 경우)
+		// 받은 메세지와 현재 문제가 같을 경우(정답인 경우)
 		else if (message.getPayload().equals(Game.getQuestionNo())) {
 			User user = new User();
 			user.setId(id);
@@ -120,6 +105,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:"+id+"님 ["+message.getPayload()+"] 정답입니다!!!"));
 			}
+			
 			// 한 게임의 셋트당 맞춘 문제 수 관리
 			if (rightAnswerCnt.get(id) == null) {
 				rightAnswerCnt.put(id, 0);
@@ -128,11 +114,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 			cnt++;
 			rightAnswerCnt.remove(id);
 			rightAnswerCnt.put(id, cnt);
-			System.out.println("정답맞출시 : "+ id +rightAnswerCnt.get(id));
+//			System.out.println("정답맞출시 : "+ id +rightAnswerCnt.get(id));
 			for (int i = 0; i < chatList.size(); i++) {
-				if (chatList.get(i) == id) {
-					System.out.println("몇번들어오나");
-					users.get(i).sendMessage(new TextMessage("notice:"+id+"님 맞춤"));
+				for (WebSocketSession wss : users) {
+					wss.sendMessage(new TextMessage("rightAnswerCnt:"+id+":"+rightAnswerCnt.get(id)));
 				}
 			}
 		}
@@ -145,6 +130,38 @@ public class GameChatHandler extends TextWebSocketHandler {
 			}
 		}
 		System.out.println("아이디:" + id + ", 메세지: " + message.getPayload());
+	}
+
+	/**
+	 * @param session
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private void endGame(WebSocketSession session) throws IOException, InterruptedException {
+		if (questionNo == 10) {return;}
+		for (int i = 5; i >= 1; i--) { 
+			session.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
+			Thread.sleep(1000); 
+		}
+		session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
+		session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+	}
+
+	/**
+	 * @throws IOException
+	 */
+	private void questionSend() throws IOException {
+		// 출제자에게 문제 보내기
+		users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
+		
+		System.out.println("문제번호: "+questionNo);
+		// 10문제 끝나면 게임 끝내기
+		if (questionNo == 10) {
+			for (WebSocketSession wss : users) {
+				wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
+			}
+			return;
+		}
 	}
 
 	@Override
