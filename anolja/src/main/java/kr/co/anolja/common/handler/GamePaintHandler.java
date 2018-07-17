@@ -24,20 +24,16 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		connectedUsers.add(session);
 		
-//		if (connectedUsers.size() == 6) {
-//		}
-		 if (connectedUsers.size() == 2) {
-			if (Game.getQuestionNo() != null && Game.getQuestionuser() != null && !Game.getQuestionNo().equals("") && !Game.getQuestionuser().equals("")) {
-				// 현재 출제자에게 그림 그릴 수 있는 권한 주기
-				for (int i = 0; i < connectedUsers.size(); i++) {
-					if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
-						connectedUsers.get(i).sendMessage(new TextMessage("OK"));
-					}
-					else {
-						connectedUsers.get(i).sendMessage(new TextMessage("NO"));
-					}
-					connectedUsers.get(i).sendMessage(new TextMessage("{ \"mode\" : \"fill\", \"color\" : \"#FFFFFF\" }"));
+		if (connectedUsers.size() == 3) {
+			// 현재 출제자에게 그림 그릴 수 있는 권한 주기
+			for (int i = 0; i < connectedUsers.size(); i++) {
+				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
+					connectedUsers.get(i).sendMessage(new TextMessage("OK"));
 				}
+				else {
+					connectedUsers.get(i).sendMessage(new TextMessage("NO"));
+				}
+				connectedUsers.get(i).sendMessage(new TextMessage("{ \"mode\" : \"fill\", \"color\" : \"#FFFFFF\" }"));
 			}
 		}
 	}
@@ -46,6 +42,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		// 한문제가 끝난 후 문제와 출제자 다음으로 set해주기
 		if (message.getPayload().equals("next")) {
+			GameChatHandler.flag = false;
 			++GameChatHandler.questionNo;
 			++GameChatHandler.userNo;
 			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
@@ -54,6 +51,9 @@ public class GamePaintHandler extends TextWebSocketHandler {
 			if (GameChatHandler.questionNo < 10) {
 				Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
 				Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
+			}
+			if (GameChatHandler.questionNo == 10) {
+				GameChatHandler.questions = null;
 			}
 		}
 		if (message.getPayload().equals("gameRestart")) {

@@ -65,9 +65,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 //			System.out.println(questions.size());
 		}
 		
-//		if (chatList.size() == 2) {
-//		}
-		 if (chatList.size() == 2) {
+		if (chatList.size() == 3) {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			}
@@ -81,9 +79,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
 		}
 	}
+	public static boolean flag = false;
 	
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
@@ -101,13 +100,23 @@ public class GameChatHandler extends TextWebSocketHandler {
 		else if (message.getPayload().equals("Time Over")) {
 			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
+		
 		// 받은 메세지와 현재 문제가 같을 경우(정답인 경우)
 		else if (message.getPayload().equals(Game.getQuestionNo())) {
+			for (WebSocketSession wss : users) {
+				if ( !wss.getId().equals(session.getId()) ) {
+					wss.sendMessage(new TextMessage(id + ": " + message.getPayload()));
+				}
+			}
+			if (flag == true) {
+				return;
+			}
 			User user = new User();
 			user.setId(id);
 			mapper.updateGameVictory(user);
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:"+id+"님 ["+message.getPayload()+"] 정답입니다!!!"));
+				flag = false;
 			}
 			
 			// 한 게임의 셋트당 맞춘 문제 수 관리
@@ -119,18 +128,20 @@ public class GameChatHandler extends TextWebSocketHandler {
 			rightAnswerCnt.remove(id);
 			rightAnswerCnt.put(id, cnt);
 //			System.out.println("정답맞출시 : "+ id +rightAnswerCnt.get(id));
-			for (int i = 0; i < chatList.size(); i++) {
-				for (WebSocketSession wss : users) {
-					wss.sendMessage(new TextMessage("rightAnswerCnt:"+id+":"+rightAnswerCnt.get(id)));
+			synchronized (users) {
+				for (int i = 0; i < chatList.size(); i++) {
+					for (WebSocketSession wss : users) {
+						wss.sendMessage(new TextMessage("rightAnswerCnt:"+id+":"+rightAnswerCnt.get(id)));
+					}
 				}
 			}
+			flag = true;
 		}
 		else {
 			for (WebSocketSession wss : users) {
 				if ( !wss.getId().equals(session.getId()) ) {
 					wss.sendMessage(new TextMessage(id + ": " + message.getPayload()));
 				}
-				
 			}
 		}
 		System.out.println("아이디:" + id + ", 메세지: " + message.getPayload());
@@ -143,10 +154,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 	 */
 	private void endGame(WebSocketSession session) throws IOException, InterruptedException {
 		if (questionNo == 10) {return;}
-		for (int i = 5; i >= 1; i--) { 
-			session.sendMessage(new TextMessage("notice:"+i+"초 후 게임을 시작합니다."));
-			Thread.sleep(1000); 
-		}
+//		for (int i = 5; i >= 1; i--) { 
+//			session.sendMessage(new TextMessage("notice:초 후 게임을 시작합니다."));
+//			Thread.sleep(1000); 
+//		}
 		session.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 		session.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
 	}
@@ -163,6 +174,9 @@ public class GameChatHandler extends TextWebSocketHandler {
 		if (questionNo == 10) {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
+				questions = null;
+				Game.setQuestionNo(null);
+				Game.setQuestionuser(null);
 			}
 			return;
 		}
@@ -187,8 +201,6 @@ public class GameChatHandler extends TextWebSocketHandler {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:게임 참여 인원수 부족으로 게임을 끝냅니다."));
 			}
-		}
-		if (chatList.size() == 0) {
 			questions = null;
 		}
 	}

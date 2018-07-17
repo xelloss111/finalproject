@@ -48,16 +48,8 @@
 	        <div id="online">
                	접속자<br>
                	<c:forEach var="i" items="${chatList}">
-               		<span id='${i}'>${i}</span> [ <span>0</span> ]<br>
+               		<span><span id='${i}'>${i}</span> [ <span>0</span> ]</span><br>
                	</c:forEach>
-<!--                	<script> -->
-<%--                		var list = <%= chatList %>; --%>
-<!-- //                		$(document).ready(function () { -->
-<!-- //                			for (var i = 0; i < ${chatList}.size(); i++) { -->
-<!-- //                				$("#online").append(i+"<br>"); -->
-<!-- //                			} -->
-<!-- //                		}); -->
-<!--                	</script> -->
             </div>
         </div>
     </div>
@@ -92,6 +84,16 @@
     	
     	var rightAnswerCnt = 0;
     	
+//     	var sec = 5;
+//         function gameSet(msg) {
+//         	$("#chat").append('<div class="bubbleNotice">'+ sec +""+ msg +'</div>');
+// 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+//         	if (sec > 0) sec--;
+//         	else {
+//         		clearInterval(gameSetId);
+//         	}
+//         }
+    	
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
@@ -112,13 +114,13 @@
     			// 소켓연결이 되면 참여자 목록에 더하기
     			if (msg.includes('참여')) {
 					var id = msg.substring(0, msg.indexOf('님'));
-					$("#online").append("<span id='"+id+"'>"+ id +"</span> [ <span>0</span> ]<br>");
+					$("#online").append("<span><span id='"+id+"'>"+ id +"</span> [ <span>0</span> ]</span><br>");
     			}
     			// 소켓연결 종료되면 참여자 목록에서 빼기
     			if (msg.includes('접속종료')) {
 					var id = msg.substring(0, msg.indexOf('님'));
-					if ($(".onlineId").text() == id) {
-    					$(".onlineId").remove();
+					if ($("#"+id).text() == id) {
+    					$("#"+id).parent().remove();
     				}
     			}
     			// 정답맞출 시 새로게임 시작하기
@@ -129,8 +131,20 @@
     			else if (msg == '게임을 시작합니다.') {
     				startTime();
     			}
+    			
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
     			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+    			
+//     			if (msg.includes('초')) {
+//     				for (let i = 5; i >= 1; i--) {
+// 	    				setInterval(() => {
+// 			    			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
+// 			    			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+// 						}, 1000);
+// 	   				}
+// 	    			var gameSetId = setInterval("gameSet("+msg+");", 1000);
+//     			}
+    			
     		}
     		else if (evt.data.startsWith('question:')) {
     			var msg = evt.data.substring('question:'.length);
