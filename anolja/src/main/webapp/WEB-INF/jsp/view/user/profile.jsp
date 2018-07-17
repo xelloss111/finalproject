@@ -7,7 +7,7 @@
 	// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 	var popupY= ((window.screen.height / 2) / 4) * 1.5;
 	// 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
-	
+		
 	// 최초 팝업 오픈 시 사이즈 및 크기 고정
 	firstPosition();
 	
@@ -292,8 +292,8 @@
 			$(body).append(canvasprofile);
 			$(body).append(captureBtn);
 		  }, function(err) {
-// 			  swal("웹캠 정보가 없어 해당 기능은 이용하실 수 없습니다.");
-// 			  return false;
+			  swal("웹캠 정보가 없어 해당 기능은 이용하실 수 없습니다.");
+			  return false;
 		  });
 		
 		// 에러 발생 시 콜백 함수
