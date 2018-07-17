@@ -117,7 +117,7 @@ p.right {
 	cursor: pointer;
 }
 
-.lini1-1 > span > span {
+.lini1-1 > span > .vidTitle {
 	width : 60%;
 	position : relative;
 	float: left;

@@ -22,13 +22,19 @@
 			<ul class="list_ul">
 				<li class="list_select">
 					<form name="lForm" id="lForm" method="post">
-						<select class="round" name="myTank_list" id="myTank_list">
+						<select class="round" name="myTank_list" id="myTank_list" onchange="chageLangSelect()">
 							<option value="tank0"> 내 저장 리스트 불러오기</option>
+							
+							
+								<c:forEach var="tankList" items="${tankList}">
+									<option value="${tankList.tankId}">${tankList.tankName}</option>
+								</c:forEach>
+							
 						</select>
 					</form>
 				</li>
 				<li class="myTank"  data-toggle="modal" data-target="#myModal2">
-					<span>내 저장소</span>
+					<span>내 저장소 관리</span>
 				</li>
 			</ul>
 			
@@ -39,7 +45,7 @@
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="carousel slide " id="myCarousel" data-interval="false">
-						<div class="carousel-inner"></div>
+						<div class="carousel-inner" id='carousel-inner'></div>
 						<!-- carousel-innerEND -->
 					</div>
 					<!-- /#myCarousel -->
@@ -54,7 +60,7 @@
 		<!-- 캐러셀 영역 끝 -->
 
 		<div class="thumb_imgs">
-			<ul class='clickList'>
+			<ul class='clickList' id="clickList">
 
 			</ul>
 		</div>
@@ -89,6 +95,11 @@
 								<li class="oldTank"><span>기존 저장소에 저장 :</span> <select
 									class="round" name="tankName2" id="tank_list">
 										<option value="tank0">저장 리스트 불러오기</option>
+										
+										<c:forEach var="tankList" items="${tankList}">
+											<option value="${tankList.tankId}">${tankList.tankName}</option>
+										</c:forEach>
+								
 								</select></li>
 
 							</ul>
@@ -231,7 +242,7 @@ req.onreadystatechange = function (aEvt) {
 	 					html2 += '<li class="lini1-1">';
 	 					html2 += '	<span>';
 	 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
-	 					html2 += '		<span>' + vtitle + '</span>';
+	 					html2 += '		<span class="vidTitle">' + vtitle + '</span>';
 	 					html2 += '		<span class="hide_url">' + vurl + '</span>';
 	 					html2 += '	</span>';
 	 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
@@ -265,10 +276,8 @@ req.onreadystatechange = function (aEvt) {
 				var saveTitleHtml ='';			
 				
 				saveImg = $(this).prev().children('img').attr('src');
-				saveTitle = $(this).prev().children('span').text();
+				saveTitle = $(this).prev().children('.vidTitle').text();
 				saveUrl = $(this).prev().children('.hide_url').text();
-				
-				console.log(saveUrl);
 				
 				saveImgHtml += '<img src="'+ saveImg +'" name="videoImg">';
 				
@@ -390,7 +399,7 @@ function searchEnter() {
 			 					html2 += '<li class="lini1-1">';
 			 					html2 += '	<span>';
 			 					html2 += '		<img src="' + vimg + '" class="index' + i + '">';
-			 					html2 += '		<span>' + vtitle + '</span>';
+			 					html2 += '		<span class="vidTitle">' + vtitle + '</span>';
 			 					html2 += '		<span class="hide_url">' + vurl + '</span>';
 			 					html2 += '	</span>';
 			 					html2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
@@ -452,8 +461,10 @@ $("#submit").click(function () {
 	saveTankName = $(".newTank").val();		
 	var target = document.getElementById("tank_list");
 	var saveTankSelect = target.options[target.selectedIndex].value;
+	var visible_modal = jQuery('.modal.in').attr('id');
+	var resultTankHtml='';
 	
-	if(saveTankName=='' & saveTankSelect=='tank0') {
+	if(saveTankSelect=='tank0') {
 		swal({
 			  text: "저장소를 선택해주세요.",
 			  icon: "error",
@@ -461,7 +472,7 @@ $("#submit").click(function () {
 			})
 				return;
 	};
-
+	
 	//////////// 서버로 데이터 보내기 ajax
 		$.ajax({
 			type: "POST",
@@ -472,17 +483,19 @@ $("#submit").click(function () {
 				   "videoTitle":saveVideoTitle,
 				   "videoUrl":saveVideoUrl},
 			url: "videoSave",
-			success: function () {
+			success: function (tankInfo) {
+				//저장완료 얼럿 후 모달창 닫기
 				swal({
 					  text: saveTankName+ " 저장소에 저장 완료",
 					  icon: "success",
 					  button: "닫기",
 					}).then((value)=> {
-						$("#myModal1").removeClass('in');
+						jQuery('#' + visible_modal).modal('hide');
 						return;
 					});
-	
 			}
+				   
+				   
 		});
 });
 
@@ -516,9 +529,98 @@ function addOption(){
     frm.tank_list.options.add(op); // 옵션 추가
     //saveTankId 추가
 	saveTankId = target.options[target.selectedIndex].value;
-	console.log("saveTankId : " + saveTankId);
 };	
 
 
+//내 저장소 불러오기 옵션값 변경 시 페이지 변환
+	var tankInfoHtml = '';
+	var tankInfoHtml2 = '';
+function chageLangSelect(){
+	
+// 	var cell = document.getElementById("carousel-inner"); 
+// 	while ( cell.hasChildNodes() ) { 
+// 				cell.removeChild( cell.firstChild ); 
+// 			};
+		
+// 	var cell2 = document.getElementById("clickList"); 
+// 	while ( cell2.hasChildNodes() ) { 
+// 				cell2.removeChild( cell2.firstChild ); 
+// 			};
+	
+
+    var target = document.getElementById("myTank_list");
+    // select element에서 선택된 option의 value가 저장된다.
+    var selectValue = target.options[target.selectedIndex].value;
+
+    if(selectValue!='tank0'){
+		$.ajax({
+			type: "POST",
+			data: {"id":sessionId, 
+					"tankId":selectValue},
+			url: "viewTankList",
+			success: function (list) {
+								console.log(list);
+
+// 						for(var j = 0; j < list.length; j++) {
+// 							var resultTankId= list[j].tankId;
+// 							var resultTankName = list[j].tankName;
+// 							var resulturl = list[j].videoUrl;
+// 							var resultTitle = list[j].videoTitle;
+// 							var resutImg = list[j].videoImg;
+
+// 								if( j == 0 ) {
+// 									tankInfoHtml += '	<div class="item active"> ';
+// 								} else {							
+// 									tankInfoHtml += '	<div class="item"> ';		
+// 								}
+							
+// 								//캐러셀 영역
+// 									tankInfoHtml += '		<div class="bannerImage"> ';	
+// 									tankInfoHtml += '			<embed src=' + resulturl + ' style="width:745px; height:419px; left:0px; top:0.46875px;" /> ';	
+// 									tankInfoHtml += '				<div class="caption row-fluid">  ';	
+// 				 					tankInfoHtml += '					<div class="span4">  ';	
+// 				 					tankInfoHtml += '						<h3>' + resultTitle + '</h3>  ';	
+// 				 					tankInfoHtml += '					</div>  ';	
+// 				 					tankInfoHtml += '					<div class="span8">  ';	
+// 				 					tankInfoHtml += '						<h3></h3>  ';	
+// 				 					tankInfoHtml += '					</div>  ';	
+// 				 					tankInfoHtml += '				</div>  ';	
+// 				 					tankInfoHtml += '		</div>  ';	
+// 				 					tankInfoHtml += '	</div>  ';	
+									
+	
+// 				 					tankInfoHtml += '<div class="control-box">';
+// 				 					tankInfoHtml += '	<a data-slide="prev" href="#myCarousel" class="carousel-control left">';
+// 				 					tankInfoHtml += '		<i class="far fa-arrow-alt-circle-left fa-2x"></i>';
+// 				 					tankInfoHtml += '	</a>';
+// 				 					tankInfoHtml += '	<a data-slide="next" href="#myCarousel" class="carousel-control right">';
+// 				 					tankInfoHtml += ' 		<i class="far fa-arrow-alt-circle-right fa-2x"></i>';
+// 				 					tankInfoHtml += '	</a>';	 					
+// 				 					tankInfoHtml += '</div>';
+				 					
+// 				 					$(".carousel-inner").html(tankInfoHtml);
+				 					
+// 				 					// list 영역
+// 				 					tankInfoHtml2 += '<li class="lini1-1">';
+// 				 					tankInfoHtml2 += '	<span>';
+// 				 					tankInfoHtml2 += '		<img src="' + resutImg + '" class="index' + j + '">';
+// 				 					tankInfoHtml2 += '		<span class="vidTitle">' + resultTitle + '</span>';
+// 				 					tankInfoHtml2 += '		<span class="hide_url">' + resulturl + '</span>';
+// 				 					tankInfoHtml2 += '	</span>';
+// 				 					tankInfoHtml2 += '  <button type="submit" value="save" class="sc_btn save_btn"  data-toggle="modal" data-target="#myModal1">';
+// 				 					tankInfoHtml2 += '		<i class="far fa-save"></i>';
+// 				 					tankInfoHtml2 += '  </button>';
+// 				 					tankInfoHtml2 += '</li>';
+				 					
+// 				 					$(".clickList").html(tankInfoHtml2);
+							
+							
+							
+							
+// 						}
+			}				   				   
+		});
+    }
+}
 
 </script>

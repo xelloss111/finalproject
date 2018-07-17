@@ -30,4 +30,17 @@
 				#{videoUrl}
 			)			
 	</insert>
+	
+	<select id="selectUserTankId" resultMap="videoMap" parameterType="string">
+		select   *
+		from     tb_video
+		where    id=#{id}
+		order by tank_id desc
+	</select>
+	
+	<select id="selectMyTank" resultMap="videoMap" parameterType="video">
+		select *
+		from (select * from tb_video where id = #{id}) a
+		where tank_id = #{tankId}
+	</select>
 </mapper>
