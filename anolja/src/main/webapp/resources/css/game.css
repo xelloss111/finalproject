@@ -2,7 +2,7 @@
     margin-bottom: 10px;
     position: relative;
     width: 210px;
-    height: 50px;
+    height: auto;
     padding: 10px;
     background: #F0D264;
     -webkit-border-radius: 9px;
@@ -17,7 +17,7 @@
     margin-bottom: 10px;
     position: relative;
     width: 200px;
-    height: 50px;
+    height: auto;
     padding: 10px;
     background: #f0dbda;
     -webkit-border-radius: 9px;
@@ -45,7 +45,7 @@
     margin-bottom: 10px;
     position: relative;
     width: 200px;
-    height: 50px;
+    height: auto;
     padding: 10px;
     background: #dae4f0;
     -webkit-border-radius: 9px;
