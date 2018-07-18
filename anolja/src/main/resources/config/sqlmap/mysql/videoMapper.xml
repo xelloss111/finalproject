@@ -36,7 +36,7 @@
 		from     tb_video
 		where    id= #{id}
 		GROUP BY tank_id
-		order by tank_id desc
+		order by tank_id
 	</select>
 	
 	<select id="selectMyTank" resultMap="videoMap" parameterType="video">

@@ -2,15 +2,16 @@
  * 동영상 저장 아이콘 클릭 시 발생하는 모달1 
  */
 
-
 // 1. 모달에서 저장하기 눌렀을 때.
+
 $("#submit").click(function () {
 	var target = document.getElementById("tank_list");
 	var option = target.options[target.selectedIndex];
-	saveTankId = option.value;
-	saveTankName = option.innerText;
 	var visible_modal = jQuery('.modal.in').attr('id');
 	var resultTankHtml='';
+
+	saveTankId = option.value;
+	saveTankName = option.innerText;
 
 // 1-1. 저장소 선택되지 않은 경우
 	if(saveTankId=='tank0') {
