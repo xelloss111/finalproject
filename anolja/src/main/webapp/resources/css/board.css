@@ -262,51 +262,6 @@ text-shadow:0px 1px 1px #191919;
 
 /* 태블릿용 CSS */
 @media all and (min-width:768px){
-/* 헤더 영역 CSS */
-.header{
-flex-direction:row;
-}
-
-.logo{
-position:absolute;
-top:0;
-left:0;
-z-index:10;
-width:15.625%;
-/* 120px ÷ 768px */
-padding:0;
-}
-
-.logo a{
-display:block;
-padding:50px 0;
-padding:3.125rem 0;
-}
-
-.nav{
-position:relative;
-min-height:80px;
-min-height:5.000rem;
-background:#2ecc71;
-}
-
-.gnb{
-position:absolute;
-top:100%;
-right:0;
-z-index:20;
-width:40.10416666666667%;
-/* 308px ÷ 768px */
-}
-
-.menu_toggle_btn{
-top:50%;
-right:30px;
-right:1.875rem;
-z-index:20;
-margin-top:-15px;
-margin-top:-0.938rem;
-}
 
 /* 콘텐츠 영역 CSS */
 .content_section{
@@ -423,53 +378,6 @@ padding:0;
 }
 
 /* 헤더 영역 CSS */
-.header{
-order:1;
-justify-content:flex-end;
-position:static;
-}
-
-.logo{
-width:12.5%;
-/* 120px ÷ 960px */
-}
-
-.nav{
-display:flex;
-align-items:center;
-position:static;
-width:87.5%;
-/* 840px ÷ 960px */
-}
-
-.gnb{
-display:flex !important;
-flex-direction:row;
-position:static;
-width:100%;
-text-shadow:0px 1px 1px #25ab5e;
-}
-
-.gnb li{
-display:block;
-margin-left:5.20833333333333%;
-/* 50px ÷ 840px */
-background:none;
-}
-
-.gnb li a{
-width:auto;
-padding:0;
-text-indent:0;
-}
-
-.gnb li span{
-display:none;
-}
-
-.menu_toggle_btn{
-display:none;
-}
 
 /* 서브 헤더 영역 CSS */
 .sub_header_section{
