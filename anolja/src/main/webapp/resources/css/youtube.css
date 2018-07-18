@@ -520,6 +520,9 @@ caption {
 	float: left;
 }
 
+.list_select {
+	width: 55%;
+}
 .myTank {
 	color: #fff;
 	cursor: pointer;
@@ -532,10 +535,6 @@ caption {
 	margin-left: 50px;
 }
 
-.myTank > span {
-	width: 40%;
-	height: 40px;
-}
 /* select Box */
 
 select {
