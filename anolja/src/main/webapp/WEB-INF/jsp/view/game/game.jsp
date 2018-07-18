@@ -163,6 +163,7 @@
     		}
     		// 추천 뿌려주기
 			else if (evt.data.includes('rcmndCnt:')) {
+				console.log(evt.data);
 				rcmndCnt = evt.data.substring('rcmndCnt:'.length);
 				$("#funny > span").text(rcmndCnt);
 			}
@@ -385,7 +386,7 @@
 			$("#question").text("");
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
     		time = 60;
-    		rcmndCnt = 1;
+    		rcmndCnt = 0;
     		
     		if (current) {
         		paintWs.send("next");
