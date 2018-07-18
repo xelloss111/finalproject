@@ -35,19 +35,27 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="list" items="${list}">
+					<c:forEach var="re" items="${result.list}">
 						<tr>
-							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${list.bNo}">${list.bNo}</a></td>
-							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${list.bNo}">${list.title}</a></td>
-							<td>${list.anonymousId}</td>
-							<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
-							<td>${list.viewCnt}</td>
+							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.bNo}</a></td>
+							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.title}</a></td>
+							<td>${re.anonymousId}</td>
+							<td><fmt:formatDate value="${re.regDate}" pattern="yyyy-MM-dd" />
+							<td>${re.viewCnt}</td>
 						</tr>
 					</c:forEach>
 						
 					</tbody>
 				</table>
 			</div>
+			
+			
+			
+			
+			<c:if test="${result.pageResult.next eq true}">
+					      <span onclick="javascript:goPage(${result.pageResult.endPage + 1});" class="list_prev_btn"></span>
+			</c:if>
+			
 			<div class="content_row_2">
 				<div class="search_box">
 					<form action="#" method="get">
@@ -67,11 +75,41 @@
 					</div>
 				</c:if>
 			</div>
-			<div class="content_row_3">
-				<span class="list_prev_btn">문의사항 이전 버튼</span>
-				<a href="#">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<span class="list_next_btn">문의사항 다음 버튼</span>
-			</div>
+			
+			<c:if test="${result.pageResult.count != 0}">
+				<nav>
+					<div class="content_row_3">
+					      <c:if test="${result.pageResult.prev eq true}">
+					      <span onclick="javascript:goPage(${result.pageResult.beginPage - 1});" class="list_prev_btn"></span>
+					      </c:if>
+					<c:forEach var="i" begin="${result.pageResult.beginPage}" end="${result.pageResult.endPage}">
+					    <c:choose>
+					    	<c:when test="${i eq result.pageResult.pageNo}">
+							    <a href="#1">${i}</a>
+					    	</c:when>
+					    	<c:otherwise>
+							    <a href="javascript:goPage(${i});">${i}</a>
+					    	</c:otherwise>
+					    </c:choose>
+					</c:forEach>
+				      <c:if test="${result.pageResult.next eq true}">
+					      <span onclick="javascript:goPage(${result.pageResult.endPage + 1});" class="list_next_btn"></span>
+						</c:if>
+					</div>
+				    	    
+				</nav>
+			</c:if>
+<!-- 			<div class="content_row_3"> -->
+<!-- 				<span class="list_prev_btn">문의사항 이전 버튼</span> -->
+<!-- 				<a href="#">1</a> -->
+<!-- 				<a href="#">2</a> -->
+<!-- 				<a href="#">3</a> -->
+<!-- 				<span class="list_next_btn">문의사항 다음 버튼</span> -->
+<!-- 			</div> -->
 		</section>
+<script>
+	
+	function goPage(pageNo) {
+		location.href = "list?pageNo=" + pageNo;
+	}
+</script>

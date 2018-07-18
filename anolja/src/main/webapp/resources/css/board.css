@@ -4,9 +4,9 @@
 /* 기본 CSS */
 #wrap {order:3}
 #content_section {margin:25px 0 25px 0;}
-#bInfo {text-align:right;}
+#bInfo {text-align:right; width:1100px;}
 #title2{width:500px; float:left;}
-#title {width:1200px; margin: 20px 0 20px 0;}
+#title {width:1200px; margin: 20px 0 0 0;}
 #outer { width: 1100px; margin: 80px 0 auto; float: left; background-color:white;}
 #titleDiv { clear: both; margin-bottom:15px;}
 #titleDiv a {color:#000000; text-decoration:none;}

@@ -1,5 +1,7 @@
 package kr.co.anolja.board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.anolja.board.service.BoardService;
 import kr.co.anolja.repository.domain.Board;
 import kr.co.anolja.repository.domain.BoardFile;
+import kr.co.anolja.repository.domain.Comment;
 
 @Controller
 @RequestMapping(value="/board")
@@ -20,8 +25,8 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/list")
-	public String selectList(Model model) throws Exception{
-		model.addAttribute("list", boardService.boardList());
+	public String selectList(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) throws Exception{
+		model.addAttribute("result", boardService.boardList(pageNo));
 		return "board/list";
 	}
 	
@@ -32,40 +37,124 @@ public class BoardController {
 	
 	@RequestMapping("/insert")
 	public String boardInsert(Board board, BoardFile files) throws Exception {
-		System.out.println(files);
+					
+//		if(files.getFiles()[0].getSize() != 0) {
+//			files.setfNo(board.getbNo()); 
+//			boardService.boardInsert(board, files);
+//		} else {
+//		}
 		boardService.boardInsert(board, files);
 		return "redirect:/board/detail?bNo="+board.getbNo();
 	}
 	
 	
 	@RequestMapping("/detail")
-	public String boardDetail(HttpServletRequest request, Model model) throws Exception{
-		model.addAttribute("list", boardService.boardList());
-		int no = Integer.parseInt(request.getParameter("bNo"));
-		model.addAttribute("no", no);
-		Board board = boardService.boardDetail(no);
-		model.addAttribute("board", board);
+	public String boardDetail(Model model, int bNo,@RequestParam(value="pageNo", defaultValue="1")int pageNo) throws Exception{
+		model.addAttribute("result", boardService.boardList(pageNo));
+		boardService.updateViewCnt(bNo);
+		Board bad = boardService.boardDetail(bNo);
+		System.out.println("찍히니 : " + bNo);
+		model.addAttribute("board", bad);
+		System.out.println("찍힘 : " + bad.getbNo());
 		return "board/detail";
 	}
 	
 	@RequestMapping("/delete")
-	public String boardDelete(HttpServletRequest request) throws Exception{
-		int no = Integer.parseInt(request.getParameter("bNo"));
-		boardService.boardDelete(no);
+	public String boardDelete(HttpServletRequest request, int bNo) throws Exception{
+		boardService.boardDelete(bNo);
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/updateForm")
 	public String boardUpdate(HttpServletRequest request, Model model) throws Exception {
 		int no = Integer.parseInt(request.getParameter("bNo"));
-		model.addAttribute("board",boardService.boardDetail(no));
+		System.out.println(no);
+		Board board = boardService.boardDetail(no);
+		model.addAttribute("board", board);
 		return "board/update";
 	}
 	
-	@RequestMapping("/board/update")
+	@RequestMapping("/update")
 	public String boardUpdate(Board board) throws Exception {
 		boardService.boardUpdate(board);
 		return "board/list";
 	}
 	
+	
+	// 댓글 시작입니다.
+	@RequestMapping("/commentList")
+	@ResponseBody
+	public List<Comment> commentList(@RequestParam (value="bNo")int no){
+		return boardService.selectCommentByNo(no);  
+	}
+	
+	@RequestMapping("/commentRegist")
+	@ResponseBody
+	public List<Comment> commentRegist(Comment comment) {
+		boardService.insertComment(comment);
+		System.out.println("찍힘 : " + boardService.selectCommentByNo(comment.getbNo()));
+		
+		return boardService.selectCommentByNo(comment.getbNo());
+	}
+	
+	@RequestMapping("/commentDelete")
+	@ResponseBody
+	public List<Comment> commentDelete(Comment comment) {
+		boardService.deleteComment(comment);
+		return boardService.selectCommentByNo(comment.getbNo());
+	}
+	
+	@RequestMapping("/commentUpdate")
+	@ResponseBody
+	public List<Comment> commentUpdate(Comment comment) {
+		boardService.updateComment(comment);
+		return boardService.selectCommentByNo(comment.getbNo());
+	}
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

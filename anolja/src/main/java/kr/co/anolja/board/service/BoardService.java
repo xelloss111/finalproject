@@ -1,9 +1,11 @@
 package kr.co.anolja.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.anolja.repository.domain.Board;
 import kr.co.anolja.repository.domain.BoardFile;
+import kr.co.anolja.repository.domain.Comment;
 
 public interface BoardService {
 
@@ -15,9 +17,25 @@ public interface BoardService {
 
 	public void boardUpdate(Board board) throws Exception;
 
-	public List<Board> boardList() throws Exception;
+	public Map<String, Object> boardList(int pageNo) throws Exception;
 
 	public void boardInsert(Board board, BoardFile boardFile) throws Exception;
+
+	public void updateViewCnt(int bNo);
+
+	// 댓글 시작 
+	
+	public List<Comment> selectCommentByNo(int no);
+
+	public void insertComment(Comment comment);
+
+	public void deleteComment(Comment comment);
+
+	public void updateComment(Comment comment);
+
+
+//	public int selectBoardCount(Page search);
+
 
 
 }

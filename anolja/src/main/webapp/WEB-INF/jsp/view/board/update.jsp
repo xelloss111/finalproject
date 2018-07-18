@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
  <style type="text/css">
-        form{
+         form{
             width:527px;
         }
     	#board {width: 506px; margin: 50px auto;}
@@ -70,27 +70,25 @@
 }
 
 
+
     </style>
-<div id="board">
-    	<form action="insert" method="GET" enctype="multiple/form-data">
-    		<input type="text" class="form-control" name="anonymousId" style="width:500px;"><br>
-	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="제목을 입력해주세요" style="width:500px;" value="${board.title}"> <br><br>
-<!--             <div class="file_input" style="margin-bottom:30px;"> -->
-<!--             <label> -->
-<!--                 File Attach -->
-<!--                 <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="filename[]"> -->
-<!--             </label> -->
+<div id="board" style="order:4">
+    	<form action="update" method="POST" enctype="multipart/form-data">
+	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;" value="${board.title}"> <br><br>
+            <div class="file_input" style="margin-bottom:30px;">
+            <label>
+                File Attach
+                <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
+            </label>
 
-
-<!--             <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;"> -->
-<!--             </div> -->
+            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
+            </div>
 	    	<textarea id="message" class="form-control" name="content" id="exampleInputEmail1" type="text" 
-	    	placeholder="${board.content}" style="width:525px; height:300px;"></textarea> <br>
-<!--             <textarea name="content" id="summernote" value=""></textarea> -->
+	    	 style="width:525px; height:300px;">${board.content}</textarea> <br>
 	    	<div id="btn">
-                password : <input type="password" placeholder="비밀번호를 입력해주세요" name="pass">
-                <div style="width:156px; margin:0 auto; margin-top:15px;">
-	    		<button  class="btn btn-primary btnps" style="margin-right:20px;">등록</button><button class="btn btn-default btnps">취소</button>
+                <div style="width:253px; margin:0 auto; margin-top:15px;">
+	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
+	    		<button type="button" onclick="location.href='list'" class="btn btn-default btnps">취소</button>
                 </div>
 	    	</div>
     	</form>

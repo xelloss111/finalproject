@@ -13,34 +13,7 @@ public class Board {
 	private String content;
 	private Date regDate;
 	private int viewCnt;
-//	private Integer fileSeq;
-//	private MultipartFile[] files;
-//	private List<BoardFile> fileList;
 	
-//public MultipartFile[] getFiles() {
-//		return files;
-//	}
-//	public void setFiles(MultipartFile[] files) {
-//		this.files = files;
-//	}
-	//	public Integer getFileSeq() {
-//		return fileSeq;
-//	}
-//	public void setFileSeq(Integer fileSeq) {
-//		this.fileSeq = fileSeq;
-//	}
-//	public MultipartFile[] getFile() {
-//		return file;
-//	}
-//	public void setFile(MultipartFile[] file) {
-//		this.file = file;
-//	}
-//	public List<BoardFile> getBoardfile() {
-//		return fileList;
-//	}
-//	public void setBoardfile(List<BoardFile> boardfile) {
-//		this.fileList = boardfile;
-//	}
 	public String getAnonymousId() {
 		return anonymousId;
 	}
@@ -100,5 +73,22 @@ public class Board {
 	}
 	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
+	}
+	
+	// 페이징
+	
+	private int pageNo = 1;
+
+	public int getBegin() {
+		return (pageNo -1) * 10 + 1;
+	}
+	public int getEnd() {
+		return pageNo * 10;
+	}
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
 	}
 }

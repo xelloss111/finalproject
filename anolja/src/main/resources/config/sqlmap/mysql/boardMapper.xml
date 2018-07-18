@@ -6,7 +6,6 @@
 <mapper namespace="kr.co.anolja.repository.mapper.BoardMapper">
 	<resultMap type="board" id="boardMap">
 		<result column="anonymous_id" property="anonymousId" />
-		<result column="pass" property="pass" />
 		<result column="bNo" property="bNo" />
 		<result column="group_bno" property="groupBno" />
 		<result column="group_blist" property="groupBlist" />
@@ -17,13 +16,25 @@
 		<result column="view_cnt" property="viewCnt" />
 	</resultMap>
 	
-	<select id="boardList" resultMap="boardMap">
-		select *
-		from tb_board
-		order by bNo desc;
-	</select>
+	<select id="boardList" parameterType="int" resultMap="boardMap">
+    	SELECT *
+			FROM tb_board
+			ORDER BY bNo DESC
+		LIMIT #{pageNo}, 10
+    </select> 
+
+    <select id="selectBoardCount" resultType="int">
+    	select count(*)
+          from tb_board 
+    </select>
 	
-	<select id="boardDetail" parameterType="int" resultType="board">
+<!-- 	<select id="boardList" resultMap="boardMap"> -->
+<!-- 		select * -->
+<!-- 		from tb_board -->
+<!-- 		order by bNo desc; -->
+<!-- 	</select> -->
+	
+	<select id="boardDetail" parameterType="int" resultMap="boardMap">
 		select *
 		from tb_board
 		where bNo = #{bNo}
@@ -34,13 +45,12 @@
              select last_insert_ID()
     </selectKey>
 		insert into tb_board(
-			group_bno, anonymous_id, title, content, pass
+			group_bno, anonymous_id, title, content
 		)values(
 			#{bNo},
 			#{anonymousId}, 
 			#{title}, 
-			#{content}, 
-			#{pass}
+			#{content}
 		)
 	</insert>
 	
@@ -62,6 +72,12 @@
 		delete from tb_board
 		where bNo = #{bNo}
 	</delete>
+	
+	<update id="updateViewCnt" parameterType="int">
+    	update tb_board
+    	   set view_cnt = view_cnt + 1
+    	 where bNo = #{bNo}
+    </update>
 	
 	<!-- 파일 첨부시작 -->
 	

@@ -86,10 +86,9 @@
             </div>
 	    	<textarea id="message" class="form-control" name="content" type="text" placeholder="내용을 입력해주세요" style="width:525px; height:300px;"></textarea> <br>
 	    	<div id="btn">
-                password : <input type="password" placeholder="비밀번호를 입력해주세요" name="pass" id="pass">
                 <div style="width:253px; margin:0 auto; margin-top:15px;">
 	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
-	    		<button onclick="location.href='list'" class="btn btn-default btnps">취소</button>
+	    		<button type="button" onclick="location.href='list'" class="btn btn-default btnps">취소</button>
                 </div>
 	    	</div>
     	</form>
@@ -106,11 +105,6 @@
     			if(f.message.value.trim() == "") {
     				alert("내용을 입력해주세요")
     				f.message.focus();
-    				return false;
-    			}
-    			
-    			if(f.pass.value.trim() =="") {
-    				alert("패스워드를 입력해주세요")
     				return false;
     			}
     			
