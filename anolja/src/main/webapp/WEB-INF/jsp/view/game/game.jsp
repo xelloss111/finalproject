@@ -99,14 +99,22 @@
     			var msg = evt.data.substring('notice:'.length);
     			// 게임 중 인원이 1명남았을 경우 게임 끝내고 메인으로 보내기
     			if (msg.includes('부족')) {
-    				alert(msg);
+    				swal({
+        				icon: "warning",
+    					title: msg,
+    					button: "닫기"
+    				});
     				clearInterval(timerId);
     				location.href = "${pageContext.request.contextPath}/main";
     				return;
     			}
     			// 모든 게임이 끝나면 메인으로 보내기
     			if (msg.includes('메인')) {
-    				alert(msg);
+    				swal({
+        				icon: "error",
+    					title: msg,
+    					button: "닫기"
+    				});
     				clearInterval(timerId);
     				location.href = "${pageContext.request.contextPath}/main";
     				return;
@@ -168,7 +176,11 @@
 				$("#funny > span").text(rcmndCnt);
 			}
 			else if (evt.data.includes('room full')) {
-				alert('방 인원이 모두 찼습니다.');
+				swal({
+    				icon: "error",
+					title: '방 인원이 모두 찼습니다.',
+					button: "닫기"
+				});
 				location.href = "${pageContext.request.contextPath}/main";
 				return;
 			}
@@ -190,7 +202,11 @@
     	function sendMsg() {
     		var $msg = $("#chatInput");
     		if ($msg.val() == "") {
-    			alert("내용을 입력하세요");
+    			swal({
+    				icon: "warning",
+					title: '내용을 입력하세요',
+					button: "닫기"
+				});
     		}
     		else {
     			if (current) {
