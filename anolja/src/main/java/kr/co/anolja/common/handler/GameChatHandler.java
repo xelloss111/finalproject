@@ -51,11 +51,13 @@ public class GameChatHandler extends TextWebSocketHandler {
 		chatList.add(id);
 		System.out.println(id + " 연결됨");
 		
-		if (users.size() > 3) {
-			if (users.get(3) != null) {
-				users.get(3).sendMessage(new TextMessage("room full"));
+		// 접속한 유저가 2명일 때 못들어오게하기
+		if (users.size() > 2) {
+			if (users.get(2) != null) {
+				users.get(2).sendMessage(new TextMessage("room full"));
 			}
 		}
+		// 그렇지 않으면 참여시키기
 		else {
 			System.out.println("--------------------");
 			System.out.println("접속한 사용자 목록");
@@ -66,8 +68,8 @@ public class GameChatHandler extends TextWebSocketHandler {
 			System.out.println("--------------------");
 		}
 		
-		if (chatList.size() == 3) {
-			// uesr가 나갔다 다시 들어와서 방이 꽉 찼을 경우 게임중일 때는 return시키기
+		if (chatList.size() == 2) {
+			// uesr가 나갔다 다시 들어왔을 때 게임중일 때는 return시키기
 			if (questions != null) {
 				return;
 			}
@@ -78,14 +80,17 @@ public class GameChatHandler extends TextWebSocketHandler {
 //			System.out.println(questions.size());
 			}
 			
+			// 모든 게임이 끝나면 리셋시키기
+			if (questionNo == 10) {
+				Game.setQuestionNo(null);
+				Game.setQuestionuser(null);
+			}
+			
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			}
 			
 			// 문제와 출제자 담기
-			if (questionNo == 10) {
-				Game.setQuestionNo(null);
-			}
 			Game.setQuestionNo(questions.get(questionNo));
 			Game.setQuestionuser(chatList.get(userNo));
 			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
@@ -207,7 +212,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (users.size() > 3) {
+		if (users.size() > 2) {
 		}
 		else {
 			for (WebSocketSession wss : users) {

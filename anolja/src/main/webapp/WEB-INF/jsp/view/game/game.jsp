@@ -390,6 +390,7 @@
     		
     		if (current) {
         		paintWs.send("next");
+        		ws.send('rcmndCnt:'+rcmndCnt);
         		current = false;
         		
 				setTimeout(() => {
