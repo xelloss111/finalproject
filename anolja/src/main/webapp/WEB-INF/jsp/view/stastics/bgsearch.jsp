@@ -3,6 +3,22 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/search.css">
 
+<style>
+.wrap-loading {
+	/*로딩 이미지*/
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	margin-left: -21px;
+	margin-top: -21px;
+}
+
+.display-none {
+	/*감추기*/
+	display: none;
+}
+</style>
+
 <section class="content_section">
 	<div class="content_row_1">
 
@@ -30,11 +46,18 @@
 		</div>
 		<!-- 여기까지 -->
 	</div>
+	<div class="wrap-loading display-none">
+            <img src="${pageContext.request.contextPath}/resources/images/battleground/load2.gif" />
+    </div>
 </section>
 
 <script>
 if('${errAlert}' == "입력하신 아이디와 일치하는 아이디가 없습니다."){
 	alert('${errAlert}');
 }
+$("button.send-btn").click(
+        function(){
+            $(".wrap-loading.display-none").removeClass("display-none");
+            });
 </script>
 </html>

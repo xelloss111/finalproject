@@ -4,6 +4,22 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/searchresult.css">
+	
+<style>
+.wrap-loading {
+	/*로딩 이미지*/
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	margin-left: -21px;
+	margin-top: -21px;
+}
+
+.display-none {
+	/*감추기*/
+	display: none;
+}
+</style>
 
 <section class="content_section">
 	<div class="content_row_1">
@@ -609,6 +625,10 @@
 			<div class="right-side"></div>
 		</div>
 	</div>
+	
+	<div class="wrap-loading display-none">
+            <img src="${pageContext.request.contextPath}/resources/images/battleground/load.gif" />
+    </div>
 </section>
 
 <script>
@@ -650,8 +670,6 @@
 											var solo = data[0];
 											var duo = data[1];
 											var squad = data[2];
-											
-											alert(((solo.winPoints*100.36)+(solo.killPoints*19.61))/100);
 											
 											var $soloBox = ".rank-box.solobox";
 											var $duoBox = ".rank-box.duobox";
@@ -769,7 +787,17 @@
 											}
 											
 											
-										}
+										},beforeSend:function(){
+									        $('.wrap-loading').removeClass('display-none');
+
+									    },
+									    complete:function(){
+
+									        $('.wrap-loading').addClass('display-none');
+
+									 
+
+									    }
 									})
 						})
 	});
