@@ -31,6 +31,8 @@
 <!-- sweetAlert 적용 -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
 <script type="text/javascript">
 	$(function(){// jQuery 시작
 		
@@ -59,7 +61,7 @@
 		<div id="quick_right_menu">
 			<span></span>
 			<ul>
-				<li><a href="#" style="font-weight: bold;">Skyqe</a></li>
+				<li><a href="#" style="font-weight: bold;">쪽지함</a></li>
 
 			</ul>
 		</div>
