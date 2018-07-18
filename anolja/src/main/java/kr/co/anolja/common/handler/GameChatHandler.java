@@ -51,13 +51,20 @@ public class GameChatHandler extends TextWebSocketHandler {
 		users.add(session);
 		chatList.add(id);
 		
-		System.out.println("--------------------");
-		System.out.println("접속한 사용자 목록");
-		for (WebSocketSession wss : users) {
-			System.out.println(wss);
-			wss.sendMessage(new TextMessage("notice:"+id+"님이 참여하셨습니다."));
+		if (users.size() > 2) {
+			if (users.get(2) != null) {
+				users.get(2).sendMessage(new TextMessage("room full"));
+			}
 		}
-		System.out.println("--------------------");
+		else {
+			System.out.println("--------------------");
+			System.out.println("접속한 사용자 목록");
+			for (WebSocketSession wss : users) {
+				System.out.println(wss);
+				wss.sendMessage(new TextMessage("notice:"+id+"님이 참여하셨습니다."));
+			}
+			System.out.println("--------------------");
+		}
 		
 		// DB에서 문제 뽑아서 10문제 List에 담기
 		if (questions == null) {
@@ -65,7 +72,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 //			System.out.println(questions.size());
 		}
 		
-		if (chatList.size() == 3) {
+		if (chatList.size() == 2) {
+//			if (questions != null) {
+//				
+//			}
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			}
@@ -194,9 +204,13 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		for (WebSocketSession wss : users) {
-			if ( !wss.getId().equals(session.getId()) ) {
-				wss.sendMessage(new TextMessage("notice:"+id+"님 접속종료"));
+		if (users.size() > 2) {
+		}
+		else {
+			for (WebSocketSession wss : users) {
+				if ( !wss.getId().equals(session.getId()) ) {
+					wss.sendMessage(new TextMessage("notice:"+id+"님 접속종료"));
+				}
 			}
 		}
 		

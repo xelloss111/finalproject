@@ -166,6 +166,11 @@
 				rcmndCnt = evt.data.substring('rcmndCnt:'.length);
 				$("#funny > span").text(rcmndCnt);
 			}
+			else if (evt.data.includes('room full')) {
+				alert('방 인원이 모두 찼습니다.');
+				location.href = "${pageContext.request.contextPath}/main";
+				return;
+			}
     		else {
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
@@ -292,7 +297,12 @@
 		            	otherCtx.fillStyle = drawData.color;
 		            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 		            	otherCtx.closePath();
-		            	$("#time").css("color", "white");
+		            	if (drawData.color == '#f4f5ed') {
+			            	$("#time").css("color", "black");
+		            	}
+		            	else {
+			            	$("#time").css("color", "white");
+		            	}
 		            	return;
 		            }
 		            
@@ -318,25 +328,15 @@
             paintCtx.strokeStyle = strokeStyle;
             color = strokeStyle;
         });
+        
         function fill() {
         	if (!isEditable) {return;}
-        	
-            paintCtx.fillStyle = color;
-            paintCtx.fillRect(0, 0, canvas.width, canvas.height);
-            paintCtx.closePath();
-            
-            $("#time").css("color", "white");
-            
-            var fill = {};
-            fill.mode = "fill";
-            fill.color = color;
-            
-            paintWs.send(JSON.stringify(fill));
+            fillColor(color, 'white');
         };
         $("canvas").contextmenu(function (e) {
             e.preventDefault();
             if (!isEditable) {return;}
-            fill();
+            fillColor('#f4f5ed', 'black');
         });
         $("#clearBtn").click(function () {
         	if (!isEditable) {return;}
@@ -346,6 +346,21 @@
             paintWs.send("clear");
         });
         
+        // 채우기 색상
+        function fillColor(fillColor, timeColor) {
+        	paintCtx.fillStyle = fillColor;
+            paintCtx.fillRect(0, 0, canvas.width, canvas.height);
+            paintCtx.closePath();
+            
+            $("#time").css("color", timeColor);
+            
+	        var fill = {};
+	        
+            fill.mode = "fill";
+            fill.color = fillColor;
+            
+            paintWs.send(JSON.stringify(fill));
+        }
         
         /* 타이머 */
         var timerId; // 타이머를 핸들링하기 위한 전역 변수
