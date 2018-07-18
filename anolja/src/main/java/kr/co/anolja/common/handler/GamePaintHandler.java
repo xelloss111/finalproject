@@ -24,7 +24,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		connectedUsers.add(session);
 		
-		if (connectedUsers.size() == 2) {
+		if (connectedUsers.size() == 3) {
 			// 현재 출제자에게 그림 그릴 수 있는 권한 주기
 			for (int i = 0; i < connectedUsers.size(); i++) {
 				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {

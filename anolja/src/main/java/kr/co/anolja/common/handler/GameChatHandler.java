@@ -45,15 +45,15 @@ public class GameChatHandler extends TextWebSocketHandler {
 		// HttpSession 에서 사용자 정보 가져오기
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
-//		System.out.println(id + " 연결됨");
 		
 		// 요청한 사용자 정보관리
 		users.add(session);
 		chatList.add(id);
+		System.out.println(id + " 연결됨");
 		
-		if (users.size() > 2) {
-			if (users.get(2) != null) {
-				users.get(2).sendMessage(new TextMessage("room full"));
+		if (users.size() > 3) {
+			if (users.get(3) != null) {
+				users.get(3).sendMessage(new TextMessage("room full"));
 			}
 		}
 		else {
@@ -66,16 +66,18 @@ public class GameChatHandler extends TextWebSocketHandler {
 			System.out.println("--------------------");
 		}
 		
-		// DB에서 문제 뽑아서 10문제 List에 담기
-		if (questions == null) {
-			questions = mapper.selectAnswer();
+		if (chatList.size() == 3) {
+			// uesr가 나갔다 다시 들어와서 방이 꽉 찼을 경우 게임중일 때는 return시키기
+			if (questions != null) {
+				return;
+			}
+			
+			// DB에서 문제 뽑아서 10문제 List에 담기
+			if (questions == null) {
+				questions = mapper.selectAnswer();
 //			System.out.println(questions.size());
-		}
-		
-		if (chatList.size() == 2) {
-//			if (questions != null) {
-//				
-//			}
+			}
+			
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			}
@@ -103,6 +105,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			questionSend();
 		}
 		else if (message.getPayload().contains("rcmndCnt")) {
+			System.out.println(id+" : "+message.getPayload());
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage(message.getPayload()));
 			}
@@ -204,7 +207,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (users.size() > 2) {
+		if (users.size() > 3) {
 		}
 		else {
 			for (WebSocketSession wss : users) {
@@ -217,6 +220,12 @@ public class GameChatHandler extends TextWebSocketHandler {
 		users.remove(session);
 		chatList.remove(id);
 		System.out.println(id + " 연결 종료");
+		System.out.println("--------------------");
+		System.out.println("접속한 사용자 목록");
+		for (WebSocketSession wss : users) {
+			System.out.println(wss);
+		}
+		System.out.println("--------------------");
 		
 		if (chatList.size() == 1) {
 			for (WebSocketSession wss : users) {
