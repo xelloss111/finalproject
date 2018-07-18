@@ -365,7 +365,7 @@
         
         /* 타이머 */
         var timerId; // 타이머를 핸들링하기 위한 전역 변수
-        var time = 60; // 타이머의 시작 시간
+        var time = 90; // 타이머의 시작 시간
         
         function startTime() {
         	timerId = setInterval("decrementTime()", 1000);
@@ -385,7 +385,7 @@
         function gameRestart() {
 			$("#question").text("");
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-    		time = 60;
+    		time = 90;
     		rcmndCnt = 0;
     		
     		if (current) {
