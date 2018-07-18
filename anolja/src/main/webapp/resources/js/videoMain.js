@@ -4,7 +4,6 @@
  *  동영상 검색
  *  
  */
-
 // 1. sessionID 구해오기 - 관련 코드 baseLayout.jsp 에 있음
 //var ctx;
 //$(document).ready(function() {
@@ -20,6 +19,12 @@ var saveVideoUrl ='';
 var saveTankName ='';
 var saveTankId ='';
 
+// 10번(내 저장소 list 불러오기)에서 사용하는 변수
+
+
+
+// 화면 다 읽은 후 실행
+$(document).ready(function(){
 // 3. 로그인 하지 않았을 때 첫 화면에서 저장소 정보 불러오지 않기
 if(sessionId == 'null') {
 	$(".searchList").hide();
@@ -271,20 +276,22 @@ $(document).on('click','.save_btn' ,function(){
 				return;
 		}
 	});
-
+});
+//document ready끝
 
 // 10. video 첫 화면에서 내 저장소 select 박스 option 변경 시 리스트 가져오기
+
 var tankInfoHtml = '';
 var tankInfoHtml2 = '';	
 function chageLangSelect(){
 
-tankInfoHtml = '';
-tankInfoHtml2 ='';
+	tankInfoHtml = '';
+	tankInfoHtml2 ='';
 
-var target = document.getElementById("myTank_list");
-var selectValue = target.options[target.selectedIndex].value;
+	var target = document.getElementById("myTank_list");
+	var selectValue = target.options[target.selectedIndex].value;
 
-if(selectValue!='tank0'){
+	if(selectValue!='tank0'){
 	$.ajax({
 		type: "POST",
 		data: {"id":sessionId, 

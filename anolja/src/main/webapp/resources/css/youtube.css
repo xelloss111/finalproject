@@ -793,22 +793,26 @@ hr {
 	margin-right: 25%;
 }
 
+.newTankBtn {
+	width: 10%;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 10px;
+	background: #e65d5d;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
+}
 /* video page용 btn */
 .btn {
-	background: #ffc40f;
+	background: #428e9e;
+	-webkit-box-shadow: 0 3px 0 0 #c8c8c8;
+	box-shadow: 0 3px 0 0 #eee;
 }
 
 .btn-default {
 	background: #ffc40f;
 	text-shadow: 0 1px 0 #fff;
-    background-image: -webkit-linear-gradient(top,#fff 0,#ffc40f 100%);
-    background-image: -o-linear-gradient(top,#fff 0,#ffc40f 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#ffc40f));
-    background-image: linear-gradient(to bottom,#fff 0,#ffc40f 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    background-repeat: repeat-x;
-    border-color: #dbdbdb;
     border-color: #ffc40f;
 }
 
