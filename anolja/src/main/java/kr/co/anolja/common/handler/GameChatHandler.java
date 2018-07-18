@@ -51,10 +51,10 @@ public class GameChatHandler extends TextWebSocketHandler {
 		chatList.add(id);
 		System.out.println(id + " 연결됨");
 		
-		// 접속한 유저가 3명일 때 못들어오게하기
-		if (users.size() > 3) {
-			if (users.get(3) != null) {
-				users.get(3).sendMessage(new TextMessage("room full"));
+		// 접속한 유저가 5명일 때 못들어오게하기
+		if (users.size() > 5) {
+			if (users.get(5) != null) {
+				users.get(5).sendMessage(new TextMessage("room full"));
 			}
 		}
 		// 그렇지 않으면 참여시키기
@@ -68,7 +68,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			System.out.println("--------------------");
 		}
 		
-		if (chatList.size() == 3) {
+		if (chatList.size() == 5) {
 			// uesr가 나갔다 다시 들어왔을 때 게임중일 때는 return시키기
 			if (questions != null) {
 				return;
@@ -212,7 +212,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (users.size() > 3) {
+		if (users.size() > 5) {
 		}
 		else {
 			for (WebSocketSession wss : users) {

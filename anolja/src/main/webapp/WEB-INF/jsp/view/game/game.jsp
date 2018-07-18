@@ -404,7 +404,7 @@
         }
         
         /* 정수형 숫자(초 단위)를 "시:분:초" 형태로 표현하는 함수 */
-    	function toMinSec(t) { 
+    	function toMinSec(time) { 
     		var min;
     		var sec;
 
