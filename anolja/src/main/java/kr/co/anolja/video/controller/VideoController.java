@@ -34,6 +34,7 @@ public class VideoController {
 	@RequestMapping(value="videoSave")
 	@ResponseBody
 	public void videoList(Video video) {
+		System.out.println(video);
 		service.insert(video);
 	}
 	
@@ -43,11 +44,8 @@ public class VideoController {
 	public List<Video> viewTankList(Model model, HttpSession session, String tankId) throws Exception {
 		
 		String userId =(String)session.getAttribute("id");
-		
 		List<Video> list = service.selectMyTank(userId, tankId);
-		System.out.println(list.toString());
 		model.addAttribute("tankList", list);
-		
 		
 		return list;
 	}

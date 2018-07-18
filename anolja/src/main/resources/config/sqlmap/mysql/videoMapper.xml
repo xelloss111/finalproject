@@ -34,7 +34,8 @@
 	<select id="selectUserTankId" resultMap="videoMap" parameterType="string">
 		select   *
 		from     tb_video
-		where    id=#{id}
+		where    id= #{id}
+		GROUP BY tank_id
 		order by tank_id desc
 	</select>
 	
