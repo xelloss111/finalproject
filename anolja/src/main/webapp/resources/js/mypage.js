@@ -472,6 +472,7 @@ if (mypage) {
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('hipster');">Hipster!</a>`;
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('blur');">Blurr!</a>`;
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('greenscreen');">Color Me!</a>`;
+			captureList += `<a href="javascript:" class="btn" onclick="App.stop();">영상 중지</a>`;
 			captureList += '<br /><br /><br />';
 			captureList += '<canvas id="output"  height="426" width="515" ></canvas>';
 			captureList += '<div class="colours" style="display:none;">';
@@ -491,7 +492,6 @@ if (mypage) {
 			$('.modal-body').html(captureList);
 			
 			App.init();
-			
 		});
 		
 		// fade 토글로 display 처리

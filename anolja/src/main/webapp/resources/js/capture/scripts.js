@@ -98,7 +98,7 @@ var App = {
 		App.playing = setInterval(function() {
 			App.drawToCanvas(effect);
 		},50);
-	}
+	},
 };
 
 App.init = function() {
@@ -128,6 +128,13 @@ App.init = function() {
 	App.start("glasses");
 
 };
+
+App.stop = function() {
+	var videoEle = document.querySelector('video');
+	clearInterval(App.playing);
+	$(videoEle).stop();
+}
+
 
 //if (document.querySelector('video')) {
 //	console.log('ready!');
