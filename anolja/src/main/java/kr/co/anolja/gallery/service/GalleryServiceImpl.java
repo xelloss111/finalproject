@@ -2,6 +2,8 @@ package kr.co.anolja.gallery.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,16 @@ public class GalleryServiceImpl implements GalleryService {
 	@Autowired
 	GalleryMapper mapper;
 	
-	@Override
 	public List<Gallery> selectGallery() {
 		return mapper.selectGallery();
+	}
+	
+	@Override
+	public void viewGallery(HttpServletResponse res) throws Exception {
+		List<Gallery> g = mapper.selectGallery();
+		for (int i = 0; i < g.size(); i++) {
+			new FileHandler().fileViewer(g.get(i).getPath(), g.get(i).getFileName(), res);
+		}
 	}
 
 	@Override

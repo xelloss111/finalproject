@@ -1,23 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gallery.css">
 
 		<section class="content_section">
 			<div class="content_row_1">
 				<ul class="gallery_list">
-					<li><a href=""><img src="C:/java-lec/upload/2018/07/19/17/pp.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_01.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_02.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_03.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_04.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_05.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_06.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_07.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_08.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_09.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_10.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_11.jpg" alt=""></a></li>
-					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_12.jpg" alt=""></a></li>
+					<c:forEach var="i" items="${list}">
+						<li><a href=""><img src='<c:url value="/gallery/listView"/>'></a></li>
+					</c:forEach>
+<!-- 					<li><a href=""><img src="C:/java-lec/upload/2018/07/19/17/pp.jpg" alt=""></a></li> -->
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_01.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_02.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_03.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_04.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_05.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_06.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_07.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_08.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_09.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_10.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_11.jpg" alt=""></a></li> --%>
+<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_12.jpg" alt=""></a></li> --%>
 				</ul>
 			</div>
 			<div class="content_row_2">
@@ -52,8 +56,3 @@
 			</div>
 		</section>
 		
-		
-		<script>
-		$(".gallery_list").append('<li><a href=""><img src="<c:url value=\"/user/viewProfileImage\""></a></li>');
-		
-		</script>

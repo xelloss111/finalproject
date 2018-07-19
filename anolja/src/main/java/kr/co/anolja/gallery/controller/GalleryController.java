@@ -1,13 +1,16 @@
 package kr.co.anolja.gallery.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.anolja.gallery.service.GalleryService;
+import kr.co.anolja.repository.domain.Gallery;
 
 @Controller
 @RequestMapping("/gallery")
@@ -16,10 +19,15 @@ public class GalleryController {
 	@Autowired
 	GalleryService service;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public String gallery() {
-		
+	@RequestMapping("/list")
+	public String gallery(Gallery gallery, Model model) throws Exception {
+		model.addAttribute("list", service.selectGallery());
 		return "gallery/list";
+	}
+	
+	@RequestMapping("/listView")
+	public void viewGallery(HttpServletResponse res) throws Exception {
+		service.viewGallery(res);
 	}
 	
 	@ResponseBody
