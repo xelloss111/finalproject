@@ -102,7 +102,7 @@ var App = {
 			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
 			// 해당 부분 지속적으로 건드리기
 			for (i = 0; i < comp.length; i++) {
-				appCtx.drawImage(App.rabbit, comp[i].x, comp[i].y,comp[i].width * 3, comp[i].height * 3);
+				appCtx.drawImage(App.rabbit, comp[i].x - comp[i].x / 4, comp[i].y - comp[i].y / 4,comp[i].width * 3, comp[i].height * 3);
 			}
 		}
 	
