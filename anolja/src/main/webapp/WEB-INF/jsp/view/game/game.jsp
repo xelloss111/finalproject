@@ -56,6 +56,8 @@
 </div>
 </section>
     <script>
+    	
+    	// 새고로침(F5) 막기
 	    function LockF5() { 
 	        if (event.keyCode == 116) { 
 	            event.keyCode = 0; 
@@ -76,6 +78,8 @@
     	var ws = null;
     	// 현재 문제 출제자
     	var current = false;
+    	var currentUser = "";
+    	var currentQue = "";
     	
     	$(function () {
     		// 서버의 웹소켓 객체 연결하기
@@ -144,6 +148,11 @@
     					$("#"+id).parent().remove();
     				}
     			}
+    			if (msg.includes('차례')) {
+    				var id2 = msg.substring('이번차례 : '.length);
+    				var id = id2.substring(0, id2.indexOf('님'));
+    				currentUser = id;
+    			}
     			// 정답맞출 시 새로게임 시작하기
     			if (msg.includes('정답')) {
     				clearInterval(timerId);
@@ -167,9 +176,13 @@
 //     			}
     			
     		}
+    		else if (evt.data.startsWith('현재문제:')) {
+    			currentQue = evt.data.substring('현재문제:'.length);
+    		}
     		else if (evt.data.startsWith('question:')) {
     			var msg = evt.data.substring('question:'.length);
     			current = true;
+    			
     			console.log("출제자: ", "${id}");
     			$("#pencilImg").show();
 				$("#question").text(msg);
@@ -347,9 +360,12 @@
 	        
         });
         
-        
-        
-        
+
+        $(function () {
+        	setTimeout(() => {
+	        	fillColor('#f4f5ed', 'black');
+			}, 300);
+        });
         
         // 캔버스 그리기 색상 바꾸기 및 지우기
         var color = "black";
@@ -416,6 +432,10 @@
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
     		time = 90;
     		rcmndCnt = 0;
+//     		$("#funny").bind('click', funny);
+			$("#funny").click(function () {
+				funny();
+			});
     		
     		if (current) {
         		paintWs.send("next");
@@ -459,15 +479,76 @@
     	
     	/* 추천버튼 */
     	var rcmndCnt = 0;
+    	
     	$("#funny").click(function () {
+    		funny();
+   		});
+    	
+    	function funny() {
     		if (current) {
-    			$(this).unbind('click');
+    			$("#funny").unbind('click');
     			return;
     		}
     		$("#funny > span").text(++rcmndCnt);
-    		$(this).unbind('click');
+    		$("#funny").unbind('click');
     		ws.send("rcmndCnt:"+rcmndCnt);
-   		}); 
+    		
+    		if (rcmndCnt == 3) {
+	   			snapshot();
+	   			uploadFile(canvasInfo);
+	   		}
+    	}
+//     	function funny() {
+//     		if (current) {
+//     			$("#funny").unbind('click');
+//     			return;
+//     		}
+//     		$("#funny > span").text(++rcmndCnt);
+//     		$("#funny").unbind('click');
+//     		ws.send("rcmndCnt:"+rcmndCnt);
+    		
+//     		if (rcmndCnt == 3) {
+// 	   			snapshot();
+// 	   			uploadFile(canvasInfo);
+// 	   		}
+//     	}
+    	
+    	
+    	
+
+    	
+    	// canvas 영역 캡처를 위한 img 태그 생성
+    	var photo = $('<img id="photo"/>');
+    	var canvasInfo = '';
+    	
+    	// 스트림객체를 통해 캔버스의 이미지 정보를 img 태그에 삽입
+    	function snapshot() {
+   			canvasInfo = canvas.toDataURL('image/jpeg');
+   			$("#photo").attr("src", canvasInfo);
+   			console.log(canvasInfo);
+    	}
+    	
+    	// 캡처된 파일 업로드 ajax 처리 함수
+    	function uploadFile(file) {
+    		var sendUrl = '';
+    		$.ajax({
+    			url: "<c:url value='/gallery/insert'/>",
+    			data: {
+    				id: currentUser,
+    				answer: currentQue,
+    				canvasInfo: file
+    			},
+    			type: "POST",
+    			success: function (data) {
+   					ws.send(data);
+    			},
+    			error: function (e) {
+    				console.log("갤러리업로드 에러발생: "+e);
+    			}
+    		});
+    	}
+    	
+    	
     </script>
 </body>
 </html>

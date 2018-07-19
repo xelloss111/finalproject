@@ -4,4 +4,28 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.anolja.repository.mapper.GalleryMapper">
+
+	<resultMap id="galleryMap" type="gallery">
+		<result column="gno" property="gno" />
+		<result column="id" property="id" />
+		<result column="answer" property="answer" />
+		<result column="path" property="path" />
+		<result column="file_name" property="fileName" />
+		<result column="reg_date" property="regDate" />
+	</resultMap>
+	
+	<select id="selectGallery" resultMap="galleryMap">
+		select *
+		  from tb_gallery
+		 order by gno desc
+	</select>
+	
+	<insert id="insertGallery" parameterType="gallery">
+		insert into tb_gallery (
+			id, answer, path, file_name
+		) values (
+			#{id}, #{answer}, #{path}, #{fileName}
+		)
+	</insert>
+	
 </mapper>

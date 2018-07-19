@@ -80,4 +80,32 @@ public class FileHandler {
 		
 		return base64Info;
 	}
+	
+	// base64 문자열 디코딩 처리 후 파일로 저장(캐치마인드 갤러리용)
+		public Object[] base64Decode(String id, String answer, String fileInfo) throws Exception {
+			String base64Image = fileInfo.split(",")[1];
+			byte[] imagebytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+			
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagebytes));
+			
+			String uploadPath = "c:/java-lec/upload";
+			SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/HH");	
+			String detailPath = sdf.format(new Date());
+			File dir = new File(uploadPath + detailPath);
+
+			if (!dir.isDirectory()) {
+				dir.mkdirs();
+			}
+			
+			File image = new File(uploadPath + detailPath, id + answer + ".jpg");
+			ImageIO.write(img, "jpg", image);
+			
+			File imageInfo = new File(uploadPath + detailPath, id + answer + ".jpg");
+			long fileSize = imageInfo.length();
+			
+			
+			Object[] base64Info = {detailPath, id + answer + ".jpg", fileSize};
+			
+			return base64Info;
+		}
 }

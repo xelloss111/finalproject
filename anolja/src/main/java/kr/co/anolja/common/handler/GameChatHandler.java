@@ -86,14 +86,16 @@ public class GameChatHandler extends TextWebSocketHandler {
 				Game.setQuestionuser(null);
 			}
 			
-			for (WebSocketSession wss : users) {
-				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
-			}
-			
 			// 문제와 출제자 담기
 			Game.setQuestionNo(questions.get(questionNo));
 			Game.setQuestionuser(chatList.get(userNo));
 			System.out.println("현재문제: "+Game.getQuestionNo()+", 현재 출제자: "+Game.getQuestionuser());
+			
+			for (WebSocketSession wss : users) {
+				wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
+				wss.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+				wss.sendMessage(new TextMessage("현재문제:"+Game.getQuestionNo()));
+			}
 			
 			// 문제 출제자에게만 문제 전송하기
 			users.get(userNo).sendMessage(new TextMessage("question:"+Game.getQuestionNo()));
@@ -115,13 +117,18 @@ public class GameChatHandler extends TextWebSocketHandler {
 				wss.sendMessage(new TextMessage(message.getPayload()));
 			}
 		}
+		else if (message.getPayload().contains("gallery:")) {
+			String msg = message.getPayload().substring("gallery:".length());
+			for (WebSocketSession wss : users) {
+				wss.sendMessage(new TextMessage(msg));
+			}
+		}
 		else if (message.getPayload().equals("gameEnd")) {
 			endGame(session);
 		}
 		else if (message.getPayload().equals("Time Over")) {
 			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
-		
 		// 받은 메세지와 현재 문제가 같을 경우(정답인 경우)
 		else if (message.getPayload().equals(Game.getQuestionNo())) {
 			for (WebSocketSession wss : users) {
@@ -182,6 +189,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		for (WebSocketSession wss : users) {
 			wss.sendMessage(new TextMessage("notice:게임을 시작합니다."));
 			wss.sendMessage(new TextMessage("notice:이번차례 : "+chatList.get(userNo)+"님"));
+			wss.sendMessage(new TextMessage("현재문제:"+Game.getQuestionNo()));
 		}
 		System.out.println("이번차례 밑에 찍히는거: "+Game.getQuestionuser()+", userNo: " + userNo);
 	}
@@ -233,10 +241,12 @@ public class GameChatHandler extends TextWebSocketHandler {
 		System.out.println("--------------------");
 		
 		if (chatList.size() == 1) {
-			for (WebSocketSession wss : users) {
-				wss.sendMessage(new TextMessage("notice:게임 참여 인원수 부족으로 게임을 끝냅니다."));
-			}
+			users.get(0).sendMessage(new TextMessage("notice:게임 참여 인원수 부족으로 게임을 끝냅니다."));
+		}
+		if (chatList.size() == 0) {
 			questions = null;
+			Game.setQuestionNo(null);
+			Game.setQuestionuser(null);
 		}
 	}
 	
