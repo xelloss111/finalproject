@@ -94,7 +94,7 @@ var App = {
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 3,
+											"interval" : 4,
 											"min_neighbors" : 1 });
 
 			// Draw rabbit on everyone!
@@ -102,11 +102,62 @@ var App = {
 			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
 			// 해당 부분 지속적으로 건드리기
 			for (i = 0; i < comp.length; i++) {
-				appCtx.drawImage(App.rabbit, comp[i].x - comp[i].x / 4, comp[i].y - comp[i].y / 2.5 ,comp[i].width * 3, comp[i].height * 3);
+				appCtx.drawImage(App.rabbit, comp[i].x - 30, comp[i].y - 120, comp[i].width + 70, comp[i].height + 170);
 			}
 		}
+		else if(effect === 'mickey') {
+			App.mickey = new Image();
+			App.mickey.src = ctx + "/resources/images/user/capture/mickey.png";
+			
+			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
+											"cascade" : cascade,
+											"interval" : 4,
+											"min_neighbors" : 1 });
 	
-					
+			// Draw mickey on everyone!
+			// 크기 조절을 위해 아래 위치를 수정한다
+			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
+			// 해당 부분 지속적으로 건드리기
+			for (i = 0; i < comp.length; i++) {
+				appCtx.drawImage(App.mickey, comp[i].x - 30, comp[i].y - 120, comp[i].width + 70, comp[i].height + 170);
+			}
+		}
+		else if (effect === 'mini'){
+			App.mini = new Image();
+			App.mini.src = ctx + "/resources/images/user/capture/mini.png";
+			
+			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
+											"cascade" : cascade,
+											"interval" : 4,
+											"min_neighbors" : 1 });
+	
+			// Draw mini on everyone!
+			// 크기 조절을 위해 아래 위치를 수정한다
+			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
+			// 해당 부분 지속적으로 건드리기
+			for (i = 0; i < comp.length; i++) {
+				appCtx.drawImage(App.mini, comp[i].x - 30, comp[i].y - 120, comp[i].width + 70, comp[i].height + 170);
+			}
+		}
+		else if (effect === 'devil'){
+			App.devil = new Image();
+			App.devil.src = ctx + "/resources/images/user/capture/devil.png";
+			
+			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
+											"cascade" : cascade,
+											"interval" : 4,
+											"min_neighbors" : 1 });
+	
+			// Draw mini on everyone!
+			// 크기 조절을 위해 아래 위치를 수정한다
+			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
+			// 해당 부분 지속적으로 건드리기
+			for (i = 0; i < comp.length; i++) {
+				appCtx.drawImage(App.devil, comp[i].x - 10, comp[i].y - 130, comp[i].width + 40, comp[i].height + 50);
+			}
+		}
+		else if (effect === 'normal') {
+		}
 	},
 
 	start : function(effect) {

@@ -467,35 +467,120 @@ if (mypage) {
 			
 			var captureList = '';
 			
+//			captureList += '<video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video>';
 			captureList += '<video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video>';
-			captureList	+= `<a href="javascript:" class="btn" onclick="App.start('glasses');">Glasses!</a>`;
-			captureList += `<a href="javascript:" class="btn" onclick="App.start('rabbit');">Rabbit!</a>`;
-			captureList += `<a href="javascript:" class="btn" onclick="App.start('hipster');">Hipster!</a>`;
-			captureList += `<a href="javascript:" class="btn" onclick="App.start('blur');">Blurr!</a>`;
-			captureList += `<a href="javascript:" class="btn" onclick="App.start('greenscreen');">Color Me!</a>`;
-			captureList += `<a href="javascript:" class="btn" onclick="App.stop();">영상 중지</a>`;
+			captureList	+= `<a href="javascript:" class="btn5" onclick="App.start('glasses');">Glasses!</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('rabbit');">Rabbit!</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mickey');">mickey!</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mini');">mini!</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('devil');">devil!</a>`;
+			captureList += '<i id="addProfile" class="fa fa-plus-circle fa-3x"></i>';
+			captureList += '<i id="backProfile" class="fa fa-redo-alt fa-3x"></i>';
 			captureList += '<br /><br /><br />';
-			captureList += '<canvas id="output"  height="426" width="515" ></canvas>';
-			captureList += '<div class="colours" style="display:none;">';
-			captureList += '<div id="red">';
-			captureList += '<input type="range" min=0 max=255 value=190 class="min">';
-			captureList += '<input type="range" min=0 max=255 value=240 class="max">';
-			captureList += '</div>';
-			captureList += '<div id="green">';
-			captureList += '<input type="range" min=0 max=255 value=0 class="min">';
-			captureList += '<input type="range" min=0 max=255 value=120 class="max">';
-			captureList += '</div>';
-			captureList += '<div id="blue">';
-			captureList += '<input type="range" min=0 max=255 value=90 class="min">';
-			captureList += '<input type="range" min=0 max=255 value=190 class="max">';
-			captureList += '</div></div>';
+//			captureList += '<canvas id="output"  height="426" width="515" ></canvas>';
+			captureList += '<canvas id="output"  height="350" width="515" ></canvas>';
+			
+			var pia = '';
+			pia += '<div class="profileImageArea">';
+			pia += '<img />';
+			pia += '</div>';
 			
 			$('.modal-body').html(captureList);
+			$('.modal-body').append(pia);
 			
 			App.init();
+			
+			var profileInfo = '';
+			$('#previewImg').click(function(){
+				// 캔버스에 합성된 이미지를 base64 형식의 dataURL로 가져옴
+				profileInfo = App.canvas.toDataURL('image/jpeg');
+				// img 태그에 해당 주소로 삽입
+				var profileImg = $('.profileImageArea').children('img').attr('src', profileInfo);
+				// 등록 버튼 보이기
+				$('#addProfile').show();
+				$('#backProfile').show();
+				console.log(profileInfo);
+			});
+			
+			// 비디오 영역 이미지 등록 버튼 클릭 이벤트 처리
+			$('#addProfile').click(function() {
+				uploadFile(profileInfo);
+			});
+			
+			$('#backProfile').click(function() {
+				$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+			});
+			
+			$('#normalView').click(function() {
+				App.start('normal');
+			});
+			
+			
 		});
+		
+		if ($('#mmm').attr('aria-hidden') == 'true') {
+			App.stop();
+			$('.modal-body').html('');
+		}
 		
 		// fade 토글로 display 처리
 		$(mypage).fadeToggle('slow');
 	});
+	
+	function uploadFile(file) {
+		var sendUrl = '';
+		var fd = new FormData();
+    	if (typeof file !== 'object') {
+			sendUrl = ctx + "/user/registProfileBase64Image";
+	    	$.ajax({
+	    		url: sendUrl,
+	    		data: {id : sessionId, fileInfo : file},
+	    		type: "POST",
+	    		success: function (data) {
+	    			if (data.endsWith("완료")) {
+	    				swal({
+	    					text: data
+	    				}).then((val) => {
+	    					$('.photoArea').attr('id', 'user');
+	    					$('.photoArea').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+	
+	    				});
+	    			} else {
+	    				swal({
+	    					text: data,
+	    					icon: 'error'
+	    				});
+	    			}
+	    		}
+	    	});
+    	} else {
+		    fd.append("id", sessionId);
+	    	fd.append("attach", file);
+			sendUrl = ctx + "/user/registProfileImage";
+	    	$.ajax({
+	    		url: sendUrl,
+	    		data: fd,
+	    		type: "POST",
+	    		contentType: false,
+	    		processData: false,
+	    		success: function (data) {
+	    			if (data.endsWith("완료")) {
+	    				swal({
+	    					text: data
+	    				}).then((val) => {
+	    					$('.photoArea').attr('id', 'user');
+	    					$('.photoArea').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+	
+	    				});
+	    			} else {
+	    				swal({
+	    					text: data,
+	    					icon: 'error'
+	    				});
+	    			}
+	    		}
+	    	});    		
+    	}
+    };
+	
 }

@@ -66,44 +66,23 @@
 	<button type="button" id="captureBtn" data-toggle="modal" data-target="#mmm"></button>
 	
 	<!-- Modal -->
-	<div class="modal fade" id="mmm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
+	<div class="modal fade bs-example-modal-lg" id="mmm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      <div class="modal-header" style="background:#ffc40f;">
+	        <h4 class="modal-title" id="myModalLabel">웹캠으로 프로필 이미지 등록 / 합성해서 등록</h4>
 	      </div>
-	      <div class="modal-body">
-<!-- 	        <video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video> -->
-<!-- 			<a href="javascript:" class="btn" onclick="App.start('glasses');">Glasses!</a> -->
-<!-- 			<a href="javascript:" class="btn" onclick="App.start('hipster');">Hipster!</a> -->
-<!-- 			<a href="javascript:" class="btn" onclick="App.start('blur');">Blurr!</a> -->
-<!-- 			<a href="javascript:" class="btn" onclick="App.start('greenscreen');">Color Me!</a> -->
-<!-- 			<br /><br /><br /> -->
-<!-- 			<!-- Out Canvas Element for output --> -->
-<%-- 			<canvas id="output"  height="426" width="515" ></canvas> --%>
-		
-<!-- 			<div class="colours" style="display:none;"> -->
-<!-- 				<div id="red"> -->
-<!-- 					<input type="range" min=0 max=255 value=190 class="min"> -->
-<!-- 					<input type="range" min=0 max=255 value=240 class="max"> -->
-<!-- 				</div> -->
-<!-- 				<div id="green"> -->
-<!-- 					<input type="range" min=0 max=255 value=0 class="min"> -->
-<!-- 					<input type="range" min=0 max=255 value=120 class="max"> -->
-<!-- 				</div> -->
-<!-- 				<div id="blue"> -->
-<!-- 					<input type="range" min=0 max=255 value=90 class="min"> -->
-<!-- 					<input type="range" min=0 max=255 value=190 class="max"> -->
-<!-- 				</div>				 -->
-<!-- 			</div> -->
-		  </div>
+			<div class="modal-body">
+			</div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <a href="javascript:" class="btn4" onclick="App.stop();" style="float:left;">영상 중지</a>
+	        <button type="button" id="normalView" class="btn3" style="float:left;">화면만 나오게</button>
+	        <button type="button" id="previewImg" class="btn1" style="float:left;">사진찍기</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
 	      </div>
-	    </div>
-	  </div>
-	</div>
+		</div>
+    </div>
+  </div>
  
 	 
 	 
@@ -133,10 +112,9 @@
 		$.getScript(ctx + "/resources/js/info_section.js", function() {});
 		$.getScript(ctx + "/resources/js/signup.js", function() {});
 		$.getScript(ctx + "/resources/js/loginout.js", function() {});
-		$.getScript(ctx + "/resources/js/capture/ccv.js", function() {});
-		$.getScript(ctx + "/resources/js/capture/face.js", function() {});
-		$.getScript(ctx + "/resources/js/capture/scripts.js", function() {});
-		$.getScript(ctx + "/resources/js/capture/stackblur.js", function() {});
+// 		$.getScript(ctx + "/resources/js/capture/ccv.js", function() {});
+// 		$.getScript(ctx + "/resources/js/capture/face.js", function() {});
+// 		$.getScript(ctx + "/resources/js/capture/scripts.js", function() {});
 		$.getScript(ctx + "/resources/js/mypage.js", function() {});
 	});
 	
