@@ -5,6 +5,7 @@
 		<section class="content_section">
 			<div class="content_row_1">
 				<ul class="gallery_list">
+					<li><a href=""><img src="C:/java-lec/upload/2018/07/19/17/pp.jpg" alt=""></a></li>
 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_01.jpg" alt=""></a></li>
 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_02.jpg" alt=""></a></li>
 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_03.jpg" alt=""></a></li>
@@ -50,3 +51,9 @@
 				<span class="list_next_btn">갤러리 다음 버튼</span>
 			</div>
 		</section>
+		
+		
+		<script>
+		$(".gallery_list").append('<li><a href=""><img src="<c:url value=\"/user/viewProfileImage\""></a></li>');
+		
+		</script>

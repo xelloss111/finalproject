@@ -1,5 +1,7 @@
 package kr.co.anolja.gallery.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,11 @@ public class GalleryServiceImpl implements GalleryService {
 	@Autowired
 	GalleryMapper mapper;
 	
+	@Override
+	public List<Gallery> selectGallery() {
+		return mapper.selectGallery();
+	}
+
 	@Override
 	public void insertGallery(String id, String answer, String fileInfo) throws Exception {
 		Object[] result = new FileHandler().base64Decode(id, answer, fileInfo);
