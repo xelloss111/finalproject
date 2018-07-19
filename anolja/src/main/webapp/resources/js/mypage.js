@@ -469,6 +469,7 @@ if (mypage) {
 			
 			captureList += '<video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video>';
 			captureList	+= `<a href="javascript:" class="btn" onclick="App.start('glasses');">Glasses!</a>`;
+			captureList += `<a href="javascript:" class="btn" onclick="App.start('rabbit');">Rabbit!</a>`;
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('hipster');">Hipster!</a>`;
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('blur');">Blurr!</a>`;
 			captureList += `<a href="javascript:" class="btn" onclick="App.start('greenscreen');">Color Me!</a>`;

@@ -88,6 +88,20 @@ var App = {
 			}
 						
 		}
+		else if(effect === 'rabbit') {
+			App.rabbit = new Image();
+			App.rabbit.src = ctx + "/resources/images/user/capture/glasses.png";
+			
+			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
+				"cascade" : cascade,
+				"interval" : 3,
+				"min_neighbors" : 1 });
+
+			// Draw rabbit on everyone!
+			for (i = 0; i < comp.length; i++) {
+				appCtx.drawImage(App.rabbit, comp[i].x, comp[i].y,comp[i].width, comp[i].height);
+			}
+		}
 	
 					
 	},
