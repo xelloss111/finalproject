@@ -90,7 +90,7 @@ var App = {
 		}
 		else if(effect === 'rabbit') {
 			App.rabbit = new Image();
-			App.rabbit.src = ctx + "/resources/images/user/capture/glasses.png";
+			App.rabbit.src = ctx + "/resources/images/user/capture/rabbit.png";
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 				"cascade" : cascade,
