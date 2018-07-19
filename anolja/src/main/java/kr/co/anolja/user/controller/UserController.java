@@ -54,6 +54,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
+//	@RequestMapping(value = "login")
 	@ResponseBody
 	public String loginPost(User user, Model model) throws Exception {
 		User temp = service.loginUser(user);
@@ -67,7 +68,7 @@ public class UserController {
 			msg = "가입된 메일 인증 후 로그인이 가능합니다";
 		} else {
 			model.addAttribute("id", temp.getId());
-			return "/";
+			msg = "/";
 		}
 		
 		return msg;

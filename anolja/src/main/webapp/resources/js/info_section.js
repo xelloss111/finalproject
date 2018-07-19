@@ -3,6 +3,7 @@
  */
 //	ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 
+
 	var infoList = $('#wrap > .info_section > ul');
 	console.log("세션 ID 체크 중 : ", sessionId);
 	if (sessionId == 'null') {

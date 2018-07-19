@@ -32,10 +32,10 @@ if (login != null) {
 			</tr>\
 			</table>\
 			</div>\
+			</form>\
 			<div id="loginArea" style="float:left; margin-left: 40px; margin-top:100px;">\
 			<button class="btn2" id="loginBtn"><span class="button__inner">로그인</span></button>\
 			</div>\
-			</form>\
 			<div id="findArea" style="float:left; margin-left: 40px; margin-top:100px;">\
 			<button class="btn" id="findIdBtn"><span class="button__inner">ID 찾기</span></button>\
 			<button class="btn" id="findPassBtn"><span class="button__inner">PW 찾기</span></button>\
@@ -53,8 +53,7 @@ if (login != null) {
 		var loginpass = document.querySelector("input[name='pass']");
 
 		// 로그인 버튼 이벤트 처리
-		$(document).on('click', '#loginBtn', function(e) {
-			e.preventDefault();
+		$(document).on('click', '#loginBtn', function() {
 			if (loginid.value === "") { 
 				swal({
 					  title: "로그인 실패",
@@ -82,14 +81,14 @@ if (login != null) {
 				success: function(result) {
 					if (result.startsWith('/')) {
 						location.href = ctx + result;
-						return;
+					} else {
+						swal({
+							title: "로그인 실패",
+							text: result,
+							icon: "error",
+							button: "돌아가기",
+						});
 					}
-					swal({
-						  title: "로그인 실패",
-						  text: result,
-						  icon: "error",
-						  button: "돌아가기",
-					});
 				}
 			});
 		});
