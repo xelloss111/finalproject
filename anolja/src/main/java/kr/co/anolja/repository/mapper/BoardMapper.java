@@ -1,7 +1,6 @@
 package kr.co.anolja.repository.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import kr.co.anolja.repository.domain.Board;
 import kr.co.anolja.repository.domain.BoardFile;
@@ -18,10 +17,20 @@ public interface BoardMapper {
 	public void updateViewCnt(int bNo);
 	
 	
+	
+	
+	public void boardReply(Board board) throws Exception;
+	
+	public void boardUpdateNo(int bNo) throws Exception;
+	
 	public List<Board> selectBoard(Board board);
 
 	public int selectBoardCount();
 	
 	public void insertBoardFile(BoardFile boardFile);
+	
+	
+	public void updateReplyBoard(Board board);
+	public void updateBno(int getbNo);
 	
 }

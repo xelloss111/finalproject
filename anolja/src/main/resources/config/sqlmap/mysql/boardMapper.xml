@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.anolja.repository.mapper.BoardMapper">
 	<resultMap type="board" id="boardMap">
 		<result column="anonymous_id" property="anonymousId" />
-		<result column="bNo" property="bNo" />
+		<result column="bno" property="bNo" />
 		<result column="group_bno" property="groupBno" />
 		<result column="group_blist" property="groupBlist" />
 		<result column="depth" property="depth" />
@@ -19,7 +19,7 @@
 	<select id="boardList" parameterType="int" resultMap="boardMap">
     	SELECT *
 			FROM tb_board
-			ORDER BY bNo DESC
+			order by group_bno desc, group_blist asc
 		LIMIT #{pageNo}, 10
     </select> 
 
@@ -27,12 +27,6 @@
     	select count(*)
           from tb_board 
     </select>
-	
-<!-- 	<select id="boardList" resultMap="boardMap"> -->
-<!-- 		select * -->
-<!-- 		from tb_board -->
-<!-- 		order by bNo desc; -->
-<!-- 	</select> -->
 	
 	<select id="boardDetail" parameterType="int" resultMap="boardMap">
 		select *
@@ -45,39 +39,56 @@
              select last_insert_ID()
     </selectKey>
 		insert into tb_board(
-			group_bno, anonymous_id, title, content
+			anonymous_id, title, content, group_bno, depth, group_blist
 		)values(
-			#{bNo},
 			#{anonymousId}, 
 			#{title}, 
-			#{content}
+			#{content},
+			#{bNo},
+			0,
+			0
 		)
 	</insert>
-	
 	<update id="boardUpdateNo" parameterType="int">
 		update tb_board
-		   set #{group_bNo} = #{bNo}
-		   where bNo = #{bNo}
+		   set group_bno = #{bNo}
+		   where bno = #{bNo}
 	</update>
 	
 	<update id="boardUpdate" parameterType="board">
 		update tb_board
 			set title = #{title},
-				content = #{content},
-				pass = #{pass}
-			where bNo = #{bNo} 
+				content = #{content}
+			where bno = #{bNo} 
 	</update>
 	
 	<delete id="boardDelete" parameterType="int">
 		delete from tb_board
-		where bNo = #{bNo}
+		where bno = #{bNo}
 	</delete>
 	
 	<update id="updateViewCnt" parameterType="int">
     	update tb_board
     	   set view_cnt = view_cnt + 1
-    	 where bNo = #{bNo}
+    	 where bno = #{bNo}
     </update>
+	
+	<!-- 답글 시작 -->
+	
+	<update id="updateReplyBoard" parameterType="board">
+		update tb_board
+		   set group_blist = group_blist + 1
+		   where group_bNo = #{groupBno} and group_blist &gt; #{groupBlist}
+	</update>
+	
+	<insert id="boardReply" parameterType="board">
+		insert into tb_board(
+			anonymous_id, title, content, group_blist, depth, group_bno 
+		)values(
+			#{anonymousId}, #{title}, #{content}, #{groupBlist}+1, #{depth}+1, #{groupBno}
+		)
+	</insert>
+	
 	
 	<!-- 파일 첨부시작 -->
 	
@@ -97,4 +108,5 @@
 			#{bNo}, #{path}, #{oriName}, #{sysName}, #{fileSize}		
 		)
 	</insert> 
+	
 </mapper>

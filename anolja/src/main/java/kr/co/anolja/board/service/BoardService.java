@@ -21,7 +21,11 @@ public interface BoardService {
 
 	public void boardInsert(Board board, BoardFile boardFile) throws Exception;
 
+	public void boardReply(Board board, BoardFile boardFile) throws Exception;
+
 	public void updateViewCnt(int bNo);
+	
+	
 
 	// 댓글 시작 
 	
@@ -32,6 +36,7 @@ public interface BoardService {
 	public void deleteComment(Comment comment);
 
 	public void updateComment(Comment comment);
+
 
 
 //	public int selectBoardCount(Page search);

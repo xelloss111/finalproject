@@ -37,12 +37,6 @@ public class BoardController {
 	
 	@RequestMapping("/insert")
 	public String boardInsert(Board board, BoardFile files) throws Exception {
-					
-//		if(files.getFiles()[0].getSize() != 0) {
-//			files.setfNo(board.getbNo()); 
-//			boardService.boardInsert(board, files);
-//		} else {
-//		}
 		boardService.boardInsert(board, files);
 		return "redirect:/board/detail?bNo="+board.getbNo();
 	}
@@ -53,9 +47,7 @@ public class BoardController {
 		model.addAttribute("result", boardService.boardList(pageNo));
 		boardService.updateViewCnt(bNo);
 		Board bad = boardService.boardDetail(bNo);
-		System.out.println("찍히니 : " + bNo);
 		model.addAttribute("board", bad);
-		System.out.println("찍힘 : " + bad.getbNo());
 		return "board/detail";
 	}
 	
@@ -78,6 +70,22 @@ public class BoardController {
 	public String boardUpdate(Board board) throws Exception {
 		boardService.boardUpdate(board);
 		return "board/list";
+	}
+	
+	
+	//답글 시작입니다.
+	
+	@RequestMapping("/boardReply")
+	public String reply(Board board, BoardFile boardFile) throws Exception{
+		System.out.println("찍히냐 : " + board.getbNo());
+		boardService.boardReply(board, boardFile);
+		return "redirect:/board/list";
+	}
+	
+	@RequestMapping("/replyForm")
+	public String replyForm(Model model, int bNo) throws Exception{
+		model.addAttribute("board",boardService.boardDetail(bNo));
+		return "board/replyForm";
 	}
 	
 	

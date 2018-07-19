@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
  <style type="text/css">
-        form{
+         form{
             width:527px;
         }
     	#board {width: 506px; margin: 50px auto;}
@@ -70,23 +69,29 @@
     border:1px solid #777;
 }
 
-#board {order : 2;}
+
 
     </style>
-<div id="board">
-    	<form action="insert" method="POST" enctype="multipart/form-data">
-    		<input type="hidden" name="groupBlist" value="0" />
-    		<input type="hidden" name="depth" value="0" />
-    		<input type="hidden" name="anonymousId" value="${sessionScope.id}">
-	    	<input type="text" class="form-control" id="exampleInputEmail1" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
+<div id="board" style="order:4">
+    	<form action="boardReply" method="POST" enctype="multipart/form-data">
+    		<input type="hidden" name="bNo" value="${board.bNo}" />
+    		<input type="hidden" name="groupBno" value="${board.groupBno}" />
+    		<input type="hidden" name="anonymousId" value="${sessionScope.id}" />
+    		<input type="hidden" name="groupBlist" value="${board.groupBlist}" />
+    		<input type="hidden" name="depth" value="${board.depth}" />
+    		
+	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;""> <br><br>
             <div class="file_input" style="margin-bottom:30px;">
-	            <label>
-	                File Attach
-	                <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
-	            </label>
-	            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
+            <label>
+                File Attach
+                <input type="file" onchange="javascript:document.getElementById('file_route
+                ').value=this.value" multiple="multiple" name="files">
+            </label>
+
+            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
             </div>
-	    	<textarea id="message" class="form-control" name="content" type="text" placeholder="내용을 입력해주세요" style="width:525px; height:300px;"></textarea> <br>
+	    	<textarea id="message" class="form-control" name="content" id="exampleInputEmail1" type="text" 
+	    	 style="width:525px; height:300px;">${board.content}</textarea> <br>
 	    	<div id="btn">
                 <div style="width:253px; margin:0 auto; margin-top:15px;">
 	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
@@ -94,24 +99,4 @@
                 </div>
 	    	</div>
     	</form>
-    	
-    	<script>
-    		function chk() {
-    			var f = document.insert;
-    			if (f.title.value.trim() == "") {
-    				alert("제목을 입력해주세요")
-    				f.title.focus();
-    				return false;
-    			}
-    			
-    			if(f.message.value.trim() == "") {
-    				alert("내용을 입력해주세요")
-    				f.message.focus();
-    				return false;
-    			}
-    			
-    			f.submit();
-    		}
-    		
-    	</script>
     </div>

@@ -43,8 +43,10 @@
 	<div id="outer">
 		<div id="titleDiv">
 			<br> <br>
-			<button onclick="location.href='write'">글쓰기</button>
-			<button>답글</button>
+			<c:if test="${!empty sessionScope.id}">
+				<button onclick="location.href='write'">글쓰기</button>
+				<button onclick="location.href='replyForm?bNo=${board.bNo}'">답글</button>
+			</c:if>
 		</div>
 		<div id="title">
 		<div style="width:1100px; height:5px; background-color:#2c3e50;margin-bottom:5px;"></div>
@@ -54,7 +56,7 @@
 
 
 			<div id="bInfo" style="background-color:#2c3e50;">
-				<span>${board.anonymousId}</span> <span>조회수 : 184</span> <span><fmt:formatDate
+				<span>${board.anonymousId}</span> <span>조회수 : ${board.viewCnt}</span> <span><fmt:formatDate
 						value="${board.regDate}" pattern="yyyy-MM-dd" /></span>
 			</div>
 		</div>
@@ -298,7 +300,7 @@
 			dataType: "json"
 		})
 		.done(function (result) {
-			alert("댓글등록이 완료되었습ㄷㅏ");
+			alert("댓글등록이 완료되었습니다");
 			if (!'${sessionScope.id}') {
 				$("#rForm input[name='anonymousId']").val("");
 			}
@@ -316,7 +318,7 @@
 		html += '	<colgroup>'; 
 		html += '		<col width="7%">'; 
 		html += '		<col width="*">'; 
-		html += '		<col width="14%">'; 
+		html += '		<col width="20%">'; 
 		html += '		<col width="10%">'; 
 		html += '	</colgroup>'; 
 		  
@@ -332,7 +334,7 @@
 			         + date.getHours() + ":"
 			         + date.getMinutes() + ":"
 			         + date.getSeconds();
-			html += '	<td style="color:white;">' + time + '</td>';
+			html += '	<td style="color:white; border:1px solid red;">' + time + '</td>';
 			html += '	<td>';    
 			if('${sessionScope.id}' == comment.anonymousId) {
 			html += '		<a href="javascript:commentUpdateForm(' + comment.cNo + ')" class="btn btn-success btn-sm" "role="button">수정</a>';    

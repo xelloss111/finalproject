@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.anolja.repository.domain.Board;
@@ -48,9 +49,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void boardInsert(Board board, BoardFile boardFile) throws Exception {
+		
 		boardMapper.boardInsert(board);
-		int a = board.getbNo();
 		// 그룹bNO값을 board에 있는 bNo값으로 업데이트
+		boardMapper.boardUpdateNo(board.getbNo());
 		
 		if(boardFile.getFiles()[0].getSize() != 0) {
 			for (MultipartFile file : boardFile.getFiles()) {
@@ -116,6 +118,38 @@ public class BoardServiceImpl implements BoardService {
 		map.put("pageResult", new PageResult(pageNo, count));
 		return map;
 	}
+
+	@Override
+	public void boardReply(Board board, BoardFile boardFile) throws Exception {
+		boardMapper.updateReplyBoard(board);
+		
+		boardMapper.boardReply(board);
+		
+		if(boardFile.getFiles()[0].getSize() != 0) {
+			for (MultipartFile file : boardFile.getFiles()) {
+				String oriName = file.getOriginalFilename();
+				
+				//파일이 있을때만 실행
+				boardFile.setbNo(board.getbNo());
+				long fileSize = file.getSize();
+				System.out.println(file.getOriginalFilename());
+				String ext = "";
+				int index = file.getOriginalFilename().lastIndexOf(".");
+				ext = file.getOriginalFilename().substring(index);
+				
+				String saveFileName = "board -" + UUID.randomUUID().toString() + ext;
+				
+				file.transferTo(new File("c:/pilseong/upload/" + saveFileName));
+				
+				boardFile.setPath("c:/pilseong/upload/");
+				boardFile.setFileSize((int) fileSize);
+				boardFile.setOriName(oriName);
+				boardFile.setSysName(saveFileName);
+				boardMapper.boardInsertFile(boardFile);
+			}
+		}
+	}
+	
 
 	
 	

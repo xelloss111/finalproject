@@ -87,8 +87,8 @@
 	    	 style="width:525px; height:300px;">${board.content}</textarea> <br>
 	    	<div id="btn">
                 <div style="width:253px; margin:0 auto; margin-top:15px;">
-	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
-	    		<button type="button" onclick="location.href='list'" class="btn btn-default btnps">취소</button>
+		    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
+		    		<button type="button" onclick="location.href='list'" class="btn btn-default btnps">취소</button>
                 </div>
 	    	</div>
     	</form>
