@@ -93,13 +93,16 @@ var App = {
 			App.rabbit.src = ctx + "/resources/images/user/capture/rabbit.png";
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
-				"cascade" : cascade,
-				"interval" : 3,
-				"min_neighbors" : 1 });
+											"cascade" : cascade,
+											"interval" : 3,
+											"min_neighbors" : 1 });
 
 			// Draw rabbit on everyone!
+			// 크기 조절을 위해 아래 위치를 수정한다
+			// 만약 크기를 조절하는 경우 좌표 값도 수정해야할 필요가 생긴다
+			// 해당 부분 지속적으로 건드리기
 			for (i = 0; i < comp.length; i++) {
-				appCtx.drawImage(App.rabbit, comp[i].x, comp[i].y,comp[i].width, comp[i].height);
+				appCtx.drawImage(App.rabbit, comp[i].x, comp[i].y,comp[i].width * 3, comp[i].height * 3);
 			}
 		}
 	
