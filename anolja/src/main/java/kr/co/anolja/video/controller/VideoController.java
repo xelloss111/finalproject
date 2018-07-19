@@ -27,15 +27,18 @@ public class VideoController {
 		String userId =(String)session.getAttribute("id");
 		model.addAttribute("tankList", service.selectUserTankId(userId));
 		
+		List<Video> test = service.selectUserTankId(userId);
+		System.out.println(test.toString());
+		
 		return "video/video";
 	}
 	
 	//리스트에 원하는 동영상 저장하기
 	@RequestMapping(value="videoSave")
 	@ResponseBody
-	public void videoList(Video video) {
+	public List<Video> videoList(Video video) {
 		System.out.println(video);
-		service.insert(video);
+		return service.insert(video);
 	}
 	
 	//특정 저장소 선택 시 리스트 불러오기
@@ -46,6 +49,8 @@ public class VideoController {
 		String userId =(String)session.getAttribute("id");
 		List<Video> list = service.selectMyTank(userId, tankId);
 		model.addAttribute("tankList", list);
+		
+		System.out.println("list : " + list);
 		
 		return list;
 	}

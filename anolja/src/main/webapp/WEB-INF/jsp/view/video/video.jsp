@@ -1,9 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <!-- video js -->
 <script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/videoMain.js'></script>
-<script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/videoModal1.js'></script>
 <!-- video css -->
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/youtube.css">
@@ -25,12 +23,11 @@
 				<li class="list_select">
 					<form name="lForm" id="lForm" method="post">
 						<select class="round" name="myTank_list" id="myTank_list" onchange="chageLangSelect()">
-							<option value="tank0"> 내 저장 리스트 불러오기</option>
 							
-							
-								<c:forEach var="tankList" items="${tankList}">
-									<option value="${tankList.tankId}">${tankList.tankName}</option>
-								</c:forEach>
+<!-- 							<option value="tank0"> 내 저장 리스트 불러오기</option> -->
+<%-- 								<c:forEach var="tankList" items="${tankList}"> --%>
+<%-- 									<option value="${tankList.tankId}">${tankList.tankName}</option> --%>
+<%-- 								</c:forEach> --%>
 							
 						</select>
 					</form>
@@ -162,6 +159,19 @@
 </section>
 
 <script>
+
+// select영역 정보 json으로 뽑기
+var resultselbox = new Array();
+
+$(function() {
+		<c:forEach var="tankList" items="${tankList}">
+			var json = new Object();
+			json.tankId = "${tankList.tankId}";
+			json.tankName = "${tankList.tankName}";
+			resultselbox.push(json);
+		</c:forEach>
+});
+
 //1. 모달에서 저장하기 눌렀을 때.
 
 $("#submit").click(function () {
@@ -169,6 +179,8 @@ $("#submit").click(function () {
 	var option = target.options[target.selectedIndex];
 	var visible_modal = jQuery('.modal.in').attr('id');
 	var resultTankHtml='';
+	var newTankOptionHtml = '';
+	var selectBoxResultHtml='';
 
 	saveTankId = option.value;
 	saveTankName = option.innerText;
@@ -191,9 +203,13 @@ $("#submit").click(function () {
 					"tankId":saveTankId,
 				   "videoImg": saveVideoImg,
 				   "videoTitle":saveVideoTitle,
-				   "videoUrl":saveVideoUrl},
+				   "videoUrl":saveVideoUrl
+				   },
 			url: "videoSave",
-			success: function (tankInfo) {
+			dataType:"json",
+			success: function (result) {
+// 				console.dir(result);
+// 				console.dir(result.length);
 // 1-3.	저장완료 얼럿 후 모달창 닫기
 				swal({
 					  text: saveTankName+ " 저장소에 저장 완료",
@@ -203,8 +219,21 @@ $("#submit").click(function () {
 						jQuery('#' + visible_modal).modal('hide');
 						return;
 					});
+				selectBoxResultHtml += '	<option value="tank0"> 내 저장 리스트 불러오기</option> ';
+
+				
+				for (var t = 0; t < result.length; t++) {
+
+						var tankList_tankId = result[t].tankId;
+						var tankList_tankName = result[t].tankName;
+						
+						selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+						
+						
+				};
+				$("#myTank_list").html(selectBoxResultHtml);
+			
 			}
-				   
 				   
 		});
 });
@@ -238,7 +267,7 @@ function addOption(){
 			})
 				return;
 	};
-	
+
 	
     var frm = document.saveTank;
     var op = new Option();

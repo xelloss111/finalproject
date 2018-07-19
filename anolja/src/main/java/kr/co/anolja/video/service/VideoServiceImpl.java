@@ -15,8 +15,10 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 	
 	@Override
-	public void insert(Video video) {
+	public  List<Video> insert(Video video) {
 		mapper.insertVideo(video);
+		return mapper.selectUserTankId(video.getId());
+
 	}
 
 	@Override

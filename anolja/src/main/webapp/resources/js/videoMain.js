@@ -19,7 +19,7 @@ var saveVideoUrl ='';
 var saveTankName ='';
 var saveTankId ='';
 
-// 10번(내 저장소 list 불러오기)에서 사용하는 변수
+
 
 
 
@@ -35,6 +35,8 @@ var url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxR
 var req = new XMLHttpRequest();
 var html = '';
 var html2 ='';
+var selectBoxResultHtml='';
+
 
 req.open('GET', url , true);
 req.onreadystatechange = function (aEvt) {
@@ -44,14 +46,29 @@ req.onreadystatechange = function (aEvt) {
 		var items = result.items;
 		var i = 0;
 		
+		//resultselbox -> video.jsp에서 작업한 저장소 정보
+		selectBoxResultHtml += '	<option value="tank0"> 내 저장 리스트 불러오기</option> ';
+		$("#myTank_list").html(selectBoxResultHtml);
+
+		for (var t = 0; t < resultselbox.length; t++) {
+
+				var tankList_tankId = resultselbox[t].tankId;
+				var tankList_tankName = resultselbox[t].tankName;
+				
+				selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+		};
+		$("#myTank_list").html(selectBoxResultHtml);
+	
+//		캐러셀
         for ( i = 0; i < items.length; i++){
 					
 				var vId = items[i].snippet.resourceId.videoId;
 				var vurl = "http://www.youtube.com/embed/" + vId;
 				var vtitle = items[i].snippet.title;
 				var vimg = items[i].snippet.thumbnails.default.url;
-				
+
 				function videoList() {	
+					
 					if( i == 0 ) {
 						html += '	<div class="item active"> ';
 					} else {							
@@ -100,7 +117,7 @@ req.onreadystatechange = function (aEvt) {
 				};
 
 			videoList();
-			
+    			
 // 5. List 클릭 시 캐러셀 이동
 			$(document).on('click','.lini1-1 > span' ,function(){
 				var indexSearch = $(this).children('img').attr('class');	
@@ -108,7 +125,8 @@ req.onreadystatechange = function (aEvt) {
 				var result = indexSearch.slice(-1);
  					$('.carousel').carousel(parseInt(result));
 				});
-			
+        }; //
+        
 // 6. 동영상 저장 클릭 시 modal1 뜨기
 						
 			$(document).on("click", ".save_btn", function(){
@@ -138,14 +156,15 @@ req.onreadystatechange = function (aEvt) {
 				
 			});
 
-
-        }
-  }else {
+        
+  } else {
       console.log("Error loading page\n");
-  }
+  		}
 };
 
 req.send(null);
+
+
 
 // 7. 돋보기 버튼 클릭 시 검색되도록 
 $(".sc_btn").click(function(){
