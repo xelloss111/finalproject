@@ -56,6 +56,19 @@
 </div>
 </section>
     <script>
+	    function LockF5() { 
+	        if (event.keyCode == 116) { 
+	            event.keyCode = 0; 
+	            swal({
+					icon: "error",
+					title: '이 페이지는 새로고침을 할 수 없습니다.',
+					button: "닫기"
+				});
+	            return false; 
+	        }	
+	    };
+	    document.onkeydown = LockF5; 
+
     	// 문제출제영역 숨기기
     	$("#pencilImg").hide();
     
