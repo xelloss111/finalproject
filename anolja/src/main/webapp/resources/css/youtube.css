@@ -487,7 +487,7 @@ caption {
 
 
 #videoSearch {
-	width: 40%;
+	width: 30%;
 	height: 40px;
 	border-radius : 10px;
 	margin-bottom: 10px;
@@ -510,7 +510,7 @@ caption {
 }
 
 .searchList {
-	width: 50%;
+	width: 60%;
 	height: 40px;
 	max-height: 300px;
 	float: right;
@@ -521,7 +521,7 @@ caption {
 }
 
 .list_select {
-	width: 55%;
+	width: 50%;
 }
 .myTank {
 	color: #fff;
@@ -530,7 +530,7 @@ caption {
 	text-align: center;
 	height: 40px;
 	line-height : 40px;
-	width : 30%;
+	width : 35%;
 	border-radius: 10px;
 	margin-left: 50px;
 }
@@ -710,6 +710,12 @@ select.round:focus {
 }
 
 /* 모달 영역 2 - 내 저장소 */
+
+.modal-body > p {
+	font-size: 0.8rem;
+	margin-bottom: 10px;
+	color: #e65d5d;
+}
 .save_myTank {
 	
 }
@@ -740,7 +746,6 @@ select.round:focus {
 .oldTank > span {
 	float: left;
 	height: 40px;
-		
 }
 
 .oldTank > select {
@@ -814,5 +819,103 @@ hr {
 	background: #ffc40f;
 	text-shadow: 0 1px 0 #fff;
     border-color: #ffc40f;
+}
+
+/* 모달 2 영역*/
+
+.modal2_body {
+	position : relative;
+	width: 100%;
+	height: auto;
+	overflow-y: scroll;	
+}
+
+.folderNoUi {
+	width: 100%;
+	height: 50px;;
+	box-sizing: border-box;
+	margin: 2% 0;
+}
+.folderNoUi > ul {
+	width: 100%;
+	height: auto;
+}
+
+.modal2FolderStart {
+	width: 90%;
+	height : auto;
+	margin: 0 5%;
+}
+.folderTankImg {
+	position : relative;
+	text-align: center;
+	width: 10%;
+	float: left;
+	height: 40px;
+}
+.fa-folder-open {
+	font-size: 2.5rem;
+	color : #ffc40f;
+}
+.folderTankTitle {
+	float: left;
+	position : relative;
+	width : 70%;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: none;
+	background: #fff;	
+	height: 40px;
+	font-size: 1rem;
+}
+
+.folderInput {
+	cursor: pointer;
+	background : #fff;
+	width : 100%;
+	height : 40px;
+	margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    vertical-align: top;
+    appearance: none;
+    border: none;
+    color: #000;
+    border-radius: 0;
+    font-family: NanumGothic,나눔고딕,'Nanum Gothic','맑은 고딕',HelveticaNeue,DroidSans,Sans-serif,Helvetica;
+}
+.folderInput:focus {
+	background: #eee;
+	border-radius: 10px;
+	border: 1px solid #e65d5d;
+	outline: none;
+}
+.folderBtn {
+	float: left;
+	width: 20%;
+	height: 40px;
+	padding-top: 5px;
+}
+.updtankBtn, .deltankBtn {
+	width: 30%;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	background: #e65d5d;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
+}
+.secBtn {
+	width: 30%;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	background: #428e9e;
+	border-color:#428e9e;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
 }
 

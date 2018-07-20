@@ -31,5 +31,11 @@ public class VideoServiceImpl implements VideoService {
 		return mapper.selectMyTank(id, tankId);
 	}
 
+	@Override
+	public List<Video> updateTankName(Video video) {
+		mapper.updateTankName(video);
+		return mapper.selectUserTankId(video.getId());
+	}
+
 
 }

@@ -2,12 +2,19 @@ package kr.co.anolja.repository.domain;
 
 public class Video {
 	private String id;
+	private int videoNo;
 	private String tankId;
 	private String tankName;
 	private String videoImg;
 	private String videoTitle;
 	private String videoUrl;
 	
+	public int getVideoNo() {
+		return videoNo;
+	}
+	public void setVideoNo(int videoNo) {
+		this.videoNo = videoNo;
+	}
 	public String getId() {
 		return id;
 	}
@@ -46,10 +53,8 @@ public class Video {
 	}
 	@Override
 	public String toString() {
-		return "Video [id=" + id + ", tankId=" + tankId + ", tankName=" + tankName + ", videoImg=" + videoImg
-				+ ", videoTitle=" + videoTitle + ", videoUrl=" + videoUrl + "]";
+		return "Video [id=" + id + ", videoNo=" + videoNo + ", tankId=" + tankId + ", tankName=" + tankName
+				+ ", videoImg=" + videoImg + ", videoTitle=" + videoTitle + ", videoUrl=" + videoUrl + "]";
 	}
-	
-	
-	
+
 }

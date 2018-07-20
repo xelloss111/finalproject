@@ -27,9 +27,6 @@ public class VideoController {
 		String userId =(String)session.getAttribute("id");
 		model.addAttribute("tankList", service.selectUserTankId(userId));
 		
-		List<Video> test = service.selectUserTankId(userId);
-		System.out.println(test.toString());
-		
 		return "video/video";
 	}
 	
@@ -37,7 +34,6 @@ public class VideoController {
 	@RequestMapping(value="videoSave")
 	@ResponseBody
 	public List<Video> videoList(Video video) {
-		System.out.println(video);
 		return service.insert(video);
 	}
 	
@@ -50,9 +46,15 @@ public class VideoController {
 		List<Video> list = service.selectMyTank(userId, tankId);
 		model.addAttribute("tankList", list);
 		
-		System.out.println("list : " + list);
-		
 		return list;
+	}
+	
+	//저장소 이름 변경
+	@RequestMapping(value="changeNewTankName")
+	@ResponseBody
+	public List<Video> changeTankName(Video video) {
+		service.updateTankName(video);
+		return service.selectUserTankId(video.getId());
 	}
 	
 }

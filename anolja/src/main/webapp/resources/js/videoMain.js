@@ -47,7 +47,7 @@ req.onreadystatechange = function (aEvt) {
 		var i = 0;
 		
 		//resultselbox -> video.jsp에서 작업한 저장소 정보
-		selectBoxResultHtml += '	<option value="tank0"> 내 저장 리스트 불러오기</option> ';
+		selectBoxResultHtml += '	<option value="tank0">  MY VIDEO BOX </option> ';
 		$("#myTank_list").html(selectBoxResultHtml);
 
 		for (var t = 0; t < resultselbox.length; t++) {

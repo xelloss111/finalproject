@@ -9,5 +9,6 @@ public interface VideoService {
 	public List<Video> insert(Video video);
 	public List<Video> selectUserTankId(String id);
 	public List<Video> selectMyTank(String id, String tankId);
+	public List<Video> updateTankName(Video video);
 
 }

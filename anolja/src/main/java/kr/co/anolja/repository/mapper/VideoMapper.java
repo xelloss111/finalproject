@@ -17,4 +17,7 @@ public interface VideoMapper {
 	//특정 저장소 선택 시 해당 저장소 데이터 불러오기
 	public List<Video> selectMyTank(@Param("id")String id, @Param("tankId")String tankId);
 	
+	//저장소 이름 변경
+	public void updateTankName(Video video);
+
 }

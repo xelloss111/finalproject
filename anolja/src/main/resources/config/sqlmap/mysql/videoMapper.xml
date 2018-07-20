@@ -6,6 +6,7 @@
 <mapper namespace="kr.co.anolja.repository.mapper.VideoMapper">
 	<resultMap type="video" id="videoMap">
 		<result column="id" property="id"/>
+		<result column="video_no" property="videoNo"/>
 		<result column="tank_id" property="tankId"/>
 		<result column="tank_name" property="tankName"/>
 		<result column="video_img" property="videoImg"/>
@@ -16,6 +17,7 @@
 	<insert id="insertVideo" parameterType="video">
 			insert into tb_video(
 				id, 
+				video_no,
 				tank_id, 
 				tank_name, 
 				video_img, 
@@ -23,6 +25,7 @@
 				video_url
 			) values(
 				#{id},
+				#{videoNo},
 				#{tankId},
 				#{tankName},
 				#{videoImg},
@@ -44,4 +47,11 @@
 		from (select * from tb_video where id = #{id}) a
 		where tank_id = #{tankId}
 	</select>
+	
+	<update id="updateTankName" parameterType="video">
+		update tb_video
+		   set tank_name = #{tankName}
+		 where id = #{id}
+		   and tank_id = #{tankId}
+	</update>
 </mapper>
