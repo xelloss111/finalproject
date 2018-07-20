@@ -6,40 +6,15 @@
 		<section class="content_section">
 			<div class="content_row_1">
 				<ul class="gallery_list">
-					<c:forEach var="i" items="${list}">
-						<li><a href=""><img src='<c:url value="/gallery/listView"/>'></a></li>
-					</c:forEach>
-<!-- 					<li><a href=""><img src="C:/java-lec/upload/2018/07/19/17/pp.jpg" alt=""></a></li> -->
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_01.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_02.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_03.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_04.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_05.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_06.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_07.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_08.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_09.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_10.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_11.jpg" alt=""></a></li> --%>
-<%-- 					<li><a href=""><img src="${pageContext.request.contextPath}/resources/images/p_images/sub_gallery_12.jpg" alt=""></a></li> --%>
+<%-- 					<c:forEach var="i" items="${list}"> --%>
+<%-- 						<li><a href=""><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>'></a></li> --%>
+<%-- 					</c:forEach> --%>
 				</ul>
 			</div>
 			<div class="content_row_2">
 				<div class="search_box">
 					<form action="#" method="get">
-<!-- 						<input type="search" name="gallery_search_window" class="search_window" placeholder="검색어"> -->
 						<div class="search_select_box">
-<!-- 							<span>검색 대상</span> -->
-<!-- 							<ul class="search_select_list"> -->
-<!-- 								<li>제목</li> -->
-<!-- 								<li>내용</li> -->
-<!-- 								<li>제목+내용</li> -->
-<!-- 								<li>댓글</li> -->
-<!-- 								<li>이름</li> -->
-<!-- 								<li>닉네임</li> -->
-<!-- 								<li>아이디</li> -->
-<!-- 								<li>태그</li> -->
-<!-- 							</ul> -->
 						</div>	
 					</form>
 				</div>
@@ -56,3 +31,37 @@
 			</div>
 		</section>
 		
+		<script>
+			$(function () {
+				$.ajax({
+					url: "<c:url value='/gallery/listAjax'/>",
+					dataType: "JSON",
+					success: function (list) {
+						console.log(list[0].gno)
+						for (let i = 0; i < list.length; i++) {
+// 							var src = ctx + '/gallery/listView?gno=' + list[i].gno;
+// 							var gli = document.createElement('li');
+// 							var ga = document.createElement('a');
+// 							var gimg = document.createElement('img');
+							
+// 							$(gimg).attr('src', src);
+// 							$(ga).append(gimg)
+// 							$(gli).append(ga);
+// 							$(".gallery_list").append(gli);
+// 							console.log($(".gallery_list"))
+							$(".gallery_list").append('<li><a href=""><img src=\'<c:url value="/gallery/listView?gno=' + list[i].gno + '"/>\'></a></li>');
+						}
+					}
+				});
+			});
+			
+// 			var page = 1;
+
+// 			$(window).scroll(function() {
+// 			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+// 			      console.log(++page);
+// 			      $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
+			      
+// 			    }
+// 			});
+		</script>

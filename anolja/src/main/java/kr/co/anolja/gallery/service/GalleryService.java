@@ -8,6 +8,6 @@ import kr.co.anolja.repository.domain.Gallery;
 
 public interface GalleryService {
 	List<Gallery> selectGallery();
-	void viewGallery(HttpServletResponse res) throws Exception;
+	void viewGallery(int gno, HttpServletResponse res) throws Exception;
 	void insertGallery(String id, String answer, String fileInfo) throws Exception;
 }

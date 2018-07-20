@@ -364,7 +364,7 @@
         $(function () {
         	setTimeout(() => {
 	        	fillColor('#f4f5ed', 'black');
-			}, 300);
+			}, 500);
         });
         
         // 캔버스 그리기 색상 바꾸기 및 지우기

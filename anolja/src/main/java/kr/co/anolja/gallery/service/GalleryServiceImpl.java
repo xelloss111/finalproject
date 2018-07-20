@@ -22,11 +22,14 @@ public class GalleryServiceImpl implements GalleryService {
 	}
 	
 	@Override
-	public void viewGallery(HttpServletResponse res) throws Exception {
-		List<Gallery> g = mapper.selectGallery();
-		for (int i = 0; i < g.size(); i++) {
-			new FileHandler().fileViewer(g.get(i).getPath(), g.get(i).getFileName(), res);
-		}
+	public void viewGallery(int gno, HttpServletResponse res) throws Exception {
+		Gallery g = mapper.viewGallery(gno);
+		new FileHandler().fileViewer(g.getPath(), g.getFileName(), res);
+		
+//		List<Gallery> g = mapper.selectGallery();
+//		for (int i = 0; i < g.size(); i++) {
+//			new FileHandler().fileViewer(g.get(i).getPath(), g.get(i).getFileName(), res);
+//		}
 	}
 
 	@Override

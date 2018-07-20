@@ -20,6 +20,12 @@
 		 order by gno desc
 	</select>
 	
+	<select id="viewGallery" resultMap="galleryMap" parameterType="int">
+		select *
+		  from tb_gallery
+		 where gno = #{gno}
+	</select>
+	
 	<insert id="insertGallery" parameterType="gallery">
 		insert into tb_gallery (
 			id, answer, path, file_name
