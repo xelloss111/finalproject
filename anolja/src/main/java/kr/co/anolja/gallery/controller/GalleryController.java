@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,10 +21,17 @@ public class GalleryController {
 	@Autowired
 	GalleryService service;
 	
+	@RequestMapping("/list")
+	public String gallery(Model model) {
+		model.addAttribute("list", service.selectGallery());
+		return "gallery/list";
+	}
+	
 	@ResponseBody
 	@RequestMapping("/listAjax")
-	public List<Gallery> gallery() throws Exception {
-		return service.selectGallery();
+	public List<Gallery> selectGalleryScroll(int gno) {
+		System.out.println(gno);
+		return service.selectGalleryScroll(gno);
 	}
 	
 	@RequestMapping("/listView")
@@ -36,6 +44,6 @@ public class GalleryController {
 	public String insertGallery(@RequestParam("id") String id, @RequestParam("answer") String answer,
 			@RequestParam("canvasInfo") String fileInfo) throws Exception {
 		service.insertGallery(id, answer, fileInfo);
-		return "gallery:notice:[축하합니다]\n 모든 참여자들의 추천으로 ["+id+"]님의 그림이 명예의 전당에 올랐습니다!";
+		return "gallery:notice:[축하합니다] 모든 사람들의 추천으로 ["+id+"]님의 그림이 명예의 전당에 올랐습니다!";
 	}
 }

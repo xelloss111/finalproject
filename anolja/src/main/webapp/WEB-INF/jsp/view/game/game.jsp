@@ -432,6 +432,7 @@
 			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
     		time = 90;
     		rcmndCnt = 0;
+        	fillColor('#f4f5ed', 'black');
 //     		$("#funny").bind('click', funny);
 			$("#funny").click(function () {
 				funny();
@@ -498,22 +499,6 @@
 	   			uploadFile(canvasInfo);
 	   		}
     	}
-//     	function funny() {
-//     		if (current) {
-//     			$("#funny").unbind('click');
-//     			return;
-//     		}
-//     		$("#funny > span").text(++rcmndCnt);
-//     		$("#funny").unbind('click');
-//     		ws.send("rcmndCnt:"+rcmndCnt);
-    		
-//     		if (rcmndCnt == 3) {
-// 	   			snapshot();
-// 	   			uploadFile(canvasInfo);
-// 	   		}
-//     	}
-    	
-    	
     	
 
     	

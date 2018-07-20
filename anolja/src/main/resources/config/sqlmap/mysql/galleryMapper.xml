@@ -18,6 +18,17 @@
 		select *
 		  from tb_gallery
 		 order by gno desc
+		 limit 0, 12
+	</select>
+	
+	<select id="selectGalleryScroll" resultMap="galleryMap" parameterType="int">
+	<![CDATA[  
+		select *
+		  from tb_gallery
+		 where gno <= #{gno}
+		   and gno > #{gno}-12
+		 order by gno desc
+	]]> 
 	</select>
 	
 	<select id="viewGallery" resultMap="galleryMap" parameterType="int">

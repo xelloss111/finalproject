@@ -6,9 +6,9 @@
 		<section class="content_section">
 			<div class="content_row_1">
 				<ul class="gallery_list">
-<%-- 					<c:forEach var="i" items="${list}"> --%>
-<%-- 						<li><a href=""><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>'></a></li> --%>
-<%-- 					</c:forEach> --%>
+					<c:forEach var="i" items="${list}">
+						<li><a href=""><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' class="scroll" data-gno="${i.gno}"></a></li>
+					</c:forEach>
 				</ul>
 			</div>
 			<div class="content_row_2">
@@ -32,36 +32,46 @@
 		</section>
 		
 		<script>
-			$(function () {
-				$.ajax({
-					url: "<c:url value='/gallery/listAjax'/>",
-					dataType: "JSON",
-					success: function (list) {
-						console.log(list[0].gno)
-						for (let i = 0; i < list.length; i++) {
-// 							var src = ctx + '/gallery/listView?gno=' + list[i].gno;
-// 							var gli = document.createElement('li');
-// 							var ga = document.createElement('a');
-// 							var gimg = document.createElement('img');
-							
-// 							$(gimg).attr('src', src);
-// 							$(ga).append(gimg)
-// 							$(gli).append(ga);
-// 							$(".gallery_list").append(gli);
-// 							console.log($(".gallery_list"))
-							$(".gallery_list").append('<li><a href=""><img src=\'<c:url value="/gallery/listView?gno=' + list[i].gno + '"/>\'></a></li>');
+			var isEnd = false;
+		
+			$(window).scroll(function () {
+				var lastGno = $(".scroll:last").attr("data-gno");
+// 				console.log("lastGno: "+lastGno);
+				let $window = $(window);
+				console.log("$window.scrollTop()",$(window).scrollTop())
+				console.log("$window.height()",$window.height())
+				console.log("$(document).height()",$(document).height())
+				
+				if ($window.scrollTop() + $window.height() + 30 > $(document).height()) {
+					if (isEnd == true) {return;}
+					$.ajax({
+						url: "<c:url value='/gallery/listAjax'/>",
+						data: {gno: lastGno},
+						dataType: "JSON",
+						success: function (list) {
+							console.log("list.length: "+list.length);
+							if( list.length <= 1 ){
+                                isEnd = true;
+                                return;
+                       		}
+							for (let i = 0; i < list.length; i++) {
+								var html = "<li>"+
+										   '	<a href="">'+
+										   '		<img src=\'<c:url value="/gallery/listView?gno='+list[i].gno+'"/>\' class="scroll" data-gno="'+list[i].gno+'">'+
+										   '	</a>'+
+										   '</li>';
+								$(".gallery_list").append(html);
+							}
 						}
-					}
-				});
+					});
+				}
 			});
 			
-// 			var page = 1;
 
 // 			$(window).scroll(function() {
 // 			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 // 			      console.log(++page);
-// 			      $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
-			      
+// 			      $(".gallery_list").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
 // 			    }
 // 			});
 		</script>
