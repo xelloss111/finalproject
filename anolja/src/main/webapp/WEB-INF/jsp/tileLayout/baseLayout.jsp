@@ -70,7 +70,7 @@
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header" style="background:#ffc40f;">
-	        <h4 class="modal-title" id="myModalLabel">웹캠으로 프로필 이미지 등록 / 합성해서 등록</h4>
+	        <h4 class="modal-title" id="myModalLabel">웹캠 프로필 이미지 등록 / 합성</h4>
 	      </div>
 			<div class="modal-body">
 			</div>
@@ -81,10 +81,13 @@
 	        <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
 	      </div>
 		</div>
+      </div>
     </div>
-  </div>
  
-	 
+ 	<!-- 회원 영역 -->
+<!--  	<section class="signup_section"></section> -->
+<!-- 	<section class="login_section"></section> -->
+<!-- 	<section class="mypage_section"></section> -->
 	 
 	<div id="quick_wrap">
 		<div id="quick_right_menu">
@@ -100,6 +103,10 @@
 	<div class="container">
 		<div id="particles"></div>
 		<tiles:insertAttribute name="header" />
+		<!-- 회원 영역 -->
+		<section class="signup_section"></section>
+		<section class="login_section"></section>
+		<section class="mypage_section"></section>
 		<tiles:insertAttribute name="content" />
 		<tiles:insertAttribute name="footer" />
 	</div>
@@ -128,7 +135,6 @@
 			  button: "확인"
 			});
 	}
-
 	</script>
 
 <script async="" src="//www.google-analytics.com/analytics.js"></script>

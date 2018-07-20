@@ -19,7 +19,7 @@ i#addProfile {
 }
 i#backProfile {
 	top: 130px;
-	left: 825px;
+	left: 835px;
 	position: absolute;
 	z-index: 1500;
 }
@@ -30,7 +30,7 @@ i#backProfile {
 	left: 565px;
 	width: 300px;
 	height: 300px;
-	border: 1px solid black;
+/* 	border: 1px solid black; */
  	border-radius: 80%;
  	position: absolute;
  	overflow: hidden;
@@ -45,7 +45,8 @@ i#backProfile {
 
 
 #output {
-	border: 1px solid black;
+	border: 1px solid gray;
+	border-radius: 3%;
 }
 #captureBtn {
 	display: none;

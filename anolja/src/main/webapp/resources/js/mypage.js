@@ -160,8 +160,8 @@ if (mypage) {
         					text: data,
         					icon: 'success',
         				}).then((val) => {
-        					$(photoArea).children('img').attr('id', 'user');
-        					$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+ sessionId);
+        					$(photoArea).attr('id', 'user');
+        					$(photoArea).attr('src', ctx + '/user/viewProfileImage?id='+ sessionId);
         					$('.addIcon').hide();
         					$('.removeIcon').show();
         				});
@@ -469,13 +469,13 @@ if (mypage) {
 			
 //			captureList += '<video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video>';
 			captureList += '<video height="426" width="640" controls autoplay style="width:99px; height:75px; display:none;"></video>';
-			captureList	+= `<a href="javascript:" class="btn5" onclick="App.start('glasses');">Glasses!</a>`;
-			captureList += `<a href="javascript:" class="btn5" onclick="App.start('rabbit');">Rabbit!</a>`;
-			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mickey');">mickey!</a>`;
-			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mini');">mini!</a>`;
-			captureList += `<a href="javascript:" class="btn5" onclick="App.start('devil');">devil!</a>`;
-			captureList += '<i id="addProfile" class="fa fa-plus-circle fa-3x"></i>';
-			captureList += '<i id="backProfile" class="fa fa-redo-alt fa-3x"></i>';
+			captureList	+= `<a href="javascript:" class="btn5" onclick="App.start('glasses');">안경</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('rabbit');">토끼</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mickey');">미키</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('mini');">미니</a>`;
+			captureList += `<a href="javascript:" class="btn5" onclick="App.start('devil');">악마귀</a>`;
+			captureList += '<i id="addProfile" class="fa fa-plus-circle fa-2x"></i>';
+			captureList += '<i id="backProfile" class="fa fa-redo-alt fa-2x"></i>';
 			captureList += '<br /><br /><br />';
 //			captureList += '<canvas id="output"  height="426" width="515" ></canvas>';
 			captureList += '<canvas id="output"  height="350" width="515" ></canvas>';
@@ -541,8 +541,8 @@ if (mypage) {
 	    				swal({
 	    					text: data
 	    				}).then((val) => {
-	    					$('.photoArea').attr('id', 'user');
-	    					$('.photoArea').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+	    					$('.photoArea').children('img').attr('id', 'user');
+	    					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
 	
 	    				});
 	    			} else {
@@ -568,8 +568,8 @@ if (mypage) {
 	    				swal({
 	    					text: data
 	    				}).then((val) => {
-	    					$('.photoArea').attr('id', 'user');
-	    					$('.photoArea').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+	    					$('.photoArea').children('img').attr('id', 'user');
+	    					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
 	
 	    				});
 	    			} else {
