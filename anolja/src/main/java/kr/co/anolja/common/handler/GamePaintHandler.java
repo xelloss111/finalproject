@@ -70,8 +70,6 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		if (message.getPayload().equals("gameRestart")) {
 			for (int i = 0; i < connectedUsers.size(); i++) {
 				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
-					System.out.println("Game.getQuestionuser(): "+Game.getQuestionuser());
-					System.out.println("GameChatHandler.chatList.get(i): "+GameChatHandler.chatList.get(i));
 					connectedUsers.get(i).sendMessage(new TextMessage("OK"));
 				}
 				else {

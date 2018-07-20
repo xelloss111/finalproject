@@ -65,8 +65,9 @@
 					icon: "error",
 					title: '이 페이지는 새로고침을 할 수 없습니다.',
 					button: "닫기"
+				}).then((val) => {
+					location.href = "${pageContext.request.contextPath}/main";
 				});
-	            return false; 
 	        }	
 	    };
 	    document.onkeydown = LockF5; 
@@ -120,10 +121,10 @@
         				icon: "warning",
     					title: msg,
     					button: "닫기"
+    				}).then((val) => {
+    					location.href = "${pageContext.request.contextPath}/main";
     				});
     				clearInterval(timerId);
-    				location.href = "${pageContext.request.contextPath}/main";
-    				return;
     			}
     			// 모든 게임이 끝나면 메인으로 보내기
     			if (msg.includes('메인')) {
@@ -131,6 +132,8 @@
         				icon: "error",
     					title: msg,
     					button: "닫기"
+    				}).then((val) => {
+    					location.href = "${pageContext.request.contextPath}/main";
     				});
     				clearInterval(timerId);
     				location.href = "${pageContext.request.contextPath}/main";
@@ -206,9 +209,9 @@
     				icon: "error",
 					title: '방 인원이 모두 찼습니다.',
 					button: "닫기"
+				}).then((val) => {
+					location.href = "${pageContext.request.contextPath}/main";
 				});
-				location.href = "${pageContext.request.contextPath}/main";
-				return;
 			}
     		else {
 	    		$("#chat").append('<div class="bubble">'+ evt.data +'</div>');
@@ -232,6 +235,8 @@
     				icon: "warning",
 					title: '내용을 입력하세요',
 					button: "닫기"
+				}).then((val) => {
+					location.href = "${pageContext.request.contextPath}/main";
 				});
     		}
     		else {
@@ -262,13 +267,14 @@
         var isPress = false;
         var prevX = 0;
         var prevY = 0;
-        var point = {};
+        var now = [];
         
         paintCtx.lineWidth = 3;
         paintCtx.lineCap = "round";
         
         $(document).ready(function () {
         	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
+        	
 	        $("canvas").on({
 	            mousedown: function (e) {
 	            	if (!isEditable) {return;}
@@ -278,11 +284,7 @@
 	                paintCtx.beginPath();
 					prevX = e.offsetX;
 					prevY = e.offsetY;
-	            },
-	            mouseup: function (e) {
-	            	if (!isEditable) {return;}
-	                isPress = false;
-	                paintCtx.closePath();
+                	now.push({"prevX":prevX, "prevY":prevY, "color":color});
 	            },
 	            mousemove: function (e) {
 	            	if (!isEditable) {return;}
@@ -290,30 +292,32 @@
 	                var x = e.offsetX;
 	                var y = e.offsetY;
 	                if (isPress) {
-	                	point.prevX = prevX;
-	                	point.prevY = prevY;
-	                	point.nowX = x;
-	                	point.nowY = y;
-	                	point.color = color;
-	                	
-	                	paintWs.send(JSON.stringify(point));
+	                	now.push({x, y});
 	                	
 	                	paintCtx.moveTo(prevX, prevY);
 	                    paintCtx.lineTo(x, y);
 	                    paintCtx.stroke();
 	                    
-	                    prevX = e.offestX;
-	                    prevY = e.offestY;
+	                    prevX = e.offsetX;
+	                    prevY = e.offsetY;
 	                    
 	                    if (x <= 10 || y <= 10 || x >= canvas.width-10 || y >= canvas.height-10) {
 	                        isPress = false;
 	                    }
 	                }
+	            },
+	            mouseup: function (e) {
+	            	if (!isEditable) {return;}
+	                isPress = false;
+	                paintCtx.closePath();
+	                
+                	paintWs.send(JSON.stringify(now));
+                	now =[];
 	            }
 	        });
 	        
 	        paintWs.onmessage = function (evt) {
-	        	console.log(evt.data);
+// 	        	console.log(evt.data);
 	        	if (evt.data == "OK" || evt.data == "NO") {
 	        		if (evt.data == "OK") {
 	        			isEditable = true;
@@ -327,6 +331,7 @@
 	        	var c = document.querySelector("#myCanvas");
 	            var otherCtx = c.getContext("2d");
 	        	var drawData;
+	        	var fillData;
 	        	
 	        	if (evt.data == "clear") {
 	            	paintCtx.clearRect(0, 0, canvas.width, canvas.height);
@@ -334,13 +339,13 @@
 	                return;
 	            }
 	        	if (evt.data.startsWith('{"')) {
-	        		drawData = JSON.parse(evt.data);
-		            console.log(drawData.mode);
-		            if(drawData.mode != undefined && drawData.mode == "fill") {
-		            	otherCtx.fillStyle = drawData.color;
+	        		fillData = JSON.parse(evt.data);
+// 		            console.log(fillData);
+		            if(fillData.mode != undefined && fillData.mode == "fill") {
+		            	otherCtx.fillStyle = fillData.color;
 		            	otherCtx.fillRect(0, 0, canvas.width, canvas.height);
 		            	otherCtx.closePath();
-		            	if (drawData.color == '#f4f5ed') {
+		            	if (fillData.color == '#f4f5ed') {
 			            	$("#time").css("color", "black");
 		            	}
 		            	else {
@@ -348,13 +353,21 @@
 		            	}
 		            	return;
 		            }
+	        	}
+	        	if (evt.data.startsWith('[{"')) {
+	        		drawData = JSON.parse(evt.data);
+// 		            console.log("drawData: ",drawData);
 		            
-		            otherCtx.strokeStyle = drawData.color;
+		            otherCtx.strokeStyle = drawData[0].color;
 		            otherCtx.beginPath();
-		            otherCtx.moveTo(drawData.prevX, drawData.prevY);
-		            otherCtx.lineTo(drawData.nowX, drawData.nowY);
+// 		            console.log("드로우데이터: ",drawData[0].prevX, drawData[0].prevY, drawData[0].color)
+		            otherCtx.moveTo(drawData[0].prevX, drawData[0].prevY);
+					for (let i = 1; i < drawData.length; i++) {
+// 						console.log(drawData[i].x, drawData[i].y);
+			            otherCtx.lineTo(drawData[i].x, drawData[i].y);
+					}
 		            otherCtx.stroke();
-		            otherCtx.closePath();
+// 		            otherCtx.closePath();
 	        	}
 	        }
 	        
