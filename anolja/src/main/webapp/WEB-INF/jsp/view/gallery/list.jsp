@@ -13,7 +13,7 @@
 			<div class="content_row_1">
 				<ul class="gallery_list">
 					<c:forEach var="i" items="${list}">
-						<li><a href=""><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' class="scroll" data-gno="${i.gno}"></a></li>
+						<li><a href=""><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' class="scroll" data-gno="${i.gno}" data-id="${i.id}"></a></li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -25,15 +25,7 @@
 					</form>
 				</div>
 				<div class="write_box">
-<!-- 					<a href="#">글 쓰기</a> -->
 				</div>
-			</div>
-			<div class="content_row_3">
-				<span class="list_prev_btn">갤러리 이전 버튼</span>
-				<a href="#">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<span class="list_next_btn">갤러리 다음 버튼</span>
 			</div>
 		</section>
 		
@@ -76,6 +68,24 @@
 					});
 				}
 			});
+			
+			$(document)
+			.on("mouseover", ".gallery_list img", function () {
+				var gno = $(this).attr("data-gno");
+				var id = $(this).attr("data-id");
+				$(this).parent().append(
+						'<span class="canvasInfo">'+
+						'	출제자 : '+id+'<br>'+
+						'	문제 : '+gno+
+						'</span>'
+				);
+			})
+			.on("mouseleave", ".gallery_list img", function () {
+				var gno = $(this).attr("data-gno");
+				$(this).next().remove();
+			})
+			
+		    
 		</script>
 </body>
 </html>

@@ -463,6 +463,9 @@
 		    		ws.send("gameEnd");
 	    			ws.send("next");
 				}, 100);
+	    		setTimeout(() => {
+	    			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+				}, 100);
     		}
         }
         
