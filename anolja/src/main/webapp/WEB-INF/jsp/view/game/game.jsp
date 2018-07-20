@@ -272,9 +272,9 @@
 	        $("canvas").on({
 	            mousedown: function (e) {
 	            	if (!isEditable) {return;}
-	            	
 	            	e.preventDefault();
 			        isPress = true;
+			        
 	                paintCtx.beginPath();
 					prevX = e.offsetX;
 					prevY = e.offsetY;

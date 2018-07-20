@@ -1,8 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gallery.css">
-
+</head>
+<body>
 		<section class="content_section">
 			<div class="content_row_1">
 				<ul class="gallery_list">
@@ -34,15 +40,11 @@
 		<script>
 			var isEnd = false;
 		
-			$(window).scroll(function () {
+			$(window).scroll(function myScroll() {
 				var lastGno = $(".scroll:last").attr("data-gno");
-// 				console.log("lastGno: "+lastGno);
-				let $window = $(window);
-				console.log("$window.scrollTop()",$(window).scrollTop())
-				console.log("$window.height()",$window.height())
-				console.log("$(document).height()",$(document).height())
 				
-				if ($window.scrollTop() + $window.height() + 30 > $(document).height()) {
+				if ($(window).scrollTop() + window.innerHeight + 30 > $(document).height()) {
+					$(window).off("scroll");
 					if (isEnd == true) {return;}
 					$.ajax({
 						url: "<c:url value='/gallery/listAjax'/>",
@@ -62,16 +64,18 @@
 										   '</li>';
 								$(".gallery_list").append(html);
 							}
+							$(window).on("scroll", myScroll);
+						},
+						// 데이터 불러오는 시간이 길어질 때 보여주는 로딩화면
+						beforeSend:function(){
+							$('.loading').attr('id', '');
+						},
+						complete:function(){
+							$('.loading').attr('id', 'display-none');
 						}
 					});
 				}
 			});
-			
-
-// 			$(window).scroll(function() {
-// 			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-// 			      console.log(++page);
-// 			      $(".gallery_list").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
-// 			    }
-// 			});
 		</script>
+</body>
+</html>
