@@ -504,7 +504,7 @@ if (mypage) {
 			
 			// 비디오 영역 이미지 등록 버튼 클릭 이벤트 처리
 			$('#addProfile').click(function() {
-				uploadFile(profileInfo);
+				uploadProfileFile(profileInfo);
 			});
 			
 			$('#backProfile').click(function() {
@@ -527,7 +527,7 @@ if (mypage) {
 		$(mypage).fadeToggle('slow');
 	});
 	
-	function uploadFile(file) {
+	function uploadProfileFile(file) {
 		var sendUrl = '';
 		var fd = new FormData();
     	if (typeof file !== 'object') {
