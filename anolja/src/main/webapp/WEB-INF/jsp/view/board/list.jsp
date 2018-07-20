@@ -39,12 +39,14 @@
 						<tr>
 							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.bNo}</a></td>
 							<td>
-							<c:if test="${re.groupBlist > 0}">
-								<c:forEach var="i" begin="0" end="${re.groupBlist}">
-									RE : 
-								</c:forEach>
-							</c:if>							
-								<a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.title}</a>
+								<a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">
+									<c:if test="${re.groupBlist > 0}">
+										<c:forEach begin="1" end="${re.depth}">
+											RE : 
+										</c:forEach>
+									</c:if>							
+								${re.title}
+								</a>
 							</td>
 							<td>${re.anonymousId}</td>
 							<td><fmt:formatDate value="${re.regDate}" pattern="yyyy-MM-dd" />
