@@ -54,4 +54,12 @@
 		 where id = #{id}
 		   and tank_id = #{tankId}
 	</update>
+	
+	<delete id="delTank" parameterType="video">
+      delete 
+		from tb_video
+		where tank_id = #{tankId}
+		and id = #{id}
+	</delete>
+	
 </mapper>

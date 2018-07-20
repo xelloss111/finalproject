@@ -19,5 +19,7 @@ public interface VideoMapper {
 	
 	//저장소 이름 변경
 	public void updateTankName(Video video);
-
+	
+	//저장소 삭제
+	public void delTank(Video video);
 }

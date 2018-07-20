@@ -385,7 +385,6 @@ $(document).on('click', '.updtankBtn', function(){
 						$('.secBtn').attr("class","updtankBtn").val("변경");
 						$('.folderInput').attr('disabled', true);
 						
-						console.log(result[0].tankName);
 						// main 화면에 바뀐 저장소 이름으로 재로딩
 						selectBoxResultHtml2 += '	<option value="tank0"> MY VIDEO BOX </option> ';
 
@@ -426,5 +425,79 @@ $(document).on('click', '.updtankBtn', function(){
 					}
 				});
 		});
+		
+		$(document).on('click','.deltankBtn', function(){
+			var targetTankid = $($(this).parent().prev().children('.hdnTankId')).val();
+			var selectBoxResultHtml3 = '';
+			var modal2FolderHtml3 ='';
+			
+			swal({
+				  title: "정말로 BOX를 삭제할까요?",
+				  text: "BOX를 삭제하면 저장된 동영상이 모두 삭제됩니다.",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					  
+					  /* 유저 삭제 요청 */
+					$.ajax({
+						type: "POST",
+						data: {"id":sessionId,
+								"tankId":targetTankid
+							   },
+						url: "delTank",
+						dataType:"json",
+						success: function (result) {
+							swal("BOX를 삭제했습니다.", {
+							      icon: "success",
+							    });
+							
+							// 삭제 후 재로딩
+							// main 화면에 바뀐 저장소 이름으로 재로딩
+						selectBoxResultHtml3 += '	<option value="tank0"> MY VIDEO BOX </option> ';
 
+						
+						for (var t = 0; t < result.length; t++) {
+
+								// select 박스 시작
+								var tankList_tankId = result[t].tankId;
+								var tankList_tankName = result[t].tankName;
+								
+								selectBoxResultHtml3 += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+								// select 박스 끝
+								
+								// modal2 folder
+			        			modal2FolderHtml3 += '<li class="folderNoUi">';
+			        			modal2FolderHtml3 += '	<ul>';
+			        			modal2FolderHtml3 +=	'		<li class="folderTankImg">';
+			        			modal2FolderHtml3 +=	'			<i class="far fa-folder-open"></i>';
+			        			modal2FolderHtml3 +=	'		</li>';
+			        			modal2FolderHtml3 +=	'		<li class="folderTankTitle">';
+			        			modal2FolderHtml3 +=	'			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled">';
+			        			modal2FolderHtml3 +=	'			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId">';
+		        				modal2FolderHtml3 +=	'		</li>';
+		        				modal2FolderHtml3 +=	'		<li	class="folderBtn">';
+		        				modal2FolderHtml3 +=	'			<input type="button" value="변경" class="updtankBtn">';
+		        				modal2FolderHtml3 +=	'			<input type="button" value="삭제" class="deltankBtn">';
+		        				modal2FolderHtml3 +=	'		</li>';
+		        				modal2FolderHtml3 += '	</ul>';
+		        				modal2FolderHtml3 += '</li>';
+						};
+								
+						// select 박스 추가해주기
+						$("#myTank_list").html(selectBoxResultHtml3);
+						$(".modal2FolderStart").html(modal2FolderHtml3);
+						
+						//재로딩 끝
+						}
+					});  
+				  } else {
+				    swal("BOX 삭제 취소!");
+				  }
+				});
+			
+		});
+		
 </script>

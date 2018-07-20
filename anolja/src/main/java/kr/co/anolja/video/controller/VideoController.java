@@ -57,4 +57,11 @@ public class VideoController {
 		return service.selectUserTankId(video.getId());
 	}
 	
+	//저장소 삭제
+	@RequestMapping(value="delTank")
+	@ResponseBody
+	public List<Video> delTank(Video video) {
+		service.delTank(video);
+		return service.selectUserTankId(video.getId());
+	}
 }

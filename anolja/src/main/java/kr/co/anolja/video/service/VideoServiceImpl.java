@@ -37,5 +37,10 @@ public class VideoServiceImpl implements VideoService {
 		return mapper.selectUserTankId(video.getId());
 	}
 
+	@Override
+	public void delTank(Video video) {
+		mapper.delTank(video);
+	}
+
 
 }
