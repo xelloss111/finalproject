@@ -26,6 +26,7 @@ public class VideoController {
 		
 		String userId =(String)session.getAttribute("id");
 		model.addAttribute("tankList", service.selectUserTankId(userId));
+		model.addAttribute("delList", service.alldata(userId));
 		
 		return "video/video";
 	}
@@ -63,5 +64,26 @@ public class VideoController {
 	public List<Video> delTank(Video video) {
 		service.delTank(video);
 		return service.selectUserTankId(video.getId());
+	}
+	
+	//동영상 삭제를 위한 리스트 가져오기
+	@RequestMapping(value="delVideo")
+	@ResponseBody
+	public List<Video> allData(Model model, HttpSession session) {
+		String userId =(String)session.getAttribute("id");
+		List<Video> delList = service.alldata(userId);
+		
+		model.addAttribute("delList", delList);
+
+		return delList;
+	}
+	
+	//동영상 삭제
+	@RequestMapping(value="selectDalVideo")
+	@ResponseBody
+	public List<Video> deleteVideo(Model model, Video video) {
+		service.seldelvideo(video);
+				
+		return service.alldata(video.getId());
 	}
 }

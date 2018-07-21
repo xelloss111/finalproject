@@ -62,4 +62,16 @@
 		and id = #{id}
 	</delete>
 	
+	<select id="alldata" parameterType="string" resultMap="videoMap">
+		select *
+		from tb_video
+		where id=#{id}
+	</select>
+	
+	<delete id="seldelvideo" parameterType="video">
+		delete
+		from tb_video
+		where id=#{id}
+		and video_no = #{videoNo}
+	</delete>
 </mapper>

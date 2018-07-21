@@ -853,7 +853,7 @@ hr {
 	float: left;
 	height: 40px;
 }
-.fa-folder-open {
+.fa-folder {
 	font-size: 2.5rem;
 	color : #ffc40f;
 }
@@ -919,3 +919,63 @@ hr {
 	cursor: pointer;
 }
 
+/* 동영상 삭제  */
+#videoListHide {
+	display: none;
+}
+.seldelvideo {
+	width: 100%;
+	height: auto;
+}
+.seldelvideo > li {
+	margin: 2% 0%;
+	box-sizing: border-box;
+}
+
+.videoImg {
+	position: relative;
+	width: 15%;
+	height: 50px;
+	float: left;
+	padding-left: 10%;
+}
+.videoImg > img {
+	width: 80px;
+	height: auto;
+}
+.selVideoTitle {
+	position: relative;
+	width: 65%;
+	height: 50px;
+	float: left;
+	padding-left: 8%;
+}
+.selVideoTitle > .folderInput {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.selvideoBtnArea {
+	position: relative;
+	width: 15%;
+	float: left;
+	height: 50px;
+}
+.delVideoBtn{
+	width: 50%;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	background: #609ec7;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
+	border: none;
+}
+
+.ui-accordion-header {
+	outline: none;
+	}
+.fa-folder-open {
+	display: none;
+}

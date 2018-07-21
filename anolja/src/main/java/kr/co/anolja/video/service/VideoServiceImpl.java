@@ -42,5 +42,17 @@ public class VideoServiceImpl implements VideoService {
 		mapper.delTank(video);
 	}
 
+	@Override
+	public List<Video> alldata(String id) {
+		return mapper.alldata(id);
+	
+	}
+
+	@Override
+	public void seldelvideo(Video video) {
+		 mapper.seldelvideo(video);
+	}
+
+
 
 }

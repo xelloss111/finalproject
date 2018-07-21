@@ -22,4 +22,10 @@ public interface VideoMapper {
 	
 	//저장소 삭제
 	public void delTank(Video video);
+	
+	//동영상 삭제를 위한 리스트 가져오기
+	public List<Video> alldata(String id);
+	
+	//선택 동영상 삭제
+	public void seldelvideo(Video video);
 }

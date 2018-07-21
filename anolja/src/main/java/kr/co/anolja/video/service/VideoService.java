@@ -11,5 +11,6 @@ public interface VideoService {
 	public List<Video> selectMyTank(String id, String tankId);
 	public List<Video> updateTankName(Video video);
 	public void delTank(Video video);
-
+	public List<Video> alldata(String id);
+	public void seldelvideo(Video video);
 }
