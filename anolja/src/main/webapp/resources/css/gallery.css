@@ -60,14 +60,21 @@ filter:grayscale(0);
 filter:grayscale(1);
 }
 
+.gallery_list a{
+text-align: center;
+}
+
 .canvasInfo{
-color: white;
-position: relative;
-top: -130px;
-left: 100px;
+color: gray;
+position: absolute;
+top: 50%;
+left: 50%;
+font-family: 'Hanna', serif;
+transform:translate(-50%, -50%);
 }
 
 .gallery_list li{
+position: relative;
 margin-top:20px;
 margin-top:1.250rem;
 }
