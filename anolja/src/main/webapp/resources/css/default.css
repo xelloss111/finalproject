@@ -956,11 +956,16 @@ margin-top:15px;
 margin-top:0.938rem;
 padding-left:14px;
 padding-left:0.875rem;
-font-weight:bold;
 text-transform:uppercase;
 background:url(../images/s_images/post_circle_icon.png) left center no-repeat;
 }
-
+.latest_post_list_li {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width:80%; 
+    margin-left: 10%;
+}
 .latest_post_list li:first-child, .popular_post_list li:first-child{
 margin-top:0;
 }

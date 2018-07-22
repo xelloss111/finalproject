@@ -465,7 +465,7 @@ $(document).on('click', '.updtankBtn', function(){
 				});
 		});
 		
-		$(document).on('click','.deltankBtn', function {
+		$(document).on('click','.deltankBtn', function(){
 			var targetTankid = $($(this).parent().prev().children('.hdnTankId')).val();
 			var selectBoxResultHtml3 = '';
 			var modal2FolderHtml3 ='';

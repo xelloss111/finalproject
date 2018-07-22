@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <section class="slider_section">
 
 	<div class="img_con">
@@ -54,11 +56,9 @@
 <section class="latest_post_section bdarea" >
 			<h2 class="title">최근 글</h2>
 			<ul class="latest_post_list">
-				<li><a href="">안녕하세요 홈페이지가 오픈...</a></li>
-				<li><a href="">홈페이지 리뉴얼...</a></li>
-				<li><a href="">flat design은...</a></li>
-				<li><a href="">blog에서 다양한 정보를...</a></li>
-				<li><a href="">저는 누굴까요?...</a></li>
+				<c:forEach var="boardList" items="${boardList}" end ="5">
+					<li class="latest_post_list_li"><a href="${pageContext.request.contextPath}/board/detail?bNo=${boardList.bNo}">${boardList.title}</a></li>
+				</c:forEach>
 			</ul>
 		</section>
 		<section class="popular_post_section bgarea">
