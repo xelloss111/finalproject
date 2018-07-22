@@ -149,7 +149,7 @@
 								<div id="accordion">
 								<!-- 내 동영상 box -->
 	        					<c:forEach var="tankList" items="${tankList}">
-									<div><!-- 동영상 box 리스트 반복 만들어주기 -->
+									<div class="boxListDiv"><!-- 동영상 box 리스트 반복 만들어주기 -->
 										<ul class='togui'> 
 				        					<li class="folderTankImg">
 				        						<i class="far fa-folder"></i>
@@ -171,6 +171,7 @@
 											<ul class="seldelvideo"> 
 											
 												<c:forEach var="delList" items="${delList}">
+													<c:if test="${delList.tankId == tankList.tankId}">
 							        					<li class="videoImg">
 							        						<img src="${delList.videoImg}" class="hdnImg"/>
 							        					</li>
@@ -182,6 +183,7 @@
 							        					<li	class="selvideoBtnArea">
 							        						<input type="button" value="삭제"  class="delVideoBtn">
 							        					</li>
+							        				</c:if>
 					        					</c:forEach>
 			        						</ul>
 									</div><!-- videoListHide EDN -->
@@ -213,8 +215,20 @@ $(function() {
 		</c:forEach>
 });
 
+// 모든 동영상 정보
+var resultdelbox = new Array();
 
-
+$(function() {
+		<c:forEach var="delList" items="${delList}">
+			var json = new Object();
+			json.tankId = "${delList.tankId}";
+			json.tankName = "${delList.tankName}";
+			json.videoNo = "${delList.videoNo}";
+			json.videoTitle = "${delList.videoTitle}";
+			json.videoImg = "${delList.videoImg}";
+			resultdelbox.push(json);
+		</c:forEach>
+});
 
 //1. 모달에서 저장하기 눌렀을 때.
 
@@ -451,7 +465,7 @@ $(document).on('click', '.updtankBtn', function(){
 				});
 		});
 		
-		$(document).on('click','.deltankBtn', function(){
+		$(document).on('click','.deltankBtn', function {
 			var targetTankid = $($(this).parent().prev().children('.hdnTankId')).val();
 			var selectBoxResultHtml3 = '';
 			var modal2FolderHtml3 ='';
@@ -529,7 +543,12 @@ $(document).on("click",".delVideoBtn", function(){
 	 
     // 저장소 정보 가져오기
     var videoNo = $(this).parent().prev().children('.hdnVideoNo').val();
+    
+    // 부모 저장소의 tankId
+    var selectTankID = $(this).parent().parent().parent().prev().children().children('.folderTankTitle').children('.hdnTankId').val();
+    
     console.log("클릭한 videoNo :"+  videoNo);
+    console.log("클릭한 tankID :"+  selectTankID);
     
     // 담아서 뿌려줄 HTML
     var videoDelHtml ='';
@@ -542,8 +561,40 @@ $(document).on("click",".delVideoBtn", function(){
 		url: "selectDalVideo",
 		dataType:"json",
 		success: function (resultdelbox) {
-			alert("!!");
-
+			swal({
+				text: "동영상 삭제 완료!",
+				icon: "success",
+				button: "닫기",
+			});//swal 끝
+			
+			//삭제 처리 후 html 
+			for (var v = 0; v < resultdelbox.length; v++) {
+				var deleteImgList = resultdelbox[v].videoImg;
+				var deleteNoList = resultdelbox[v].videoNo;
+				var deleteTitleList = resultdelbox[v].videoTitle;
+				var deleteTankIdList = resultdelbox[v].tankId;
+				
+		
+				//저장소의 동영상 리스트
+				if(deleteTankIdList == selectTankID) {
+					
+					videoDelHtml += '<li class="videoImg">';
+					videoDelHtml += '	<img src="'+ deleteImgList +'" class="hdnImg"/>';
+					videoDelHtml += '</li>';
+					videoDelHtml += '<li class="selVideoTitle">';
+					videoDelHtml += '	<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
+					videoDelHtml += '	<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
+					videoDelHtml += '	<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
+					videoDelHtml += '</li> ';
+					videoDelHtml += '<li class="selvideoBtnArea"> ';
+					videoDelHtml += '<input type="button" value="삭제"  class="delVideoBtn"> ';
+					videoDelHtml += '</li> ';
+				}
+			}
+			
+			
+		
+		$(".seldelvideo").html(videoDelHtml);
 			}//success
     	
     });

@@ -83,7 +83,11 @@ public class VideoController {
 	@ResponseBody
 	public List<Video> deleteVideo(Model model, Video video) {
 		service.seldelvideo(video);
-				
-		return service.alldata(video.getId());
+		
+		//삭제 처리 후 모든 데이터 돌려주기
+		List<Video> resultdelbox = service.alldata(video.getId());
+		model.addAttribute("resultdelbox", resultdelbox);
+		
+		return resultdelbox;
 	}
 }
