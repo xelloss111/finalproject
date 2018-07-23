@@ -110,10 +110,9 @@ input:hover, textarea:hover, input:focus, textarea:focus {
 #button-blue {
 	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 	float: left;
-	width: 100%;
-	border: #fbfbfb solid 4px;
+	width: 49.5%;
 	cursor: pointer;
-	background-color: #3498db;
+	background-color: #0c0c0c;
 	color: white;
 	font-size: 24px;
 	padding-top: 10px;

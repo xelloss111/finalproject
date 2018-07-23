@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/notesendUI.css">
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 받은 편지함 모달 -->
 <div class="modal fade" id="noteLogG" role="dialog">
@@ -24,6 +24,7 @@
 		<!-- Modal content-->
 		<div class="modal-content display-area">
 			<div class="modal-header">
+<!-- 			<span id="header-name">받은 쪽지함</span> -->
 				<button type="button" class="closeFixed" data-dismiss="modal">×</button>
 				<!-- <h4 class="modal-title"></h4> -->
 			</div>
@@ -116,6 +117,8 @@
       
     	$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
     	
+    	$(".modal-footerFixed").css("display","block");
+    	
     	/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
     	for(let j=0; j < result.length; j++){
     	$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
@@ -123,12 +126,12 @@
         let dateTime = new Date(result[j].sendDate);
     		
         html="<div class=\"title-areaFixed\">" + 
-    		"<h4>"+result[j].title+"</h4>" + 
+    		"<h4 class='detail-title'>"+result[j].title+"</h4>" + 
     		"</div>" + 
-    		"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
-    		"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
+    		"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">보낸사람:"+result[j].sendId+"</span>"+ 
+    		"<div class=\"write-date-areaFixed\"><span class=\"send-date\">"+dateTime.toLocaleString()+"</span></div>" + 
     		"</div>" + 
-    		"<div class=\"content-area\">"+result[j].content+"</div>";
+ 	   		"<div class=\"content-areaFixed\">"+result[j].content+"</div>";
     		
          $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
          });
@@ -171,7 +174,6 @@
  					alert("로그인을  해주세요.");
  					return;
  				}
-				
 				//페이징 값 초기화
 				notePageNo = 0;
 				
@@ -308,7 +310,8 @@
 		
 		/*게시글 쓰기 모달 */
         $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(1)").click(function(){
-         			
+         	 
+        	
          	 html = "<div id=\"form-main\">" + 
          			"<div id=\"form-div\">" + 
          			"<form class=\"form\" id=\"form1\">" + 
@@ -329,6 +332,7 @@
          			"</p>" + 
          			"<div class=\"submit\">" + 
          			"<input type=\"submit\" value=\"보내기\" id=\"button-blue\" />" + 
+         			"<input type=\"submit\" value=\"취소\" id=\"button-blue\" />" + 
          			"<div class=\"ease\"></div>" + 
          			"</div>" + 
          			"</form>" + 
@@ -337,6 +341,12 @@
          			"<div class=\"modal-footer\">";
          			
          			$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+         			
+         			//하단 버튼 메뉴바 안보이게 하기
+         			$(".modal-footerFixed").css("display","none");
+         			
+         			//취소버튼 클릭시
+         			getRevList("#button-blue[value='취소']");
          			
          			$("#form1").submit(function(event){
          				if(event.preventDefault){event.preventDefault()};
@@ -427,6 +437,11 @@
 	 	 	});
            });
           /*보낸 편지 모달 끝*/
-         
+          
+          /*모달창 draggable 걸기*/
+          $(".modal-content").draggable();
+           
+          
+          /*document.ready 끝나는 괄호*/
           });
 </script>

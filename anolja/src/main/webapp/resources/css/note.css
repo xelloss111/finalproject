@@ -1,5 +1,25 @@
 @charset "UTF-8";
 /* Global */
+/*세부글 관련 부분*/
+.detail-title{
+    font-size: 33px;
+    text-align: center;
+    margin: 20 0;
+}
+
+.writername-areaFixed{
+	font-weight: 600;
+}
+
+.write-date-areaFixed{
+	font-weight: 600;
+	margin-top:5px;
+	text-align:right;
+}
+
+.send-date{
+    font-weight: 600;
+}
 
 /*모달 부분 */
 .btn-area{
@@ -226,21 +246,23 @@ button.closeFixed {
 .writer-areaFixed {
 	border: solid #333;
 	border-width: 0px 0px 2px 0px;
-}
-
-.content-areaFixed {
-	border: solid #333;
-	border-width: 0px 0px 2px 0px;
+	padding: 10px 0;
 }
 
 .content-writerFixed {
 	border: solid #333;
 	border-width: 0px 0px 2px 0px;
+	
 }
 
 .content-areaFixed {
 	border: solid #333;
 	border-width: 0px 0px 2px 0px;
+	font-family: "Times New Roman", Times, serif;
+    text-align: left;
+    margin: 15 0;
+    font-size: 30;
+    height: 300;
 }
 
 .write-date-area{
