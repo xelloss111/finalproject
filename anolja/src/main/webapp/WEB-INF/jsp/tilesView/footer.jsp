@@ -84,6 +84,81 @@
 		/*페이징 현재 페이지 나타내는 변수*/
 		var notePageNo = 0;
 		
+		var html="";
+		
+		/*받은 쪽지함 내용물(태그) 출력 메소드<매개변수로 getnote의 출력결과가 와야한다>*/
+		function resultList(result){
+			html="<table class=\"w3-table-all w3-hoverable\">" + 
+			"<thead>" + 
+			"<tr class='w3-light-grey'>" + 
+			"<th></th>"+
+			"<th>보낸이</th>" + 
+			"<th>제목</th>" + 
+			"<th>작성시간</th>" + 
+			"<th>읽음</th>" + 
+			"</tr>" + 
+			"</thead>";
+    	for(let j=0; j < result.length; j++){
+    		console.log(result[j].title);
+    		let dateTime = new Date(result[j].sendDate);
+    		html +=	'<tr>'+ 
+    		'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
+    		'<td>'+result[j].sendId+ "</td>" + 
+    		'<td>'+result[j].title+'</td>' + 
+    		'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
+    		'<td>'+result[j].status+'</td>'+
+    		'</tr>'; 
+    	}
+    	html+="</table>";
+      
+    	$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+    	
+    	/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
+    	for(let j=0; j < result.length; j++){
+    	$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
+    	
+        let dateTime = new Date(result[j].sendDate);
+    		
+        html="<div class=\"title-areaFixed\">" + 
+    		"<h4>"+result[j].title+"</h4>" + 
+    		"</div>" + 
+    		"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
+    		"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
+    		"</div>" + 
+    		"<div class=\"content-area\">"+result[j].content+"</div>";
+    		
+         $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+         });
+         };
+    	
+      /*삭제 기능 이벤트 걸기*/
+      $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
+    	  var checkedList = []; 
+    	  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
+    		if($(this).prop("checked")){
+    			checkedList.push($(this).val());
+    		}
+    	  });
+    	  
+    	  if(checkedList.length == 0){
+    		  alert("삭제할 대상을 체크해주세요.")
+    		  return;
+    	  }
+    		$.ajax({
+    				url : "${pageContext.request.contextPath}/deletenote",
+    				data : JSON.stringify(checkedList),
+    				contentType:'application/json',
+    				type : "POST",
+    				dataType : "JSON"
+    			})
+    			.done(function (result) {
+    					alert(result);
+    			});
+    		
+    		
+    	  });
+    		}
+		
 		/* 쪽지 받기 모달 시작 부분 */
 		/* 받은 쪽지함 함수*/
 		function getRevList(getObject){
@@ -95,7 +170,6 @@
 				
 				var html = "";
 	<%-- var sessionId = `<%=session.getAttribute("id")%>`; --%>
-				
 				$.ajax({
 					url : "${pageContext.request.contextPath}/getnotelist",
 					type : "GET",
@@ -105,78 +179,7 @@
 					for(let i = 0; i < result.length; i++) {
 						console.log(result[i].title);
 					}
-				
-					
-					html+="<table class=\"w3-table-all w3-hoverable\">" + 
-							"<thead>" + 
-							"<tr class='w3-light-grey'>" + 
-							"<th></th>"+
-							"<th>보낸이</th>" + 
-							"<th>제목</th>" + 
-							"<th>작성시간</th>" + 
-							"<th>읽음</th>" + 
-							"</tr>" + 
-							"</thead>";
-					for(let j=0; j < result.length; j++){
-						console.log(result[j].title);
-						let dateTime = new Date(result[j].sendDate);
-						html +=	'<tr>'+ 
-						'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-						'<td>'+result[j].sendId+ "</td>" + 
-						'<td>'+result[j].title+'</td>' + 
-						'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-						'<td>'+result[j].status+'</td>'+
-						'</tr>'; 
-					}
-					html+="</table>";
-				  
-					$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-					
-					/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
-					for(let j=0; j < result.length; j++){
-					$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
-					
-				    let dateTime = new Date(result[j].sendDate);
-						
-				  html="<div class=\"title-areaFixed\">" + 
-						"<h4>"+result[j].title+"</h4>" + 
-						"</div>" + 
-						"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
-						"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
-						"</div>" + 
-						"<div class=\"content-area\">"+result[j].content+"</div>";
-						
-				  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-					});
-					};
-					
-				  /*삭제 기능 이벤트 걸기*/
-				  $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
-					  var checkedList = []; 
-					  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
-						if($(this).prop("checked")){
-							checkedList.push($(this).val());
-						}
-					  });
-					  
-					  if(checkedList.length == 0){
-						  alert("삭제할 대상을 체크해주세요.")
-						  return;
-					  }
-						$.ajax({
-	     					url : "${pageContext.request.contextPath}/deletenote",
-	     					data : JSON.stringify(checkedList),
-	     					contentType:'application/json',
-	     					type : "POST",
-	     					dataType : "JSON"
-	     				})
-	     				.done(function (result) {
-	         					alert(result);
-	     				});
-						
-						
-					  });
-					
+					resultList(result);
 			   /*ajax끝나는 괄호 */		
 				});
 				
@@ -214,76 +217,7 @@
 					notePageNo = notePageNo-10;
 					return;
 				}
-				
-				html="<table class=\"w3-table-all w3-hoverable\">" + 
-				"<thead>" + 
-				"<tr class='w3-light-grey'>" + 
-				"<th></th>"+
-				"<th>보낸이</th>" + 
-				"<th>제목</th>" + 
-				"<th>작성시간</th>" + 
-				"<th>읽음</th>" + 
-				"</tr>" + 
-				"</thead>";
-		for(let j=0; j < result.length; j++){
-			console.log(result[j].title);
-			let dateTime = new Date(result[j].sendDate);
-			html +=	'<tr>'+ 
-			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-			'<td>'+ result[j].sendId+ "</td>" + 
-			'<td>'+result[j].title+'</td>' + 
-			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-			'<td>'+result[j].status+'</td>'+
-			'</tr>'; 
-		}
-		html+="</table>";
-	  
-		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		
-		/* <내부코드>받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
-		for(let j=0; j < result.length; j++){
-		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
-		
-	    let dateTime = new Date(result[j].sendDate);
-			
-	  html="<div class=\"title-areaFixed\">" + 
-			"<h4>"+result[j].title+"</h4>" + 
-			"</div>" + 
-			"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
-			"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
-			"</div>" + 
-			"<div class=\"content-area\">"+result[j].content+"</div>";
-			
-	  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		});
-		};
-		
-	  /*<내부코드>삭제 기능 이벤트 걸기*/
-	  $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
-		  var checkedList = []; 
-		  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
-			if($(this).prop("checked")){
-				checkedList.push($(this).val());
-			}
-		  });
-		  
-		  if(checkedList.length == 0){
-			  alert("삭제할 대상을 체크해주세요.")
-			  return;
-		  }
-			$.ajax({
-					url : "${pageContext.request.contextPath}/deletenote",
-					data : JSON.stringify(checkedList),
-					contentType:'application/json',
-					type : "POST",
-					dataType : "JSON"
-				})
-				.done(function (result) {
- 					alert(result);
-				});
-			
-			
-		  });
+				resultList(result);
 			/*ajax 끝나는 부분*/
 		});
 		});
@@ -318,77 +252,7 @@
 					return;
 				}
 				*/
-				html="<table class=\"w3-table-all w3-hoverable\">" + 
-				"<thead>" + 
-				"<tr class='w3-light-grey'>" + 
-				"<th></th>"+
-				"<th>보낸이</th>" + 
-				"<th>제목</th>" + 
-				"<th>작성시간</th>" + 
-				"<th>읽음</th>" + 
-				"</tr>" + 
-				"</thead>";
-		for(let j=0; j < result.length; j++){
-			console.log(result[j].title);
-			let dateTime = new Date(result[j].sendDate);
-			html +=	'<tr>'+ 
-			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-			'<td>'+result[j].sendId+ "</td>" + 
-			'<td>'+result[j].title+'</td>' + 
-			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-			'<td>'+result[j].status+'</td>'+
-			'</tr>'; 
-		}
-		html+="</table>";
-	  
-		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		
-		/* <내부코드>받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
-		for(let j=0; j < result.length; j++){
-		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
-		
-	    let dateTime = new Date(result[j].sendDate);
-			
-	  html="<div class=\"title-areaFixed\">" + 
-			"<h4>"+result[j].title+"</h4>" + 
-			"</div>" + 
-			"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
-			"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
-			"</div>" + 
-			"<div class=\"content-area\">"+result[j].content+"</div>";
-			
-	  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		});
-		};
-		
-	  /*<내부코드>삭제 기능 이벤트 걸기*/
-	  $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
-		  var checkedList = []; 
-		  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
-			if($(this).prop("checked")){
-				checkedList.push($(this).val());
-			}
-		  });
-		  
-		  if(checkedList.length == 0){
-			  alert("삭제할 대상을 체크해주세요.")
-			  return;
-		  }
-			$.ajax({	
-					url : "${pageContext.request.contextPath}/deletenote",
-					data : JSON.stringify(checkedList),
-					contentType:'application/json',
-					type : "POST",
-					dataType : "JSON"
-				})
-				.done(function (result) {
- 					alert(result);
-				});
-			
-			
-		  });
-				
-				
+				resultList(result);
 			/*ajax 끝나는 부분*/
 		});
 		});
@@ -420,83 +284,12 @@
 					return;
 				}
 				*/
-				html="<table class=\"w3-table-all w3-hoverable\">" + 
-				"<thead>" + 
-				"<tr class='w3-light-grey'>" + 
-				"<th></th>"+
-				"<th>보낸이</th>" + 
-				"<th>제목</th>" + 
-				"<th>작성시간</th>" + 
-				"<th>읽음</th>" + 
-				"</tr>" + 
-				"</thead>";
-		for(let j=0; j < result.length; j++){
-			console.log(result[j].title);
-			let dateTime = new Date(result[j].sendDate);
-			html +=	'<tr>'+ 
-			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-			'<td>'+result[j].sendId+ "</td>" + 
-			'<td>'+result[j].title+'</td>' + 
-			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-			'<td>'+result[j].status+'</td>'+
-			'</tr>'; 
-		}
-		html+="</table>";
-	  
-		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		
-		/* <내부코드>받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
-		for(let j=0; j < result.length; j++){
-		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
-		
-	    let dateTime = new Date(result[j].sendDate);
-			
-	  html="<div class=\"title-areaFixed\">" + 
-			"<h4>"+result[j].title+"</h4>" + 
-			"</div>" + 
-			"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+dateTime.toLocaleDateString().slice(0,-1)+"</span>" + 
-			"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
-			"</div>" + 
-			"<div class=\"content-area\">"+result[j].content+"</div>";
-			
-	  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-		});
-		};
-		
-	  /*<내부코드>삭제 기능 이벤트 걸기*/
-	  $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
-		  var checkedList = []; 
-		  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
-			if($(this).prop("checked")){
-				checkedList.push($(this).val());
-			}
-		  });
-		  
-		  if(checkedList.length == 0){
-			  alert("삭제할 대상을 체크해주세요.")
-			  return;
-		  }
-			$.ajax({	
-					url : "${pageContext.request.contextPath}/deletenote",
-					data : JSON.stringify(checkedList),
-					contentType:'application/json',
-					type : "POST",
-					dataType : "JSON"
-				})
-				.done(function (result) {
- 					alert(result);
-				});
-			
-			
-		  });
+				resultList(result);
 			/*ajax 끝나는 부분*/
 		});
-			
-		})
-		
+		});
 		
 		/*처음으로 버튼 취소 시*/
-		
 		
 		/*이전버튼 클릭시 종료 */
 		/*페이지 전환 코딩 끝*/
@@ -558,79 +351,73 @@
 		
         /*보낸편지함 모달 시작 */
         $("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(1) > a").click(function(e) {
-			e.preventDefault();
-			
-			var html = "";
-			
-			$.ajax({
-				url : "${pageContext.request.contextPath}/sendnotelist",
-				type : "POST",
-				dataType : "JSON"
-			})
-			.done(function (result) {
-				html+="<table class=\"w3-table-all w3-hoverable\">" + 
-						"<thead>" + 
-						"<tr class='w3-light-grey'>" + 
-						"<th></th>"+
-						"<th>받은이</th>" + 
-						"<th>제목</th>" + 
-						"<th>작성시간</th>" + 
-						"<th>읽음</th>" + 
-						"</tr>" + 
-						"</thead>";
-				for(let j=0; j < result.length; j++){
-					console.log(result[j].title);
-					
-					let dateTime = new Date(result[j].sendDate);
-					
-					html +=	'<tr>'+ 
-					'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-					'<td>'+result[j].getId+ "</td>" + 
-					'<td>'+result[j].title+'</td>' + 
-					'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-					'<td>'+result[j].status+'</td>'+
-					'</tr>'; 
-					/*최근 보낸 편지 10개만 보여준다.*/
-					if(j == 9){
-						break;
-					}
-				}
-				html+="</table>";
-			  
-				$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-				
-				/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
-				/*
-				for(let j=0; j < result.length; j++){
-				$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3) > a").click(function(){
-					
-			  html="<div class=\"title-areaFixed\">" + 
-					"<h4>"+result[j].title+"</h4>" + 
-					"</div>" + 
-					"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+result[j].sendDate+"</span>" + 
-					"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
-					"</div>" + 
-					"<div class=\"content-area\">"+result[j].content+"</div>";
-					
-			  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
-				});
-				};
-				*/
-				
-		   /*ajax끝나는 괄호 */		
-			});
-			
-			$("#noteLogG").modal({
-				backdrop : false
-			});
-         });
-        /*보낸 편지 모달 끝*/
-        
-        
-        
-        
-       
-        
-         		
-        });
+	 	 	e.preventDefault();
+	 	 	
+	 	 	var html = "";
+	 	 	
+	 	 	$.ajax({
+	 	 		url : "${pageContext.request.contextPath}/sendnotelist",
+	 	 		type : "POST",
+	 	 		dataType : "JSON"
+	 	 	})
+	 	 	.done(function (result) {
+	 	 		html+="<table class=\"w3-table-all w3-hoverable\">" + 
+	 	 				"<thead>" + 
+	 	 				"<tr class='w3-light-grey'>" + 
+	 	 				"<th></th>"+
+	 	 				"<th>받은이</th>" + 
+	 	 				"<th>제목</th>" + 
+	 	 				"<th>작성시간</th>" + 
+	 	 				"<th>읽음</th>" + 
+	 	 				"</tr>" + 
+	 	 				"</thead>";
+	 	 		for(let j=0; j < result.length; j++){
+	 	 			console.log(result[j].title);
+	 	 			
+	 	 			let dateTime = new Date(result[j].sendDate);
+	 	 			
+	 	 			html +=	'<tr>'+ 
+	 	 			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
+	 	 			'<td>'+result[j].getId+ "</td>" + 
+	 	 			'<td>'+result[j].title+'</td>' + 
+	 	 			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
+	 	 			'<td>'+result[j].status+'</td>'+
+	 	 			'</tr>'; 
+	 	 			/*최근 보낸 편지 10개만 보여준다.*/
+	 	 			if(j == 9){
+	 	 				break;
+	 	 			}
+	 	 		}
+	 	 		html+="</table>";
+	 	 	  
+	 	 		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+	 	 		
+	 	 		/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
+	 	 		/*
+	 	 		for(let j=0; j < result.length; j++){
+	 	 		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3) > a").click(function(){
+	 	 			
+	 	 	  html="<div class=\"title-areaFixed\">" + 
+	 	 			"<h4>"+result[j].title+"</h4>" + 
+	 	 			"</div>" + 
+	 	 			"<div class=\"writer-areaFixed\"><span class=\"writername-areaFixed\">"+result[j].sendId+"</span><span class=\"send-date\">"+result[j].sendDate+"</span>" + 
+	 	 			"<div class=\"write-date-areaFixed\"><span>2018-09-04</span></div>" + 
+	 	 			"</div>" + 
+	 	 			"<div class=\"content-area\">"+result[j].content+"</div>";
+	 	 			
+	 	 	  $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+	 	 		});
+	 	 		};
+	 	 		*/
+	 	 		
+	 	    /*ajax끝나는 괄호 */		
+	 	 	});
+	 	 	
+	 	 	$("#noteLogG").modal({
+	 	 		backdrop : false
+	 	 	});
+           });
+          /*보낸 편지 모달 끝*/
+         
+          });
 </script>
