@@ -84,7 +84,6 @@
 		/*페이징 현재 페이지 나타내는 변수*/
 		var notePageNo = 0;
 		
-		
 		/* 쪽지 받기 모달 시작 부분 */
 		/* 받은 쪽지함 함수*/
 		function getRevList(getObject){
@@ -95,7 +94,7 @@
 				e.preventDefault();
 				
 				var html = "";
-	<%-- 			var sessionId = `<%=session.getAttribute("id")%>`; --%>
+	<%-- var sessionId = `<%=session.getAttribute("id")%>`; --%>
 				
 				$.ajax({
 					url : "${pageContext.request.contextPath}/getnotelist",
@@ -285,13 +284,9 @@
 			
 			
 		  });
-				
-				
-				
 			/*ajax 끝나는 부분*/
 		});
 		});
-		
 		
 		
 		/* 이전 버튼 클릭시 */
@@ -394,7 +389,6 @@
 		  });
 				
 				
-				
 			/*ajax 끝나는 부분*/
 		});
 		});
@@ -441,7 +435,7 @@
 			let dateTime = new Date(result[j].sendDate);
 			html +=	'<tr>'+ 
 			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-			'<td>'+ sendId+ "</td>" + 
+			'<td>'+result[j].sendId+ "</td>" + 
 			'<td>'+result[j].title+'</td>' + 
 			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
 			'<td>'+result[j].status+'</td>'+
@@ -495,9 +489,6 @@
 			
 			
 		  });
-				
-				
-				
 			/*ajax 끝나는 부분*/
 		});
 			
@@ -594,7 +585,7 @@
 					
 					html +=	'<tr>'+ 
 					'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
-					'<td>'+result[j].sendId+ "</td>" + 
+					'<td>'+result[j].getId+ "</td>" + 
 					'<td>'+result[j].title+'</td>' + 
 					'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
 					'<td>'+result[j].status+'</td>'+
