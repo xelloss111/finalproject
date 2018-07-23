@@ -333,11 +333,6 @@
 	        	var drawData;
 	        	var fillData;
 	        	
-	        	if (evt.data == "clear") {
-	            	paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-	                paintCtx.closePath();
-	                return;
-	            }
 	        	if (evt.data.startsWith('{"')) {
 	        		fillData = JSON.parse(evt.data);
 // 		            console.log(fillData);
@@ -399,10 +394,7 @@
         });
         $("#clearBtn").click(function () {
         	if (!isEditable) {return;}
-            paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-            paintCtx.closePath();
-            
-            paintWs.send("clear");
+            fillColor('#f4f5ed', 'black');
         });
         
         // 채우기 색상
@@ -446,6 +438,7 @@
     		time = 90;
     		rcmndCnt = 0;
         	fillColor('#f4f5ed', 'black');
+        	// 추천수
 			$("#funny").off('click');
 			$("#funny").on('click', funny);
     		
@@ -540,7 +533,9 @@
     			},
     			type: "POST",
     			success: function (data) {
+//     				console.log(data);
    					ws.send(data);
+   					fillColor('#f4f5ed', 'black');
     			},
     			error: function (e) {
     				console.log("갤러리업로드 에러발생: "+e);
