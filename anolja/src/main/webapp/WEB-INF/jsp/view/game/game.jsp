@@ -101,7 +101,6 @@
     	});
     	
     	var rightAnswerCnt = 0;
-    	
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
@@ -494,7 +493,7 @@
     		$("#funny").off('click');
     		ws.send("rcmndCnt:"+rcmndCnt);
     		
-    		if (rcmndCnt == 3) {
+    		if (rcmndCnt == 2) {
 	   			snapshot();
 	   			uploadFile(canvasInfo);
 	   		}
