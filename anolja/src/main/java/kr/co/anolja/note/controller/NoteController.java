@@ -75,5 +75,15 @@ public class NoteController {
 		return "받은 편지 삭제";
 	}
 	
+	@RequestMapping("/checknote")
+	@ResponseBody
+	public String checkNote(@RequestParam(value="readNo")int id) {
+		System.out.println("업데이트할 번호:"+id);
+		
+		noteService.checkNote(id);
+		
+		return "체크되었습니다.";
+	}
+	
 
 }

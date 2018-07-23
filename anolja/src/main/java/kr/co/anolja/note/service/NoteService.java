@@ -11,6 +11,6 @@ public interface NoteService {
 	public List<Note> printGetIdList(Note note);
 	public List<Note> printSendIdList(String sessionId);
 	public void deleteNote(String[] list);
+	public void checkNote(int no);
 }
-
 
