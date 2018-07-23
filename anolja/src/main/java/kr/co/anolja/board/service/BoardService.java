@@ -23,7 +23,6 @@ public interface BoardService {
 
 	public void boardReply(Board board, BoardFile boardFile) throws Exception;
 
-	public void updateViewCnt(int bNo);
 	
 	
 
@@ -36,6 +35,8 @@ public interface BoardService {
 	public void deleteComment(Comment comment);
 
 	public void updateComment(Comment comment);
+
+	public List<Board> searchBoard(String board);
 
 
 

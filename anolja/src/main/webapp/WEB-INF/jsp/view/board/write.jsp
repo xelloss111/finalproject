@@ -75,8 +75,6 @@
     </style>
 <div id="board">
     	<form action="insert" method="POST" enctype="multipart/form-data">
-    		<input type="hidden" name="groupBlist" value="0" />
-    		<input type="hidden" name="depth" value="0" />
     		<input type="hidden" name="anonymousId" value="${sessionScope.id}">
 	    	<input type="text" class="form-control" id="exampleInputEmail1" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
             <div class="file_input" style="margin-bottom:30px;">

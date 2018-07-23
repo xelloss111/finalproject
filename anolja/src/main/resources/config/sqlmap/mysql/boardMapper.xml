@@ -103,10 +103,18 @@
 	
 	<insert id="boardInsertFile" parameterType="boardFile">
 		insert into tb_file (
-			bNo, path, ori_name, sys_name, file_size
+			bNo, path, ori_name, sys_name, file_sizessss
 		) values (
 			#{bNo}, #{path}, #{oriName}, #{sysName}, #{fileSize}		
 		)
 	</insert> 
 	
+	
+	<!-- 검색 시작 -->
+	<select id="searchBoard" parameterType="String" resultMap="boardMap">
+		select *
+		  from tb_board
+		 where title like CONCAT('%',#{title},'%')
+		 order by group_bno desc, group_blist asc
+	</select>
 </mapper>

@@ -38,16 +38,19 @@
 	#commentList table tr td{
 	 font-color : white;
 	}
+	
+	#commentArea {
+		width:1083px;
+		height: 100px;
+		background-color:white;
+	}
+	
+	#btnud {
+		background-color:whtie;
+	}
 </style>
 <div id="wrap">
 	<div id="outer">
-		<div id="titleDiv">
-			<br> <br>
-			<c:if test="${!empty sessionScope.id}">
-				<button onclick="location.href='write'">글쓰기</button>
-				<button onclick="location.href='replyForm?bNo=${board.bNo}'">답글</button>
-			</c:if>
-		</div>
 		<div id="title">
 		<div style="width:1100px; height:5px; background-color:#2c3e50;margin-bottom:5px;"></div>
 			<div id="title2" style="margin-left:20px;">
@@ -61,9 +64,9 @@
 			</div>
 		</div>
 		<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:5px;"></div>
-		<div id="content_section" style="height:300px; margin-left:20px; ">${board.content}</div>
+		<div id="content_section" style="height:300px; "><p>${board.content}</p></div>
 		<div id="updateBtn">
-			<hr>
+			<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:5px;"></div>
 			<br>
 			<div>
 				<br>
@@ -71,9 +74,10 @@
 					<c:when test="${sessionScope.id == board.anonymousId}">
 						<div class="write_box">
 								<ul>
-									<li style="margin-left:830px;"><a href="updateForm?bNo=${board.bNo}">수정</a></li>
-									<li><a href="delete?bNo=${board.bNo}">삭제</a></li>
-									<li><a href="list">목록</a></li>
+									<li style="margin-left:735px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
+									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li>
+									<li onclick="confirm('삭제 하시겠습니까?');"><a style="background:#d82f2f;" href="delete?bNo=${board.bNo}">삭제</a></li>
+									<li><a style="background:#0faeea;" href="list">목록</a></li>
 								</ul>
 						</div>
 					</c:when>
@@ -102,123 +106,20 @@
 	</form>
 		
 		<!-- 댓글 관련 파트 시작 -->
-		<form id="rForm" class="form-inline">
-			<div id="comment">
-				<div class="form-group">
-					<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; float:left;"/>
+		<div id="commentArea">
+			<form id="rForm" class="form-inline">
+				<div id="comment">
+					<div class="form-group">
+						<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; float:left; text-align:center; font-size:17px;"/>
+					</div>
+					<div class="form-group">
+						<input type="text" name="content" class="form-control input-wo1" style="width:813px; height:50px; padding-left:23px; float:left" placeholder="내용을 입력하세요"  />
+					</div>	
+					<button class="btn btn-primary">등록</button>			
 				</div>
-				<div class="form-group">
-					<input type="text" name="content" class="form-control input-wo1" style="width:789px; height:50px; padding-left:50px; float:left" placeholder="내용을 입력하세요"  />
-				</div>	
-				<button class="btn btn-primary">등록</button>			
-			</div>
-		</form>	
+			</form>	
+		</div>
 	</section>
-	<section class="content_section">
-			<div class="content_row_1">
-			<div class="content_row_2">
-				<div class="search_box">
-					<form action="#" method="get" style="width:880px;">
-						<input type="search" name="gallery_search_window" class="search_window" placeholder="검색어">
-						<div class="search_select_box">
-							<select name="검색 대상">
-								<option value="제목">제목</option>
-								<option value="제목">제목+내용</option>
-								<option value="제목">댓글</option>
-							</select>
-						</div>	
-					</form>
-				</div>
-				<c:if test="${!empty sessionScope.id}">
-					<div class="write_box">
-						<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
-					</div>
-				</c:if>
-			</div>
-				<table class="board_table">
-					<caption>문의사항 게시판</caption>
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>글쓴이</th>
-							<th>작성일</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-					<c:forEach var="re" items="${result.list}">
-						<tr>
-							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.bNo}</a></td>
-							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.title}</a></td>
-							<td>${re.anonymousId}</td>
-							<td><fmt:formatDate value="${re.regDate}" pattern="yyyy-MM-dd" />
-							<td>${re.viewCnt}</td>
-						</tr>
-					</c:forEach>
-						
-					</tbody>
-				</table>
-			</div>
-			
-			
-			
-			
-			<c:if test="${result.pageResult.next eq true}">
-					      <span onclick="javascript:goPage(${result.pageResult.endPage + 1});" class="list_prev_btn"></span>
-			</c:if>
-			
-			<div class="content_row_2">
-				<div class="search_box">
-					<form action="#" method="get" style="width:880px;">
-						<input type="search" name="gallery_search_window" class="search_window" placeholder="검색어">
-						<div class="search_select_box">
-							<select name="검색 대상">
-								<option value="제목">제목</option>
-								<option value="제목">제목+내용</option>
-								<option value="제목">댓글</option>
-							</select>
-						</div>	
-					</form>
-				</div>
-				<c:if test="${!empty sessionScope.id}">
-					<div class="write_box">
-						<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
-					</div>
-				</c:if>
-			</div>
-			
-			<c:if test="${result.pageResult.count != 0}">
-				<nav>
-					<div class="content_row_3">
-					      <c:if test="${result.pageResult.prev eq true}">
-					      <span onclick="javascript:goPage(${result.pageResult.beginPage - 1});" class="list_prev_btn"></span>
-					      </c:if>
-					<c:forEach var="i" begin="${result.pageResult.beginPage}" end="${result.pageResult.endPage}">
-					    <c:choose>
-					    	<c:when test="${i eq result.pageResult.pageNo}">
-							    <a href="#1">${i}</a>
-					    	</c:when>
-					    	<c:otherwise>
-							    <a href="javascript:goPage(${i});">${i}</a>
-					    	</c:otherwise>
-					    </c:choose>
-					</c:forEach>
-				      <c:if test="${result.pageResult.next eq true}">
-					      <span onclick="javascript:goPage(${result.pageResult.endPage + 1});" class="list_next_btn"></span>
-						</c:if>
-					</div>
-				    	    
-				</nav>
-			</c:if>
-<!-- 			<div class="content_row_3"> -->
-<!-- 				<span class="list_prev_btn">문의사항 이전 버튼</span> -->
-<!-- 				<a href="#">1</a> -->
-<!-- 				<a href="#">2</a> -->
-<!-- 				<a href="#">3</a> -->
-<!-- 				<span class="list_next_btn">문의사항 다음 버튼</span> -->
-<!-- 			</div> -->
-		</section>
 	
 	<script>
 	
@@ -250,11 +151,12 @@
 		html += '	<td>' + modId + '</td>';
 		html += '	<td>';
 		html += '		<div class="form-group">';
-		html += '			<input type="text" name="content" value="' + modContent + '" class="form-control input-wp2" placeholder="내용을 입력하세요">';
+		html += '			<input type="text" name="content" value="' + modContent +
+		'" class="form-control input-wp2" placeholder="내용을 입력하세요" style="color:white;padding-left:50px; height:50px;  line-height:50px; text-align:center;">';
 		html += '		</div>';
 		html += '	</td>';
 		html += '	<td colspan="2">';
-		html += '		<a href="javascript:commentUpdate(' + commentNo + ');" class="btn btn-success btn-sm" role="button">수정</a>';
+		html += '		<a href="javascript:commentUpdate(' + commentNo + ');" class="btn btn-success btn-sm btnud" role="button">수정</a>';
 		html += '		<a href="javascript:commentCancel(' + commentNo + ');" class="btn btn-warning btn-sm" role="button">취소</a>';
 		html += '	</td>';
 		html += '</tr>';
@@ -326,7 +228,7 @@
 			var comment = result[i];
 			html += '<tr id="row' + comment.cNo + '">';
 			html += '	<td style="color:white;text-align:center">' + comment.anonymousId + '</td>';
-			html += '	<td style="color:white; padding-left:50px;">' + comment.content + '</td>';
+			html += '	<td style="color:white; padding-left:50px; ">' + comment.content + '</td>';
 			var date = new Date(comment.regDate);
 			var time = date.getFullYear() + "-" 
 			         + (date.getMonth() + 1) + "-" 
@@ -344,7 +246,7 @@
 			html += '</tr>';
 		}
 		if (result.length == 0) {
-			html += '<tr><td colspan="4" style="color:white; height:30px; padding-left:50px; text-align:center;">댓글이 존재하지 않습니다.</td></tr>';
+			html += '<tr><td colspan="4" style="color:white;padding-left:50px; height:50px;  line-height:50px; text-align:center;">댓글이 존재하지 않습니다.</td></tr>';
 		}
 		html += "</title>";
 		$("#commentList").html(html);
@@ -366,6 +268,7 @@
 	
 	// 상세 페이지 로딩시 댓글 목록 조회 ajax 호출
 	commentList();	
+	
 	</script>
 </div>
 

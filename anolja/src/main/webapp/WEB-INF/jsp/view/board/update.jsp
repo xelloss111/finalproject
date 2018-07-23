@@ -74,6 +74,7 @@
     </style>
 <div id="board" style="order:4">
     	<form action="update" method="POST" enctype="multipart/form-data">
+    		<input type="hidden" name="bNo" value="${board.bNo}" />
 	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;" value="${board.title}"> <br><br>
             <div class="file_input" style="margin-bottom:30px;">
             <label>

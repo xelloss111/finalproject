@@ -16,7 +16,7 @@ public interface BoardMapper {
 	public void boardInsertFile(BoardFile boardFile);
 	public void updateViewCnt(int bNo);
 	
-	
+	public List<Board> searchBoard(String board);
 	
 	
 	public void boardReply(Board board) throws Exception;
