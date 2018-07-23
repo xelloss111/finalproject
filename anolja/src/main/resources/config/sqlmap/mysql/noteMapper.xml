@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.anolja.repository.mapper.NoteMapper">
+	<resultMap type="note" id="noteMap">
+		<result column="id" property="id" />
+		<result column="send_id" property="sendId" />
+		<result column="get_id" property="getId" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="status" property="status" />
+		<result column="send_date" property="sendDate" />
+		<result column="read_date" property="readDate" />
+		<result column="send_del" property="sendDel" />
+		<result column="get_del" property="getDel" />
+	</resultMap>
+	
+	<insert id="sendNote" parameterType="note">
+	insert into tb_note(send_id,get_id,title,content)
+                 values(#{sendId},#{getId},#{title},#{content})
+	</insert>
+	
+	<select id="printGetList" resultMap="noteMap" parameterType="note">
+	select *
+	  from tb_note
+	 where get_id = #{getId} and get_del = 0
+	 order by send_date desc
+	 limit #{pageNo},10
+	</select>
+	
+	<select id="printSendList" resultMap="noteMap" parameterType="string">
+	select *
+	  from tb_note
+	 where send_id = #{sendId} and send_del = 0
+	 order by send_date	desc
+	</select>
+	
+	<update id="deleteNote" parameterType="int">
+	update tb_note
+	   set get_del = 1
+	 where id = #{id}
+	</update>
+	
+		
+	
+</mapper>
