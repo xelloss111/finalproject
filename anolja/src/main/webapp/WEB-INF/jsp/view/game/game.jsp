@@ -102,16 +102,6 @@
     	
     	var rightAnswerCnt = 0;
     	
-//     	var sec = 5;
-//         function gameSet(msg) {
-//         	$("#chat").append('<div class="bubbleNotice">'+ sec +""+ msg +'</div>');
-// 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-//         	if (sec > 0) sec--;
-//         	else {
-//         		clearInterval(gameSetId);
-//         	}
-//         }
-    	
     	function onMessage(evt) {
     		if (evt.data.startsWith('notice:')) {
     			var msg = evt.data.substring('notice:'.length);
@@ -157,7 +147,7 @@
     				currentUser = id;
     			}
     			// 정답맞출 시 새로게임 시작하기
-    			if (msg.includes('정답')) {
+    			if (msg.includes('정답입니다!!!')) {
     				clearInterval(timerId);
     				gameRestart();
     			}
@@ -167,17 +157,6 @@
     			
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
     			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-    			
-//     			if (msg.includes('초')) {
-//     				for (let i = 5; i >= 1; i--) {
-// 	    				setInterval(() => {
-// 			    			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
-// 			    			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-// 						}, 1000);
-// 	   				}
-// 	    			var gameSetId = setInterval("gameSet("+msg+");", 1000);
-//     			}
-    			
     		}
     		else if (evt.data.startsWith('현재문제:')) {
     			currentQue = evt.data.substring('현재문제:'.length);
@@ -432,32 +411,45 @@
         }
         
         // 게임 한세트 끝난 후 다시 시작하기
+        var waiting = 8;
         function gameRestart() {
-			$("#question").text("");
-			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-    		time = 90;
-    		rcmndCnt = 0;
-        	fillColor('#f4f5ed', 'black');
-        	// 추천수
-			$("#funny").off('click');
-			$("#funny").on('click', funny);
-    		
-    		if (current) {
-        		paintWs.send("next");
-        		ws.send('rcmndCnt:'+rcmndCnt);
-        		current = false;
-        		
-				setTimeout(() => {
-	        		paintWs.send("gameRestart");
-				}, 100);
-	    		setTimeout(() => {
-		    		ws.send("gameEnd");
-	    			ws.send("next");
-				}, 100);
-	    		setTimeout(() => {
-	    			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-				}, 500);
-    		}
+        	if (current) {
+        		waitingID = setInterval(() => {
+        			if (waiting > 0) {
+			        	ws.send("notice:정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
+        			}
+        			else {
+        				clearInterval(waitingID);
+        			}
+				}, 1000);
+        	}
+	        setTimeout(() => {
+				$("#question").text("");
+				paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+	    		time = 90;
+	    		rcmndCnt = 0;
+	        	fillColor('#f4f5ed', 'black');
+	        	// 추천수
+				$("#funny").off('click');
+				$("#funny").on('click', funny);
+	    		
+	    		if (current) {
+	        		paintWs.send("next");
+	        		ws.send('rcmndCnt:'+rcmndCnt);
+	        		current = false;
+	        		
+					setTimeout(() => {
+		        		paintWs.send("gameRestart");
+					}, 100);
+		    		setTimeout(() => {
+			    		ws.send("gameEnd");
+		    			ws.send("next");
+					}, 100);
+		    		setTimeout(() => {
+		    			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+					}, 500);
+	    		}
+			}, 8000);
         }
         
         /* 정수형 숫자(초 단위)를 "시:분:초" 형태로 표현하는 함수 */
