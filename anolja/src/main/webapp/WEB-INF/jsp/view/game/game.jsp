@@ -291,6 +291,7 @@
 	                
                 	paintWs.send(JSON.stringify(now));
                 	now =[];
+//                 	color = "black";
 	            }
 	        });
 	        
@@ -410,12 +411,17 @@
         }
         
         // 게임 한세트 끝난 후 다시 시작하기
-        var waiting = 8;
         function gameRestart() {
+	        let waiting = 8;
+//         	color = "black";
         	if (current) {
         		waitingID = setInterval(() => {
         			if (waiting > 0) {
-			        	ws.send("notice:정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
+						if (rcmndCnt == 2) { 
+	        				clearInterval(waitingID);
+							return;
+						}
+        				ws.send("notice:정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
         			}
         			else {
         				clearInterval(waitingID);
@@ -424,10 +430,9 @@
         	}
 	        setTimeout(() => {
 				$("#question").text("");
-				paintCtx.clearRect(0, 0, canvas.width, canvas.height);
 	    		time = 90;
 	    		rcmndCnt = 0;
-	        	fillColor('#f4f5ed', 'black');
+// 	        	fillColor('#f4f5ed', 'black');
 	        	// 추천수
 				$("#funny").off('click');
 				$("#funny").on('click', funny);
@@ -445,7 +450,7 @@
 		    			ws.send("next");
 					}, 100);
 		    		setTimeout(() => {
-		    			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
+		    			fillColor('#f4f5ed', 'black');
 					}, 500);
 	    		}
 			}, 8000);
@@ -526,7 +531,6 @@
     			success: function (data) {
 //     				console.log(data);
    					ws.send(data);
-   					fillColor('#f4f5ed', 'black');
     			},
     			error: function (e) {
     				console.log("갤러리업로드 에러발생: "+e);
