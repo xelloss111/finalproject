@@ -540,7 +540,9 @@ $(document).on('click', '.updtankBtn', function(){
 		});
 /* 동영상 관리 */
 $(document).on("click",".delVideoBtn", function(){
-	 
+	//삭제 후 처리를 위한 this 기억해놓기
+	var targetBtn = $(this); 
+	
     // 저장소 정보 가져오기
     var videoNo = $(this).parent().prev().children('.hdnVideoNo').val();
     
@@ -551,8 +553,10 @@ $(document).on("click",".delVideoBtn", function(){
     console.log("클릭한 tankID :"+  selectTankID);
     
     // 담아서 뿌려줄 HTML
-    var videoDelHtml ='';
 
+    //video영역
+    var videoDelHtml ='';
+	
     $.ajax({
     	type: "POST",
 		data: {"id":sessionId,
@@ -568,6 +572,9 @@ $(document).on("click",".delVideoBtn", function(){
 			});//swal 끝
 			
 			//삭제 처리 후 html 
+			
+			
+			// BOX 안의 동영상 리스트
 			for (var v = 0; v < resultdelbox.length; v++) {
 				var deleteImgList = resultdelbox[v].videoImg;
 				var deleteNoList = resultdelbox[v].videoNo;
@@ -591,10 +598,7 @@ $(document).on("click",".delVideoBtn", function(){
 					videoDelHtml += '</li> ';
 				}
 			}
-			
-			
-		
-		$(".seldelvideo").html(videoDelHtml);
+					targetBtn.parent().parent().html(videoDelHtml);
 			}//success
     	
     });
