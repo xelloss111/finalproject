@@ -40,6 +40,8 @@ public class GameChatHandler extends TextWebSocketHandler {
 	public static Map<String, Integer> rightAnswerCnt = new HashMap<>();
 	int cnt = 0;
 	
+	final int maxUsers = 3;
+	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// HttpSession 에서 사용자 정보 가져오기
@@ -52,9 +54,9 @@ public class GameChatHandler extends TextWebSocketHandler {
 		System.out.println(id + " 연결됨");
 		
 		// 접속한 유저가 5명일 때 못들어오게하기
-		if (users.size() > 4) {
-			if (users.get(4) != null) {
-				users.get(4).sendMessage(new TextMessage("room full"));
+		if (users.size() > maxUsers) {
+			if (users.get(maxUsers) != null) {
+				users.get(maxUsers).sendMessage(new TextMessage("room full"));
 			}
 		}
 		// 그렇지 않으면 참여시키기
@@ -68,7 +70,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			System.out.println("--------------------");
 		}
 		
-		if (chatList.size() == 4) {
+		if (chatList.size() == maxUsers) {
 			// uesr가 나갔다 다시 들어왔을 때 게임중일 때는 return시키기
 			if (questions != null) {
 				return;
@@ -226,7 +228,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		Map<String, Object> attrs = session.getAttributes();
 		String id = (String)attrs.get("id");
 		
-		if (users.size() > 4) {
+		if (users.size() > maxUsers) {
 		}
 		else {
 			for (WebSocketSession wss : users) {

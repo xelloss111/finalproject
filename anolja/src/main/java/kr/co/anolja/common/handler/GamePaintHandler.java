@@ -20,6 +20,8 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		connectedUsers = new ArrayList<WebSocketSession>();
 	}
 	
+	final int maxUsers = 3;
+	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		connectedUsers.add(session);
@@ -28,7 +30,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 			Game.setQuestionuser(GameChatHandler.chatList.get(0));
 		}
 		
-		if (connectedUsers.size() == 4) {
+		if (connectedUsers.size() == maxUsers) {
 			// 현재 출제자에게 그림 그릴 수 있는 권한 주기
 			for (int i = 0; i < connectedUsers.size(); i++) {
 				if (Game.getQuestionuser() == GameChatHandler.chatList.get(i)) {
