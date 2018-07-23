@@ -80,12 +80,12 @@
     		<input type="hidden" name="groupBlist" value="${board.groupBlist}" />
     		<input type="hidden" name="depth" value="${board.depth}" />
     		
-	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;""> <br><br>
+	    	<input type="text" class="form-control" id="exampleInputEmail1" name="title" 
+	    	placeholder="제목을 입력해주세요" style="width:523px; height:40px;""> <br><br>
             <div class="file_input" style="margin-bottom:30px;">
             <label>
                 File Attach
-                <input type="file" onchange="javascript:document.getElementById('file_route
-                ').value=this.value" multiple="multiple" name="files">
+                <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
             </label>
 
             <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">

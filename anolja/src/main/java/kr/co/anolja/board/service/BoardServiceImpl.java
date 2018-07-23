@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.anolja.repository.domain.Board;
@@ -38,8 +37,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board boardDetail(int no) throws Exception {
-		return boardMapper.boardDetail(no);
+	public Board boardDetail(int bNO) throws Exception {
+		System.out.println("찍히니 : " + bNO);
+		boardMapper.updateViewCnt(bNO);
+		return boardMapper.boardDetail(bNO);
 	}
 
 	@Override
@@ -100,10 +101,6 @@ public class BoardServiceImpl implements BoardService {
 		commentMapper.updateComment(comment);
 	}
 
-	@Override
-	public void updateViewCnt(int bNo) {
-		boardMapper.updateViewCnt(bNo);
-	}
 
 	@Override
 	public Map<String, Object> boardList(int pageNo) throws Exception{
@@ -113,7 +110,6 @@ public class BoardServiceImpl implements BoardService {
 		Map<String, Object> map = new HashMap<>();
 		List<Board> list = boardMapper.boardList((pageNo - 1) * 10);
 		int count = boardMapper.selectBoardCount();
-
 		map.put("list", list);
 		map.put("pageResult", new PageResult(pageNo, count));
 		return map;
@@ -148,6 +144,11 @@ public class BoardServiceImpl implements BoardService {
 				boardMapper.boardInsertFile(boardFile);
 			}
 		}
+	}
+
+	@Override
+	public List<Board> searchBoard(String board) {
+		return boardMapper.searchBoard(board);
 	}
 	
 
