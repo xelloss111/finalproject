@@ -19,4 +19,6 @@ public class MainServiceImpl implements MainService {
 		return mapper.boardList();
 	}
 
+	
+
 }

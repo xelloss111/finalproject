@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="kr.co.anolja.repository.mapper.MainMapper">
+  <!-- BOARD  -->
   	<resultMap type="board" id="mainBoardMap">
   		<result column="anonymous_id" property="anonymousId" />
 		<result column="bno" property="bNo" />
@@ -16,10 +17,15 @@
 		<result column="view_cnt" property="viewCnt" />
   	</resultMap>
   
+
+	
+	<!-- BOARD LIST -->
 	  <select id="boardList" resultMap="mainBoardMap">
-	  	select *
-		from tb_board
-		where depth = 0
+	  	select   *
+		from     tb_board
+		where    depth = 0
 		order by reg_date desc
 	  </select>
+	  
+
   </mapper>

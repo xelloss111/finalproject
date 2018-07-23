@@ -6,35 +6,25 @@
 	<div class="img_con">
 		<h2 class="sec_h2">명예의 전당</h2>
 		<div id="main_img">
-			<ul>
-				<li class="visual_0">
-					<a href="#">
-						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img.png">
-					</a>
-				</li>
-	
-				<li class="visual_1">
-					<a href="#">
-						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img2.png">
-					</a>
-				</li>
-	
-				<li class="visual_2">
-					<a href="#">
-						<img src="${pageContext.request.contextPath}/resources/images/catchmind/game_img3.png">
-					</a>
-				</li>
-	
+			<ul class="catchImgUl">
+				<c:forEach var="i" items="${list}" end='2' varStatus="status">
+						<li class="visual_${status.index}">
+							<a href="${pageContext.request.contextPath}/gallery/list">
+								<img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' >
+							</a>
+						</li>
+				</c:forEach>
 			</ul>
 	
 	
 	<!-- 화살표 영역 -->
 			<div id="prev">
-				<i class="far fa-arrow-alt-circle-left fa-2x"></i>
+				
+				<i class="fas fa-arrow-alt-circle-left fa-2x"></i>
 			</div><!-- prev -->
 	
 			<div id="next">
-				<i class="far fa-arrow-alt-circle-right fa-2x"></i>
+				<i class="fas fa-arrow-alt-circle-right fa-2x"></i>
 			</div><!-- next -->
 <!-- 화살표 영역 끝 -->
 
@@ -232,5 +222,29 @@ $(function(){
 	});
 
 });
+
+// $(document).ready(function(){
+// 	$.ajax({
+// 		url: "<c:url value='/gallery/listAjax'/>",
+// 		dataType: "JSON",
+// 		success: function (list) {
+// 			if( list.length <= 1 ){
+//                 isEnd = true;
+//                 return;
+//        		}
+// 			for (let i = 0; i < list.length; i++) {
+// 				var html = "<li>"+
+// 						   '	<a href="#t">'+
+// 						   '		<img src=\'<c:url value="/gallery/listView?gno='+list[i].gno+'"/>\''+
+// 						   '	   		 class="scroll" data-gno="'+list[i].gno+'" '+
+// 						   '	   		 data-id="'+list[i].id+'" data-answer="'+list[i].answer+'">'+
+// 						   '	</a>'+
+// 						   '</li>';
+// 				$(".catchImgUl").append(html);
+// 			}
+// 		}//success
+// 	});//ajax
+// });
+
 </script>		
 		

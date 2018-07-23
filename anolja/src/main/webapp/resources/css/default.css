@@ -1487,7 +1487,10 @@ height: 400	px;
 .fa-arrow-alt-circle-left,  .fa-arrow-alt-circle-right{
 	color: #fff;
 	}
-	
+.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+	margin-top: 155px;
+}
+
 #next {
 	position:absolute;
 	top : 35%;
