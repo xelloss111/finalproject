@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.anolja.repository.domain.Board;
+import kr.co.anolja.repository.domain.User;
 import kr.co.anolja.repository.mapper.MainMapper;
 
 @Service
@@ -17,6 +18,11 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<Board> boardList() {
 		return mapper.boardList();
+	}
+
+	@Override
+	public List<User> victoryList() {
+		return mapper.victoryList();
 	}
 
 	

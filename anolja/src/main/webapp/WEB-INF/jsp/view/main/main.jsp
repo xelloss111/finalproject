@@ -124,16 +124,38 @@
 		<section class="rankup_section">
 			<h2 class="title">씽크빅 마스터</h2>
 			<ul class="rankup_list">
-				<li><a href=""><i class="fas fa-crown" style="color: gold"></i> &nbsp; 펭귄 </a></li>
-				<li><a href=""><i class="fas fa-crown" style="color: silver"></i> &nbsp; 늑대 </a></li>
-				<li><a href=""><i class="fas fa-crown" style="color: #cd7f32"></i> &nbsp; 카멜레온 </a></li>
-				<li><a href=""><i class="fas fa-trophy" style="color: gold"></i> &nbsp; 돌고래</a></li>
-				<li><a href=""><i class="fas fa-trophy" style="color: silver"></i> &nbsp; 기린</a></li>
-				<li><a href=""><i class="fas fa-trophy" style="color: #cd7f32"></i> &nbsp; 팬더</a></li>
-				<li><a href=""><i class="fas fa-medal" style="color: gold"></i> &nbsp; 블롭피쉬 </a></li>
-				<li><a href=""><i class="fas fa-medal" style="color: silver"></i> &nbsp; 키위새</a></li>
-				<li><a href=""><i class="fas fa-medal" style="color: #cd7f32"></i> &nbsp; 고양이</a></li>
-				<li><a href=""><i class="fas fa-medal" style="color :#fff"></i> &nbsp; 해파리</a></li>
+				<c:forEach var="ranklist" items="${ranklist}" end ="9" varStatus="status2">
+					<c:if test ="${status2.index == 0}">
+						<li><i class="fas fa-crown" style="color: gold"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 1}">
+						<li><i class="fas fa-crown" style="color: silver"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 2}">
+						<li><i class="fas fa-crown" style="color: #cd7f32"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 3}">
+						<li><i class="fas fa-trophy" style="color: gold"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 4}">
+						<li><i class="fas fa-trophy" style="color: silver"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 5}">
+						<li><i class="fas fa-trophy" style="color: #cd7f32"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 6}">
+						<li><i class="fas fa-medal" style="color: gold"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 7}">
+						<li><i class="fas fa-medal" style="color: silver"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 8}">
+						<li><i class="fas fa-medal" style="color: #cd7f32"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+					<c:if test ="${status2.index == 9}">
+						<li><i class="fas fa-medal" style="color :#fff"></i> &nbsp;${ranklist.id}</li>
+					</c:if>
+				</c:forEach>
 			</ul>
 		</section>
 		
@@ -222,29 +244,6 @@ $(function(){
 	});
 
 });
-
-// $(document).ready(function(){
-// 	$.ajax({
-// 		url: "<c:url value='/gallery/listAjax'/>",
-// 		dataType: "JSON",
-// 		success: function (list) {
-// 			if( list.length <= 1 ){
-//                 isEnd = true;
-//                 return;
-//        		}
-// 			for (let i = 0; i < list.length; i++) {
-// 				var html = "<li>"+
-// 						   '	<a href="#t">'+
-// 						   '		<img src=\'<c:url value="/gallery/listView?gno='+list[i].gno+'"/>\''+
-// 						   '	   		 class="scroll" data-gno="'+list[i].gno+'" '+
-// 						   '	   		 data-id="'+list[i].id+'" data-answer="'+list[i].answer+'">'+
-// 						   '	</a>'+
-// 						   '</li>';
-// 				$(".catchImgUl").append(html);
-// 			}
-// 		}//success
-// 	});//ajax
-// });
 
 </script>		
 		

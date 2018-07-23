@@ -34,6 +34,9 @@ public class MainController {
 		//갤러리
 		model.addAttribute("list", gService.selectGallery());
 		
+		//랭크
+		model.addAttribute("ranklist", service.victoryList());
+		
 		return "main/main";
 	}
 
