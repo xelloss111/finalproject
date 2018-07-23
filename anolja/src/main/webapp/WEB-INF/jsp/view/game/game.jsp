@@ -136,8 +136,8 @@
     					location.href = "${pageContext.request.contextPath}/main";
     				});
     				clearInterval(timerId);
-    				location.href = "${pageContext.request.contextPath}/main";
-    				return;
+//     				location.href = "${pageContext.request.contextPath}/main";
+//     				return;
     			}
     			// 소켓연결이 되면 참여자 목록에 더하기
     			if (msg.includes('참여')) {
@@ -446,10 +446,8 @@
     		time = 90;
     		rcmndCnt = 0;
         	fillColor('#f4f5ed', 'black');
-//     		$("#funny").bind('click', funny);
-			$("#funny").click(function () {
-				funny();
-			});
+			$("#funny").off('click');
+			$("#funny").on('click', funny);
     		
     		if (current) {
         		paintWs.send("next");
@@ -465,7 +463,7 @@
 				}, 100);
 	    		setTimeout(() => {
 	    			paintCtx.clearRect(0, 0, canvas.width, canvas.height);
-				}, 100);
+				}, 500);
     		}
         }
         
@@ -502,12 +500,13 @@
    		});
     	
     	function funny() {
+    		console.log("----");
     		if (current) {
-    			$("#funny").unbind('click');
+    			$("#funny").off('click');
     			return;
     		}
     		$("#funny > span").text(++rcmndCnt);
-    		$("#funny").unbind('click');
+    		$("#funny").off('click');
     		ws.send("rcmndCnt:"+rcmndCnt);
     		
     		if (rcmndCnt == 3) {
