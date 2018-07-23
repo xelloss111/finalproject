@@ -830,13 +830,13 @@ background:url(../images/p_images/slider_01.jpg) center center no-repeat;
 
 /* 최근 글 영역, 인기 글 영역 CSS */
 .latest_post_section{
-order:4;
+order:6;
 background:#ffc40f;
 text-shadow:0px 1px 1px #eee;
 }
 
 .popular_post_section{
-order:5;
+order:4;
 text-shadow:0px 1px 1px #eee;
 }
 
@@ -1056,6 +1056,7 @@ margin-top:0.938rem;
 text-align:center;
 text-transform:uppercase;
 font-weight:bold;
+color: #fff;
 }
 
 .rankup_list li:first-child, .rankup_list li:nth-child(2){
@@ -1205,11 +1206,11 @@ z-index:10;
 
 /* 최근 글 영역, 인기 글 영역 CSS */
 .latest_post_section {
-order:5;
+order:6;
 }
 
 .popular_post_section{
-order:6;
+order:5;
 }
 
 .latest_post_section, .popular_post_section{
@@ -1528,16 +1529,31 @@ height: 400	px;
 	
 	
 	/* 최근 글 영역, 인기 글 영역 CSS */
-	.latest_post_section, .popular_post_section{
+.latest_post_section {
+display:flex;
+flex-direction:column;
+align-items:center;
+width:50%;
+/* 288px ÷ 960px */
+padding-left:0;
+padding-right:0;
+}
+.latest_post_section > h2 {
+	width: 100%;
+}
+.latest_post_section > ul {
+	width: 100%;
+	height: auto;
+}
+.popular_post_section{
 display:flex;
 flex-direction:column;
 align-items:center;
 width:25%;
 /* 288px ÷ 960px */
 padding-left:0;
-padding-right:0;
+padding-right:0;	
 }
-
 /* 갤러리 영역 CSS */
 .gallery_section{    
 order:3;
