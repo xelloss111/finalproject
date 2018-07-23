@@ -86,6 +86,9 @@
 		
 		var html="";
 		
+		/*로그인한 사람만 사용할 수 있도록 하기위한 세션 아이디*/
+		var sessionId = `<%=session.getAttribute("id")%>`;
+		
 		/*받은 쪽지함 내용물(태그) 출력 메소드<매개변수로 getnote의 출력결과가 와야한다>*/
 		function resultList(result){
 			html="<table class=\"w3-table-all w3-hoverable\">" + 
@@ -163,13 +166,19 @@
 		/* 받은 쪽지함 함수*/
 		function getRevList(getObject){
 			$(getObject).click(function(e) {
+				/*로그인 여부 확인 얼럿*/
+ 				if(sessionId == 'null'){
+ 					alert("로그인을  해주세요.");
+ 					return;
+ 				}
+				
 				//페이징 값 초기화
 				notePageNo = 0;
 				
 				e.preventDefault();
 				
 				var html = "";
-	<%-- var sessionId = `<%=session.getAttribute("id")%>`; --%>
+				
 				$.ajax({
 					url : "${pageContext.request.contextPath}/getnotelist",
 					type : "GET",
@@ -190,7 +199,7 @@
 			
 		}
 		
-		/*버튼에 리스트 출력 이벤트 거는 함수*/
+		/*버튼에 리스트 출력 이벤트 거는 함수 실행문*/
 		getRevList("#quick_right_menu > ul > li > a");
 		getRevList("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(2) > a");
         
