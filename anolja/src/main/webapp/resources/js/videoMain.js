@@ -11,7 +11,6 @@
 //});
 
 // 2. 동영상 저장을 위한 변수들
-sessionId = `<%=session.getAttribute("id")%>`;
 var tankName ='';
 var saveVideoImg='';
 var saveVideoTitle ='';

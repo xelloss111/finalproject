@@ -4,7 +4,7 @@
 <!-- video css -->
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/youtube.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 <section class="content_section">
 	<div class="content_row_1">
@@ -146,30 +146,29 @@
 	        <p>VIDEO BOX 이름을 변경/삭제하거나 BOX에 모아둔 동영상을 삭제 하실 수 있어요!</p>
 	        
 	        	<div class="modal2_body">
-								<div id="accordion">
-								<!-- 내 동영상 box -->
+									<div id="accordion">
 	        					<c:forEach var="tankList" items="${tankList}">
-									<div class="boxListDiv"><!-- 동영상 box 리스트 반복 만들어주기 -->
-										<ul class='togui'> 
-				        					<li class="folderTankImg">
-				        						<i class="far fa-folder"></i>
-				        						<i class="far fa-folder-open"></i>
-				        					</li>
-				        					<li class="folderTankTitle">
-				        						<input type="text" value="${tankList.tankName}" class="folderInput" disabled="disabled" maxlength="10"> 
-				        						<input type="hidden" value="${tankList.tankId}" class="hdnTankId"> 
-				        					</li>
-				        					<li	class="folderBtn">
-				        						<input type="button" value="변경"  class="updtankBtn">
-				        						<input type="button" value="삭제"  class="deltankBtn">
-				        					</li>
-		        						</ul>
-									</div>
-									<!-- 각 박스 안의 동영상들  -->
-									<div id="videoListHide">
-										<!-- 클릭한 저장소에 있는 동영상 리스트  -->
+									<!-- 내 동영상 box -->
+										<div class="boxListDiv"><!-- 동영상 box 리스트 반복 만들어주기 -->
+											<ul class='togui'> 
+				        						<li class="folderTankImg">
+				        							<i class="far fa-folder"></i>
+				        							<i class="far fa-folder-open"></i>
+				        						</li>
+				        						<li class="folderTankTitle">
+				        							<input type="text" value="${tankList.tankName}" class="folderInput" disabled="disabled" maxlength="10"> 
+				        							<input type="hidden" value="${tankList.tankId}" class="hdnTankId"> 
+				        						</li>
+				        						<li	class="folderBtn">
+				        							<input type="button" value="변경"  class="updtankBtn">
+				        							<input type="button" value="삭제"  class="deltankBtn">
+				        						</li>
+		        							</ul>
+										</div>
+										<!-- 각 박스 안의 동영상들  -->
+										<div id="videoListHide">
+											<!-- 클릭한 저장소에 있는 동영상 리스트  -->
 											<ul class="seldelvideo"> 
-											
 												<c:forEach var="delList" items="${delList}">
 													<c:if test="${delList.tankId == tankList.tankId}">
 							        					<li class="videoImg">
@@ -186,10 +185,9 @@
 							        				</c:if>
 					        					</c:forEach>
 			        						</ul>
-									</div><!-- videoListHide EDN -->
+										</div><!-- videoListHide EDN -->
 			        			</c:forEach>
-			        			
-							</div><!-- accordionEND -->
+									</div><!-- accordionEND -->
 	        	</div><!-- modal2_body -->
 	        </div>
 	        <div class="modal-footer">
@@ -224,7 +222,7 @@ $(function() {
 			json.tankId = "${delList.tankId}";
 			json.tankName = "${delList.tankName}";
 			json.videoNo = "${delList.videoNo}";
-			json.videoTitle = "${delList.videoTitle}";
+			json.videoTitle = "`${delList.videoTitle}`";
 			json.videoImg = "${delList.videoImg}";
 			resultdelbox.push(json);
 		</c:forEach>
@@ -240,6 +238,7 @@ $("#submit").click(function () {
 	var newTankOptionHtml = '';
 	var selectBoxResultHtml='';
 	var modal2FolderHtml ='';
+	var videoDelHtml ='';
 	
 	saveTankId = option.value;
 	saveTankName = option.innerText;
@@ -267,8 +266,7 @@ $("#submit").click(function () {
 			url: "videoSave",
 			dataType:"json",
 			success: function (result) {
-// 				console.dir(result);
-// 				console.dir(result.length);
+
 // 1-3.	저장완료 얼럿 후 모달창 닫기
 				swal({
 					  text: saveTankName + " VIDEO BOX에 저장 완료",
@@ -280,7 +278,8 @@ $("#submit").click(function () {
 					});
 					
 				selectBoxResultHtml += '	<option value="tank0">  MY VIDEO BOX </option> ';
-
+				// select 박스 추가해주기
+				$("#myTank_list").html(selectBoxResultHtml);
 				
 				for (var t = 0; t < result.length; t++) {
 
@@ -288,38 +287,72 @@ $("#submit").click(function () {
 						var tankList_tankId = result[t].tankId;
 						var tankList_tankName = result[t].tankName;
 						
-						selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
-						// select 박스 끝
-
         				// 내 VIDEO BOX
-        				modal2FolderHtml += '<div class="boxListDiv">';
-        				modal2FolderHtml += '	<ul class="togui">'; 
-        				modal2FolderHtml += '		<li class="folderTankImg">';
-        				modal2FolderHtml += '			<i class="far fa-folder"></i>';
-        				modal2FolderHtml += '			<i class="far fa-folder-open"></i>';
-        				modal2FolderHtml += '		</li>';		
-        				modal2FolderHtml += '		<li class="folderTankTitle">';		
-        				modal2FolderHtml += '			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled" maxlength="10"> ';	
-        				modal2FolderHtml += '			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId"> ';	
-        				modal2FolderHtml += '		</li>';		
-        				modal2FolderHtml += '		<li class="folderBtn">';		
-        				modal2FolderHtml += '			<input type="button" value="변경"  class="updtankBtn">';		
-        				modal2FolderHtml += '			<input type="button" value="삭제"  class="deltankBtn">';		
-        				modal2FolderHtml += '		</li>';		
-        				modal2FolderHtml += '	</ul>';						 
-        				modal2FolderHtml += '</div>';						 
-				};
+        				modal2FolderHtml += '	<div class="boxListDiv">';
+        				modal2FolderHtml += '		<ul class="togui">'; 
+        				modal2FolderHtml += '			<li class="folderTankImg">';
+        				modal2FolderHtml += '				<i class="far fa-folder"></i>';
+        				modal2FolderHtml += '				<i class="far fa-folder-open"></i>';
+        				modal2FolderHtml += '			</li>';		
+        				modal2FolderHtml += '			<li class="folderTankTitle">';		
+        				modal2FolderHtml += '				<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled" maxlength="10"> ';	
+        				modal2FolderHtml += '				<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId"> ';	
+        				modal2FolderHtml += '			</li>';		
+        				modal2FolderHtml += '			<li class="folderBtn">';		
+        				modal2FolderHtml += '				<input type="button" value="변경"  class="updtankBtn">';		
+        				modal2FolderHtml += '				<input type="button" value="삭제"  class="deltankBtn">';		
+        				modal2FolderHtml += '			</li>';		
+        				modal2FolderHtml += '		</ul>';						 
+        				modal2FolderHtml += '	</div>';
+
+        				modal2FolderHtml += '	<div id="videoListHide">';
+					for (var v = 0; v < resultdelbox.length; v++) {
+						// BOX 안의 동영상 리스트 
 						
-				// select 박스 추가해주기
+						var deleteImgList = resultdelbox[v].videoImg;
+						var deleteNoList = resultdelbox[v].videoNo;
+						var deleteTitleList = resultdelbox[v].videoTitle;
+						var deleteTankIdList = resultdelbox[v].tankId;
+						
+// 						if(deleteTankIdList == selectTankID) {
+							
+							
+// 						}
+						
+							modal2FolderHtml += '		<ul class="seldelvideo">';
+							modal2FolderHtml += '			<li class="videoImg">';
+							modal2FolderHtml += '				<img src="'+ deleteImgList +'" class="hdnImg"/>';
+							modal2FolderHtml += '			</li>';
+							modal2FolderHtml += '			<li class="selVideoTitle">';
+							modal2FolderHtml += '				<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
+							modal2FolderHtml += '				<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
+							modal2FolderHtml += '				<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
+							modal2FolderHtml += '			</li> ';
+							modal2FolderHtml += '			<li class="selvideoBtnArea"> ';
+							modal2FolderHtml += '				<input type="button" value="삭제"  class="delVideoBtn"> ';
+							modal2FolderHtml += '			</li> ';
+							modal2FolderHtml += '		</ul> ';
+							
+	
+						};//동영상 추가 for
+						
+						
+						modal2FolderHtml += '	</div> ';
+        				//select 추가
+        				selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+        				
+				};//폴더 for
+				
+				//저장소의 동영상 리스트
+				
 				$("#myTank_list").html(selectBoxResultHtml);
 				$("#accordion").html(modal2FolderHtml);
 				
-				
-				//각 BOX에 동영상 담아주기
-				
-			}
-				   
+				//아코디언 리프레쉬
+				$('#accordion').accordion("refresh");  
+			}//success
 		});
+				   
 });
 
 // 2. 새로운 저장소 추가
@@ -510,25 +543,26 @@ $(document).on('click', '.updtankBtn', function(){
 								var tankList_tankId = result[t].tankId;
 								var tankList_tankName = result[t].tankName;
 								
-								selectBoxResultHtml3 += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+								selectBoxResultHtml3 += '	<option value="' + tankList_tankId+ '">' +tankList_tankName+ '</option> ';
 								// select 박스 끝
 								
 								// modal2 folder
-			        			modal2FolderHtml3 += '<li class="folderNoUi">';
-			        			modal2FolderHtml3 += '	<ul>';
-			        			modal2FolderHtml3 +=	'		<li class="folderTankImg">';
-			        			modal2FolderHtml3 +=	'			<i class="far fa-folder"></i>';
-			        			modal2FolderHtml3 +=	'		</li>';
-			        			modal2FolderHtml3 +=	'		<li class="folderTankTitle">';
-			        			modal2FolderHtml3 +=	'			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled">';
-			        			modal2FolderHtml3 +=	'			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId">';
-		        				modal2FolderHtml3 +=	'		</li>';
-		        				modal2FolderHtml3 +=	'		<li	class="folderBtn">';
-		        				modal2FolderHtml3 +=	'			<input type="button" value="변경" class="updtankBtn">';
-		        				modal2FolderHtml3 +=	'			<input type="button" value="삭제" class="deltankBtn">';
-		        				modal2FolderHtml3 +=	'		</li>';
-		        				modal2FolderHtml3 += '	</ul>';
-		        				modal2FolderHtml3 += '</li>';
+		        				modal2FolderHtml3 += '<div class="boxListDiv">';
+		        				modal2FolderHtml3 += '	<ul class="togui">'; 
+		        				modal2FolderHtml3 += '		<li class="folderTankImg">';
+		        				modal2FolderHtml3 += '			<i class="far fa-folder"></i>';
+		        				modal2FolderHtml3 += '			<i class="far fa-folder-open"></i>';
+		        				modal2FolderHtml3 += '		</li>';		
+		        				modal2FolderHtml3 += '		<li class="folderTankTitle">';		
+		        				modal2FolderHtml3 += '			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled" maxlength="10"> ';	
+		        				modal2FolderHtml3 += '			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId"> ';	
+		        				modal2FolderHtml3 += '		</li>';		
+		        				modal2FolderHtml3 += '		<li class="folderBtn">';		
+		        				modal2FolderHtml3 += '			<input type="button" value="변경"  class="updtankBtn">';		
+		        				modal2FolderHtml3 += '			<input type="button" value="삭제"  class="deltankBtn">';		
+		        				modal2FolderHtml3 += '		</li>';		
+		        				modal2FolderHtml3 += '	</ul>';						 
+		        				modal2FolderHtml3 += '</div>';	
 						};
 								
 						// select 박스 추가해주기
@@ -617,6 +651,6 @@ $(document).on("click",".delVideoBtn", function(){
       collapsible: true
     });
   });
-  
+
 
 </script>

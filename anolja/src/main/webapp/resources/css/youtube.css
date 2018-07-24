@@ -812,6 +812,9 @@ hr {
 .newTankBtn:hover {
 	background: #e65d5d;
 }
+.newTankBtn:focus {
+	background: #e65d5d;
+}
 /* video page용 btn */
 .btn {
 	background: #428e9e;
@@ -819,6 +822,9 @@ hr {
 	box-shadow: 0 3px 0 0 #eee;
 }
 #submit:hover {
+	background: #428e9e;
+}
+#submit:focus {
 	background: #428e9e;
 }
 .btn-default {
@@ -916,6 +922,9 @@ hr {
 .updtankBtn:hover , .deltankBtn:hover {
 	background: #e65d5d;
 }
+.updtankBtn:focus , .deltankBtn:focus {
+	background: #e65d5d;
+}
 .secBtn {
 	width: 30%;
 	height: 30px;
@@ -928,6 +937,10 @@ hr {
 	cursor: pointer;
 }
 .secBtn:hover {
+	border-color:#428e9e;
+	background: #428e9e;
+}
+.secBtn:focus {
 	border-color:#428e9e;
 	background: #428e9e;
 }
@@ -986,6 +999,9 @@ hr {
 	border: none;
 }
 .delVideoBtn:hover {
+	background: #609ec7;
+}
+.delVideoBtn:focus {
 	background: #609ec7;
 }
 .ui-accordion-header {

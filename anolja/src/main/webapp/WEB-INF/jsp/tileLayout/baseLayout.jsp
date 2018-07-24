@@ -26,6 +26,7 @@
 	src="${pageContext.request.contextPath}/resources/js/flat.min.js"></script>
 <script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/demo.js'></script>
 <script type='text/javascript' src='${pageContext.request.contextPath}/resources/js/jquery.particleground.js'></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
