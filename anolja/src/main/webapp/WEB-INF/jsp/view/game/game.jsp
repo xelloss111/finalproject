@@ -23,6 +23,7 @@
                 <canvas id="myCanvas" width="520" height="430"></canvas>
                 <a id="funny" href="#t" class="btn yellow mini">추천 <span>0</span></a>
                 <span id="time"></span>
+                <div id="rcmndDiv"></div>
             </div>
             <div id="colorArea">
                 <a href='#t' class='color' data-color='#fa5a5a' id='red'><img src="${pageContext.request.contextPath}/resources/images/game/red.png"></a>
@@ -74,6 +75,8 @@
 
     	// 문제출제영역 숨기기
     	$("#pencilImg").hide();
+    	// 추천유도 메세지 숨기기
+    	$("#rcmndDiv").hide();
     
     	// 웹소켓을 이용한 채팅하기
     	var ws = null;
@@ -156,6 +159,13 @@
     			
     			$("#chat").append('<div class="bubbleNotice">'+ msg +'</div>');
     			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+    		}
+    		else if (evt.data.includes('그림이 마음에')) {
+    			$("#rcmndDiv").show();
+    			$("#rcmndDiv").text(evt.data);
+    		}
+    		else if (evt.data.includes('hide')) {
+    			$("#rcmndDiv").hide();
     		}
     		else if (evt.data.startsWith('현재문제:')) {
     			currentQue = evt.data.substring('현재문제:'.length);
@@ -421,14 +431,17 @@
 	        				clearInterval(waitingID);
 							return;
 						}
-        				ws.send("notice:정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
+        				ws.send("정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
         			}
         			else {
         				clearInterval(waitingID);
+        				$("#rcmndDiv").hide();
         			}
 				}, 1000);
         	}
 	        setTimeout(() => {
+	        	$("#rcmndDiv").hide();
+	        	ws.send("hide");
 				$("#question").text("");
 	    		time = 90;
 	    		rcmndCnt = 0;
