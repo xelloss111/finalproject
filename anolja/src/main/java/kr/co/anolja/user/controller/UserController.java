@@ -18,13 +18,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.anolja.common.CurrentUser;
 import kr.co.anolja.repository.domain.User;
 import kr.co.anolja.user.service.UserService;
 
 @Controller
 @RequestMapping("/user/*")
-@SessionAttributes({"id", "currentUser"})
+@SessionAttributes("id")
 public class UserController {
 
 	@Autowired
