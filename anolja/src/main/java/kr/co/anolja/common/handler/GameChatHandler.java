@@ -133,7 +133,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		else if (message.getPayload().equals("Time Over")) {
 			session.sendMessage(new TextMessage("notice:"+message.getPayload()));
 		}
-		else if (message.getPayload().contains("그림이 마음에")) {
+		else if (message.getPayload().contains("그림이 마음에") || message.getPayload().equals("hide")) {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage(message.getPayload()));
 			}

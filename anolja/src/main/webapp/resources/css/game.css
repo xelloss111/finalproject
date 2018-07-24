@@ -1,3 +1,32 @@
+#rcmndDiv {
+    position: absolute;
+    left: 105px;
+    top: 379px;
+    width: 210px;
+    height: auto;
+    padding: 10px;
+    background: #2ecc71;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Nanum Pen Script', serif;
+}
+#rcmndDiv:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 9px 12px 9px 0;
+    border-color: transparent #2ecc71;
+    display: block;
+    width: 0;
+    z-index: 1;
+    left: -12px;
+    top: 75px;
+}
+
 .bubbleNotice {
     margin-bottom: 10px;
     position: relative;
