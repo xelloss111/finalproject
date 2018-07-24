@@ -255,6 +255,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			questions = null;
 			questionNo = 0;
 			userNo = 0;
+			cnt = 0;
 			Game.setQuestionNo(null);
 			Game.setQuestionuser(null);
 		}
