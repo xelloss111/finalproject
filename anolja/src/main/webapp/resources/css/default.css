@@ -81,6 +81,10 @@ i#backProfile {
 
 /* 유저 영역용 CSS */
 
+#signup, #login, #mypage, #logout {
+	display: none;
+}
+
 .mypage_section > .photoInput {
 	display: none;
 }

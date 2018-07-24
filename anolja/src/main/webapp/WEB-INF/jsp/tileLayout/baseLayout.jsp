@@ -36,7 +36,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
-
 <script type="text/javascript">
 	$(function(){// jQuery 시작
 		
@@ -55,17 +54,18 @@
 		});
 
 	}); //jQuery 종결 
+	
+	var sessionId = `<%= session.getAttribute("id")%>`;
 	</script>
 </head>
 <body>
 	<!-- 로딩 이미지 -->
 	<div class="loading" id='display-none'><img class="loading-image" src="${pageContext.request.contextPath}/resources/images/user/working.gif" alt="Loading..." /></div>
 	 
-	<!-- Large modal -->
-	<!-- Button trigger modal -->
+	<!-- MyPage 모달 오픈을 위한 버튼 트리거 -->
 	<button type="button" id="captureBtn" data-toggle="modal" data-target="#mmm"></button>
 	
-	<!-- Modal -->
+	<!-- MyPage 영역 -->
 	<div class="modal fade bs-example-modal-lg" id="mmm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
@@ -83,12 +83,10 @@
 		</div>
       </div>
     </div>
+    
+    
+    
  
- 	<!-- 회원 영역 -->
-<!--  	<section class="signup_section"></section> -->
-<!-- 	<section class="login_section"></section> -->
-<!-- 	<section class="mypage_section"></section> -->
-	 
 	<div id="quick_wrap">
 		<div id="quick_right_menu">
 			<span></span>
@@ -104,8 +102,68 @@
 		<div id="particles"></div>
 		<tiles:insertAttribute name="header" />
 		<!-- 회원 영역 -->
-		<section class="signup_section"></section>
-		<section class="login_section"></section>
+		<section class="signup_section">
+			<img class="glass" src="${pageContext.request.contextPath}/resources/images/user/mark_icon_title.png" alt="" style="float:left; margin-right: 100px; padding-left:17%; padding-top:50px;">
+			<form id="sForm">
+				<div id="writeArea" style="float:left; margin-top:40px; margin-right:20px;">
+					<table id="writeTable">
+					<tr>
+						<td style="width: 200px; vertical-align=middle;" >
+							<input class="userlib" type="text" name="id" placeholder="id 입력"/>
+						</td>
+						<td style="width: 100px;"><span id="chkId"></span></td>
+					</tr>
+					<tr>
+						<td>
+							<input class="userlib" type="password" name="pass" placeholder="비밀번호 입력" />
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<input class="userlib" type="password" id="passCheck" placeholder="비밀번호 체크" />
+						</td>
+						<td><span id="chkPass"></span></td>
+					</tr>
+					<tr>
+						<td>
+							<input class="userlib" type="email" name="email" placeholder="Example@Example.com" />
+						</td>
+						<td><span id="chkEmail"></span></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+		<div id="btnArea" style="float:left; margin-left: 40px; margin-top:105px;">
+	    	<button class="btn" id="registBtn"><span class="button__inner">가입</span></button>
+		</div>
+		</section>
+		<section class="login_section">
+			<img class="glass" src="${pageContext.request.contextPath}/resources/images/user/mark_icon_login.png" alt="" style="float:left; margin-right: 100px; padding-left:17%; padding-top:50px;">
+			<form id="lForm">
+				<div id="writeArea" style="float:left; margin-top:80px; margin-right:20px;">
+					<table id="writeTable">
+						<tr>
+							<td style="width: 200px; vertical-align=middle;" >
+								<input class="userlib" type="text" name="id" placeholder="id 입력"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input class="userlib" type="password" name="pass" placeholder="비밀번호 입력" />
+							</td>
+						</tr>
+					</table>
+				</div>
+			</form>
+			<div id="loginArea" style="float:left; margin-left: 40px; margin-top:100px;">
+				<button class="btn2" id="loginBtn"><span class="button__inner">로그인</span></button>
+			</div>
+			<div id="findArea" style="float:left; margin-left: 40px; margin-top:100px;">
+				<button class="btn" id="findIdBtn"><span class="button__inner">ID 찾기</span></button>
+				<button class="btn" id="findPassBtn"><span class="button__inner">PW 찾기</span></button>
+			</div>
+		</section>
 		<section class="mypage_section"></section>
 		<tiles:insertAttribute name="content" />
 		<tiles:insertAttribute name="footer" />
@@ -119,15 +177,14 @@
 		$.getScript(ctx + "/resources/js/info_section.js", function() {});
 		$.getScript(ctx + "/resources/js/signup.js", function() {});
 		$.getScript(ctx + "/resources/js/loginout.js", function() {});
-// 		$.getScript(ctx + "/resources/js/capture/ccv.js", function() {});
-// 		$.getScript(ctx + "/resources/js/capture/face.js", function() {});
-// 		$.getScript(ctx + "/resources/js/capture/scripts.js", function() {});
 		$.getScript(ctx + "/resources/js/mypage.js", function() {});
 	});
 	
 
-	var sessionId = `<%= session.getAttribute("id")%>`;
+
+	var currentUser = `<%= session.getAttribute("currentUser") %>`;
 	console.log("세션 ID : ", sessionId);
+	console.log("현재 접속자 수 : ", currentUser);
 	var msg = `${msg}`;
 	if (msg) {
 		swal({
@@ -143,8 +200,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/capture/scripts.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/capture/stackblur.js"></script>
 
-<%-- <script src="${pageContext.request.contextPath}/resources/js/info_section.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/resources/js/signup.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/resources/js/loginout.js"></script> --%>
 </body>
 </html>

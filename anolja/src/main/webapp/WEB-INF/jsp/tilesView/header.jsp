@@ -14,6 +14,18 @@
 		
 		<section class="info_section">
 			<ul class="info_list">
+				<li id="signup">
+					<img class="signupicon" src="${pageContext.request.contextPath}/resources/images/user/signup.png" alt="회원가입" title="회원가입">
+				</li>
+				<li id="login">
+					<img class="loginicon" src="${pageContext.request.contextPath}/resources/images/user/login.png" alt="로그인" title="로그인">
+				</li>
+				<li id="mypage"><span id="mSpan">' + sessionId + '님 접속중</span>
+					<img class="mypageicon" src="${pageContext.request.contextPath}/resources/images/user/mypage.png" alt="내 정보" title="내 정보">
+				</li>
+				<li id="logout">
+					<img class="logouticon" src="${pageContext.request.contextPath}/resources/images/user/logout.png" alt="로그아웃" title="로그아웃">
+				</li>
 			</ul>
 		</section>
 
