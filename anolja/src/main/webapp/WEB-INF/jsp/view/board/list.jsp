@@ -144,6 +144,10 @@
 </section>
 <script>
 	$("#ps").click(function () {
+		if($("#searchBar").val() == "") {
+			swal("검색어를 입력해주세요");
+			return false;
+		}
 		$(".board_table").hide();
 		$.ajax({
 			url: "<c:url value='/board/search'/>",
@@ -187,6 +191,4 @@
 	function goPage(pageNo) {
 		location.href = "list?pageNo=" + pageNo;
 	}
-	
-	
 </script>

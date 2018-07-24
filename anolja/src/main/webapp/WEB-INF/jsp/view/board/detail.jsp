@@ -138,7 +138,8 @@
 								<ul>
 									<li style="margin-left:773px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
 									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li>
-									<li><a id="kkkk" style="background:#d82f2f;" href="delete?bNo=${board.bNo}" role="button">삭제</a></li>
+<%-- 									<li><a onclick='return del();' id="kkkk" style="background:#d82f2f;" href="delete?bNo=${board.bNo}" role="button">삭제</a></li> --%>
+									<li><a id="kkkk" style="background:#d82f2f;" role="button">삭제</a></li>
 									<li><a style="background:#0faeea;" href="list">목록</a></li>
 								</ul>
 						</div>
@@ -146,7 +147,7 @@
 					<c:otherwise>
 						<div class="write_box">
 								<ul>
-									<li style="margin-left:920px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
+									<li style="margin-left:950px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
 									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li>
 								</ul>
 						</div>
@@ -320,7 +321,7 @@
 // 		      icon: "success",
 // 		    });
 // 		  } else {
-// 			return false;
+// 			return 'false';
 // 		  }
 // 		});
 		
@@ -335,6 +336,7 @@
 // 				  timer: 2500
 // 				})
 // 		}
+	}
 
 $("#kkkk").click(function () {
 	swal({
@@ -347,6 +349,8 @@ $("#kkkk").click(function () {
 		  if (willDelete) {
 		    swal('삭제 되었습니다.', {
 		      icon: "success",
+		    }).then((suc) => {
+		    	location.href = `delete?bNo=${board.bNo}`;
 		    });
 		  } else {
 			return false;
