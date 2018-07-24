@@ -425,9 +425,10 @@ caption {
   opacity: .2;
 }
 
-.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+.faacl, .faacr {
 	margin-top: 245px;
 }
+
 
 
 .carousel-control.left {

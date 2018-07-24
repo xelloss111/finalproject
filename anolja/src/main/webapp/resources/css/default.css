@@ -826,7 +826,10 @@ background:url(../images/p_images/slider_01.jpg) center center no-repeat;
 	margin: 20px 10%;
 
 }
-
+.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+	margin-top: 200px;
+	z-index: 999999;
+}
 
 /* 최근 글 영역, 인기 글 영역 CSS */
 .latest_post_section{
@@ -1206,11 +1209,11 @@ z-index:10;
 
 /* 최근 글 영역, 인기 글 영역 CSS */
 .latest_post_section {
-order:6;
+order:5;
 }
 
 .popular_post_section{
-order:5;
+order:6;
 }
 
 .latest_post_section, .popular_post_section{

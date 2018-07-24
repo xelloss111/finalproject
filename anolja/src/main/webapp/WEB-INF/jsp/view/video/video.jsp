@@ -290,29 +290,33 @@ $("#submit").click(function () {
 						
 						selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
 						// select 박스 끝
-						
-						// modal2 folder
-	        			modal2FolderHtml += '<li class="folderNoUi">';
-	        			modal2FolderHtml += '	<ul>';
-	        			modal2FolderHtml +=	'		<li class="folderTankImg">';
-	        			modal2FolderHtml +=	'			<i class="far fa-folder"></i>';
-	        			modal2FolderHtml +=	'		</li>';
-	        			modal2FolderHtml +=	'		<li class="folderTankTitle">';
-	        			modal2FolderHtml +=	'			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled">';
-	        			modal2FolderHtml +=	'			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId">';
-        				modal2FolderHtml +=	'		</li>';
-        				modal2FolderHtml +=	'		<li	class="folderBtn">';
-        				modal2FolderHtml +=	'			<input type="button" value="변경" class="updtankBtn">';
-        				modal2FolderHtml +=	'			<input type="button" value="삭제" class="deltankBtn">';
-        				modal2FolderHtml +=	'		</li>';
-        				modal2FolderHtml += '	</ul>';
-        				modal2FolderHtml += '</li>';
+
+        				// 내 VIDEO BOX
+        				modal2FolderHtml += '<div class="boxListDiv">';
+        				modal2FolderHtml += '	<ul class="togui">'; 
+        				modal2FolderHtml += '		<li class="folderTankImg">';
+        				modal2FolderHtml += '			<i class="far fa-folder"></i>';
+        				modal2FolderHtml += '			<i class="far fa-folder-open"></i>';
+        				modal2FolderHtml += '		</li>';		
+        				modal2FolderHtml += '		<li class="folderTankTitle">';		
+        				modal2FolderHtml += '			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled" maxlength="10"> ';	
+        				modal2FolderHtml += '			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId"> ';	
+        				modal2FolderHtml += '		</li>';		
+        				modal2FolderHtml += '		<li class="folderBtn">';		
+        				modal2FolderHtml += '			<input type="button" value="변경"  class="updtankBtn">';		
+        				modal2FolderHtml += '			<input type="button" value="삭제"  class="deltankBtn">';		
+        				modal2FolderHtml += '		</li>';		
+        				modal2FolderHtml += '	</ul>';						 
+        				modal2FolderHtml += '</div>';						 
 				};
 						
 				// select 박스 추가해주기
 				$("#myTank_list").html(selectBoxResultHtml);
-				$(".modal2FolderStart").html(modal2FolderHtml);
-			
+				$("#accordion").html(modal2FolderHtml);
+				
+				
+				//각 BOX에 동영상 담아주기
+				
 			}
 				   
 		});
@@ -438,26 +442,28 @@ $(document).on('click', '.updtankBtn', function(){
 								// select 박스 끝
 								
 								// modal2 folder
-			        			modal2FolderHtml2 += '<li class="folderNoUi">';
-			        			modal2FolderHtml2 += '	<ul>';
-			        			modal2FolderHtml2 +=	'		<li class="folderTankImg">';
-			        			modal2FolderHtml2 +=	'			<i class="far fa-folder"></i>';
-			        			modal2FolderHtml2 +=	'		</li>';
-			        			modal2FolderHtml2 +=	'		<li class="folderTankTitle">';
-			        			modal2FolderHtml2 +=	'			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled">';
-			        			modal2FolderHtml2 +=	'			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId">';
-		        				modal2FolderHtml2 +=	'		</li>';
-		        				modal2FolderHtml2 +=	'		<li	class="folderBtn">';
-		        				modal2FolderHtml2 +=	'			<input type="button" value="변경" class="updtankBtn">';
-		        				modal2FolderHtml2 +=	'			<input type="button" value="삭제" class="deltankBtn">';
-		        				modal2FolderHtml2 +=	'		</li>';
-		        				modal2FolderHtml2 += '	</ul>';
-		        				modal2FolderHtml2 += '</li>';
+		        				// 내 VIDEO BOX
+		        				modal2FolderHtml2 += '<div class="boxListDiv">';
+		        				modal2FolderHtml2 += '	<ul class="togui">'; 
+		        				modal2FolderHtml2 += '		<li class="folderTankImg">';
+		        				modal2FolderHtml2 += '			<i class="far fa-folder"></i>';
+		        				modal2FolderHtml2 += '			<i class="far fa-folder-open"></i>';
+		        				modal2FolderHtml2 += '		</li>';		
+		        				modal2FolderHtml2 += '		<li class="folderTankTitle">';		
+		        				modal2FolderHtml2 += '			<input type="text" value="'+tankList_tankName+'" class="folderInput" disabled="disabled" maxlength="10"> ';	
+		        				modal2FolderHtml2 += '			<input type="hidden" value="'+tankList_tankId+'" class="hdnTankId"> ';	
+		        				modal2FolderHtml2 += '		</li>';		
+		        				modal2FolderHtml2 += '		<li class="folderBtn">';		
+		        				modal2FolderHtml2 += '			<input type="button" value="변경"  class="updtankBtn">';		
+		        				modal2FolderHtml2 += '			<input type="button" value="삭제"  class="deltankBtn">';		
+		        				modal2FolderHtml2 += '		</li>';		
+		        				modal2FolderHtml2 += '	</ul>';						 
+		        				modal2FolderHtml2 += '</div>';	
 						};
 								
 						// select 박스 추가해주기
 						$("#myTank_list").html(selectBoxResultHtml2);
-						$(".modal2FolderStart").html(modal2FolderHtml2);
+						$("#accordion").html(modal2FolderHtml2);
 						
 						//재로딩 끝
 						return;
@@ -527,7 +533,7 @@ $(document).on('click', '.updtankBtn', function(){
 								
 						// select 박스 추가해주기
 						$("#myTank_list").html(selectBoxResultHtml3);
-						$(".modal2FolderStart").html(modal2FolderHtml3);
+						$("#accordion").html(modal2FolderHtml3);
 						
 						//재로딩 끝
 						}
