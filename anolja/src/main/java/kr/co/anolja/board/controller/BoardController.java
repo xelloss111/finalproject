@@ -83,7 +83,7 @@ public class BoardController {
 	@RequestMapping("/update")
 	public String boardUpdate(Board board) throws Exception {
 		boardService.boardUpdate(board);
-		return "redirect:/board/list";
+		return "redirect:/board/detail?bNo="+board.getbNo();
 	}
 	
 	

@@ -98,7 +98,7 @@
     	$(document).ready(function(){
     		   $("#bContent").on("keyup", function(){
     		      if($(this).val().length > 30){
-    		         alert("30자 이상은 쓸 수 없습니다");
+    		         swal("30자 이상은 쓸 수 없습니다");
     		         $(this).val($(this).val().substring(0,30));
     		      }
     	   })
@@ -106,13 +106,13 @@
     		function chk() {
     			var f = document.insert;
     			if (f.title.value.trim() == "") {
-    				alert("제목을 입력해주세요")
+    				swal("제목을 입력해주세요")
     				f.title.focus();
     				return false;
     			}
     			
     			if(f.message.value.trim() == "") {
-    				alert("내용을 입력해주세요")
+    				swal("내용을 입력해주세요")
     				f.message.focus();
     				return false;
     			}

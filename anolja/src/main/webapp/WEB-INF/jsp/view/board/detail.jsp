@@ -22,7 +22,7 @@
 	}
 	.write_box ul li {
 		float:left;
-		margin:0 10px;
+		margin-left:10px;
 		}
 	#writeForm {clear:both;}
 	
@@ -40,7 +40,7 @@
 	}
 	
 	#commentArea {
-		width:1083px;
+		width:1100px;
 		height: 100px;
 		background-color:white;
 	}
@@ -72,40 +72,39 @@
 				<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:-5px;"></div>
 			 </div>
 		 </c:if> 
-		<div id="content_section" style="height:300px; "><p>${board.content}</p></div>
-		<div id="updateBtn">
-			<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:5px;"></div>
+		<div id="content_section"><p>${board.content}</p></div>
+<!-- 		<div id="updateBtn"> -->
 			<br>
-			<div>
-				<br>
-				<c:choose>
-					<c:when test="${sessionScope.id == board.anonymousId}">
-						<div class="write_box">
-								<ul>
-									<li style="margin-left:735px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
-									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li>
-									<li onclick="confirm('삭제 하시겠습니까?');"><a style="background:#d82f2f;" href="delete?bNo=${board.bNo}">삭제</a></li>
-									<li><a style="background:#0faeea;" href="list">목록</a></li>
-								</ul>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="write_box">
-								<ul>
-									<li style="margin-left:920px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
-									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li>
-								</ul>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-		<br> <br> <br> <br> <br> <br> <br>
+<!-- 			<div> -->
+<!-- 				<br> -->
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${sessionScope.id == board.anonymousId}"> --%>
+<!-- 						<div class="write_box"> -->
+<!-- 								<ul> -->
+<%-- 									<li style="margin-left:735px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li> --%>
+<%-- 									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li> --%>
+<%-- 									<li onclick="confirm('삭제 하시겠습니까?');"><a style="background:#d82f2f;" href="delete?bNo=${board.bNo}">삭제</a></li> --%>
+<!-- 									<li><a style="background:#0faeea;" href="list">목록</a></li> -->
+<!-- 								</ul> -->
+<!-- 						</div> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<!-- 						<div class="write_box"> -->
+<!-- 								<ul> -->
+<%-- 									<li style="margin-left:920px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li> --%>
+<!-- 									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li> -->
+<!-- 								</ul> -->
+<!-- 						</div> -->
+<%-- 					</c:otherwise> --%>
+<%-- 				</c:choose> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<br> <br> <br> <br> <br> <br> <br> -->
 	</div>
 
-	
 	<!-- 댓글 시작 -->
 	<section id="commentStart">
+	<div style="width:1100px; height:5px; background-color:#2c3e50; margin-bottom:5px;"></div>
 	<form action="commentUpdate" method="post">
 		<input type="hidden" name="bNo" value="${board.bNo}}" />
 		<input type="hidden" name="cNo" value="${comment.cNo}" />
@@ -120,17 +119,43 @@
 			<form id="rForm" class="form-inline">
 				<div id="comment">
 					<div class="form-group" style="width:100px; height:50px; float:left; display:inline-block;">
-						<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; text-align:center; font-size:17px;"/>
+						<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; text-align:center; font-size:17px;" readonly/>
 					</div>
 					<div class="form-group" style="width:847px; height:50px; float:left;">
 						<input type="text" id="content" name="content" class="form-control input-wo1" style="width:846px; height:50px; padding-left:23px; float:left" placeholder="내용을 입력하세요"  />
 					</div>	
-					<button style="margin-left:36px; font-color:white; width:100px; height:50px; background-color:#e65d5d" class="btnud">등록</button>			
+					<button style="margin-left:36px; font-color:white; width:100px; height:50px; background-color:#e65d5d" class="btnud" id="ps">등록</button>			
 				</div>
 			</form>	
 		</div>
 		</c:if>
+		<div id="buttonsDiv">
+		<div style="background-color:white;">
+				<br>
+				<c:choose>
+					<c:when test="${sessionScope.id == board.anonymousId}">
+						<div class="write_box">
+								<ul>
+									<li style="margin-left:773px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
+									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li>
+									<li><a id="kkkk" style="background:#d82f2f;" href="delete?bNo=${board.bNo}" role="button">삭제</a></li>
+									<li><a style="background:#0faeea;" href="list">목록</a></li>
+								</ul>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="write_box">
+								<ul>
+									<li style="margin-left:920px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
+									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li>
+								</ul>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			</div>
 	</section>
+	
 	
 	<script>
 	
@@ -159,7 +184,7 @@
 		
 		var html = '';
 		html += '<tr id="modRow' + commentNo + '">';
-		html += '	<td style="text-align:center; color:white;">' + modId + '</td>';
+		html += '	<td style="text-align:center; color:white;" >' + modId + '</td>';
 		html += '	<td>';
 		html += '		<div class="form-group">';
 		html += '			<input type="text" name="content" value="' + modContent +
@@ -280,7 +305,54 @@
 	// 상세 페이지 로딩시 댓글 목록 조회 ajax 호출
 	commentList();	
 	
-	
+	function del() {
+// 		var result = confirm("삭제 하시겠습니까?");
+// 		var result = swal("삭제 하시겠습니까?");
+// 		swal({
+// 		  title: "삭제 하시겠습니까?",
+// 		  icon: "warning",
+// 		  buttons: true,
+// 		  dangerMode: true,
+// 		})
+// 		.then(willDelete => {
+// 		  if (willDelete) {
+// 		    swal('삭제 되었습니다.', {
+// 		      icon: "success",
+// 		    });
+// 		  } else {
+// 			return false;
+// 		  }
+// 		});
+		
+		
+// 		if(result == false) {
+// 			return false;
+// 		} else {
+// 			swal({
+// 				  icon: 'success',
+// 				  title: '삭제 되었습니다.',
+// 				  showConfirmButton: false,
+// 				  timer: 2500
+// 				})
+// 		}
+
+$("#kkkk").click(function () {
+	swal({
+		  title: "삭제 하시겠습니까?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then(willDelete => {
+		  if (willDelete) {
+		    swal('삭제 되었습니다.', {
+		      icon: "success",
+		    });
+		  } else {
+			return false;
+		  }
+		});
+	});
 	</script>
 </div>
 

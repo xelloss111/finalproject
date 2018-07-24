@@ -32,29 +32,23 @@
 		background:#e65d5d;
 		cursor:pointer;
 	}
-	#ps {
-		width: 100px;
-	    background-color: #e65d5d;
-	    height: 30px;
-	    border-radius: 20px;
-		margin-left:10px;	    
-}
+	
 
 </style>
 <section class="content_section">
 	<div class="content_row_1">
-		<div class="content_row_2">
-			<div class="search_box">
-				<input type="text" id="searchBar" name="title" class="search_window"
-					style="width:150px;" placeholder="제목으로 검색하기">
-				<button type="button" id="ps">검색</button>
-			</div>
-			<c:if test="${!empty sessionScope.id}">
-				<div class="write_box">
-					<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
-				</div>
-			</c:if>
-		</div>
+<!-- 		<div class="content_row_2"> -->
+<!-- 			<div class="search_box"> -->
+<!-- 				<input type="text" id="searchBar" name="title" class="search_window" -->
+<!-- 					style="width:150px;" placeholder="제목으로 검색하기"> -->
+<!-- 				<button type="button" id="ps">검색</button> -->
+<!-- 			</div> -->
+<%-- 			<c:if test="${!empty sessionScope.id}"> --%>
+<!-- 				<div class="write_box"> -->
+<%-- 					<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a> --%>
+<!-- 				</div> -->
+<%-- 			</c:if> --%>
+<!-- 		</div> -->
 		<div id="sContent">
 			<table class="board_table">
 				<caption>문의사항 게시판</caption>
@@ -80,7 +74,7 @@
 										<c:forEach begin="1" end="${re.depth}">
 												RE : 
 											</c:forEach>
-									</c:if> ${re.title}[${re.comCnt}]
+									</c:if> ${re.title} [${re.comCnt}]
 							</a></td>
 							<td>${re.anonymousId}</td>
 							<td><fmt:formatDate value="${re.regDate}" pattern="yyyy-MM-dd" />
@@ -100,19 +94,17 @@
 	</c:if>
 
 	<div class="content_row_2">
-		<div class="search_box">
-			<form action="#" method="get">
+			<div class="search_box">
 				<input type="text" id="searchBar" name="title" class="search_window"
 					style="width:150px;" placeholder="제목으로 검색하기">
 				<button type="button" id="ps">검색</button>
-			</form>
-		</div>
-		<c:if test="${!empty sessionScope.id}">
-			<div class="write_box">
-				<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
 			</div>
-		</c:if>
-	</div>
+			<c:if test="${!empty sessionScope.id}">
+				<div class="write_box">
+					<a href="${pageContext.request.contextPath}/board/write">글 쓰기</a>
+				</div>
+			</c:if>
+		</div>
 
 	<c:if test="${result.pageResult.count != 0}">
 		<nav>

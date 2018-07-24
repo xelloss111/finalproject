@@ -2,13 +2,25 @@
 
 /* 모바일용 CSS */
 /* 기본 CSS */
+#ps {
+	    width: 75px;
+	    color: white;
+	    background-color: #e65d5d;
+	    height: 30px;
+	    margin-left: 10px;
+	    border: 0px;
+	    cursor: pointer;
+	}
+#buttonsDiv{width:1100px;}
+#buttonsDiv ul li:first-child{margin-left:800px;}
+#commentList {width:1100px;}
 #wrap {order:3}
-#content_section {background-color:#f6f6f6;}
-#content_section p {padding:25px 0 0 25px;}
+#content_section {background-color:#f6f6f6; height:auto;}
+#content_section p {padding:50px; width: 100%; height: auto;} 
 #bInfo {text-align:right; width:1100px;}
 #title2{width:500px; float:left;}
 #title {width:1200px;}
-#outer { width: 1100px; margin: 50px 0 auto; float: left; background-color:white;}
+#outer { width: 1100px; margin: 50px 0 100px 0 auto; float: left; background-color:white; height:auto; padding-top:24px;}
 #titleDiv { clear: both; margin-bottom:15px;}
 #titleDiv a {color:#000000; text-decoration:none;}
 #titleSpan { font-size: 25px; }
