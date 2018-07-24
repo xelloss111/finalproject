@@ -182,7 +182,7 @@
 	
 
 
-	var currentUser = `<%= session.getAttribute("currentUser") %>`;
+	var sessionId = `<%= session.getAttribute("id") %>`;
 	console.log("세션 ID : ", sessionId);
 	console.log("현재 접속자 수 : ", currentUser);
 	var msg = `${msg}`;
