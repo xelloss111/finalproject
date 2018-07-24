@@ -97,6 +97,11 @@
 			$("#noteLogG > div > div > div.modal-header > #header-name").html(text);
 		}
 		
+		/*버튼 재생성 함수*/
+		function putButton(text){
+			
+		}
+		
 		/*받은 쪽지함 내용물(태그) 출력 메소드<매개변수로 getnote의 출력결과가 와야한다>*/
 		function resultList(result){
 			html="<table class=\"w3-table-all w3-hoverable\">" + 
@@ -178,11 +183,13 @@
       $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
     	  var checkedList = []; 
     	  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
+    		console.log($(this).val());
+    		
     		if($(this).prop("checked")){
     			checkedList.push($(this).val());
     		}
     	  });
-    	  
+    	  console.log("-------------------------------")
     	  if(checkedList.length == 0){
     		  alert("삭제할 대상을 체크해주세요.")
     		  return;
@@ -195,7 +202,20 @@
     				dataType : "JSON"
     			})
     			.done(function(result) {
-    					alert(result);
+    				$.ajax({
+    					url : "${pageContext.request.contextPath}/getnotelist",
+    					type : "GET",
+    					dataType : "JSON"
+    				})
+    				.done(function (result) {
+    					for(let i = 0; i < result.length; i++) {
+    						console.log(result[i].title);
+    					}
+    					resultList(result);
+    					putHeader("받은 쪽지함")
+    			   /*ajax끝나는 괄호 */		
+    				});
+    					
     			});
     		
     		
@@ -412,7 +432,7 @@
         $("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(1) > a").click(function(e) {
 	 	 	e.preventDefault();
 	 	 	
-	 	 	putHeader("보낸 쪽지함")
+	 	 	putHeader("보낸 쪽지함");
 	 	 	
 	 	 	$(".modal-footerFixed").css("display","block");
 	 	 	
@@ -427,7 +447,6 @@
 	 	 		html+="<table class=\"w3-table-all w3-hoverable\">" + 
 	 	 				"<thead>" + 
 	 	 				"<tr class='w3-light-grey'>" + 
-	 	 				"<th></th>"+
 	 	 				"<th>받은이</th>" + 
 	 	 				"<th>제목</th>" + 
 	 	 				"<th>작성시간</th>" + 
@@ -440,7 +459,6 @@
 	 	 			let dateTime = new Date(result[j].sendDate);
 	 	 			let readTime = new Date(result[j].readDate)
 	 	 			html +=	'<tr>'+ 
-	 	 			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
 	 	 			'<td>'+result[j].getId+ "</td>" + 
 	 	 			'<td>'+result[j].title+'</td>' + 
 	 	 			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
@@ -456,8 +474,8 @@
 	 	 		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
 	 	 		
 	 	 		for(let j=0; j < result.length; j++){
-	 	 			if($("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").text()=="1970. 1. 1"){
-	 	 				$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").text("읽지 않음");
+	 	 			if($("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(4)").text()=="1970. 1. 1"){
+	 	 				$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(4)").text("읽지 않음");
 	 	 			}
 	 	 		}
 	 	 		
