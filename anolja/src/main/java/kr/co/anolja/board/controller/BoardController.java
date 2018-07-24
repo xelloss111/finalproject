@@ -3,6 +3,7 @@ package kr.co.anolja.board.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.anolja.board.service.BoardService;
 import kr.co.anolja.repository.domain.Board;
@@ -25,7 +27,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("/list")
-	public String selectList(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo, HttpServletRequest req) throws Exception{
+	public String selectList(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) throws Exception{
 		model.addAttribute("result", boardService.boardList(pageNo));
 		return "board/list";
 	}
@@ -47,8 +49,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/insert")
-	public String boardInsert(Board board, BoardFile files) throws Exception {
+	public String boardInsert(Board board, BoardFile files, Model model) throws Exception {
 		boardService.boardInsert(board, files);
+		
 		return "redirect:/board/detail?bNo="+board.getbNo();
 	}
 	
@@ -56,8 +59,9 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String boardDetail(Model model, int bNo,@RequestParam(value="pageNo", defaultValue="1")int pageNo) throws Exception{
 		model.addAttribute("result", boardService.boardList(pageNo));
-		Board bad = boardService.boardDetail(bNo);
-		model.addAttribute("board", bad);
+		model.addAttribute("file",boardService.selectFileNo(bNo));
+		System.out.println(boardService.selectFileNo(bNo));
+		model.addAttribute("board", boardService.boardDetail(bNo));
 		return "board/detail";
 	}
 	

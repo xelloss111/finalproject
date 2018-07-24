@@ -45,9 +45,8 @@
 		background-color:white;
 	}
 	
-	#btnud {
-		background-color:whtie;
-	}
+	
+	
 </style>
 <div id="wrap">
 	<div id="outer">
@@ -64,6 +63,15 @@
 			</div>
 		</div>
 		<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:5px;"></div>
+		 <c:if test="${!empty file}">
+			 <div id="fileList" style="width:1100px; height:35px; line-height:35px;">
+			 	첨부파일 : 
+				<c:forEach var="file" items="${file}" >
+					${file} ,
+				</c:forEach>
+				<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:-5px;"></div>
+			 </div>
+		 </c:if> 
 		<div id="content_section" style="height:300px; "><p>${board.content}</p></div>
 		<div id="updateBtn">
 			<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:5px;"></div>
@@ -84,7 +92,8 @@
 					<c:otherwise>
 						<div class="write_box">
 								<ul>
-									<li style="float:right;"><a href="list">목록</a></li>
+									<li style="margin-left:920px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
+									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li>
 								</ul>
 						</div>
 					</c:otherwise>
@@ -106,19 +115,21 @@
 	</form>
 		
 		<!-- 댓글 관련 파트 시작 -->
+		<c:if test="${!empty id}">
 		<div id="commentArea">
 			<form id="rForm" class="form-inline">
 				<div id="comment">
-					<div class="form-group">
-						<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; float:left; text-align:center; font-size:17px;"/>
+					<div class="form-group" style="width:100px; height:50px; float:left; display:inline-block;">
+						<input type="text" name="anonymousId" value="${sessionScope.id}" style="width:100px;height:50px; text-align:center; font-size:17px;"/>
 					</div>
-					<div class="form-group">
-						<input type="text" name="content" class="form-control input-wo1" style="width:813px; height:50px; padding-left:23px; float:left" placeholder="내용을 입력하세요"  />
+					<div class="form-group" style="width:847px; height:50px; float:left;">
+						<input type="text" id="content" name="content" class="form-control input-wo1" style="width:846px; height:50px; padding-left:23px; float:left" placeholder="내용을 입력하세요"  />
 					</div>	
-					<button class="btn btn-primary">등록</button>			
+					<button style="margin-left:36px; font-color:white; width:100px; height:50px; background-color:#e65d5d" class="btnud">등록</button>			
 				</div>
 			</form>	
 		</div>
+		</c:if>
 	</section>
 	
 	<script>
@@ -148,16 +159,17 @@
 		
 		var html = '';
 		html += '<tr id="modRow' + commentNo + '">';
-		html += '	<td>' + modId + '</td>';
+		html += '	<td style="text-align:center; color:white;">' + modId + '</td>';
 		html += '	<td>';
 		html += '		<div class="form-group">';
 		html += '			<input type="text" name="content" value="' + modContent +
-		'" class="form-control input-wp2" placeholder="내용을 입력하세요" style="color:white;padding-left:50px; height:50px;  line-height:50px; text-align:center;">';
+		'" class="form-control input-wp2" placeholder="내용을 입력하세요" style="height:33px; width:616px; padding-left:30px;  line-height:50px;">';
 		html += '		</div>';
 		html += '	</td>';
-		html += '	<td colspan="2">';
-		html += '		<a href="javascript:commentUpdate(' + commentNo + ');" class="btn btn-success btn-sm btnud" role="button">수정</a>';
-		html += '		<a href="javascript:commentCancel(' + commentNo + ');" class="btn btn-warning btn-sm" role="button">취소</a>';
+		html += ' <td></td>'
+		html += '	<td colspan="1">';
+		html += '		<a href="javascript:commentUpdate(' + commentNo + ');" class="btnud" role="button">수정</a>';
+		html += '		<a href="javascript:commentCancel(' + commentNo + ');" class="btnud" role="button">취소</a>';
 		html += '	</td>';
 		html += '</tr>';
 		$("#row" + commentNo).after(html);	
@@ -202,7 +214,6 @@
 			dataType: "json"
 		})
 		.done(function (result) {
-			alert("댓글등록이 완료되었습니다");
 			if (!'${sessionScope.id}') {
 				$("#rForm input[name='anonymousId']").val("");
 			}
@@ -218,9 +229,9 @@
 		var html = "";
 		html += '<table class="table table-bordered">';
 		html += '	<colgroup>'; 
-		html += '		<col width="7%">'; 
-		html += '		<col width="*">'; 
-		html += '		<col width="20%">'; 
+		html += '		<col width="10%">'; 
+		html += '		<col width="*">';
+		html += '		<col width="18%">'; 
 		html += '		<col width="10%">'; 
 		html += '	</colgroup>'; 
 		  
@@ -236,17 +247,17 @@
 			         + date.getHours() + ":"
 			         + date.getMinutes() + ":"
 			         + date.getSeconds();
-			html += '	<td style="color:white; border:1px solid red;">' + time + '</td>';
+			html += '	<td style="color:white;">' + time + '</td>';
 			html += '	<td>';    
 			if('${sessionScope.id}' == comment.anonymousId) {
-			html += '		<a href="javascript:commentUpdateForm(' + comment.cNo + ')" class="btn btn-success btn-sm" "role="button">수정</a>';    
-			html += '		<a href="javascript:commentDelete(' + comment.cNo + ')" class="btn btn-danger btn-sm" role="button">삭제</a>';    
+			html += '		<a href="javascript:commentUpdateForm(' + comment.cNo + ')" class="btnud" "role="button">수정</a>  &nbsp;';    
+			html += '		<a style="width:100px;" href="javascript:commentDelete(' + comment.cNo + ')" class="btnud" role="button">삭제</a>';    
 			}
 			html += '	</td>';    
 			html += '</tr>';
 		}
 		if (result.length == 0) {
-			html += '<tr><td colspan="4" style="color:white;padding-left:50px; height:50px;  line-height:50px; text-align:center;">댓글이 존재하지 않습니다.</td></tr>';
+			html += '<tr><td colspan="1" style="color:white; height:50px;  line-height:50px; text-align:center;">댓글이 존재하지 않습니다.</td></tr>';
 		}
 		html += "</title>";
 		$("#commentList").html(html);
@@ -268,6 +279,7 @@
 	
 	// 상세 페이지 로딩시 댓글 목록 조회 ajax 호출
 	commentList();	
+	
 	
 	</script>
 </div>

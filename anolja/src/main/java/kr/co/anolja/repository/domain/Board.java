@@ -13,7 +13,14 @@ public class Board {
 	private String content;
 	private Date regDate;
 	private int viewCnt;
+	private int comCnt;
 	
+	public int getComCnt() {
+		return comCnt;
+	}
+	public void setComCnt(int comCnt) {
+		this.comCnt = comCnt;
+	}
 	public String getAnonymousId() {
 		return anonymousId;
 	}

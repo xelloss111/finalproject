@@ -76,7 +76,7 @@
 <div id="board">
     	<form action="insert" method="POST" enctype="multipart/form-data">
     		<input type="hidden" name="anonymousId" value="${sessionScope.id}">
-	    	<input type="text" class="form-control" id="exampleInputEmail1" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
+	    	<input type="text" class="form-control" id="bContent" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
             <div class="file_input" style="margin-bottom:30px;">
 	            <label>
 	                File Attach
@@ -94,6 +94,15 @@
     	</form>
     	
     	<script>
+    	
+    	$(document).ready(function(){
+    		   $("#bContent").on("keyup", function(){
+    		      if($(this).val().length > 30){
+    		         alert("30자 이상은 쓸 수 없습니다");
+    		         $(this).val($(this).val().substring(0,30));
+    		      }
+    	   })
+    	})
     		function chk() {
     			var f = document.insert;
     			if (f.title.value.trim() == "") {

@@ -106,9 +106,17 @@ public class BoardServiceImpl implements BoardService {
 	public Map<String, Object> boardList(int pageNo) throws Exception{
 //		board.setPageNo(board.getPageNo());
 //		board.setPageNo(pageNo != null ? Integer.parseInt(sPageNo) : 1);
+		int comCnt = 0;
 		
 		Map<String, Object> map = new HashMap<>();
 		List<Board> list = boardMapper.boardList((pageNo - 1) * 10);
+		for(Board k : list) {
+			comCnt = boardMapper.selectCommentCount(k.getbNo());
+			k.setComCnt(comCnt);
+			System.out.println(comCnt);
+//			map.put("comCnt", boardMapper.selectCommentCount(k.getbNo()));
+			
+		}
 		int count = boardMapper.selectBoardCount();
 		map.put("list", list);
 		map.put("pageResult", new PageResult(pageNo, count));
@@ -133,7 +141,7 @@ public class BoardServiceImpl implements BoardService {
 				int index = file.getOriginalFilename().lastIndexOf(".");
 				ext = file.getOriginalFilename().substring(index);
 				
-				String saveFileName = "board -" + UUID.randomUUID().toString() + ext;
+				String saveFileName = "board-" + UUID.randomUUID().toString() + ext;
 				
 				file.transferTo(new File("c:/pilseong/upload/" + saveFileName));
 				
@@ -150,8 +158,19 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> searchBoard(String board) {
 		return boardMapper.searchBoard(board);
 	}
-	
 
+	@Override
+	public List<String> selectFileNo(int no) {
+		return boardMapper.selectFileNo(no);
+	}
+
+	@Override
+	public int selectCommentCount(int no) {
+		return boardMapper.selectCommentCount(no);
+	}
+	
+	
+	
 	
 	
 	

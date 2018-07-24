@@ -24,7 +24,9 @@ public interface BoardService {
 	public void boardReply(Board board, BoardFile boardFile) throws Exception;
 
 	
+	public List<String> selectFileNo(int no);
 	
+	public int selectCommentCount(int no);
 
 	// 댓글 시작 
 	
