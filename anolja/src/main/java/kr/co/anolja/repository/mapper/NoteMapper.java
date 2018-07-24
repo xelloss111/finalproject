@@ -9,5 +9,5 @@ public interface NoteMapper {
 	List<Note> printGetList(Note note);
 	List<Note> printSendList(String sendId);
 	void deleteNote(int no);
-
+	void noteCheck(int no);
 }

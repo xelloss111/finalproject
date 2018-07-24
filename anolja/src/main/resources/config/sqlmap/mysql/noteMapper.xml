@@ -43,6 +43,12 @@
 	 where id = #{id}
 	</update>
 	
+	<update id="noteCheck" parameterType="int">
+	update tb_note
+	   set status = 1
+	 where id = #{id}
+	</update>
+	
 		
 	
 </mapper>

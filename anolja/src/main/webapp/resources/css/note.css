@@ -1,5 +1,11 @@
 @charset "UTF-8";
 /* Global */
+
+/*이미지 관련 부분*/
+img.envelope{
+    width: 30;
+    height: auto;
+}
 /*세부글 관련 부분*/
 .detail-title{
     font-size: 33px;

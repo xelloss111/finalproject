@@ -37,5 +37,9 @@ public class NoteServiceImpl implements NoteService{
 		}
 	}
 	
+	public void checkNote(int no) {
+		noteMapper.noteCheck(no);
+	}
+	
 	
 }

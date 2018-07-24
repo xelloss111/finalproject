@@ -35,7 +35,7 @@
 							<a class="navbar-brandFixed" href="#">쪽지함</a>
 						</div>
 						<ul class="navFixed navbar-navFixed">
-							<li><a href="send">보낸 쪽지함</a></li>
+							<li><a href="send" style="position: absolute;left: 139px;">보낸 쪽지함</a></li>
 							<li><a href="get">받은 쪽지함</a></li>
 
 						</ul>
@@ -104,7 +104,9 @@
 			"</thead>";
     	for(let j=0; j < result.length; j++){
     		console.log(result[j].title);
+    		
     		let dateTime = new Date(result[j].sendDate);
+    		
     		html +=	'<tr>'+ 
     		'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
     		'<td>'+result[j].sendId+ "</td>" + 
@@ -112,17 +114,40 @@
     		'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
     		'<td>'+result[j].status+'</td>'+
     		'</tr>'; 
+    		//상태에 맞는 편지 이미지를 넣자
+    		
     	}
     	html+="</table>";
       
     	$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+    	
+    	/*쪽지함 편지 이미지 추가*/
+    	for(let j=0; j < result.length; j++){
+    		if($("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").text() == 0){
+        		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").html("<img class='envelope' src='https://png.icons8.com/color/50/000000/secured-letter.png'>");
+        		}else{
+        		$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").html("<img class='envelope' src='https://png.icons8.com/color/50/000000/open-envelope.png'>");
+        		}
+    	}
+    	
+    	
     	
     	$(".modal-footerFixed").css("display","block");
     	
     	/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
     	for(let j=0; j < result.length; j++){
     	$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(3)").click(function(){
-    	
+        /*버튼 클릭 시 이벤트 읽음 상태 변경 이벤트 걸기*/
+  		$.ajax({
+   		 url : "${pageContext.request.contextPath}/checknote",
+   		 data : "readNo="+result[j].id,
+   		 type : "GET",
+   		 dataType: "JSON"
+   		 }).done(function(result){
+   			 alert(result);
+   		 })
+       	 /*읽음 상태 변경 취소*/ 
+       	 
         let dateTime = new Date(result[j].sendDate);
     		
         html="<div class=\"title-areaFixed\">" + 
@@ -132,8 +157,13 @@
     		"<div class=\"write-date-areaFixed\"><span class=\"send-date\">"+dateTime.toLocaleString()+"</span></div>" + 
     		"</div>" + 
  	   		"<div class=\"content-areaFixed\">"+result[j].content+"</div>";
-    		
+ 	   		
+ 	   	
          $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+         
+ 
+         
+         
          });
          };
     	
@@ -371,6 +401,8 @@
         /*보낸편지함 모달 시작 */
         $("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(1) > a").click(function(e) {
 	 	 	e.preventDefault();
+	 	 	
+	 	 	$(".modal-footerFixed").css("display","block");
 	 	 	
 	 	 	var html = "";
 	 	 	
