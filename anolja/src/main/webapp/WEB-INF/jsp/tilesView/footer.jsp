@@ -107,7 +107,7 @@
     		
     		let dateTime = new Date(result[j].sendDate);
     		
-    		html +=	'<tr>'+ 
+    		html +=	'<tr class="trLine">'+ 
     		'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
     		'<td>'+result[j].sendId+ "</td>" + 
     		'<td>'+result[j].title+'</td>' + 
@@ -187,13 +187,13 @@
     				type : "POST",
     				dataType : "JSON"
     			})
-    			.done(function (result) {
+    			.done(function(result) {
     					alert(result);
     			});
     		
     		
     	  });
-    		}
+    	}
 		
 		/* 쪽지 받기 모달 시작 부분 */
 		/* 받은 쪽지함 함수*/
@@ -398,6 +398,7 @@
          		});
          	/*쓰기 모듈 끝부분 */
 		
+         	
         /*보낸편지함 모달 시작 */
         $("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(1) > a").click(function(e) {
 	 	 	e.preventDefault();
@@ -419,20 +420,20 @@
 	 	 				"<th>받은이</th>" + 
 	 	 				"<th>제목</th>" + 
 	 	 				"<th>작성시간</th>" + 
-	 	 				"<th>읽음</th>" + 
+	 	 				"<th>읽음날짜</th>" + 
 	 	 				"</tr>" + 
 	 	 				"</thead>";
 	 	 		for(let j=0; j < result.length; j++){
 	 	 			console.log(result[j].title);
 	 	 			
 	 	 			let dateTime = new Date(result[j].sendDate);
-	 	 			
+	 	 			let readTime = new Date(result[j].readDate)
 	 	 			html +=	'<tr>'+ 
 	 	 			'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
 	 	 			'<td>'+result[j].getId+ "</td>" + 
 	 	 			'<td>'+result[j].title+'</td>' + 
 	 	 			'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
-	 	 			'<td>'+result[j].status+'</td>'+
+	 	 			'<td>'+readTime.toLocaleDateString().slice(0,-1)+'</td>'+
 	 	 			'</tr>'; 
 	 	 			/*최근 보낸 편지 10개만 보여준다.*/
 	 	 			if(j == 9){
@@ -442,6 +443,12 @@
 	 	 		html+="</table>";
 	 	 	  
 	 	 		$("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
+	 	 		
+	 	 		for(let j=0; j < result.length; j++){
+	 	 			if($("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").text()=="1970. 1. 1"){
+	 	 				$("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody > tr:nth-child("+(j+1)+") > td:nth-child(5)").text("읽지 않음");
+	 	 			}
+	 	 		}
 	 	 		
 	 	 		/* 받은 쪽지함 디테일 페이지로 이동 이벤트 걸기*/
 	 	 		/*

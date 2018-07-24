@@ -45,10 +45,9 @@
 	
 	<update id="noteCheck" parameterType="int">
 	update tb_note
-	   set status = 1
-	 where id = #{id}
+	   set status = 1,
+	       read_date = now()
+	 where id = #{id} and status = 0
 	</update>
-	
-		
 	
 </mapper>
