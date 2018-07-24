@@ -24,7 +24,8 @@
 		<!-- Modal content-->
 		<div class="modal-content display-area">
 			<div class="modal-header">
-<!-- 			<span id="header-name">받은 쪽지함</span> -->
+			<span id="header-name"></span>
+
 				<button type="button" class="closeFixed" data-dismiss="modal">×</button>
 				<!-- <h4 class="modal-title"></h4> -->
 			</div>
@@ -43,6 +44,7 @@
 						</ul>
 					</div>
 				</nav>
+				
 				<div class="w3-container">
 
 					<table class="w3-table-all w3-hoverable">
@@ -89,6 +91,11 @@
 		
 		/*로그인한 사람만 사용할 수 있도록 하기위한 세션 아이디*/
 		var sessionId = `<%=session.getAttribute("id")%>`;
+		
+		/*매개변수에 해당하는 문자열 헤더에 삽입하는 함수*/
+		function putHeader(text){
+			$("#noteLogG > div > div > div.modal-header > #header-name").html(text);
+		}
 		
 		/*받은 쪽지함 내용물(태그) 출력 메소드<매개변수로 getnote의 출력결과가 와야한다>*/
 		function resultList(result){
@@ -221,6 +228,7 @@
 						console.log(result[i].title);
 					}
 					resultList(result);
+					putHeader("받은 쪽지함")
 			   /*ajax끝나는 괄호 */		
 				});
 				
@@ -340,7 +348,8 @@
 		
 		/*게시글 쓰기 모달 */
         $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(1)").click(function(){
-         	 
+        	 /*헤더 관련 모듈*/
+        	 putHeader("글쓰기");
         	
          	 html = "<div id=\"form-main\">" + 
          			"<div id=\"form-div\">" + 
@@ -402,6 +411,8 @@
         /*보낸편지함 모달 시작 */
         $("#noteLogG > div > div > div.modal-body > nav > div > ul:nth-child(2) > li:nth-child(1) > a").click(function(e) {
 	 	 	e.preventDefault();
+	 	 	
+	 	 	putHeader("보낸 쪽지함")
 	 	 	
 	 	 	$(".modal-footerFixed").css("display","block");
 	 	 	
