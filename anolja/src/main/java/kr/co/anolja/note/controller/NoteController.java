@@ -22,7 +22,7 @@ public class NoteController {
 	
 	@RequestMapping("/sendnote")
 	@ResponseBody
-	public void sendNoteData(Note note,HttpSession session) {
+	public String sendNoteData(Note note,HttpSession session) {
 		String sendId = (String) session.getAttribute("id");
 		
 		note.setSendId(sendId);
@@ -30,6 +30,8 @@ public class NoteController {
 		System.out.println("세션값:"+sendId);
 		
 		noteService.sendNote(note);
+		
+		return "쪽지 보내기 완료";
 	}
 	
 	@RequestMapping("/getnotelist")
@@ -85,5 +87,11 @@ public class NoteController {
 		return "체크되었습니다.";
 	}
 	
+//	@RequestMapping("/getUserList")
+//	@ResponseBody
+//	public String[] getUserList() {
+//		
+//		return null;
+//	}
 
 }

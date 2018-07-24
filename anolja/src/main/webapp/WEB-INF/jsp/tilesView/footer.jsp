@@ -63,16 +63,18 @@
 				</div>
 
 				<div class="modal-footerFixed btn-area" style="text-align: right">
-					<div class="button-list btnFixed"
-						style="float: left; margin-left: 20px;">
+					<div class="button-list btnFixed" id="btnarea-1" style="float: left; margin-left: 20px;">
 						<button type="button" class="btnFixed"
 							style="text-shadow: 0 0 black;">글쓰기</button>
 						<button type="button" class="btnFixed">삭제</button>
 					</div>
-					<div class="button-list btnFixed" style="margin-right: 40px;">
+					<div class="button-list btnFixed" id="btnarea-2" style="margin-right: 20px;display: block;float: right;">
 						<button type="button" class="btnFixed">이전</button>
 						<button type="button" class="btnFixed">다음</button>
 						<button type="button" class="btnFixed">처음으로</button>
+					</div>
+					<div class="button-list btnFixed" id="btnarea-3" style="display: none">
+						<button type="button" class="btnFixed" style="width: 100%">목록</button>
 					</div>
 				</div>
 			</div>
@@ -97,8 +99,35 @@
 			$("#noteLogG > div > div > div.modal-header > #header-name").html(text);
 		}
 		
-		/*버튼 재생성 함수*/
-		function putButton(text){
+		/*목록버튼 호출 함수*/
+		function putListButton(){
+			$("#btnarea-1").css("display","none");
+			$("#btnarea-2").css("display","none");
+			$("#btnarea-3").css("display","block");
+			
+			$("#btnarea-3 > button").click(function(){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/getnotelist",
+					type : "GET",
+					dataType : "JSON"
+				})
+				.done(function (result) {
+					for(let i = 0; i < result.length; i++) {
+						console.log(result[i].title);
+					}
+					resultList(result);
+					putHeader("받은 쪽지함")
+					putOriButton();
+			   /*ajax끝나는 괄호 */		
+				});
+			});
+		}
+		
+		/*기존버튼 호출 함수*/
+		function putOriButton(){
+			$("#btnarea-1").css("display","block");
+			$("#btnarea-2").css("display","block");
+			$("#btnarea-3").css("display","none");
 			
 		}
 		
@@ -173,8 +202,8 @@
  	   	
          $("#noteLogG > div > div > div.modal-body > div.w3-container").html(html);
          
- 
-         
+         /*목록버튼 출현*/
+         putListButton();
          
          });
          };
@@ -248,7 +277,8 @@
 						console.log(result[i].title);
 					}
 					resultList(result);
-					putHeader("받은 쪽지함")
+					putHeader("받은 쪽지함");
+					putOriButton();
 			   /*ajax끝나는 괄호 */		
 				});
 				
@@ -279,7 +309,6 @@
 				for(let i = 0; i < result.length; i++) {
 					console.log(result[i].title);
 				}
-				alert(notePageNo);
 				
 				if(result.length == 0){
 					alert("다음 페이지가 존재하지 않습니다.");
@@ -313,7 +342,7 @@
 				for(let i = 0; i < result.length; i++) {
 					console.log(result[i].title);
 				}
-				alert(notePageNo);
+// 				alert(notePageNo);
 				/*
 				if(result.length == 0){
 					alert("더 이상 보여줄 쪽지가 없습니다.");
@@ -345,7 +374,7 @@
 				for(let i = 0; i < result.length; i++) {
 					console.log(result[i].title);
 				}
-				alert(notePageNo);
+// 				alert(notePageNo);
 				/*
 				if(result.length == 0){
 					alert("더 이상 보여줄 쪽지가 없습니다.");
@@ -377,17 +406,17 @@
          			"<p class=\"getId\">" + 
          			"<input name=\"getId\" type=\"text\"" + 
          			"class=\"validate[required,custom[onlyLetter],length[0,100]] feedback-input\"" + 
-         			"placeholder=\"Name\" id=\"name\" />" + 
+         			"placeholder=\"받는이\" id=\"name\" />" + 
          			"</p>" + 
          			"<p class=\"title\">" + 
          			"<input name=\"title\" type=\"text\"" + 
          			"class=\"validate[required,custom[email]] feedback-input\"" + 
-         			"placeholder=\"Title\" />" + 
+         			"placeholder=\"제목\" />" + 
          			"</p>" + 
          			"<p class=\"content\">" + 
          			"<textarea name=\"content\"" + 
          			"class=\"validate[required,length[6,300]] feedback-input\"" + 
-         			"placeholder=\"Comment\"></textarea>" + 
+         			"placeholder=\"내용\"></textarea>" + 
          			"</p>" + 
          			"<div class=\"submit\">" + 
          			"<input type=\"submit\" value=\"보내기\" id=\"button-blue\" />" + 
@@ -407,12 +436,42 @@
          			//취소버튼 클릭시
          			getRevList("#button-blue[value='취소']");
          			
+         			
+         			//글쓰기 폼에서 값 제출시
          			$("#form1").submit(function(event){
          				if(event.preventDefault){event.preventDefault()};
+         				let isId;
+         				
+         				$.ajax({
+         					url : "${pageContext.request.contextPath}/user/idCheck",
+         					data : {id:$("#name").val()},
+         					type : "POST",
+         			    dataType : "JSON"		
+         				}).done(function(result){
+         					isId=result.id;
+         					console.log("유저에서 넘어온 값"+result.id);
+         				});
+         				console.log("이즈아이디:"+isId);
+         				console.log("다른 값:"+$("#name").val())
+         				
+         				if(isId != $("#name").val()){
+         					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
+         					return;
+         				}
+         				
+         				if($("#form1 > p.title > input").val()==""){
+         					alert("제목을 입력해주십시오.");
+         					return;
+         				}
+         				
+         				if($("#form1 > p.content > textarea").val()==""){
+         					alert("내용을 입력해주십시오.");
+         					return;
+         				}
          				
          				var note = $('#form1').serialize();
          				
-         				alert(note);
+         				
          
          				$.ajax({
          					url : "${pageContext.request.contextPath}/sendnote",
@@ -421,9 +480,10 @@
          					dataType : "JSON"
          				})
          				.done(function (result) {
-         					alert("쪽지 보내기 완료")
+         					alert(result)
          				}); /*ajax 마침표*/
          		});	
+         			
          		});
          	/*쓰기 모듈 끝부분 */
 		
@@ -496,8 +556,11 @@
 	 	 		});
 	 	 		};
 	 	 		*/
-	 	 		
-	 	    /*ajax끝나는 괄호 */		
+	 	 	
+	 	 	/*리스트만 보이게하기*/
+	 	 	$("#btnarea-1").css("display","none");
+			$("#btnarea-2").css("display","none");
+	 	    /*ajax끝나는 괄호 */	
 	 	 	});
 	 	 	
 	 	 	$("#noteLogG").modal({
