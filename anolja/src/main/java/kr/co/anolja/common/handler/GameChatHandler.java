@@ -40,7 +40,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 	public static Map<String, Integer> rightAnswerCnt = new HashMap<>();
 	int cnt = 0;
 	
-	final int maxUsers = 3;
+	final int maxUsers = 5;
 	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -256,6 +256,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			questionNo = 0;
 			userNo = 0;
 			cnt = 0;
+			rightAnswerCnt.remove(id);
 			Game.setQuestionNo(null);
 			Game.setQuestionuser(null);
 		}

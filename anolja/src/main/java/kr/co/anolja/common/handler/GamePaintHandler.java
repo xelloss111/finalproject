@@ -20,7 +20,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		connectedUsers = new ArrayList<WebSocketSession>();
 	}
 	
-	final int maxUsers = 3;
+	final int maxUsers = 5;
 	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {

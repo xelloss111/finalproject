@@ -417,7 +417,7 @@
         	if (current) {
         		waitingID = setInterval(() => {
         			if (waiting > 0) {
-						if (rcmndCnt == 2) { 
+						if (rcmndCnt == 4) { 
 	        				clearInterval(waitingID);
 							return;
 						}
@@ -498,7 +498,7 @@
     		$("#funny").off('click');
     		ws.send("rcmndCnt:"+rcmndCnt);
     		
-    		if (rcmndCnt == 2) {
+    		if (rcmndCnt == 4) {
 	   			snapshot();
 	   			uploadFile(canvasInfo);
 	   		}
