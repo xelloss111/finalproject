@@ -73,7 +73,7 @@ $(document).on('click', '#login', function() {
 			return;
 		};
 
-		var lform = $('#lForm').serialize();
+		var lform = $('#loginForm').serialize();
 		$.ajax({
 			url: ctx + "/user/login",
 			type: 'post',

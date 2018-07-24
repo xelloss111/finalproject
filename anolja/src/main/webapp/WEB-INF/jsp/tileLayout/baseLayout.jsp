@@ -140,7 +140,7 @@
 		</section>
 		<section class="login_section">
 			<img class="glass" src="${pageContext.request.contextPath}/resources/images/user/mark_icon_login.png" alt="" style="float:left; margin-right: 100px; padding-left:17%; padding-top:50px;">
-			<form id="lForm">
+			<form id="loginForm">
 				<div id="writeArea" style="float:left; margin-top:80px; margin-right:20px;">
 					<table id="writeTable">
 						<tr>
@@ -184,7 +184,6 @@
 
 	var sessionId = `<%= session.getAttribute("id") %>`;
 	console.log("세션 ID : ", sessionId);
-	console.log("현재 접속자 수 : ", currentUser);
 	var msg = `${msg}`;
 	if (msg) {
 		swal({
