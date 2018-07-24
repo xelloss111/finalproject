@@ -37,8 +37,7 @@
 	    background-color: #e65d5d;
 	    height: 30px;
 	    border-radius: 20px;
-        box-shadow: none;
-	    
+		margin-left:10px;	    
 }
 
 </style>
@@ -73,13 +72,15 @@
 						<tr>
 							<td><a
 								href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">${re.bNo}</a></td>
-							<td><a
-								href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">
+							<td><a href="${pageContext.request.contextPath}/board/detail?bNo=${re.bNo}&pageNo=${result.pageResult.pageNo}">
 									<c:if test="${re.groupBlist > 0}">
+										<c:forEach begin="1" end="${re.depth}">
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										</c:forEach>
 										<c:forEach begin="1" end="${re.depth}">
 												RE : 
 											</c:forEach>
-									</c:if> ${re.title}
+									</c:if> ${re.title}[${re.comCnt}]
 							</a></td>
 							<td>${re.anonymousId}</td>
 							<td><fmt:formatDate value="${re.regDate}" pattern="yyyy-MM-dd" />

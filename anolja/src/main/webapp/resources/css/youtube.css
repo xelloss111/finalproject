@@ -425,9 +425,10 @@ caption {
   opacity: .2;
 }
 
-.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+.faacl, .faacr {
 	margin-top: 245px;
 }
+
 
 
 .carousel-control.left {
@@ -808,13 +809,18 @@ hr {
 	margin-left: 20px;
 	cursor: pointer;
 }
+.newTankBtn:hover {
+	background: #e65d5d;
+}
 /* video page용 btn */
 .btn {
 	background: #428e9e;
 	-webkit-box-shadow: 0 3px 0 0 #c8c8c8;
 	box-shadow: 0 3px 0 0 #eee;
 }
-
+#submit:hover {
+	background: #428e9e;
+}
 .btn-default {
 	background: #ffc40f;
 	text-shadow: 0 1px 0 #fff;
@@ -907,6 +913,9 @@ hr {
 	margin-left: 20px;
 	cursor: pointer;
 }
+.updtankBtn:hover , .deltankBtn:hover {
+	background: #e65d5d;
+}
 .secBtn {
 	width: 30%;
 	height: 30px;
@@ -918,7 +927,10 @@ hr {
 	margin-left: 20px;
 	cursor: pointer;
 }
-
+.secBtn:hover {
+	border-color:#428e9e;
+	background: #428e9e;
+}
 /* 동영상 삭제  */
 #videoListHide {
 	display: none;
@@ -973,7 +985,9 @@ hr {
 	cursor: pointer;
 	border: none;
 }
-
+.delVideoBtn:hover {
+	background: #609ec7;
+}
 .ui-accordion-header {
 	outline: none;
 	}

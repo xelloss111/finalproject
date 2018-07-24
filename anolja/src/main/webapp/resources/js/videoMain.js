@@ -91,10 +91,10 @@ req.onreadystatechange = function (aEvt) {
 
 	 					html += '<div class="control-box">';
 	 					html += '	<a data-slide="prev" href="#myCarousel" class="carousel-control left">';
-	 					html += '		<i class="far fa-arrow-alt-circle-left fa-2x"></i>';
+	 					html += '		<i class="far fa-arrow-alt-circle-left faacl fa-2x"></i>';
 	 					html += '	</a>';
 	 					html += '	<a data-slide="next" href="#myCarousel" class="carousel-control right">';
-	 					html += ' 		<i class="far fa-arrow-alt-circle-right fa-2x"></i>';
+	 					html += ' 		<i class="far fa-arrow-alt-circle-right faacr fa-2x"></i>';
 	 					html += '	</a>';	 					
 	 					html += '</div>';
 	 					
@@ -247,10 +247,10 @@ function searchEnter() {
 
 			 					html += '<div class="control-box">';
 			 					html += '	<a data-slide="prev" href="#myCarousel" class="carousel-control left">';
-			 					html += '		<i class="far fa-arrow-alt-circle-left fa-2x"></i>';
+			 					html += '		<i class="far fa-arrow-alt-circle-left faacl fa-2x"></i>';
 			 					html += '	</a>';
 			 					html += '	<a data-slide="next" href="#myCarousel" class="carousel-control right">';
-			 					html += ' 		<i class="far fa-arrow-alt-circle-right fa-2x"></i>';
+			 					html += ' 		<i class="far fa-arrow-alt-circle-right faacr fa-2x"></i>';
 			 					html += '	</a>';	 					
 			 					html += '</div>';
 			 					
@@ -345,14 +345,13 @@ function chageLangSelect(){
 			 					tankInfoHtml += '				</div>  ';	
 			 					tankInfoHtml += '		</div>  ';	
 			 					tankInfoHtml += '	</div>  ';	
-								
-
+			 					
 			 					tankInfoHtml += '<div class="control-box">';
 			 					tankInfoHtml += '	<a data-slide="prev" href="#myCarousel" class="carousel-control left">';
-			 					tankInfoHtml += '		<i class="far fa-arrow-alt-circle-left fa-2x"></i>';
+			 					tankInfoHtml += '		<i class="far fa-arrow-alt-circle-left faacl fa-2x"></i>';
 			 					tankInfoHtml += '	</a>';
 			 					tankInfoHtml += '	<a data-slide="next" href="#myCarousel" class="carousel-control right">';
-			 					tankInfoHtml += ' 		<i class="far fa-arrow-alt-circle-right fa-2x"></i>';
+			 					tankInfoHtml += ' 		<i class="far fa-arrow-alt-circle-right faacr fa-2x"></i>';
 			 					tankInfoHtml += '	</a>';	 					
 			 					tankInfoHtml += '</div>';
 			 					

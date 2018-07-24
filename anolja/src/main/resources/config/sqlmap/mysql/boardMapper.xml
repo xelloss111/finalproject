@@ -103,7 +103,7 @@
 	
 	<insert id="boardInsertFile" parameterType="boardFile">
 		insert into tb_file (
-			bNo, path, ori_name, sys_name, file_sizessss
+			bNo, path, ori_name, sys_name, file_size
 		) values (
 			#{bNo}, #{path}, #{oriName}, #{sysName}, #{fileSize}		
 		)
@@ -116,5 +116,17 @@
 		  from tb_board
 		 where title like CONCAT('%',#{title},'%')
 		 order by group_bno desc, group_blist asc
+	</select>
+	
+	<select id="selectFileNo" parameterType="int" resultType="string">
+		select ori_name
+		from tb_file
+		where bno = #{bNo}
+	</select>
+	
+	<select id="selectCommentCount" parameterType="int" resultType="int">
+		select count(*)
+		from tb_comment
+		where bno = #{bNo}
 	</select>
 </mapper>
