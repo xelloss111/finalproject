@@ -24,8 +24,6 @@ import kr.co.anolja.repository.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-	public static int currentUser = 0;
-	
 	private static final Logger logger = 
 			LoggerFactory.getLogger(UserServiceImpl.class);
 	

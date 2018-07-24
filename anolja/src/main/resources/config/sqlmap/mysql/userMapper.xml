@@ -111,13 +111,4 @@
 		  from tb_user
 		 where id = #{id}
 	</sql>
-	
-	<insert id="insertVisitor" parameterType="visitor">
-		insert into tb_visitor (
-			ip, refer, agent
-		) values (
-			#{ip}, #{refer}, #{agent}
-		);
-	</insert>
-	
 </mapper>
