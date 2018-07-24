@@ -18,12 +18,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.anolja.common.CurrentUser;
 import kr.co.anolja.repository.domain.User;
 import kr.co.anolja.user.service.UserService;
 
 @Controller
 @RequestMapping("/user/*")
-@SessionAttributes("id")
+@SessionAttributes({"id", "currentUser"})
 public class UserController {
 
 	@Autowired
@@ -53,8 +54,8 @@ public class UserController {
 		return "user/emailConfirm";
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-//	@RequestMapping(value = "login")
+//	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = "login")
 	@ResponseBody
 	public String loginPost(User user, Model model) throws Exception {
 		User temp = service.loginUser(user);
@@ -81,7 +82,7 @@ public class UserController {
 		return service.getId(id);
 	}
 	
-	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
+	@RequestMapping(value = "emailCheck")
 	@ResponseBody
 	public User emailCheck(@RequestParam(value="email") String email) throws Exception {
 		logger.info(email);
@@ -102,9 +103,9 @@ public class UserController {
 	
 	@RequestMapping(value = "findPass")
 	@ResponseBody
-	public String findPass(@RequestParam(value="email") String email, HttpServletRequest req) throws Exception {
+	public String findPass(User user, HttpServletRequest req) throws Exception {
 		String path = req.getServerName() + ":" + req.getServerPort() + "" + req.getContextPath();
-		String result = service.findPass(email, path);
+		String result = service.findPass(user, path);
 		return result;
 	}
 	
@@ -182,9 +183,5 @@ public class UserController {
 		sessionStatus.setComplete();
 		service.deleteUserInfo(id);
 		return "/main";
-	}
-	
-	@RequestMapping(value = "profile", method = RequestMethod.GET)
-	public void profile() throws Exception {
 	}
 }

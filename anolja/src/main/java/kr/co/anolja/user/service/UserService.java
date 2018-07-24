@@ -1,5 +1,7 @@
 package kr.co.anolja.user.service;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +15,7 @@ public interface UserService {
 	public User getId(String id) throws Exception;
 	public User getEmail(String email) throws Exception;
 	public User findId(String email) throws Exception;
-	public String findPass(String email, String path) throws Exception;
+	public String findPass(User user, String path) throws Exception;
 	public String checkPass(User user) throws Exception;
 	public String changePass(User user) throws Exception;
 	public void registProfileImage(String id, MultipartFile attach) throws Exception;

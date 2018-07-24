@@ -75,21 +75,22 @@ $(document).on('click', '#mypage', function() {
 	$(mypage).append(photoInput);
 	
 	// 서버 통신으로 사용자 프로필 이미지 경로가 존재하는지 체크 후 코드 추가
-	$.ajax({
-		url: ctx + '/user/getUserInfo',
-		data: {id : sessionId},
-		dataType: 'json',
-		success: function(result) {
-			if(result.filePath == null) {
-				$(photoArea).children('img').attr('id', 'default');
-				$(photoArea).children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
-			} else {
-				$(photoArea).children('img').attr('id', 'user');
-				$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-				$('.removeIcon').show();
-			}
-		}
-	});
+	imageLoad();
+//	$.ajax({
+//		url: ctx + '/user/getUserInfo',
+//		data: {id : sessionId},
+//		dataType: 'json',
+//		success: function(result) {
+//			if(result.filePath == null) {
+//				$(photoArea).children('img').attr('id', 'default');
+//				$(photoArea).children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+//			} else {
+//				$(photoArea).children('img').attr('id', 'user');
+//				$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+//				$('.removeIcon').show();
+//			}
+//		}
+//	});
 
 	// 프로필 영역 이미지 등록 처리
 	$(document).on('dragover', '.photoArea > img', function(event) { 
@@ -234,6 +235,7 @@ $(document).on('click', '#mypage', function() {
 	// --------------------------------------------------------------------------------------------
 	// email 변경 처리
 	$('.changeemailbtn').on('click', function() {
+		var curEmail = '';
 		swal({
 			  title: "[MyPage Email 변경]",
 			  text: "기존 Email 주소를 입력해 주세요",
@@ -275,25 +277,38 @@ $(document).on('click', '#mypage', function() {
 						    closeModal: false,
 						  },
 					}).then((changeEmail) => {
+						if (changeEmail == '') {
+							return swal("Email은 비어있는 값으로 적용할 수 없습니다..\n다시 시도해 주세요");
+						}
 						$.ajax({
-							url: ctx + "/user/updateUserEmail",
+							url: ctx + "/user/emailCheck",
 							type: "post",
-							data: {id: sessionId, email: changeEmail},
-						}).done(function(result) {
-							swal({
-								title: '[MyPage Email 변경]',
-								text: result,
-								icon: 'success',
-								button: '닫기',
-							});
-						}).fail(function() {
-							swal({
-								title: '[MyPage Email 변경]',
-								text: '서버 통신 중 오류 발생으로 변경이 불가능합니다.\n다시 시도해 주세요',
-								icon: 'error',
-								button: '닫기',
+							data: {email: changeEmail},
+						}).done(function(resEmail) {
+							if (resEmail) {
+								return swal("이미 존재하는 Email입니다.\n다른 이메일로 다시 시도해 주세요");
+							}
+							$.ajax({
+								url: ctx + "/user/updateUserEmail",
+								type: "post",
+								data: {id: sessionId, email: changeEmail},
+							}).done(function(result) {
+								swal({
+									title: '[MyPage Email 변경]',
+									text: result,
+									icon: 'success',
+									button: '닫기',
+								});
+							}).fail(function() {
+								swal({
+									title: '[MyPage Email 변경]',
+									text: '서버 통신 중 오류 발생으로 변경이 불가능합니다.\n다시 시도해 주세요',
+									icon: 'error',
+									button: '닫기',
+								});
 							});
 						});
+				
 					});
 				}
 			});
@@ -334,7 +349,7 @@ $(document).on('click', '#mypage', function() {
 					$.ajax({
 						url: ctx + "/user/findPass",
 						type: "post",
-						data: {email: temp.email},
+						data: {id : resEmail.id, email: temp.email},
 						success: function(result) {
 							swal({
 								title: "[MyPage Password 변경]",
@@ -461,6 +476,7 @@ $(document).on('click', '#mypage', function() {
 	// 웹캠 영상과 이미지 합성
 //		var capBtn = $('#profileCapture');
 	$(document).on('click', '.videoIcon', function(e) {
+		imageLoad();
 		console.log('비디오 아이콘 클릭');
 		$('#captureBtn').trigger('click');
 		
@@ -507,8 +523,21 @@ $(document).on('click', '#mypage', function() {
 		});
 		
 		$('#backProfile').click(function() {
-			$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
-			$('#addProfile').hide();
+			$.ajax({
+				url: ctx + '/user/getUserInfo',
+				data: {id : sessionId},
+				dataType: 'json',
+				success: function(result) {
+					if(result.filePath == null) {
+						$('.profileImageArea').children('img').attr('id', 'default');
+						$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+					} else {
+						$('.profileImageArea').children('img').attr('id', 'user');
+						$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+						$('#addProfile').hide();
+					}
+				}
+			});
 		});
 		
 		$('#normalView').click(function() {
@@ -527,6 +556,30 @@ $(document).on('click', '#mypage', function() {
 	$(mypage).fadeToggle('slow');
 });
 
+function imageLoad() {
+	$.ajax({
+		url: ctx + '/user/getUserInfo',
+		data: {id : sessionId},
+		dataType: 'json',
+		success: function(result) {
+			if(result.filePath == null) {
+				$('.photoArea').children('img').attr('id', 'default');
+				$('.photoArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+				$('.profileImageArea').children('img').attr('id', 'default');
+				$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+			} else {
+				$('.photoArea').children('img').attr('id', 'user');
+				$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+				$('.profileImageArea').children('img').attr('id', 'user');
+				$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+				$('#addProfile').hide();
+				$('.removeIcon').show();
+			}
+		}
+	});
+}
+
+
 function uploadProfileFile(file) {
 	var sendUrl = '';
 	var fd = new FormData();
@@ -543,7 +596,8 @@ function uploadProfileFile(file) {
     				}).then((val) => {
     					$('.photoArea').children('img').attr('id', 'user');
     					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-
+    					$('.profileImageArea').children('img').attr('id', 'user');
+    					$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
     				});
     			} else {
     				swal({
@@ -570,7 +624,8 @@ function uploadProfileFile(file) {
     				}).then((val) => {
     					$('.photoArea').children('img').attr('id', 'user');
     					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-
+    					$('.profileImageArea').children('img').attr('id', 'user');
+    					$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
     				});
     			} else {
     				swal({

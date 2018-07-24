@@ -63,7 +63,7 @@ i#backProfile {
  display: block;  
  opacity: 0.7;  
  background-color: #fff;  
- z-index: 99;  
+ z-index: 2000;  
  text-align: center;
  } 
   

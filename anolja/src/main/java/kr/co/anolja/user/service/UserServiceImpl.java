@@ -24,6 +24,7 @@ import kr.co.anolja.repository.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
+	public static int currentUser = 0;
 	
 	private static final Logger logger = 
 			LoggerFactory.getLogger(UserServiceImpl.class);
@@ -71,6 +72,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User loginUser(User user) throws Exception {
 		User temp = mapper.selectOneUser(user.getId());
+		
+		if (temp == null) {
+			return null;
+		}
+		
 		List<String> idList = mapper.getAnnonymousId();
 		// 스프링 시큐리티의 BCryptPasswordEncoder 객체의 matches 메서드로 패스워드 체크
 		boolean passCheck = passwordEncoder.matches(user.getPass(), temp.getPass());
@@ -99,7 +105,7 @@ public class UserServiceImpl implements UserService {
 			mapper.setAnnonymousId(temp);
 		}
 		
-		if (temp != null && passCheck == true) {
+		if (passCheck == true) {
 			return temp;
 		} else {
 			return null;
@@ -139,15 +145,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String findPass(String email, String path) throws Exception {
-		User temp = mapper.getEmailperUser(email);
-
+	public String findPass(User user, String path) throws Exception {
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("[anolja 패스워드 변경 서비스]");
 		sendMail.setText(new StringBuffer().append("<h1>패스워드 변경</h1>").append("<a href='http://" + path + "/user/changePass?email=")
-				.append(temp.getEmail()).append("' target='_blank'>인증 확인 후 비밀번호 변경 페이지 이동</a>").toString());
+				.append(user.getEmail()).append("' target='_blank'>인증 확인 후 비밀번호 변경 페이지 이동</a>").toString());
 		sendMail.setFrom("anoljamanager@gmail.com", "anolja 관리자");
-		sendMail.setTo(temp.getEmail());
+		sendMail.setTo(user.getEmail());
 		sendMail.send();
 			
 		return "비밀번호 변경을 위한 메일이 발송되었습니다.\n확인 후 비밀번호를 변경해 주세요";

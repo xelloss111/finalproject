@@ -49,12 +49,12 @@ $(document).on('click', '#login', function() {
 	var loginBtn = $("#loginBtn");
 	var findIdBtn = $('#findIdBtn');
 	var findPassBtn = $('#findPassBtn');
-	var loginid = $(".login_section > form > div > table > tr td input[name='id']");
-	var loginpass = $(".login_section > form > div > table > tr td input[name='pass']");
+	var loginid = $(".login_section input[name='id']");
+	var loginpass = $(".login_section input[name='pass']");
 
 	// 로그인 버튼 이벤트 처리
 	$(document).on('click', '#loginBtn', function() {
-		if (loginid.value === "") { 
+		if ($(loginid).val() == "") { 
 			swal({
 				  title: "로그인 실패",
 				  text: "ID는 필수 입력 사항입니다.",
@@ -63,7 +63,7 @@ $(document).on('click', '#login', function() {
 				});
 			return;
 		};
-		if (loginpass.value === "") {
+		if ($(loginpass).val() == "") {
 			swal({
 				  title: "로그인 실패",
 				  text: "패스워드는 필수 입력 사항입니다.",
@@ -126,6 +126,8 @@ $(document).on('click', '#login', function() {
 	});
 	
 	$(findPassBtn).click(function() {
+		var idcheck ='';
+		var mailcheck = '';
 		swal({
 			  title: 'Password 찾기',
 			  text: 'ID를 먼저 입력해 주세요',
@@ -141,12 +143,16 @@ $(document).on('click', '#login', function() {
 			    closeModal: false,
 			  },
 			}).then(id => {
+				idcheck = id;
 				console.log(id);
 				$.ajax({
 					url: ctx + "/user/idCheck",
 					type: "post",
-					data: {id: id},
+					data: {id: idcheck},
 				}).done(function(resID) {
+					var resIDD = JSON.parse(resID);
+					mailcheck = resIDD.email;
+					console.log("아이디 체크 후 이메일 주소 : " + mailcheck);
 					if (!resID) {
 						return swal({
 									icon: "error",
@@ -165,7 +171,7 @@ $(document).on('click', '#login', function() {
 						  },
 						  button: {
 						    text: "입력",
-						    closeModal: false,
+						    closeModal: true,
 						  },
 						}).then(email => {
 							console.log(email);
@@ -174,17 +180,24 @@ $(document).on('click', '#login', function() {
 								type: "post",
 								data: {email: email},
 							}).done(function(resEmail) {
+								var temp = JSON.parse(resEmail);
 								if (!resEmail) {
 									return swal({
 												icon: "error",
 												text: "email 주소가 맞지 않습니다."
 											});
 								}
-								var temp = JSON.parse(resEmail);
+								if (mailcheck != temp.email) {
+									return swal({
+										icon: "error",
+										text: "사용하는 email 주소가 아닙니다.\다시 확인해주세요"
+									});
+								}
+								
 								$.ajax({
 									url: ctx + "/user/findPass",
 									type: "post",
-									data: {email: temp.email},
+									data: {id: idcheck, email: temp.email},
 									success: function(result) {
 										swal({
 											title: "완료",
@@ -192,6 +205,18 @@ $(document).on('click', '#login', function() {
 											text: result,
 											button: "닫기"
 										});
+									},beforeSend:function(){
+										$('.loading').attr('id', '');
+									},complete:function(){
+										$('.loading').attr('id', 'display-none');
+									},error:function() {
+										$('.loading').attr('id', 'display-none');
+										swal({
+											text: '서버 통신 오류로 메일 발송에 실패했습니다.\n다시 시도해 주세요',
+											icon: 'error',
+											button: '확인',
+										});
+										location.href = ctx + '/main';
 									}
 								});
 							});
