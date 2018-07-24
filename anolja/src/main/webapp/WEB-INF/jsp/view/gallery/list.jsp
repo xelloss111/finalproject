@@ -16,7 +16,7 @@
 			<div class="content_row_1">
 				<ul class="gallery_list">
 					<c:forEach var="i" items="${list}">
-						<li><a href="#t"><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' class="scroll" data-gno="${i.gno}" data-id="${i.id}" data-answer="${i.answer}"></a></li>
+						<li><img src='<c:url value="/gallery/listView?gno=${i.gno}"/>' class="scroll" data-gno="${i.gno}" data-id="${i.id}" data-answer="${i.answer}"></li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -58,11 +58,9 @@
                        		}
 							for (let i = 0; i < list.length; i++) {
 								var html = "<li>"+
-										   '	<a href="#t">'+
-										   '		<img src=\'<c:url value="/gallery/listView?gno='+list[i].gno+'"/>\''+
-										   '	   		 class="scroll" data-gno="'+list[i].gno+'" '+
-										   '	   		 data-id="'+list[i].id+'" data-answer="'+list[i].answer+'">'+
-										   '	</a>'+
+										   '	<img src=\'<c:url value="/gallery/listView?gno='+list[i].gno+'"/>\''+
+										   '	     class="scroll" data-gno="'+list[i].gno+'" '+
+										   '	   	 data-id="'+list[i].id+'" data-answer="'+list[i].answer+'">'+
 										   '</li>';
 								$(".gallery_list").append(html);
 							}
