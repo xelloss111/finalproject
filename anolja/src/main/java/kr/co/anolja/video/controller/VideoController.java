@@ -36,7 +36,8 @@ public class VideoController {
 	@ResponseBody
 	public List<Video> videoList(Video video, HttpSession session, Model model) {
 		String userId =(String)session.getAttribute("id");
-		model.addAttribute("delList", service.alldata(userId));
+		
+//		List<Video> delList = service.alldata(userId);
 		
 		return service.insert(video);
 	}

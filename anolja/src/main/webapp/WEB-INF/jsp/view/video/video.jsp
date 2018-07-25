@@ -267,7 +267,7 @@ $("#submit").click(function () {
 			url: "videoSave",
 			dataType:"json",
 			success: function (result) {
-
+				
 // 1-3.	저장완료 얼럿 후 모달창 닫기
 				swal({
 					  text: saveTankName + " VIDEO BOX에 저장 완료",
@@ -277,17 +277,18 @@ $("#submit").click(function () {
 						jQuery('#' + visible_modal).modal('hide');
 						return;
 					});
-
+				
 				//main selectbox
 				selectBoxResultHtml += '	<option value="tank0">  MY VIDEO BOX </option> ';
 				// select 박스 추가해주기
 				$("#myTank_list").html(selectBoxResultHtml);
 				
 				for (var t = 0; t < result.length; t++) {
-
+						
 						// select 박스 시작
 						var tankList_tankId = result[t].tankId;
 						var tankList_tankName = result[t].tankName;
+
 						
         				// 내 VIDEO BOX
         				modal2FolderHtml += '	<div class="boxListDiv">';
@@ -724,7 +725,8 @@ $(document).on("click",".delVideoBtn", function(){
 
   $( function() {
     $( "#accordion" ).accordion({
-      collapsible: true
+      collapsible: true,
+      animate :100
     });
   });
 
