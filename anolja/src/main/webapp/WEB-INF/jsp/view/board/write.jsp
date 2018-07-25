@@ -80,7 +80,7 @@
             <div class="file_input" style="margin-bottom:30px;">
 	            <label>
 	                File Attach
-	                <input type="file" accept="jpg" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
+	                <input type="file" accept=".jpg" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
 	            </label>
 	            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
             </div>

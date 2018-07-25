@@ -49,6 +49,7 @@
 	
 </style>
 <div id="wrap">
+${sessionSocpe.id}
 	<div id="outer">
 		<div id="title">
 		<div style="width:1100px; height:5px; background-color:#2c3e50;margin-bottom:5px;"></div>
@@ -72,14 +73,15 @@
 <!-- 				<div style="width:1100px; height:5px; background-color:#2c3e50; margin-top:-5px;"></div> -->
 <!-- 			 </div> -->
 <%-- 		 </c:if>  --%>
-		 <div id="fileArea">
-		 	<c:forEach var="result" items="${file}">
-			 	<img src="${pageContext.request.contextPath}/board/fileOutPut?path=${result.path}&sysName=${result.sysName}" style="width:50%; height:50%; margin:0 auto;"/><br>
-                  <button type="button" class="btn btn-default" style="margin:5px 0px 20px;">
-                  <a href="${pageContext.request.contextPath}/board/fileOutPut?path=${result.path}&sysName=${result.sysName}">다운로드</a></button><br> 
-		 	</c:forEach>
-		 </div>
-		<div id="content_section"><p>${board.content}</p></div>
+		<div id="content_section">
+			<p>
+			 	<c:forEach var="result" items="${file}">
+				 	<img src="${pageContext.request.contextPath}/board/fileOutPut?path=${result.path}&sysName=${result.sysName}" style="width:50%; height:50%; margin:0 auto;"/><br>
+				 	<br>
+			 	</c:forEach>
+				${board.content}
+			</p>	
+		</div>
 <!-- 		<div id="updateBtn"> -->
 			<br>
 <!-- 			<div> -->
@@ -154,7 +156,7 @@
 					<c:otherwise>
 						<div class="write_box">
 								<ul>
-								<c:if test="${sessionScope.id}">
+								<c:if test="${!empty id}">
 									<li style="margin-left:950px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
 								</c:if>
 									<li style="float:right;"><a style="background:#0faeea;" href="list">목록</a></li>
