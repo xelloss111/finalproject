@@ -498,12 +498,44 @@ $(document).on('click', '.updtankBtn', function(){
 		        				modal2FolderHtml2 += '		</li>';		
 		        				modal2FolderHtml2 += '	</ul>';						 
 		        				modal2FolderHtml2 += '</div>';	
+		        				
+		        				modal2FolderHtml2 += '	<div id="videoListHide">';
+		        				
+		    					for (var v = 0; v < resultdelbox.length; v++) {
+		    						// BOX 안의 동영상 리스트 
+		    							var deleteImgList = resultdelbox[v].videoImg;
+		    							var deleteNoList = resultdelbox[v].videoNo;
+		    							var deleteTitleList = resultdelbox[v].videoTitle;
+		    							var deleteTankIdList = resultdelbox[v].tankId;
+		    						
+		    						if(deleteTankIdList == tankList_tankId) {
+		    						
+		    							modal2FolderHtml2 += '		<ul class="seldelvideo">';
+		    							modal2FolderHtml2 += '			<li class="videoImg">';
+		    							modal2FolderHtml2 += '				<img src="'+ deleteImgList +'" class="hdnImg"/>';
+		    							modal2FolderHtml2 += '			</li>';
+		    							modal2FolderHtml2 += '			<li class="selVideoTitle">';
+		    							modal2FolderHtml2 += '				<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
+		    							modal2FolderHtml2 += '				<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
+		    							modal2FolderHtml2 += '				<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
+		    							modal2FolderHtml2 += '			</li> ';
+		    							modal2FolderHtml2 += '			<li class="selvideoBtnArea"> ';
+		    							modal2FolderHtml2 += '				<input type="button" value="삭제"  class="delVideoBtn"> ';
+		    							modal2FolderHtml2 += '			</li> ';
+		    							modal2FolderHtml2 += '		</ul> ';
+		    							}//if추가
+		    							
+		    						};//동영상 추가 for
+		    						
+		    						modal2FolderHtml2 += '	</div> ';
 						};
 								
 						// select 박스 추가해주기
 						$("#myTank_list").html(selectBoxResultHtml2);
 						$("#accordion").html(modal2FolderHtml2);
 						
+						//아코디언 리프레쉬
+						$('#accordion').accordion("refresh");  
 						//재로딩 끝
 						return;
 					}
@@ -574,6 +606,36 @@ $(document).on('click', '.updtankBtn', function(){
 		        				modal2FolderHtml3 += '		</li>';		
 		        				modal2FolderHtml3 += '	</ul>';						 
 		        				modal2FolderHtml3 += '</div>';	
+		        				
+		        				modal2FolderHtml3 += '	<div id="videoListHide">';
+		        				
+		    					for (var v = 0; v < resultdelbox.length; v++) {
+		    						// BOX 안의 동영상 리스트 
+		    							var deleteImgList = resultdelbox[v].videoImg;
+		    							var deleteNoList = resultdelbox[v].videoNo;
+		    							var deleteTitleList = resultdelbox[v].videoTitle;
+		    							var deleteTankIdList = resultdelbox[v].tankId;
+		    						
+		    						if(deleteTankIdList == tankList_tankId) {
+		    						
+		    							modal2FolderHtml3 += '		<ul class="seldelvideo">';
+		    							modal2FolderHtml3 += '			<li class="videoImg">';
+		    							modal2FolderHtml3 += '				<img src="'+ deleteImgList +'" class="hdnImg"/>';
+		    							modal2FolderHtml3 += '			</li>';
+		    							modal2FolderHtml3 += '			<li class="selVideoTitle">';
+		    							modal2FolderHtml3 += '				<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
+		    							modal2FolderHtml3 += '				<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
+		    							modal2FolderHtml3 += '				<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
+		    							modal2FolderHtml3 += '			</li> ';
+		    							modal2FolderHtml3 += '			<li class="selvideoBtnArea"> ';
+		    							modal2FolderHtml3 += '				<input type="button" value="삭제"  class="delVideoBtn"> ';
+		    							modal2FolderHtml3 += '			</li> ';
+		    							modal2FolderHtml3 += '		</ul> ';
+		    							}//if추가
+		    							
+		    						};//동영상 추가 for
+		    						
+		    						modal2FolderHtml3 += '	</div> ';
 						};
 								
 						// select 박스 추가해주기
@@ -581,6 +643,8 @@ $(document).on('click', '.updtankBtn', function(){
 						$("#accordion").html(modal2FolderHtml3);
 		 				$("#tank_list").html(selectModal1Box);
 						
+		 				//아코디언 리프레쉬
+						$('#accordion').accordion("refresh");  
 						//재로딩 끝
 						}
 					});  

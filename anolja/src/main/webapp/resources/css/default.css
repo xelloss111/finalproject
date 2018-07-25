@@ -1496,7 +1496,7 @@ height: 400	px;
 	color: #fff;
 	}
 .fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
-	margin-top: 155px;
+	margin-top: 100px;
 }
 
 #next {
@@ -1508,6 +1508,7 @@ height: 400	px;
 	
 	
 /* 블릿 버튼 이미지 스타일 */
+
 #list_btn li {
 	background: url(../images/catchmind/btnVisual.png) 0 -16px no-repeat;
 	width: 14px;
