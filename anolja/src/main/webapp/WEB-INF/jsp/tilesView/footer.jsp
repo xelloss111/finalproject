@@ -66,7 +66,7 @@
 					<div class="button-list btnFixed" id="btnarea-1" style="float: left; margin-left: 20px;">
 						<button type="button" class="btnFixed"
 							style="text-shadow: 0 0 black;">글쓰기</button>
-						<button type="button" class="btnFixed">삭제</button>
+						<button type="button" id="delteBtn" class="btnFixed">삭제</button>
 					</div>
 					<div class="button-list btnFixed" id="btnarea-2" style="margin-right: 20px;display: block;float: right;">
 						<button type="button" class="btnFixed">이전</button>
@@ -209,7 +209,7 @@
          };
     	
       /*삭제 기능 이벤트 걸기*/
-      $("#noteLogG > div > div > div.modal-body > div.modal-footerFixed.btn-area > div:nth-child(1) > button:nth-child(2)").click(function(){
+      $("#delteBtn").click(function(){
     	  var checkedList = []; 
     	  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
     		console.log($(this).val());
@@ -438,28 +438,29 @@
          			getRevList("#button-blue[value='취소']");
          			
          			
+         				var isId;
          			//글쓰기 폼에서 값 제출시
          			$("#form1").submit(function(event){
          				if(event.preventDefault){event.preventDefault()};
-         				var isId;
          				
          				$.ajax({
          					url : "${pageContext.request.contextPath}/user/idCheck",
          					data : {id:$("#name").val()},
          					type : "POST",
-         			    dataType : "JSON",
-         			        async: false,
+         			    dataType : "JSON"
          				}).done(function(result){
          					isId=result.id;
          					console.log("유저에서 넘어온 값"+result.id);
+         					
+         					if(isId != $("#name").val()){
+             					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
+             					return;
+             				}
          				});
          				console.log("이즈아이디:"+isId);
          				console.log("다른 값:"+$("#name").val())
          				
-         				if(isId != $("#name").val()){
-         					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
-         					return;
-         				}
+         			
          				
          				if($("#form1 > p.title > input").val()==""){
          					alert("제목을 입력해주십시오.");
@@ -482,7 +483,21 @@
          					dataType : "JSON"
          				})
          				.done(function (result) {
-         					alert(result)
+         					alert(result);
+         					$.ajax({
+         						url : "${pageContext.request.contextPath}/getnotelist",
+         						type : "GET",
+         						dataType : "JSON"
+         					})
+         					.done(function (result) {
+         						for(let i = 0; i < result.length; i++) {
+         							console.log(result[i].title);
+         						}
+         						resultList(result);
+         						putHeader("받은 쪽지함");
+         						putOriButton();
+         				   /*ajax끝나는 괄호 */		
+         					});
          				}); /*ajax 마침표*/
          		});	
          			
@@ -562,8 +577,10 @@
 	 	 	/*리스트만 보이게하기*/
 	 	 	$("#btnarea-1").css("display","none");
 			$("#btnarea-2").css("display","none");
+			$("#btnarea-3").css("display","none");
 	 	    /*ajax끝나는 괄호 */	
 	 	 	});
+	 	 	
 	 	 	
 	 	 	$("#noteLogG").modal({
 	 	 		backdrop : false
