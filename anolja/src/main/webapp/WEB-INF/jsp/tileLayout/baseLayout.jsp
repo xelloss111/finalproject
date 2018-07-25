@@ -73,7 +73,7 @@
 	      <div class="modal-header" style="background:#ffc40f;">
 	        <h4 class="modal-title" id="myModalLabel">웹캠 프로필 이미지 등록 / 합성</h4>
 	      </div>
-			<div class="modal-body">
+			<div id="mypageBody" class="modal-body">
 			</div>
 	      <div class="modal-footer">
 	        <a href="javascript:" class="btn4" onclick="App.stop();" style="float:left;">영상 중지</a>

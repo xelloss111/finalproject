@@ -2,9 +2,10 @@
  * 
  */
 
-var mypage = $('.mypage_section');
+
 
 $(document).on('click', '#mypage', function() {
+	var mypage = $('.mypage_section');
 	// show 되기 전 내부 html을 지우고 시작
 	$(mypage).html('');
 	
@@ -214,6 +215,7 @@ $(document).on('click', '#mypage', function() {
 			});
 	});
 	
+	// 프로필 이미지 삭제 처리 함수
 	function removeProfile() {
 		$.ajax({
 			url: ctx + '/user/removeProfileImage',
@@ -500,8 +502,8 @@ $(document).on('click', '#mypage', function() {
 		pia += '<img />';
 		pia += '</div>';
 		
-		$('.modal-body').html(captureList);
-		$('.modal-body').append(pia);
+		$('#mypageBody').html(captureList);
+		$('#mypageBody').append(pia);
 		
 		App.init();
 		
@@ -549,7 +551,7 @@ $(document).on('click', '#mypage', function() {
 	
 	if ($('#mmm').attr('aria-hidden') == 'true') {
 		App.stop();
-		$('.modal-body').html('');
+		$('#mypageBody').html('');
 	}
 	
 	// fade 토글로 display 처리
