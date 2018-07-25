@@ -96,7 +96,7 @@
 	<div class="content_row_2">
 			<div class="search_box">
 				<input type="text" id="searchBar" name="title" class="search_window"
-					style="width:150px;" placeholder="제목으로 검색하기">
+					style="width:150px;" placeholder="제목으로 검색하기" onkeydown="javascript:if(event.keyCode==13){test_key();}">
 				<button type="button" id="ps">검색</button>
 			</div>
 			<c:if test="${!empty sessionScope.id}">
@@ -143,11 +143,13 @@
 	<!-- 			</div> -->
 </section>
 <script>
+
 	$("#ps").click(function () {
 		if($("#searchBar").val() == "") {
 			swal("검색어를 입력해주세요");
 			return false;
 		}
+		
 		$(".board_table").hide();
 		$.ajax({
 			url: "<c:url value='/board/search'/>",

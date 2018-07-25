@@ -76,24 +76,32 @@
 <div id="board">
     	<form action="insert" method="POST" enctype="multipart/form-data">
     		<input type="hidden" name="anonymousId" value="${sessionScope.id}">
-	    	<input type="text" class="form-control" id="bContent" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
+	    	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" style="width:523px; height:40px;"> <br><br>
             <div class="file_input" style="margin-bottom:30px;">
 	            <label>
 	                File Attach
-	                <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
+	                <input type="file" accept="jpg" onchange="javascript:document.getElementById('file_route').value=this.value" multiple="multiple" name="files">
 	            </label>
 	            <input type="text" readonly="readonly" title="File Route" id="file_route"  style="width:420px;">
             </div>
 	    	<textarea id="message" class="form-control" name="content" type="text" placeholder="내용을 입력해주세요" style="width:525px; height:300px;"></textarea> <br>
 	    	<div id="btn">
                 <div style="width:253px; margin:0 auto; margin-top:15px;">
-	    		<button type="submit" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
+	    		<button type="submit" id="writeBtn" class="btn btn-primary btnps" style="margin-right:20px;">등록</button>
 	    		<button type="button" onclick="location.href='list'" class="btn btn-default btnps">취소</button>
                 </div>
 	    	</div>
     	</form>
     	
     	<script>
+    	
+    		출처: http://88240.tistory.com/52 [shaking blog]
+    	$("#writeBtn").click(function () {
+    		if($("#title").val() == "") {
+    			swal("제목을 입력해주세요");
+    			return false;
+    		}
+    	});
     	
     	$(document).ready(function(){
     		   $("#bContent").on("keyup", function(){

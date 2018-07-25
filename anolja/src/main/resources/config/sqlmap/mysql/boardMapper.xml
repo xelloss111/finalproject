@@ -118,8 +118,8 @@
 		 order by group_bno desc, group_blist asc
 	</select>
 	
-	<select id="selectFileNo" parameterType="int" resultType="string">
-		select ori_name
+	<select id="selectFileNo" parameterType="int" resultMap="boardFileMap">
+		select *
 		from tb_file
 		where bno = #{bNo}
 	</select>

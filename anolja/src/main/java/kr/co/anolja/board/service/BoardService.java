@@ -24,7 +24,7 @@ public interface BoardService {
 	public void boardReply(Board board, BoardFile boardFile) throws Exception;
 
 	
-	public List<String> selectFileNo(int no);
+	public List<BoardFile> selectFileNo(int no);
 	
 	public int selectCommentCount(int no);
 

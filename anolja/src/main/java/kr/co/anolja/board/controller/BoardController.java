@@ -1,9 +1,14 @@
 package kr.co.anolja.board.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.anolja.board.service.BoardService;
 import kr.co.anolja.repository.domain.Board;
@@ -62,6 +66,9 @@ public class BoardController {
 		model.addAttribute("file",boardService.selectFileNo(bNo));
 		System.out.println(boardService.selectFileNo(bNo));
 		model.addAttribute("board", boardService.boardDetail(bNo));
+		
+		//List<BoardFile> files = boardService.selectFileNo(bNo);
+		
 		return "board/detail";
 	}
 	
@@ -133,7 +140,73 @@ public class BoardController {
 		return boardService.selectCommentByNo(comment.getbNo());
 	}
 	
+	//다운로드
 	
+	//파일다운로드
+	   @RequestMapping("/fileOutPut")
+	   public void fileOutPut(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	      
+
+	      String path = request.getParameter("path");
+	      String sysName = request.getParameter("sysName");
+	   
+	      File file = new File(path,sysName);
+	      //System.out.println("f:파일객체생성"+file);
+	      String fileName = file.getName();
+	       
+	       FileInputStream fileInputStream = null;
+	       ServletOutputStream servletOutputStream = null;
+	    
+	       try{
+	           String downName = null;
+	           String browser = request.getHeader("User-Agent");
+	           //파일 인코딩
+	           if(browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")){//브라우저 확인 파일명 encode , 브라우저별 처리
+	                
+	               downName = URLEncoder.encode(fileName,"UTF-8").replaceAll("\\+", "%20"); //공백설정
+	                
+	           }else{
+	                
+	               downName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1"); //파일이름설정
+	                
+	           }
+	            
+	           response.setHeader("Content-Disposition","attachment;filename=\"" + downName+"\"");             
+	           response.setContentType("application/octer-stream");
+	           response.setHeader("Content-Transfer-Encoding", "binary;");
+	    
+	           fileInputStream = new FileInputStream(file);
+	           servletOutputStream = response.getOutputStream();
+	    
+	           byte b [] = new byte[1024];
+	           int data = 0;
+	    
+	           while((data=(fileInputStream.read(b, 0, b.length))) != -1){
+	                
+	               servletOutputStream.write(b, 0, data);
+	                
+	           }
+	    
+	           servletOutputStream.flush();//출력
+	       }catch (Exception e) {
+	           e.printStackTrace();
+	       }finally{
+	           if(servletOutputStream!=null){
+	               try{
+	                   servletOutputStream.close();
+	               }catch (IOException e){
+	                   e.printStackTrace();
+	               }
+	           }
+	           if(fileInputStream!=null){
+	               try{
+	                   fileInputStream.close();
+	               }catch (IOException e){
+	                   e.printStackTrace();
+	               }
+	           }
+	       }
+	   }
 	
 	
 }

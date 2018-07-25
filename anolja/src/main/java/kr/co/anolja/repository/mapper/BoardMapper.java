@@ -33,7 +33,7 @@ public interface BoardMapper {
 	public void updateReplyBoard(Board board);
 	public void updateBno(int getbNo);
 	
-	public List<String> selectFileNo(int no);
+	public List<BoardFile> selectFileNo(int no);
 	
 	public int selectCommentCount(int no);
 	

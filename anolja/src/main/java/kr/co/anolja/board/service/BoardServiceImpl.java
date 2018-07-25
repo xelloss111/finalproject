@@ -160,7 +160,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<String> selectFileNo(int no) {
+	public List<BoardFile> selectFileNo(int no) {
 		return boardMapper.selectFileNo(no);
 	}
 
