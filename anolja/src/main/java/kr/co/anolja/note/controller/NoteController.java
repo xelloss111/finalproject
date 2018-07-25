@@ -79,12 +79,10 @@ public class NoteController {
 	
 	@RequestMapping("/checknote")
 	@ResponseBody
-	public String checkNote(@RequestParam(value="readNo")int id) {
+	public void checkNote(@RequestParam(value="readNo")int id) {
 		System.out.println("업데이트할 번호:"+id);
 		
 		noteService.checkNote(id);
-		
-		return "체크되었습니다.";
 	}
 	
 //	@RequestMapping("/getUserList")

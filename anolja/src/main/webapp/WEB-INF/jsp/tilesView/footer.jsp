@@ -185,7 +185,7 @@
    		 type : "GET",
    		 dataType: "JSON"
    		 }).done(function(result){
-   			 alert(result);
+//    			 alert(result);
    		 })
        	 /*읽음 상태 변경 취소*/ 
        	 
@@ -228,7 +228,8 @@
     				data : JSON.stringify(checkedList),
     				contentType:'application/json',
     				type : "POST",
-    				dataType : "JSON"
+    				dataType : "JSON",
+    				async : false
     			})
     			.done(function(result) {
     				$.ajax({
