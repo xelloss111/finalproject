@@ -209,6 +209,7 @@
          };
     	
       /*삭제 기능 이벤트 걸기*/
+      $("#delteBtn").off("click")
       $("#delteBtn").click(function(){
     	  var checkedList = []; 
     	  $("#noteLogG > div > div > div.modal-body > div.w3-container > table > tbody input[type='checkbox']").each(function(){
@@ -219,17 +220,19 @@
     		}
     	  });
     	  console.log("-------------------------------")
+    	  
     	  if(checkedList.length == 0){
-    		  alert("삭제할 대상을 체크해주세요.")
+    		  alert("삭제할 대상을 체크해주세요.");
     		  return;
     	  }
+    	  
+    	  alert("반복되는가");
     		$.ajax({
     				url : "${pageContext.request.contextPath}/deletenote",
     				data : JSON.stringify(checkedList),
     				contentType:'application/json',
     				type : "POST",
     				dataType : "JSON",
-    				async : false
     			})
     			.done(function(result) {
     				$.ajax({
@@ -447,19 +450,21 @@
          					url : "${pageContext.request.contextPath}/user/idCheck",
          					data : {id:$("#name").val()},
          					type : "POST",
-         			    dataType : "JSON"
+         			    dataType : "JSON",
+         				   async : false
          				}).done(function(result){
          					isId=result.id;
          					console.log("유저에서 넘어온 값"+result.id);
          					
-         					if(isId != $("#name").val()){
-             					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
-             					return;
-             				}
+         					
          				});
          				console.log("이즈아이디:"+isId);
          				console.log("다른 값:"+$("#name").val())
          				
+         				if(isId != $("#name").val()){
+         					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
+         					return;
+         				}
          			
          				
          				if($("#form1 > p.title > input").val()==""){
