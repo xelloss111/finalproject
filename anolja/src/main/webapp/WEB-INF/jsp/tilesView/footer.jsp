@@ -440,13 +440,14 @@
          			//글쓰기 폼에서 값 제출시
          			$("#form1").submit(function(event){
          				if(event.preventDefault){event.preventDefault()};
-         				let isId;
+         				var isId;
          				
          				$.ajax({
          					url : "${pageContext.request.contextPath}/user/idCheck",
          					data : {id:$("#name").val()},
          					type : "POST",
-         			    dataType : "JSON"		
+         			    dataType : "JSON",
+         			        async: false,
          				}).done(function(result){
          					isId=result.id;
          					console.log("유저에서 넘어온 값"+result.id);
