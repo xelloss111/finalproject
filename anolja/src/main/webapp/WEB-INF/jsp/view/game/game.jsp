@@ -162,7 +162,7 @@
     		}
     		else if (evt.data.includes('그림이 마음에')) {
     			$("#rcmndDiv").show();
-    			$("#rcmndDiv").text(evt.data);
+    			$("#rcmndDiv").html(evt.data);
     		}
     		else if (evt.data.includes('hide')) {
     			$("#rcmndDiv").hide();
@@ -431,7 +431,7 @@
 	        				clearInterval(waitingID);
 							return;
 						}
-        				ws.send("정답은 ["+currentQue+"]입니다. 그림이 마음에 드셨나요? 그럼 추천을 눌러주세요! 게임은 "+waiting--+"초 뒤 다시 시작합니다.");
+        				ws.send("정답은 ["+currentQue+"]입니다.<br>그림이 마음에 드셨나요?<br>그럼 추천을 눌러주세요!<br>게임은 <b>"+waiting--+"초</b> 뒤 다시 시작합니다.");
         			}
         			else {
         				clearInterval(waitingID);

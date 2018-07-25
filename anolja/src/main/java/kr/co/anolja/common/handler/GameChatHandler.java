@@ -152,7 +152,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			user.setId(id);
 			mapper.updateGameVictory(user);
 			for (WebSocketSession wss : users) {
-				wss.sendMessage(new TextMessage("notice:"+id+"님 ["+message.getPayload()+"] 정답입니다!!!"));
+				wss.sendMessage(new TextMessage("notice:"+id+"님 ["+message.getPayload()+"] <br>정답입니다!!!"));
 				flag = false;
 			}
 			
