@@ -593,12 +593,8 @@ function uploadProfileFile(file) {
     			if (data.endsWith("완료")) {
     				swal({
     					text: data
-    				}).then((val) => {
-    					$('.photoArea').children('img').attr('id', 'user');
-    					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-    					$('.profileImageArea').children('img').attr('id', 'user');
-    					$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
     				});
+    				imageLoad();    				
     			} else {
     				swal({
     					text: data,
@@ -621,12 +617,8 @@ function uploadProfileFile(file) {
     			if (data.endsWith("완료")) {
     				swal({
     					text: data
-    				}).then((val) => {
-    					$('.photoArea').children('img').attr('id', 'user');
-    					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-    					$('.profileImageArea').children('img').attr('id', 'user');
-    					$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
     				});
+    				imageLoad();
     			} else {
     				swal({
     					text: data,
