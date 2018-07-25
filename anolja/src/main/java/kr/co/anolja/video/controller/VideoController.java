@@ -34,7 +34,10 @@ public class VideoController {
 	//리스트에 원하는 동영상 저장하기
 	@RequestMapping(value="videoSave")
 	@ResponseBody
-	public List<Video> videoList(Video video) {
+	public List<Video> videoList(Video video, HttpSession session, Model model) {
+		String userId =(String)session.getAttribute("id");
+		model.addAttribute("delList", service.alldata(userId));
+		
 		return service.insert(video);
 	}
 	

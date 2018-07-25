@@ -222,7 +222,7 @@ $(function() {
 			json.tankId = "${delList.tankId}";
 			json.tankName = "${delList.tankName}";
 			json.videoNo = "${delList.videoNo}";
-			json.videoTitle = "`${delList.videoTitle}`";
+			json.videoTitle = `${delList.videoTitle}`;
 			json.videoImg = "${delList.videoImg}";
 			resultdelbox.push(json);
 		</c:forEach>
@@ -239,6 +239,7 @@ $("#submit").click(function () {
 	var selectBoxResultHtml='';
 	var modal2FolderHtml ='';
 	var videoDelHtml ='';
+
 	
 	saveTankId = option.value;
 	saveTankName = option.innerText;
@@ -276,7 +277,8 @@ $("#submit").click(function () {
 						jQuery('#' + visible_modal).modal('hide');
 						return;
 					});
-					
+
+				//main selectbox
 				selectBoxResultHtml += '	<option value="tank0">  MY VIDEO BOX </option> ';
 				// select 박스 추가해주기
 				$("#myTank_list").html(selectBoxResultHtml);
@@ -306,18 +308,15 @@ $("#submit").click(function () {
         				modal2FolderHtml += '	</div>';
 
         				modal2FolderHtml += '	<div id="videoListHide">';
+        				
 					for (var v = 0; v < resultdelbox.length; v++) {
 						// BOX 안의 동영상 리스트 
+							var deleteImgList = resultdelbox[v].videoImg;
+							var deleteNoList = resultdelbox[v].videoNo;
+							var deleteTitleList = resultdelbox[v].videoTitle;
+							var deleteTankIdList = resultdelbox[v].tankId;
 						
-						var deleteImgList = resultdelbox[v].videoImg;
-						var deleteNoList = resultdelbox[v].videoNo;
-						var deleteTitleList = resultdelbox[v].videoTitle;
-						var deleteTankIdList = resultdelbox[v].tankId;
-						
-// 						if(deleteTankIdList == selectTankID) {
-							
-							
-// 						}
+						if(deleteTankIdList == tankList_tankId) {
 						
 							modal2FolderHtml += '		<ul class="seldelvideo">';
 							modal2FolderHtml += '			<li class="videoImg">';
@@ -332,14 +331,14 @@ $("#submit").click(function () {
 							modal2FolderHtml += '				<input type="button" value="삭제"  class="delVideoBtn"> ';
 							modal2FolderHtml += '			</li> ';
 							modal2FolderHtml += '		</ul> ';
+							}//if추가
 							
-	
 						};//동영상 추가 for
-						
 						
 						modal2FolderHtml += '	</div> ';
         				//select 추가
         				selectBoxResultHtml += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
+
         				
 				};//폴더 for
 				
@@ -420,9 +419,16 @@ $(document).on('click', '.updtankBtn', function(){
 	
 	$('body').on('keydown','.folderInput', function(){
 		$(this).parent().next().children(".updtankBtn").attr("class","secBtn").val("완료");
+		$(this).parent().next().children(".deltankBtn").attr("class","backBtn").val("취소");
 	});
-
-	
+		// BOX 이름 저장 취소 클릭
+		$(document).on('click','.backBtn', function(){
+			$('.secBtn').attr("class","updtankBtn").val("변경");
+			$('.backBtn').attr("class","deltankBtn").val("삭제");
+			$('.folderInput').attr('disabled', true);
+		});
+		
+		// BOX 이름 변경 시도
 		$(document).on('click','.secBtn', function(){
 			var selectBoxResultHtml2 = '';
 			var modal2FolderHtml2 ='';
@@ -508,6 +514,7 @@ $(document).on('click', '.updtankBtn', function(){
 			var targetTankid = $($(this).parent().prev().children('.hdnTankId')).val();
 			var selectBoxResultHtml3 = '';
 			var modal2FolderHtml3 ='';
+			var selectModal1Box ='';
 			
 			swal({
 				  title: "정말로 BOX를 삭제할까요?",
@@ -535,7 +542,8 @@ $(document).on('click', '.updtankBtn', function(){
 							// 삭제 후 재로딩
 							// main 화면에 바뀐 저장소 이름으로 재로딩
 						selectBoxResultHtml3 += '	<option value="tank0"> MY VIDEO BOX </option> ';
-
+						//modal1 selectbox
+		 				selectModal1Box = '<option value="tank0">VIDEO BOX LIST</option>';
 						
 						for (var t = 0; t < result.length; t++) {
 
@@ -545,6 +553,9 @@ $(document).on('click', '.updtankBtn', function(){
 								
 								selectBoxResultHtml3 += '	<option value="' + tankList_tankId+ '">' +tankList_tankName+ '</option> ';
 								// select 박스 끝
+								
+								//modal1에 있는 my video list select box
+								selectModal1Box += '	<option value="' +tankList_tankId+ '">' +tankList_tankName+ '</option> ';
 								
 								// modal2 folder
 		        				modal2FolderHtml3 += '<div class="boxListDiv">';
@@ -568,6 +579,7 @@ $(document).on('click', '.updtankBtn', function(){
 						// select 박스 추가해주기
 						$("#myTank_list").html(selectBoxResultHtml3);
 						$("#accordion").html(modal2FolderHtml3);
+		 				$("#tank_list").html(selectModal1Box);
 						
 						//재로딩 끝
 						}

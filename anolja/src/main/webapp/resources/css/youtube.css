@@ -944,6 +944,25 @@ hr {
 	border-color:#428e9e;
 	background: #428e9e;
 }
+.backBtn {
+	width: 30%;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 5px;
+	background: #ffc40f;
+	border-color:#ffc40f;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
+}
+.backBtn:hover {
+	border-color:#ffc40f;
+	background: #ffc40f;
+}
+.backBtn:focus {
+	border-color:#ffc40f;
+	background: #ffc40f;
+}
 /* 동영상 삭제  */
 #videoListHide {
 	display: none;
