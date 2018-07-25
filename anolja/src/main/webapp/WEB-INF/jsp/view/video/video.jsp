@@ -288,7 +288,6 @@ $("#submit").click(function () {
 						// select 박스 시작
 						var tankList_tankId = result[t].tankId;
 						var tankList_tankName = result[t].tankName;
-
 						
         				// 내 VIDEO BOX
         				modal2FolderHtml += '	<div class="boxListDiv">';
@@ -666,11 +665,7 @@ $(document).on("click",".delVideoBtn", function(){
     // 부모 저장소의 tankId
     var selectTankID = $(this).parent().parent().parent().prev().children().children('.folderTankTitle').children('.hdnTankId').val();
     
-    console.log("클릭한 videoNo :"+  videoNo);
-    console.log("클릭한 tankID :"+  selectTankID);
-    
     // 담아서 뿌려줄 HTML
-
     //video영역
     var videoDelHtml ='';
 	
@@ -681,7 +676,7 @@ $(document).on("click",".delVideoBtn", function(){
 			   },
 		url: "selectDalVideo",
 		dataType:"json",
-		success: function (resultdelbox) {
+		success: function (result) {
 			swal({
 				text: "동영상 삭제 완료!",
 				icon: "success",
@@ -690,32 +685,30 @@ $(document).on("click",".delVideoBtn", function(){
 			
 			//삭제 처리 후 html 
 			
-			
 			// BOX 안의 동영상 리스트
-			for (var v = 0; v < resultdelbox.length; v++) {
-				var deleteImgList = resultdelbox[v].videoImg;
-				var deleteNoList = resultdelbox[v].videoNo;
-				var deleteTitleList = resultdelbox[v].videoTitle;
-				var deleteTankIdList = resultdelbox[v].tankId;
+			for (var v = 0; v < result.length; v++) {
+					var deleteImgList = result[v].videoImg;
+					var deleteNoList = result[v].videoNo;
+					var deleteTitleList = result[v].videoTitle;
+					var deleteTankIdList = result[v].tankId;
 				
-		
-				//저장소의 동영상 리스트
-				if(deleteTankIdList == selectTankID) {
+					//저장소의 동영상 리스트
+					if(deleteTankIdList == selectTankID) {
 					
-					videoDelHtml += '<li class="videoImg">';
-					videoDelHtml += '	<img src="'+ deleteImgList +'" class="hdnImg"/>';
-					videoDelHtml += '</li>';
-					videoDelHtml += '<li class="selVideoTitle">';
-					videoDelHtml += '	<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
-					videoDelHtml += '	<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
-					videoDelHtml += '	<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
-					videoDelHtml += '</li> ';
-					videoDelHtml += '<li class="selvideoBtnArea"> ';
-					videoDelHtml += '<input type="button" value="삭제"  class="delVideoBtn"> ';
-					videoDelHtml += '</li> ';
-				}
-			}
+						videoDelHtml += '<li class="videoImg">';
+						videoDelHtml += '	<img src="'+ deleteImgList +'" class="hdnImg"/>';
+						videoDelHtml += '</li>';
+						videoDelHtml += '<li class="selVideoTitle">';
+						videoDelHtml += '	<input type="text" value="' + deleteTitleList +'" class="folderInput" disabled="disabled">';
+						videoDelHtml += '	<input type="hidden" value="' + deleteTankIdList +'" class="hdnTankId">';
+						videoDelHtml += '	<input type="hidden" value="' + deleteNoList + '" class="hdnVideoNo"> ';
+						videoDelHtml += '</li> ';
+						videoDelHtml += '<li class="selvideoBtnArea"> ';
+						videoDelHtml += '	<input type="button" value="삭제"  class="delVideoBtn"> ';
+						videoDelHtml += '</li> ';
+					}//if
 					targetBtn.parent().parent().html(videoDelHtml);
+				}//for
 			}//success
     	
     });
@@ -725,8 +718,7 @@ $(document).on("click",".delVideoBtn", function(){
 
   $( function() {
     $( "#accordion" ).accordion({
-      collapsible: true,
-      animate :100
+      collapsible: true
     });
   });
 

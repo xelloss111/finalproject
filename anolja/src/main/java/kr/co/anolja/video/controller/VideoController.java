@@ -34,10 +34,7 @@ public class VideoController {
 	//리스트에 원하는 동영상 저장하기
 	@RequestMapping(value="videoSave")
 	@ResponseBody
-	public List<Video> videoList(Video video, HttpSession session, Model model) {
-		String userId =(String)session.getAttribute("id");
-		
-//		List<Video> delList = service.alldata(userId);
+	public List<Video> videoList(Video video) {
 		
 		return service.insert(video);
 	}
@@ -89,9 +86,9 @@ public class VideoController {
 		service.seldelvideo(video);
 		
 		//삭제 처리 후 모든 데이터 돌려주기
-		List<Video> resultdelbox = service.alldata(video.getId());
-		model.addAttribute("resultdelbox", resultdelbox);
+		List<Video> result = service.alldata(video.getId());
+		model.addAttribute("result", result);
 		
-		return resultdelbox;
+		return result;
 	}
 }
