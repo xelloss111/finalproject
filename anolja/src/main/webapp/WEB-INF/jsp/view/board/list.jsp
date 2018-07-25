@@ -150,6 +150,7 @@
 	}
 
 	function searchKey() {
+		$(".content_row_3").hide();
 		if($("#searchBar").val() == "") {
 			swal("검색어를 입력해주세요");
 			return false;
