@@ -151,7 +151,7 @@
     		html +=	'<tr class="trLine">'+ 
     		'<td>'+'<input type="checkbox" name=\"ch'+j+'\" value='+result[j].id+'></td>'+
     		'<td>'+result[j].sendId+ "</td>" + 
-    		'<td>'+result[j].title+'</td>' + 
+    		'<td class="titleHover">'+result[j].title+'</td>' + 
     		'<td>'+dateTime.toLocaleDateString().slice(0,-1)+'</td>' + 
     		'<td>'+result[j].status+'</td>'+
     		'</tr>'; 
@@ -185,7 +185,7 @@
    		 type : "GET",
    		 dataType: "JSON"
    		 }).done(function(result){
-//    			 alert(result);
+//    			 swal(result);
    		 })
        	 /*읽음 상태 변경 취소*/ 
        	 
@@ -222,11 +222,11 @@
     	  console.log("-------------------------------")
     	  
     	  if(checkedList.length == 0){
-    		  alert("삭제할 대상을 체크해주세요.");
+    		  swal("삭제할 대상을 체크해주세요.");
     		  return;
     	  }
     	  
-    	  alert("반복되는가");
+    	  swal("반복되는가");
     		$.ajax({
     				url : "${pageContext.request.contextPath}/deletenote",
     				data : JSON.stringify(checkedList),
@@ -261,7 +261,7 @@
 			$(getObject).click(function(e) {
 				/*로그인 여부 확인 얼럿*/
  				if(sessionId == 'null'){
- 					alert("로그인을  해주세요.");
+ 					swal("로그인을  해주세요.");
  					return;
  				}
 				//페이징 값 초기화
@@ -315,7 +315,7 @@
 				}
 				
 				if(result.length == 0){
-					alert("다음 페이지가 존재하지 않습니다.");
+					swal("다음 페이지가 존재하지 않습니다.");
 					notePageNo = notePageNo-10;
 					return;
 				}
@@ -332,7 +332,7 @@
 			notePageNo = notePageNo-10;
 			
 			if(notePageNo == -10){
-				alert("이전 페이지가 존재하지 않습니다.");
+				swal("이전 페이지가 존재하지 않습니다.");
 				notePageNo = notePageNo+10;
 				return;
 			}
@@ -346,10 +346,10 @@
 				for(let i = 0; i < result.length; i++) {
 					console.log(result[i].title);
 				}
-// 				alert(notePageNo);
+// 				swal(notePageNo);
 				/*
 				if(result.length == 0){
-					alert("더 이상 보여줄 쪽지가 없습니다.");
+					swal("더 이상 보여줄 쪽지가 없습니다.");
 					notePageNo = notePageNo+10;
 					return;
 				}
@@ -364,7 +364,7 @@
             notePageNo = 0;
 			
 			if(notePageNo == -10){
-				alert("이전 페이지가 존재하지 않습니다.");
+				swal("이전 페이지가 존재하지 않습니다.");
 				notePageNo = notePageNo+10;
 				return;
 			}
@@ -378,10 +378,10 @@
 				for(let i = 0; i < result.length; i++) {
 					console.log(result[i].title);
 				}
-// 				alert(notePageNo);
+// 				swal(notePageNo);
 				/*
 				if(result.length == 0){
-					alert("더 이상 보여줄 쪽지가 없습니다.");
+					swal("더 이상 보여줄 쪽지가 없습니다.");
 					notePageNo = notePageNo+10;
 					return;
 				}
@@ -462,18 +462,18 @@
          				console.log("다른 값:"+$("#name").val())
          				
          				if(isId != $("#name").val()){
-         					alert("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
+         					swal("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
          					return;
          				}
          			
          				
          				if($("#form1 > p.title > input").val()==""){
-         					alert("제목을 입력해주십시오.");
+         					swal("제목을 입력해주십시오.");
          					return;
          				}
          				
          				if($("#form1 > p.content > textarea").val()==""){
-         					alert("내용을 입력해주십시오.");
+         					swal("내용을 입력해주십시오.");
          					return;
          				}
          				
@@ -488,7 +488,7 @@
          					dataType : "JSON"
          				})
          				.done(function (result) {
-         					alert(result);
+         					swal(result);
          					$.ajax({
          						url : "${pageContext.request.contextPath}/getnotelist",
          						type : "GET",

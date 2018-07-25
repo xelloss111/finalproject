@@ -558,6 +558,17 @@
 						</li>
 					</ul>
 				</div>
+				
+				<!-- 매치기록 헤더부분 -->
+				<div class="match-header" >
+				<span class="log-header" style="text-align:center">TimePlayed</span>
+				<span class="log-header" style="margin-left: 5;text-align: right;">GameMode</span>
+				<span class="log-header" style="margin-left: -21px;text-align: right;">Rank</span>
+				<span class="log-header" style="margin-left: 69px;width: 8%;text-align: right">Kill</span>
+				<span class="log-header" style="margin-left: 67px;text-align: right;">Damage</span>
+				<span class="log-header" style="margin-left: 52px;text-align: right;">Distance</span>
+				<span class="log-header" style="margin-left: 67px;text-align: right;width: 5%;">Map</span>
+				</div>
 
 				<div class="matches-list-layer">
 					<ul class="matches__list">
@@ -996,45 +1007,21 @@
 		"<img src='${pageContext.request.contextPath}/resources/images/battleground/exclamation-mark.png' width='70px' height='70px'>"+
 		"<p>표시할 전적이 없습니다.</p></div></div></div></li>";
 		
-		$(".allbtn").on("click", function() {
-			displayCnt = 4;
-			$("ul.matches__list").html(all);
-			$("ul.matches__list li").eq(displayCnt).nextAll().css(
-					"display", "none");
-			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary' style='text-align:center;'>표시할 매치기록이 존재하지 않습니다.</div></li>");
-			}
-		});
-		
-		$(".solobtn").on("click", function() {
-			displayCnt = 4;
-			$("ul.matches__list").html(solo);
-			$("ul.matches__list li").eq(displayCnt).nextAll().css(
-					"display", "none");
-			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item' style='text-align:center';><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
-			}
-		});
-		
-		$(".duobtn").on("click", function() {
-			displayCnt = 4;
-			$("ul.matches__list").html(duo);
-			$("ul.matches__list li").eq(displayCnt).nextAll().css(
-					"display", "none");
-			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item' style='text-align:center;'><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
-			}
-		});
-		
-		$(".squadbtn").on("click", function() {
-			displayCnt = 4;
-			$("ul.matches__list").html(squad);
-			$("ul.matches__list li").eq(displayCnt).nextAll().css(
-					"display", "none");
-			if($("ul.matches__list").children().length == 0){
-				$("ul.matches__list").html("<li class='matches-item' style='text-align:center';><div class='matches-item_summary'>표시할 매치기록이 존재하지 않습니다.</div></li>");
-			}
-		});
+		function putEventBtn(target,text){
+			$(target).on("click", function() {
+				displayCnt = 4;
+				$("ul.matches__list").html(text);
+				$("ul.matches__list li").eq(displayCnt).nextAll().css(
+						"display", "none");
+				if($("ul.matches__list").children().length == 0){
+					$("ul.matches__list").html("<li class='matches-item'><div class='matches-item_summary' style='text-align:center;'>표시할 매치기록이 존재하지 않습니다.</div></li>");
+				}
+			});
+		};
+		putEventBtn(".allbtn",all);
+		putEventBtn(".solobtn",solo);
+		putEventBtn(".duobtn",duo);
+		putEventBtn(".squadbtn",squad);
 
 	})
 </script>
