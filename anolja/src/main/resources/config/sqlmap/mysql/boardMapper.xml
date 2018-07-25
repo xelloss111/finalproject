@@ -107,7 +107,12 @@
 		) values (
 			#{bNo}, #{path}, #{oriName}, #{sysName}, #{fileSize}		
 		)
-	</insert> 
+	</insert>
+	
+	<delete id="boardDeleteFile" parameterType="int">
+		delete from tb_file
+		 where bno = #{bno}
+	</delete> 
 	
 	
 	<!-- 검색 시작 -->

@@ -76,7 +76,7 @@ $(document).on('click', '#login', function() {
 		var lform = $('#loginForm').serialize();
 		$.ajax({
 			url: ctx + "/user/login",
-			type: 'post',
+			type: 'POST',
 			data: lform,
 			success: function(result) {
 				if (result.startsWith('/')) {

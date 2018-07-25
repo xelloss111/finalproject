@@ -79,7 +79,7 @@ var App = {
 		else if(effect === 'glasses') {
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 3,
+											"interval" : 10,
 											"min_neighbors" : 1 });
 
 			// Draw glasses on everyone!
@@ -94,7 +94,7 @@ var App = {
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 4,
+											"interval" : 10,
 											"min_neighbors" : 1 });
 
 			// Draw rabbit on everyone!
@@ -111,7 +111,7 @@ var App = {
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 4,
+											"interval" : 10,
 											"min_neighbors" : 1 });
 	
 			// Draw mickey on everyone!
@@ -128,7 +128,7 @@ var App = {
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 4,
+											"interval" : 10,
 											"min_neighbors" : 1 });
 	
 			// Draw mini on everyone!
@@ -145,7 +145,7 @@ var App = {
 			
 			var comp = ccv.detect_objects({ "canvas" : (App.canvas),
 											"cascade" : cascade,
-											"interval" : 4,
+											"interval" : 10,
 											"min_neighbors" : 1 });
 	
 			// Draw mini on everyone!

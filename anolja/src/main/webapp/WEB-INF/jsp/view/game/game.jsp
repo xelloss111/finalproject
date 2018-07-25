@@ -87,7 +87,7 @@
     	
     	$(function () {
     		// 서버의 웹소켓 객체 연결하기
-    		ws = new WebSocket("ws://192.168.10.115/anolja/gameChat.do");
+    		ws = new WebSocket("ws://192.168.0.35:8000/anolja/gameChat.do");
     		ws.onopen = function () {
     			console.log("웹소켓 서버 접속 성공");
     			console.log("${id}");
@@ -261,7 +261,7 @@
         paintCtx.lineCap = "round";
         
         $(document).ready(function () {
-        	paintWs = new WebSocket("ws://192.168.10.115/anolja/gamePaint.do");
+        	paintWs = new WebSocket("ws://192.168.0.35:8000/anolja/gamePaint.do");
         	
 	        $("canvas").on({
 	            mousedown: function (e) {
@@ -511,7 +511,7 @@
     		$("#funny").off('click');
     		ws.send("rcmndCnt:"+rcmndCnt);
     		
-    		if (rcmndCnt == 4) {
+    		if (rcmndCnt == 2) {
 	   			snapshot();
 	   			uploadFile(canvasInfo);
 	   		}

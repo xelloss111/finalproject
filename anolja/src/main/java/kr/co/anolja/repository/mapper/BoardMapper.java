@@ -14,6 +14,7 @@ public interface BoardMapper {
 	public List<Board> boardList(int pageNo) throws Exception;
 	public void boardInsert(Board board) throws Exception;
 	public void boardInsertFile(BoardFile boardFile);
+	public void boardDeleteFile(int bNo);
 	public void updateViewCnt(int bNo);
 	
 	public List<Board> searchBoard(String board);

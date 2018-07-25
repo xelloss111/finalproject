@@ -40,7 +40,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 	public static Map<String, Integer> rightAnswerCnt = new HashMap<>();
 	int cnt = 0;
 	
-	final int maxUsers = 5;
+	final int maxUsers = 3;
 	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -83,7 +83,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 			}
 			
 			// 모든 게임이 끝나면 리셋시키기
-			if (questionNo == 10) {
+			if (questionNo == 3) {
 				questionNo = 0;
 				userNo = 0;
 				Game.setQuestionNo(null);
@@ -190,7 +190,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 	 * @throws InterruptedException
 	 */
 	private void endGame(WebSocketSession session) throws IOException, InterruptedException {
-		if (questionNo == 10) {return;}
+		if (questionNo == 3) {return;}
 //		for (int i = 5; i >= 1; i--) { 
 //			session.sendMessage(new TextMessage("notice:초 후 게임을 시작합니다."));
 //			Thread.sleep(1000); 
@@ -212,7 +212,7 @@ public class GameChatHandler extends TextWebSocketHandler {
 		
 		System.out.println("문제번호: "+questionNo);
 		// 10문제 끝나면 게임 끝내기
-		if (questionNo == 10) {
+		if (questionNo == 3) {
 			for (WebSocketSession wss : users) {
 				wss.sendMessage(new TextMessage("notice:모든 게임이 끝났습니다. 메인으로 넘어갑니다!~"));
 			}

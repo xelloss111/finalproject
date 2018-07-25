@@ -20,7 +20,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 		connectedUsers = new ArrayList<WebSocketSession>();
 	}
 	
-	final int maxUsers = 5;
+	final int maxUsers = 3;
 	
 	@Override
 	public synchronized void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -54,7 +54,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 			if (GameChatHandler.userNo > GameChatHandler.chatList.size()-1) {
 				GameChatHandler.userNo = 0;
 			}
-			if (GameChatHandler.questionNo < 10) {
+			if (GameChatHandler.questionNo < 3) {
 //				for (int i = 0; i < GameChatHandler.chatList.size(); i++) {
 //					if (GameChatHandler.chatList.get(GameChatHandler.userNo) == null) {
 //						System.out.println("4 : " + GameChatHandler.userNo);
@@ -65,7 +65,7 @@ public class GamePaintHandler extends TextWebSocketHandler {
 				Game.setQuestionNo(GameChatHandler.questions.get(GameChatHandler.questionNo));
 				Game.setQuestionuser(GameChatHandler.chatList.get(GameChatHandler.userNo));
 			}
-			if (GameChatHandler.questionNo == 10) {
+			if (GameChatHandler.questionNo == 3) {
 				GameChatHandler.questions = null;
 			}
 		}

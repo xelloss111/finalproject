@@ -28,6 +28,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void boardDelete(int no) throws Exception {
+		boardMapper.boardDeleteFile(no);
 		boardMapper.boardDelete(no);
 	}
 

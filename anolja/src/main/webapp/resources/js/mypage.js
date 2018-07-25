@@ -76,22 +76,26 @@ $(document).on('click', '#mypage', function() {
 	$(mypage).append(photoInput);
 	
 	// 서버 통신으로 사용자 프로필 이미지 경로가 존재하는지 체크 후 코드 추가
-	imageLoad();
-//	$.ajax({
-//		url: ctx + '/user/getUserInfo',
-//		data: {id : sessionId},
-//		dataType: 'json',
-//		success: function(result) {
-//			if(result.filePath == null) {
-//				$(photoArea).children('img').attr('id', 'default');
-//				$(photoArea).children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
-//			} else {
-//				$(photoArea).children('img').attr('id', 'user');
-//				$(photoArea).children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-//				$('.removeIcon').show();
-//			}
-//		}
-//	});
+	$.ajax({
+		url: ctx + '/user/getUserInfo',
+		data: {id : sessionId},
+		dataType: 'json',
+		success: function(result) {
+			if(result.filePath == null) {
+				$('.photoArea').children('img').attr('id', 'default');
+				$('.photoArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+				$('.profileImageArea').children('img').attr('id', 'default');
+				$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+			} else {
+				$('.photoArea').children('img').attr('id', 'user');
+				$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+				$('.profileImageArea').children('img').attr('id', 'user');
+				$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+				$('#addProfile').hide();
+				$('.removeIcon').show();
+			}
+		}
+	});
 
 	// 프로필 영역 이미지 등록 처리
 	$(document).on('dragover', '.photoArea > img', function(event) { 
@@ -110,7 +114,8 @@ $(document).on('click', '#mypage', function() {
     };
 	
 	// 프로필 이미지 출력 팝업
-	$(document).on('click', ".photoIcon", function() {
+	$(document).on('click', ".photoIcon", function(e) {
+		e.preventDefault();
 //			var windowOpen = window.open("about:blank", "resizable=1", "pop");
 //			windowOpen.location.href = ctx + '/user/profile'
 		
@@ -556,78 +561,84 @@ $(document).on('click', '#mypage', function() {
 	
 	// fade 토글로 display 처리
 	$(mypage).fadeToggle('slow');
-});
-
-function imageLoad() {
-	$.ajax({
-		url: ctx + '/user/getUserInfo',
-		data: {id : sessionId},
-		dataType: 'json',
-		success: function(result) {
-			if(result.filePath == null) {
-				$('.photoArea').children('img').attr('id', 'default');
-				$('.photoArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
-				$('.profileImageArea').children('img').attr('id', 'default');
-				$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
-			} else {
-				$('.photoArea').children('img').attr('id', 'user');
-				$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-				$('.profileImageArea').children('img').attr('id', 'user');
-				$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
-				$('#addProfile').hide();
-				$('.removeIcon').show();
+	
+	function imageLoad() {
+		$.ajax({
+			url: ctx + '/user/getUserInfo',
+			data: {id : sessionId},
+			dataType: 'json',
+			success: function(result) {
+				if(result.filePath == null) {
+					$('.photoArea').children('img').attr('id', 'default');
+					$('.photoArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+					$('.profileImageArea').children('img').attr('id', 'default');
+					$('.profileImageArea').children('img').attr('src', ctx + '/resources/images/user/default-profile.png');
+				} else {
+					$('.photoArea').children('img').attr('id', 'user');
+					$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+					$('.profileImageArea').children('img').attr('id', 'user');
+					$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+					$('#addProfile').hide();
+					$('.removeIcon').show();
+				}
 			}
-		}
-	});
-}
-
-
-function uploadProfileFile(file) {
-	var sendUrl = '';
-	var fd = new FormData();
-	if (typeof file !== 'object') {
-		sendUrl = ctx + "/user/registProfileBase64Image";
-    	$.ajax({
-    		url: sendUrl,
-    		data: {id : sessionId, fileInfo : file},
-    		type: "POST",
-    		success: function (data) {
-    			if (data.endsWith("완료")) {
-    				swal({
-    					text: data
-    				});
-    				imageLoad();    				
-    			} else {
-    				swal({
-    					text: data,
-    					icon: 'error'
-    				});
-    			}
-    		}
-    	});
-	} else {
-	    fd.append("id", sessionId);
-    	fd.append("attach", file);
-		sendUrl = ctx + "/user/registProfileImage";
-    	$.ajax({
-    		url: sendUrl,
-    		data: fd,
-    		type: "POST",
-    		contentType: false,
-    		processData: false,
-    		success: function (data) {
-    			if (data.endsWith("완료")) {
-    				swal({
-    					text: data
-    				});
-    				imageLoad();
-    			} else {
-    				swal({
-    					text: data,
-    					icon: 'error'
-    				});
-    			}
-    		}
-    	});    		
+		});
 	}
-};
+	
+	
+	function uploadProfileFile(file) {
+		var sendUrl = '';
+		var fd = new FormData();
+		if (typeof file !== 'object') {
+			sendUrl = ctx + "/user/registProfileBase64Image";
+			$.ajax({
+				url: sendUrl,
+				data: {id : sessionId, fileInfo : file},
+				type: "POST",
+				success: function (data) {
+					if (data.endsWith("완료")) {
+						$('.photoArea').children('img').attr('id', 'user');
+						$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+						$('.profileImageArea').children('img').attr('id', 'user');
+						$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+						swal({
+							text: data
+						});
+					} else {
+						swal({
+							text: data,
+							icon: 'error'
+						});
+					}
+				}
+			});
+		} else {
+			fd.append("id", sessionId);
+			fd.append("attach", file);
+			sendUrl = ctx + "/user/registProfileImage";
+			$.ajax({
+				url: sendUrl,
+				data: fd,
+				type: "POST",
+				contentType: false,
+				processData: false,
+				success: function (data) {
+					if (data.endsWith("완료")) {
+						$('.photoArea').children('img').attr('id', 'user');
+						$('.photoArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+						$('.profileImageArea').children('img').attr('id', 'user');
+						$('.profileImageArea').children('img').attr('src', ctx + '/user/viewProfileImage?id='+sessionId);
+						swal({
+							text: data
+						});
+					} else {
+						swal({
+							text: data,
+							icon: 'error'
+						});
+					}
+				}
+			});    		
+		}
+	};
+});

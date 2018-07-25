@@ -9,7 +9,7 @@
 		select answer
 		  from tb_answer
 		 order by rand()
-		 limit 10
+		 limit 3
 	</select>
 	
 	<update id="updateGameVictory" parameterType="user">

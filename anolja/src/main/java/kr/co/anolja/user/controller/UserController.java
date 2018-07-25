@@ -146,7 +146,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "viewProfileImage")
-	public void viewProfileImage(String id, HttpServletResponse res) throws Exception {
+	public void viewProfileImage(@RequestParam("id") String id, HttpServletResponse res) throws Exception {
 		service.profileImageView(id, res);
 	}
 	
