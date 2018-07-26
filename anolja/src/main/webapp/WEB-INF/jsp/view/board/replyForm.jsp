@@ -74,7 +74,7 @@
     </style>
 <div id="board" style="order:4">
     	<form action="boardReply" method="POST" enctype="multipart/form-data">
-    		<input type="hidden" name="bNo" value="${board.bNo}" />
+<%--     		<input type="hidden" name="bNo" value="${board.bNo}" /> --%>
     		<input type="hidden" name="groupBno" value="${board.groupBno}" />
     		<input type="hidden" name="anonymousId" value="${sessionScope.id}" />
     		<input type="hidden" name="groupBlist" value="${board.groupBlist}" />

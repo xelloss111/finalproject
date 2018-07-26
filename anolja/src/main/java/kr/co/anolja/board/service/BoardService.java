@@ -40,6 +40,8 @@ public interface BoardService {
 
 	public List<Board> searchBoard(String board);
 
+	public void boardDeleteFile(int bNo);
+
 
 
 //	public int selectBoardCount(Page search);

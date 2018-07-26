@@ -169,6 +169,11 @@ public class BoardServiceImpl implements BoardService {
 	public int selectCommentCount(int no) {
 		return boardMapper.selectCommentCount(no);
 	}
+
+	@Override
+	public void boardDeleteFile(int bNo) {
+		boardMapper.boardDeleteFile(bNo);
+	}
 	
 	
 	

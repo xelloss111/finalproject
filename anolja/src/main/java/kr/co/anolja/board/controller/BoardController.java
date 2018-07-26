@@ -75,6 +75,7 @@ public class BoardController {
 	@RequestMapping("/delete")
 	public String boardDelete(HttpServletRequest request, int bNo) throws Exception{
 		boardService.boardDelete(bNo);
+		boardService.boardDeleteFile(bNo);
 		return "redirect:/board/list";
 	}
 	

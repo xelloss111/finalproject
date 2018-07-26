@@ -148,7 +148,7 @@ ${sessionSocpe.id}
 									<li style="margin-left:773px;"><a style="background-color:#37cc25;"href="${pageContext.request.contextPath}/board/replyForm?bNo=${board.bNo}">답글</a></li>
 									<li><a style="background:#f5db27;" href="updateForm?bNo=${board.bNo}">수정</a></li>
 <%-- 									<li><a onclick='return del();' id="kkkk" style="background:#d82f2f;" href="delete?bNo=${board.bNo}" role="button">삭제</a></li> --%>
-									<li><a id="kkkk" style="background:#d82f2f;" role="button">삭제</a></li>
+									<li><a id="kkkk" style="background:#d82f2f; cursor:pointer; role:button;">삭제</a></li>
 									<li><a style="background:#0faeea;" href="list">목록</a></li>
 								</ul>
 						</div>
