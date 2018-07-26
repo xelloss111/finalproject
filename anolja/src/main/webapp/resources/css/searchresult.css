@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.matches-item__column{
+	vertical-align: middle;
+}
+
 .content_section {
 	width: 100%;
 	order: 3;
@@ -199,6 +203,7 @@ ul {
 }
 
 .matches-item_summary {
+    height: 52px;
 	width: 100%;
 	display: table;
 	background-color: #f6f6f6;

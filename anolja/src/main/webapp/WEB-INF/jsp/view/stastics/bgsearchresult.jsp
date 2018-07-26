@@ -562,12 +562,12 @@
 				<!-- 매치기록 헤더부분 -->
 				<div class="match-header" >
 				<span class="log-header" style="text-align:center">TimePlayed</span>
-				<span class="log-header" style="margin-left: 5;text-align: right;">GameMode</span>
-				<span class="log-header" style="margin-left: -21px;text-align: right;">Rank</span>
-				<span class="log-header" style="margin-left: 69px;width: 8%;text-align: right">Kill</span>
-				<span class="log-header" style="margin-left: 67px;text-align: right;">Damage</span>
-				<span class="log-header" style="margin-left: 52px;text-align: right;">Distance</span>
-				<span class="log-header" style="margin-left: 67px;text-align: right;width: 5%;">Map</span>
+				<span class="log-header" style="margin-left: 8px;text-align: right;">GameMode</span>
+				<span class="log-header" style="margin-left: -20px;text-align: right;">Rank</span>
+				<span class="log-header" style="margin-left: 55px;width: 8%;text-align: center">Kill</span>
+				<span class="log-header" style="margin-left: 67px;text-align: left;">Damage</span>
+				<span class="log-header" style="margin-left: 27px;text-align: left;">Distance</span>
+				<span class="log-header" style="margin-left: 61px;text-align: right;width: 5%;">Map</span>
 				</div>
 
 				<div class="matches-list-layer">
@@ -578,29 +578,24 @@
 						<c:forEach var="mlog" items="${ulist}">
 							<li class="matches-item ${mlog.gameMode}">
 								<div class="matches-item_summary">
-									<div class="matches-item-column-status matches-item__column">
+									<div class="matches-item-column-status matches-item__column" style="width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;">
 										<i></i>
-										<div>게임 일시</div>
 										<div>${mlog.createdAt}</div>
 									</div>
-									<div class="matches-item-column-status matches-item__column">
-										<div>게임 모드</div>
+									<div class="matches-item-column-status matches-item__column" style="width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;">
 										<div class="matches-game-mode">${mlog.gameMode}</div>
 									</div>
-									<div class="matches-item-column-rank matches-item__column">
+									<div class="matches-item-column-rank matches-item__column" style="width: 12%;">
 										<div>${mlog.winPlace}</div>
-										<div>등</div>
 									</div>
 
-									<div class="matches-item-column-kill matches-item__column">
+									<div class="matches-item-column-kill matches-item__column" style="width: 13%;">
 										<div>${mlog.kills}</div>
-										<div>킬</div>
 									</div>
-									<div class="matches-item-column-damage matches-item__column">
+									<div class="matches-item-column-damage matches-item__column" style="width: 14%;">
 										<div>
 											<fmt:formatNumber value="${mlog.damageDealt}" pattern="0" />
 										</div>
-										<div>데미지</div>
 									</div>
 									<div class="matches-item-column-distance matches-item__column">
 										<div>
@@ -609,12 +604,10 @@
 												pattern="0" />
 											M
 										</div>
-										<div>총 이동 거리</div>
 									</div>
 
 									<div class="matches-item-column-distance matches-item__column">
 										<div>${mlog.mapName}</div>
-										<div>맵</div>
 									</div>
 									<div class="matches-item-column-team matches-item__column">
 
@@ -832,39 +825,32 @@
 		var all = "<c:forEach var='mlog' items='${ulist}'>" + 
 		"							<li class='matches-item ${mlog.gameMode}'>" + 
 		"								<div class='matches-item_summary'>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<i></i>\r\n" + 
-		"										<div>게임 일시</div>\r\n" + 
 		'										<div>"${mlog.createdAt}"</div>' + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
-		"										<div>게임 모드</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column' style='width: 12%;'>\r\n" + 
 		"										<div>${mlog.winPlace}</div>\r\n" + 
-		"										<div>등</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column' style='width: 13%;'>\r\n" + 
 		"										<div>${mlog.kills}</div>\r\n" + 
-		"										<div>킬</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column' style='width: 14%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>데미지</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>총 이동 거리</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		'										<div>"${mlog.mapName}"</div>' + 
-		"										<div>맵</div>" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
 		"									</div>\r\n" + 
@@ -875,39 +861,32 @@
 		var solo = "<c:forEach var='mlog' items='${soloMatchInfo}'>" + 
 		"							<li class='matches-item ${mlog.gameMode}'>" + 
 		"								<div class='matches-item_summary'>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<i></i>\r\n" + 
-		"										<div>게임 일시</div>\r\n" + 
 		'										<div>"${mlog.createdAt}"</div>' + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
-		"										<div>게임 모드</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column' style='width: 12%;'>\r\n" + 
 		"										<div>${mlog.winPlace}</div>\r\n" + 
-		"										<div>등</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column' style='width: 13%;'>\r\n" + 
 		"										<div>${mlog.kills}</div>\r\n" + 
-		"										<div>킬</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column' style='width: 14%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>데미지</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>총 이동 거리</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		'										<div>"${mlog.mapName}"</div>' + 
-		"										<div>맵</div>" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
 		"									</div>\r\n" + 
@@ -918,39 +897,32 @@
 		var duo = "<c:forEach var='mlog' items='${duoMatchInfo}'>" + 
 		"							<li class='matches-item ${mlog.gameMode}'>" + 
 		"								<div class='matches-item_summary'>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
-		"										<i></i>\r\n" + 
-		"										<div>게임 일시</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
+		"										<i></i>\r\n" + 	
 		'										<div>"${mlog.createdAt}"</div>' + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
-		"										<div>게임 모드</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column' style='width: 12%;'>\r\n" + 
 		"										<div>${mlog.winPlace}</div>\r\n" + 
-		"										<div>등</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column' style='width: 13%;'>\r\n" + 
 		"										<div>${mlog.kills}</div>\r\n" + 
-		"										<div>킬</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column' style='width: 14%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>데미지</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>총 이동 거리</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		'										<div>"${mlog.mapName}"</div>' + 
-		"										<div>맵</div>" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
 		"									</div>\r\n" + 
@@ -961,39 +933,32 @@
 		var squad = "<c:forEach var='mlog' items='${squadMatchInfo}'>" + 
 		"							<li class='matches-item ${mlog.gameMode}'>" + 
 		"								<div class='matches-item_summary'>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<i></i>\r\n" + 
-		"										<div>게임 일시</div>\r\n" + 
 		'										<div>"${mlog.createdAt}"</div>' + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-status matches-item__column'>\r\n" + 
-		"										<div>게임 모드</div>\r\n" + 
+		"									<div class='matches-item-column-status matches-item__column' style='width: 16%;padding-left: 12px;margin-left: 10px;border-left: 4px solid #cacaca;'>\r\n" + 
 		"										<div class='matches-game-mode'>${mlog.gameMode}</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-rank matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-rank matches-item__column' style='width: 12%;'>\r\n" + 
 		"										<div>${mlog.winPlace}</div>\r\n" + 
-		"										<div>등</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-kill matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-kill matches-item__column' style='width: 13%;'>\r\n" + 
 		"										<div>${mlog.kills}</div>\r\n" + 
-		"										<div>킬</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-damage matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-damage matches-item__column' style='width: 14%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>데미지</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
 		"										</div>\r\n" + 
-		"										<div>총 이동 거리</div>\r\n" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
 		'										<div>"${mlog.mapName}"</div>' + 
-		"										<div>맵</div>" + 
 		"									</div>\r\n" + 
 		"									<div class='matches-item-column-team matches-item__column'>\r\n" + 
 		"									</div>\r\n" + 
