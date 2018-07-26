@@ -597,7 +597,7 @@
 											<fmt:formatNumber value="${mlog.damageDealt}" pattern="0" />
 										</div>
 									</div>
-									<div class="matches-item-column-distance matches-item__column">
+									<div class="matches-item-column-distance matches-item__column" style='width: 15%;'>
 										<div>
 											<fmt:formatNumber
 												value="${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}"
@@ -729,6 +729,7 @@
 									            squadRank += "Diamond";
 									        }
 											
+									        
 											//함수화 필요
 											if(solo.roundsPlayed !=0 || ((solo.winPoints*100.36)+(solo.killPoints*19.61))/100 !=0 ||solo == null){
 											$($soloBox).find(".rank-score").text((((solo.winPoints*100.36)+(solo.killPoints*19.61))/100).toFixed(0));
@@ -843,7 +844,7 @@
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column' style='width: 15%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
@@ -879,7 +880,7 @@
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column' style='width: 15%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
@@ -915,7 +916,7 @@
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column' style='width: 15%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
@@ -951,7 +952,7 @@
 		"											<fmt:formatNumber value='${mlog.damageDealt}' pattern='0' />\r\n" + 
 		"										</div>\r\n" + 
 		"									</div>\r\n" + 
-		"									<div class='matches-item-column-distance matches-item__column'>\r\n" + 
+		"									<div class='matches-item-column-distance matches-item__column' style='width: 15%;'>\r\n" + 
 		"										<div>\r\n" + 
 		"											<fmt:formatNumber value='${mlog.walkDistance+mlog.rideDistance+mlog.swimDistance}' pattern='0' />\r\n" + 
 		"											M\r\n" + 
