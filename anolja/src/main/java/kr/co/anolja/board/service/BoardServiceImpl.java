@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
 				int index = file.getOriginalFilename().lastIndexOf(".");
 				ext = file.getOriginalFilename().substring(index);
 				
-				String saveFileName = "board -" + UUID.randomUUID().toString() + ext;
+				String saveFileName = "board-" + UUID.randomUUID().toString() + ext;
 				
 				file.transferTo(new File("c:/pilseong/upload/" + saveFileName));
 				
@@ -144,7 +144,7 @@ public class BoardServiceImpl implements BoardService {
 				
 				String saveFileName = "board-" + UUID.randomUUID().toString() + ext;
 				
-				file.transferTo(new File("c:/java-lec/upload/" + saveFileName));
+				file.transferTo(new File("c:/pilseong/upload/" + saveFileName));
 				
 				boardFile.setPath("c:/pilseong/upload/");
 				boardFile.setFileSize((int) fileSize);

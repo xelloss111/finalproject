@@ -82,6 +82,9 @@
 	</update>
 	
 	<insert id="boardReply" parameterType="board">
+	<selectKey resultType="int" keyProperty="bNo" order="AFTER" >
+             select last_insert_ID()
+    </selectKey>
 		insert into tb_board(
 			anonymous_id, title, content, group_blist, depth, group_bno 
 		)values(
