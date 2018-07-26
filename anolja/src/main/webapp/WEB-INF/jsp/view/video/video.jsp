@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/youtube.css">
 
-
+ 
 <section class="content_section">
 	<div class="content_row_1">
 
