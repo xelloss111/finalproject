@@ -37,9 +37,10 @@
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
-    color: rgb(134, 134, 134);
+/*     color: rgb(134, 134, 134); */
+    color: black;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .bubble {
@@ -52,8 +53,9 @@
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
-    color: rgb(134, 134, 134);
-    font-size: 20px;
+/*     color: rgb(134, 134, 134); */
+    color: black;
+    font-size: 25px;
     left: 13px;
 }
 .bubble:after {
@@ -70,7 +72,7 @@
 }
 
 .bubbleMe {
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 10px;
     position: relative;
     width: 200px;
@@ -80,7 +82,8 @@
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
-    color: rgb(134, 134, 134);
+/*     color: rgb(134, 134, 134); */
+    color: black;
 }
 
 .bubbleMe:after {
