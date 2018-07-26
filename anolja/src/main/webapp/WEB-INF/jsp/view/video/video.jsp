@@ -707,6 +707,7 @@ $(document).on("click",".delVideoBtn", function(){
 						videoDelHtml += '	<input type="button" value="삭제"  class="delVideoBtn"> ';
 						videoDelHtml += '</li> ';
 					}//if
+					//-----------------------------수정
 					targetBtn.parent().parent().html(videoDelHtml);
 				}//for
 			}//success
