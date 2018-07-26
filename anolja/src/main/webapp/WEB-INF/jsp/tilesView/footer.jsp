@@ -226,7 +226,6 @@
     		  return;
     	  }
     	  
-    	  swal("반복되는가");
     		$.ajax({
     				url : "${pageContext.request.contextPath}/deletenote",
     				data : JSON.stringify(checkedList),
@@ -441,7 +440,7 @@
          			getRevList("#button-blue[value='취소']");
          			
          			
-         				var isId;
+         			var isId;
          			//글쓰기 폼에서 값 제출시
          			$("#form1").submit(function(event){
          				if(event.preventDefault){event.preventDefault()};
@@ -451,12 +450,10 @@
          					data : {id:$("#name").val()},
          					type : "POST",
          			    dataType : "JSON",
-         				   async : false
+         			       async : false
          				}).done(function(result){
          					isId=result.id;
-         					console.log("유저에서 넘어온 값"+result.id);
-         					
-         					
+         					console.log("유저에서 넘어온 값"+isId);
          				});
          				console.log("이즈아이디:"+isId);
          				console.log("다른 값:"+$("#name").val())
@@ -465,7 +462,6 @@
          					swal("메시지를 보내려는 해당 아이디가 존재하지 않습니다.");
          					return;
          				}
-         			
          				
          				if($("#form1 > p.title > input").val()==""){
          					swal("제목을 입력해주십시오.");
